@@ -22,7 +22,7 @@ Date：2018-12-01
         outs.push(oi);
 
         oi = fi();
-        oi.msg = "\r\nhttps://zme.ink\r\n\r\n码云：\r\nhttps://gitee.com/netnr\r\n\r\nGitHub：\r\nhttps://github.com/netnr\r\n\r\nQ群：83084426\r\n";
+        oi.msg = "\r\n源码：\r\nhttps://github.com/netnr/blog\r\n\r\nGitHub：\r\nhttps://github.com/netnr\r\n\r\n码云：\r\nhttps://gitee.com/netnr\r\n\r\nQ群：83084426";
         outs.push(oi);
 
         if (!("ActiveXObject" in window)) {

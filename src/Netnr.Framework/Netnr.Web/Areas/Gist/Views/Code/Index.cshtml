@@ -78,7 +78,20 @@
                             <div class="markdown-body px-2 py-2">@Model.GistContent</div>
                             <script>
                                 var nmd = $('div.markdown-body');
-                                nmd.html(new netnrmd().md.render(nmd.html()));
+                                nmd.html(DOMPurify.sanitize(marked(nmd.html(), {
+                                    headerIds: false,
+                                    highlight: function (str, lang) {
+                                        if (window.hljs && hljs.getLanguage(lang)) {
+                                            try {
+                                                return hljs.highlight(lang, str).value;
+                                            } catch (__) { }
+                                        }
+                                        try {
+                                            return hljs.highlightAuto(str).value;
+                                        } catch (__) { }
+                                        return '';
+                                    }
+                                })));
                                 $('#faicon').removeClass('fa-spinner fa-spin').addClass('fa-file-code-o');
                             </script>
                         }
