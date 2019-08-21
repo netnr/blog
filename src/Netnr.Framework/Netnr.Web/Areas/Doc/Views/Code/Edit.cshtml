@@ -1,4 +1,4 @@
-﻿@model Netnr.Domain.DocSetDetail
+@model Netnr.Domain.DocSetDetail
 @{
     ViewData["Title"] = "NetnrDoc";
 }
@@ -48,7 +48,7 @@
             <a href="/doc/code/@Model.DsCode@(string.IsNullOrWhiteSpace(Model.DsdId)?"":"/"+Model.DsdId)" class="btn mb-3 btn-outline-dark">返回</a>
         </div>
         <div class="col-sm-12">
-            <textarea class="form-control" id="editor" name="DsdContentMd" placeholder='来，开始吧 ...'>@Model.DsdContentMd</textarea>
+            <div id="editor" name="DsdContentMd" data-value="@Model.DsdContentMd"></div>
         </div>
     </div>
 </div>

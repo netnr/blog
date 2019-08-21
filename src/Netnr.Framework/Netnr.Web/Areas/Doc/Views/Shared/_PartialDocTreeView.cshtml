@@ -1,8 +1,8 @@
-﻿@model Netnr.Func.ViewModel.DocTreeViewVM
+@model Netnr.Func.ViewModel.DocTreeViewVM
 
 <div class="container-fluid" id="dtview">
     <div class="row">
-        <div class="col-12 mb-4">
+        <div class="col-12">
             @if (string.IsNullOrWhiteSpace(Model.DsdId))
             {
                 <div class="text-center py-5 my-5">
@@ -14,7 +14,7 @@
             {
                 <h2 class="font-weight-bold">@Model.DsdTitle</h2>
                 <hr />
-                <div class="netnrmd-body">
+                <div class="markdown-body">
                     @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.DsdContentHtml))
                 </div>
             }

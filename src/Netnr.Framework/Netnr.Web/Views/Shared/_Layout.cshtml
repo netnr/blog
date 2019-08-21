@@ -1,4 +1,4 @@
-﻿<partial name="_PartialThe" />
+<partial name="_PartialThe" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +26,7 @@
         string ca = (vrv["controller"].ToString() + "/" + vrv["action"].ToString()).ToLower();
 
         var canav = "account/login,account/register,home/auth,mix/log,mix/logchart,mix/terms".Split(',');
-        var cafooter = "account/login,account/register,home/auth,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,mix/log,mix/logchart,mix/terms".Split(',');
+        var cafooter = "account/login,account/register,home/auth,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,mix/log,mix/logchart,mix/terms,note/index".Split(',');
     }
 
     @if (!canav.Contains(ca))

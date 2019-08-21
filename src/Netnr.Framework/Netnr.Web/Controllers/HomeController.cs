@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using Netnr.Domain;
@@ -80,9 +80,9 @@ namespace Netnr.Web.Controllers
 
         [Description("保存文章")]
         [Authorize]
-        public IActionResult WriteSave(UserWriting mo, string TagIds)
+        public ActionResultVM WriteSave(UserWriting mo, string TagIds)
         {
-            string result = "fail";
+            var vm = new ActionResultVM();
 
             using (var db = new ContextBase())
             {
@@ -95,7 +95,7 @@ namespace Netnr.Web.Controllers
                 mo.UwCreateTime = DateTime.Now;
                 mo.UwUpdateTime = mo.UwCreateTime;
                 mo.UwLastUid = mo.Uid;
-                mo.UwLastDate = mo.UwLastDate;
+                mo.UwLastDate = mo.UwCreateTime;
                 mo.UwReplyNum = 0;
                 mo.UwReadNum = 0;
                 mo.UwOpen = 1;
@@ -126,11 +126,12 @@ namespace Netnr.Web.Controllers
                 listTags.ForEach(x => x.TagHot += 1);
                 db.Tags.UpdateRange(listTags);
 
-                db.SaveChanges();
-                result = "success";
+                int num = db.SaveChanges();
 
-                return Content(result);
+                vm.Set(num > 0);
             }
+
+            return vm;
         }
 
         [Description("一篇")]

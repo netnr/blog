@@ -1,4 +1,4 @@
-﻿var gd1 = z.Grid();
+var gd1 = z.Grid();
 gd1.url = "/user/writelist";
 gd1.autosizePid = "#PGrid1";
 gd1.pageSize = 100;
@@ -40,11 +40,7 @@ $('#btnEdit').click(function () {
     var rowData = gd1.func('getSelected');
     if (rowData) {
         $.ajax({
-            url: "/user/writeone",
-            type: 'post',
-            data: {
-                UwId: rowData.UwId
-            },
+            url: "/user/writeone?id=" + rowData.UwId,
             dataType: 'json',
             success: function (data) {
                 var tags = data.tags, data = data.item;
@@ -79,11 +75,7 @@ $('#btnDel').click(function () {
             content: "确定删除该文章（含回复内容）？",
             ok: function () {
                 $.ajax({
-                    url: "/user/writedel",
-                    type: 'post',
-                    data: {
-                        UwId: rowData.UwId
-                    },
+                    url: "/user/writedel?id=" + rowData.UwId,
                     success: function (data) {
                         if (data == "success") {
                             gd1.load();

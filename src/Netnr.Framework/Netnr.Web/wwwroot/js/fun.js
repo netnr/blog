@@ -1,4 +1,4 @@
-﻿/**\
+/**\
 
 Author：netnr
 Date：2018-12-01
@@ -22,7 +22,7 @@ Date：2018-12-01
         outs.push(oi);
 
         oi = fi();
-        oi.msg = "\r\nhttps://zme.ink\r\n\r\n码云：\r\nhttps://gitee.com/netnr\r\n\r\nGitHub：\r\nhttps://github.com/netnr\r\n ";
+        oi.msg = "\r\nhttps://zme.ink\r\n\r\n码云：\r\nhttps://gitee.com/netnr\r\n\r\nGitHub：\r\nhttps://github.com/netnr\r\n\r\nQ群：83084426\r\n";
         outs.push(oi);
 
         if (!("ActiveXObject" in window)) {

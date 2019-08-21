@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Baidu.Aip.Speech;
 using System.ComponentModel;
 using Baidu.Aip.Ocr;
+using Netnr.Func.ViewModel;
 
 namespace Netnr.Web.Controllers
 {
@@ -62,31 +63,44 @@ namespace Netnr.Web.Controllers
 
         [Description("文字识别接口")]
         [ResponseCache(Duration = 60)]
-        public string OcrAPI(string image_base64, string image_url)
+        public ActionResultVM OcrAPI(string image_base64, string image_url)
         {
-            var client = new Ocr(API_KEY, SECRET_KEY)
-            {
-                Timeout = 60000
-            };
+            var vm = new ActionResultVM();
 
-            var options = new Dictionary<string, object>{
-                {"language_type", "CHN_ENG"},
-                { "detect_direction", "true"},
-                { "detect_language", "true"},
-                { "probability", "true"}
-            };
+            try
+            {
+                var client = new Ocr(API_KEY, SECRET_KEY)
+                {
+                    Timeout = 60000
+                };
 
-            if (!string.IsNullOrWhiteSpace(image_url))
-            {
-                var result = client.GeneralBasicUrl(image_url, options);
-                return result.ToJson();
+                var options = new Dictionary<string, object>{
+                    {"language_type", "CHN_ENG"},
+                    { "detect_direction", "true"},
+                    { "detect_language", "true"},
+                    { "probability", "true"}
+                };
+
+                if (!string.IsNullOrWhiteSpace(image_url))
+                {
+                    var result = client.GeneralBasicUrl(image_url, options);
+                    vm.Set(ARTag.success);
+                    vm.data = result;
+                }
+                else
+                {
+                    var image = Convert.FromBase64String(image_base64);
+                    var result = client.GeneralBasic(image, options);
+                    vm.Set(ARTag.success);
+                    vm.data = result;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var image = Convert.FromBase64String(image_base64);
-                var result = client.GeneralBasic(image, options);
-                return result.ToJson();
+                vm.Set(ex);
             }
+
+            return vm;
         }
     }
 }

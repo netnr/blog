@@ -1,61 +1,58 @@
-﻿@model Netnr.Func.ViewModel.DocTreeViewVM
+@model Netnr.Func.ViewModel.DocTreeViewVM
 @{
     ViewData["Title"] = Model.DsdTitle ?? "NetnrDoc";
 }
 
 <link href="/areas/doc/css/code/index.css" rel="stylesheet" asp-append-version="true" />
-<link href="/lib/netnrmd/netnrmd.css" rel="stylesheet" defer async asp-append-version="true" />
+<link href="https://code.bdstatic.com/npm/netnrmd@2.2.1/src/netnrmd.css" rel="stylesheet" defer async />
 
 <div class="ndtv">
-    <div class="ndview">
-        <div class="ndvheader">
-            <button type="button" class="MenuToggle show-in-mobile btn btn-primary my-3 float-left">
-                <span class="fa fa-align-justify fa-2x"></span>
-            </button>
-            <div class="dropdown float-right my-2 mx-2">
-                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    <i class="fa fa-fw fa-book"></i>
-                </button>
-                <div class="dropdown-menu">
-                    @{
-                        var uinfo = new UserAuthAid(ViewContext.HttpContext).Get();
-                    }
-                    @if (uinfo.UserId == 0)
-                    {
-                        <a class="dropdown-item" href="/doc/discover">
-                            <i class="fa fa-fw fa-book text-success"></i>&nbsp;Doc
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="dropdown-item" href="/doc/user/@uinfo.UserId">
-                            <i class="fa fa-fw fa-book text-success"></i>&nbsp;Your doc
-                        </a>
-                    }
-                    <div class="dropdown-divider"></div>
-                    @if (!string.IsNullOrWhiteSpace(Model.DsdId))
-                    {
-                        <a class="dropdown-item" href="/doc/code/edit/@Model.DsCode?dsdid=@Model.DsdId">
-                            <i class="fa fa-fw fa-edit text-info"></i>&nbsp;Edit
-                        </a>
-                        <a class="dropdown-item" href="/doc/code/del/@Model.DsCode?dsdid=@Model.DsdId" onclick="return confirm('确定删除?')">
-                            <i class="fa fa-fw fa-remove text-danger"></i>&nbsp;Del
-                        </a>
-                    }
-                    <a class="dropdown-item" target="_blank" href="/doc/code/export/@Model.DsCode">
-                        <i class="fa fa-fw fa-edit text-primary"></i>&nbsp;Export
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0)" id="switchsize">
-                        <i class="fa fa-fw fa-compress text-info"></i>&nbsp;Switch size
-                    </a>
-                </div>
-            </div>
-        </div>
-        <partial name="_PartialDocTreeView" />
-    </div>
+    <button type="button" class="MenuToggle show-in-mobile btn btn-primary my-3 mx-3 float-left">
+        <span class="fa fa-align-justify fa-2x"></span>
+    </button>
     <div class="ndtree">
         <partial name="_PartialDocTree" />
+    </div>
+
+    <div class="ndview">
+        <!--右侧菜单-->
+        <div class="ndvmenu">
+            @{
+                var uinfo = new UserAuthAid(ViewContext.HttpContext).Get();
+            }
+            @if (uinfo.UserId == 0)
+            {
+                <a href="/doc/discover" data-toggle="tooltip" data-placement="left" title="Doc">
+                    <i class="fa fa-fw fa-lg fa-book text-success"></i>
+                </a>
+            }
+            else
+            {
+                <a href="/doc/user/@uinfo.UserId" data-toggle="tooltip" data-placement="left" title="Your doc">
+                    <i class="fa fa-fw fa-lg fa-book text-success"></i>
+                </a>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.DsdId))
+            {
+                <a href="/doc/code/edit/@Model.DsCode?dsdid=@Model.DsdId" data-toggle="tooltip" data-placement="left" title="Edit">
+                    <i class="fa fa-fw fa-lg fa-edit text-info"></i>
+                </a>
+                <a href="/doc/code/del/@Model.DsCode?dsdid=@Model.DsdId" data-toggle="tooltip" data-placement="left" title="Delete" onclick="return confirm('确定删除?')">
+                    <i class="fa fa-fw fa-lg fa-trash text-danger"></i>
+                </a>
+            }
+            <a target="_blank" href="/doc/code/export/@Model.DsCode" data-toggle="tooltip" data-placement="left" title="Export">
+                <i class="fa fa-fw fa-lg fa-file-word-o text-primary"></i>
+            </a>
+            <a href="javascript:void(0)" id="switchsize" data-toggle="tooltip" data-placement="left" title="Switch size">
+                <i class="fa fa-fw fa-lg fa-compress text-info"></i>
+            </a>
+        </div>
+
+        <!--内容主体-->
+        <div class="my-5 pt-5">
+            <partial name="_PartialDocTreeView" />
+        </div>
     </div>
 </div>
 <script>
@@ -74,4 +71,7 @@
     $('#switchsize').click(function () {
         SwitchSize($(this).children().hasClass('fa-compress') ? 1 : 0);
     });
+
+    //提示
+    $('.ndvmenu').children().tooltip()
 </script>

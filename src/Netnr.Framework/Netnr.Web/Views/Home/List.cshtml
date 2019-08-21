@@ -1,4 +1,4 @@
-﻿@model PageSetVM
+@model PageSetVM
 @{
     var uw = Model.Temp as UserWriting;
     var tt = JArray.Parse(uw.Spare1);
@@ -19,7 +19,6 @@
     </div>
 
     <div class="row uwo-box">
-
         <!--标题-->
         <div class="col-md-12">
             <div class="uwo-title">
@@ -69,7 +68,7 @@
                 </span>
                 <span>
                     <i class="fa fa-clock-o text-muted"></i>
-                    @VisualFormat.Duration(uw.UwLastDate.Value, 0)
+                    @VisualFormat.Duration(uw.UwLastDate ?? uw.UwCreateTime.Value, 0)
                 </span>
                 <span class="mx-3">
                     <i class="fa fa-eye text-muted"></i> @uw.UwReadNum
@@ -83,12 +82,12 @@
 
         <!--内容-->
         <div class="col-md-12 my-3">
-            <div class="uwo-content netnrmd-body">
+            <div class="uwo-content markdown-body">
                 @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(uw.UwContent))
             </div>
         </div>
 
-        <!--回复-->
+        <!--回复列表-->
         <div class="col-md-12">
             <div class="uwo-reply mt-5">
                 @if (Model.Pag.Total > 0)
@@ -131,7 +130,7 @@
                                     <div class="mt-2">
                                         @if (item.UrStatus == 1)
                                         {
-                                            <div class="netnrmd-body display-section">@(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(item.UrContent))</div>
+                                            <div class="markdown-body display-section">@(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(item.UrContent))</div>
                                         }
                                         else
                                         {
@@ -144,50 +143,49 @@
                     </ul>
                 }
             </div>
-
             <partial name="_PartialPaging4" />
-
-            <!--回复帖子-->
-            <div class="my-5">
-                <h5>回复</h5>
-                @if (!ViewContext.HttpContext.User.Identity.IsAuthenticated)
-                {
-                    <div class="row">
-                        <div class="col-sm-4 mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">昵称</div>
-                                </div>
-                                <input class="form-control" id="WrAnonymousName" placeholder="请输入昵称" maxlength="20">
-                            </div>
-                        </div>
-                        <div class="col-sm-4 mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">邮箱</div>
-                                </div>
-                                <input class="form-control" id="WrAnonymousMail" placeholder="根据邮箱从 Gravatar 获取头像" maxlength="50">
-                            </div>
-                        </div>
-                        <div class="col-sm-4 mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">链接</div>
-                                </div>
-                                <input class="form-control" id="WrAnonymousLink" placeholder="请输入链接，以 http 开头" maxlength="50">
-                            </div>
-                        </div>
-                    </div>
-                }
-                <div>
-                    <textarea class="form-control" id="txtReply" placeholder="想写点什么 .."></textarea>
-                </div>
-                <button id="btnReply" class="btn btn-danger mt-3">提交</button>
-            </div>
-
         </div>
     </div>
 
+    <div class="row mt-5">
+        <!--回复帖子-->
+        <div class="col-md-12">
+            <h5>回复</h5>
+        </div>
+        @if (!ViewContext.HttpContext.User.Identity.IsAuthenticated)
+        {
+            <div class="col-sm-4 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">昵称</div>
+                    </div>
+                    <input class="form-control" id="WrAnonymousName" placeholder="请输入昵称" maxlength="20">
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">邮箱</div>
+                    </div>
+                    <input class="form-control" id="WrAnonymousMail" placeholder="根据邮箱从 Gravatar 获取头像" maxlength="50">
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">链接</div>
+                    </div>
+                    <input class="form-control" id="WrAnonymousLink" placeholder="请输入链接，以 http 开头" maxlength="50">
+                </div>
+            </div>
+        }
+        <div class="col-md-12">
+            <div>
+                <div id="replyeditor"></div>
+            </div>
+            <button id="btnReply" class="btn btn-danger mt-3">提交</button>
+        </div>
+    </div>
 </div>
 
 <partial name="_PartialMarkdownQuote" />

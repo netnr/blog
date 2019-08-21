@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -459,14 +459,14 @@ namespace Netnr.Web.Controllers
 
         [Description("获取一篇文章")]
         [Authorize]
-        public string WriteOne(int UwId)
+        public string WriteOne(int id)
         {
             string result = string.Empty;
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {
-                var mo = db.UserWriting.Where(x => x.Uid == uid && x.UwId == UwId).FirstOrDefault();
-                var listTags = db.UserWritingTags.Where(x => x.UwId == UwId).ToList();
+                var mo = db.UserWriting.Where(x => x.Uid == uid && x.UwId == id).FirstOrDefault();
+                var listTags = db.UserWritingTags.Where(x => x.UwId == id).ToList();
                 result = new
                 {
                     item = mo,
@@ -478,9 +478,9 @@ namespace Netnr.Web.Controllers
 
         [Description("保存一篇文章（编辑）")]
         [Authorize]
-        public string WriteEditSave(Domain.UserWriting mo, int UwId, string TagIds)
+        public ActionResultVM WriteEditSave(Domain.UserWriting mo, int UwId, string TagIds)
         {
-            string result = "fail";
+            var vm = new ActionResultVM();
 
             var lisTagId = new List<int>();
             TagIds.Split(',').ToList().ForEach(x => lisTagId.Add(Convert.ToInt32(x)));
@@ -518,29 +518,29 @@ namespace Netnr.Web.Controllers
                     }
                     db.UserWritingTags.AddRange(listwt);
 
-                    db.SaveChanges();
+                    int num = db.SaveChanges();
 
-                    result = "success";
+                    vm.Set(num > 0);
                 }
             }
 
-            return result;
+            return vm;
         }
 
         [Description("删除 一篇文章")]
         [Authorize]
-        public string WriteDel(int UwId)
+        public string WriteDel(int id)
         {
             string result = "fail";
 
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {
-                var mo1 = db.UserWriting.Where(x => x.Uid == uid && x.UwId == UwId).FirstOrDefault();
+                var mo1 = db.UserWriting.Where(x => x.Uid == uid && x.UwId == id).FirstOrDefault();
                 db.UserWriting.Remove(mo1);
-                var mo2 = db.UserWritingTags.Where(x => x.UwId == UwId).ToList();
+                var mo2 = db.UserWritingTags.Where(x => x.UwId == id).ToList();
                 db.UserWritingTags.RemoveRange(mo2);
-                var mo3 = db.UserReply.Where(x => x.UrTargetId == UwId.ToString()).ToList();
+                var mo3 = db.UserReply.Where(x => x.UrTargetId == id.ToString()).ToList();
                 db.UserReply.RemoveRange(mo3);
 
                 db.SaveChanges();
