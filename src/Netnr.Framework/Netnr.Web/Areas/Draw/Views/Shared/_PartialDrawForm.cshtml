@@ -1,0 +1,55 @@
+﻿@model Netnr.Domain.Draw
+
+@{
+    ViewData["Title"] = "Form draw";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form id="fromid" class="my-5" action="/draw/code/saveform">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="DrName" value="@Model?.DrName" placeholder="标题名称" maxlength="50" autofocus />
+                    <small class="form-text text-muted">必填</small>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="DrRemark" placeholder="描述" maxlength="200">@Model?.DrRemark</textarea>
+                </div>
+                <div class="form-group">
+                    <select class="custom-select" name="DrOpen">
+                        @if (Model?.DrOpen == 2)
+                        {
+                            <option value="1">公开（只读）</option>
+                            <option value="2" selected>私有</option>
+                        }
+                        else
+                        {
+                            <option value="1">公开（只读）</option>
+                            <option value="2">私有</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="custom-select" name="DrType" @(Model == null ? "" : "disabled")>
+                        @if (Model?.DrType == "mind")
+                        {
+                            <option value="draw">绘制（Draw）</option>
+                            <option value="mind" selected>思维导图（Mind Mapping）</option>
+                        }
+                        else
+                        {
+                            <option value="draw">绘制（Draw）</option>
+                            <option value="mind">思维导图（Mind Mapping）</option>
+                        }
+                    </select>
+                </div>
+                <input type="hidden" name="DrId" value="@Model?.DrId" />
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i>&nbsp;保存
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/areas/draw/js/partial/form.js" asp-append-version="true"></script>

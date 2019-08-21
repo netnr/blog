@@ -1,0 +1,205 @@
+﻿@model Netnr.Domain.UserInfo
+@{
+    ViewData["Title"] = "个人设置";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <partial name="_PartialSettingNav" />
+                </div>
+                <div class="col-md-10 col-sm-8">
+                    @{ string tab = ViewContext.RouteData.Values["id"]?.ToString();}
+                    @if (tab == null || tab == "account")
+                    {
+                        <div class="mb-2">
+                            <a href="javascript:void(0);" class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#ModalUserInfo">编辑</a>
+                            <span class="h4">个人信息</span>
+                        </div>
+                        <table class="table">
+                            <colgroup><col style="width:30%" /></colgroup>
+                            <tr>
+                                <td>
+                                    账号
+                                    <i class="fa fa-fw text-muted fa-question-circle-o" data-toggle="tooltip" title="登录账号，个性网址，唯一"></i>
+                                </td>
+                                <td class="text-muted">https://www.netnr.com/u/<b class="text-primary">@Model.UserName</b></td>
+                            </tr>
+                            <tr>
+                                <td>昵称</td>
+                                <td>@Model.Nickname</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    邮箱
+                                    <i class="fa fa-fw text-muted fa-question-circle-o" data-toggle="tooltip" title="登录邮箱，唯一"></i>
+                                </td>
+                                <td>
+                                    <a class="mr-3" href="mailto:@Model.UserMail">@Model.UserMail</a>
+                                    @if (Model.UserMailValid == 1)
+                                    {
+                                        <span class="text-success">已验证</span>
+                                    }
+                                    else if (!string.IsNullOrWhiteSpace(Model.UserMail))
+                                    {
+                                        <a href="/user/verify/send" class="btn-outline-info">点击发送验证信息</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>手机</td>
+                                <td><a href="tel:@Model.UserPhone">@Model.UserPhone</a></td>
+                            </tr>
+                            <tr>
+                                <td>网址</td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(Model.UserUrl))
+                                    {
+                                        <a href='@(Model.UserUrl.Contains("//")?Model.UserUrl:"http://"+Model.UserUrl)'>@Model.UserUrl</a>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="modal fade" role="dialog" id="ModalUserInfo">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">修改个人信息</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="FormUserInfo">
+                                            <div class="form-group">
+                                                <label>
+                                                    账号
+                                                    @if (Model.UserNameChange != 1)
+                                                    {
+                                                        <small class="text-info">（你可以修改一次账号）</small>
+                                                    }
+                                                </label>
+                                                <input class="form-control" name="UserName" value="@Model.UserName" maxlength="50" @(Model.UserNameChange == 1 ? "readonly" : "")>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>昵称</label>
+                                                <input class="form-control" name="Nickname" value="@Model.Nickname" maxlength="50">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>邮箱<small class="text-info">（更改邮箱需要重新验证）</small></label>
+                                                <input class="form-control" name="UserMail" value="@Model.UserMail" maxlength="50">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>手机</label>
+                                                <input class="form-control" name="UserPhone" value="@Model.UserPhone" maxlength="20">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>网址</label>
+                                                <input class="form-control" name="UserUrl" value="@Model.UserUrl" maxlength="100">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-warning" id="btnSaveUserInfo">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-5">授权关联</h4>
+                        <table class="table">
+                            <colgroup><col style="width:30%" /></colgroup>
+                            <tr>
+                                <td class="siteIcon"><img class="mr-2" src="/images/login/qq.svg" />QQ</td>
+                                <td>
+                                    @if (Model.OpenId1?.Length > 1)
+                                    {
+                                        <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/qq">解除</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/oauth/qq">立即绑定账号</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="siteIcon"><img class="mr-2" src="/images/login/weibo.svg" />微博</td>
+                                <td>
+                                    @if (Model.OpenId2?.Length > 1)
+                                    {
+                                        <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/weibo">解除</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/oauth/weibo">立即绑定账号</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="siteIcon"><img class="mr-2" src="/images/login/github.svg" />GitHub</td>
+                                <td>
+                                    @if (Model.OpenId3?.Length > 1)
+                                    {
+                                        <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/github">解除</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/oauth/github">立即绑定账号</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="siteIcon"><img class="mr-2" src="/images/login/taobao.svg" />淘宝</td>
+                                <td>
+                                    @if (Model.OpenId4?.Length > 1)
+                                    {
+                                        <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/taobao">解除</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/oauth/taobao">立即绑定账号</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="siteIcon"><img class="mr-2" src="/images/login/microsoft.svg" />Microsoft</td>
+                                <td>
+                                    @if (Model.OpenId5?.Length > 1)
+                                    {
+                                        <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/microsoft">解除</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/oauth/microsoft">立即绑定账号</a>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h4 class="mt-5">更改密码</h4>
+                        <table class="table table-sm">
+                            <colgroup><col style="width:30%" /></colgroup>
+                            <tr>
+                                <td colspan="2"><input type="password" class="form-control" id="txtOldPwd" placeholder="现有的密码" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="password" class="form-control" id="txtNewPwd1" placeholder="新密码，至少5位数" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="password" class="form-control" id="txtNewPwd2" placeholder="确认新的密码" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><button class="btn btn-warning" id="btnUpdatePwd">提交</button></td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/user/setting.js" asp-append-version="true"></script>

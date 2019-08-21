@@ -1,0 +1,73 @@
+﻿@model PageSetVM
+@{
+    var listUm = Model.Rows as List<UserMessage>;
+    int mn = listUm.Where(x => x.UmStatus == 1).Count();
+
+    ViewData["Title"] = "消息";
+}
+
+<link href="https://code.bdstatic.com/npm/netnrmd@1.2.0/src/netnrmd.css" rel="stylesheet" />
+<link href="/css/home/view.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 uwo-box">
+            <h4>消息提醒（@(listUm.Count)）</h4>
+            @if (listUm.Count == 0)
+            {
+                <p class="text-center">
+                    <img src="/images/smile.svg" />
+                </p>
+            }
+            <div class="uwo-reply">
+                <ul class="list-unstyled">
+                    @foreach (var item in listUm)
+                    {
+                        <li class="media uwo-reply-item py-3">
+                            <img class="imgup" src="https://gs.zme.ink/static/avatar/@item.Spare2" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
+                            <div class="media-body ml-2">
+                                @if (item.UmStatus == 1)
+                                {
+                                    <i class="fa fa-fw fa-lg fa-envelope text-success mr-2" title="新消息"></i>
+                                }
+                                @switch (item.UmAction)
+                                {
+                                    case 2:
+                                        <a href="/user/id/@item.UmTriggerUid">@item.Spare1</a>
+                                        <span class="text-muted">回复了</span>
+
+                                        var page = 1;
+                                        if (item.UmTargetIndex > 10)
+                                        {
+                                            page = (int)Math.Ceiling(Convert.ToDecimal(item.UmTargetIndex) / Convert.ToDecimal(10));
+                                        }
+                                        if (page == 1)
+                                        {
+                                            <a href="/home/list/@item.UmTargetId#no_@item.UmTargetIndex">@item.Spare3</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/home/list/@item.UmTargetId?page=@(page)#no_@item.UmTargetIndex">@item.Spare3</a>
+                                        }
+                                        break;
+                                }
+                                <span class="text-muted mx-3">
+                                    @VisualFormat.Duration(item.UmCreateTime.Value)
+                                </span>
+                                <a href="/user/delmessage/@item.UmId" class="btn-outline-danger" onclick='return confirm("确定删除？")'>删除</a>
+                                <div class="mt-2">
+                                    <div class="netnrmd-body display-section">
+                                        @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(item.UmContent))
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <partial name="_PartialPaging4" />
+        </div>
+    </div>
+</div>

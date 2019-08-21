@@ -1,0 +1,35 @@
+﻿@model Netnr.Func.ViewModel.DocTreeViewVM
+@{
+    var child = Model.DocTree.Where(x => x.DsdPid == Model.DsdId).ToList();
+}
+
+@foreach (var item in child)
+{
+    var sub = Model.DocTree.Where(x => x.DsdPid == item.DsdId).Count();
+
+    <li>
+        @if (sub == 0)
+        {
+            if (item.IsCatalog)
+            {
+                <a class="text-muted"><span class="fa fa-fw fa-folder-open"></span> @item.DsdTitle <span class="indicator fa fa-sort-desc"></span></a>
+            }
+            else
+            {
+                <a data-leaf="1" href="/doc/code/@item.DsCode/@item.DsdId" data-value="@item.DsdId"><span class="fa fa-fw fa-file-text"></span> @item.DsdTitle</a>
+            }
+        }
+        else
+        {
+            var vm = new Netnr.Func.ViewModel.DocTreeViewVM()
+            {
+                DocTree = Model.DocTree,
+                DsdId = item.DsdId
+            };
+            <a class="text-muted"><span class="fa fa-fw fa-folder-open"></span> @item.DsdTitle <span class="indicator fa fa-sort-desc"></span></a>
+            <ul>
+                <partial name="_PartialDocTreeLoop" model="@vm" />
+            </ul>
+        }
+    </li>
+}

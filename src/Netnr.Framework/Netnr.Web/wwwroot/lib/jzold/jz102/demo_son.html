@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    <input id="txt6" type="text" name="name" value="回传父页面 " />
+    <input id="btn6" type="button" name="name" value="传递值到父页面 并触发关闭按钮" />
+</body>
+</html>
+<script>
+    document.getElementById("txt6").value += Math.random().toString().substr(2, 4);
+
+    document.getElementById("btn6").onclick = function () {
+        parent.document.getElementById("txt6").value = document.getElementById("txt6").value;
+        //子页面关闭自身窗口操作：
+        //1.调用父页面的函数 模拟点击 窗口关闭按钮 没有标题栏则失效
+        parent.jz.closeback(window.name);
+        //2.子页面直接模拟点击父页面的关闭按钮 按钮id和自身窗口name值一样 没有标题栏失效
+        //parent.document.getElementById(window.name).click();
+    }
+</script>

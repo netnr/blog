@@ -1,2 +1,39 @@
-# blog
-åŸºäº.NET Coreçš„åšå®¢
+# Netnr.Framework
+
+> ÕâÊÇ <https://www.netnr.com> Õ¾µãµÄÔ´´úÂë
+
+### ¿ò¼Ü×é¼ş
+- jQuery + Bootstrap4
+- .NET Core (latest)
+- EF + Linq
+- Ö§³Ö£ºSQLServer¡¢MySQL¡¢PostgreSQL¡¢SQLiteµÈ
+
+
+- Baidu.AI£¨ÊµÑéÊÒ£©
+- FluentScheduler£¨¶¨Ê±ÈÎÎñ£©
+- MailKit£¨ÓÊÏäÑéÖ¤£©
+- Netease.Cloud.Nos£¨ÍøÒ×¶ÔÏó´æ´¢£©
+- Netnr.Core£¨¹«¹²Àà¿â£©
+- Netnr.Login£¨µÚÈı·½µÇÂ¼£©
+- Netnr.WeChat£¨Î¢ĞÅ¹«ÖÚºÅ£©
+- Qcloud.Shared.NetCore£¨ÌÚÑ¶¶ÔÏó´æ´¢£©
+- Qiniu.Shared£¨ÆßÅ£¶ÔÏó´æ´¢£©
+- Shell.NET£¨Ö´ĞĞLinuxÃüÁî£©
+- sqlite-net-pcl£¨SQLite£¬ÈÕÖ¾£©
+
+### ¹¦ÄÜÄ£¿é
+- µÇÂ¼¡¢×¢²á£¨µÚÈı·½Ö±½ÓµÇÂ¼£ºQQ¡¢Î¢²©¡¢GitHub¡¢ÌÔ±¦¡¢Microsoft£©
+- ÎÄÕÂ£º·¢²¼ÎÄÕÂ£¨Markdown±à¼­Æ÷£©
+- ÎÄÕÂÁôÑÔ£ºÖ§³ÖÄäÃûÁôÑÔ£¬¸ù¾İÓÊÏä´Ó Gravatar »ñÈ¡Í·Ïñ
+- ¹«ÖÚºÅ£º£¨Íæ¾ß£©
+- Gist£º´úÂëÆ¬¶Î£¬×Ô¶¯Í¬²½GitHub¡¢Gitee
+- Run£ºÔÚÏßÔËĞĞHTML´úÂë£¬Ğ´demoÓÃ
+- Doc£ºÎÄµµ¹ÜÀí£¬APIËµÃ÷ÎÄµµ
+- Draw£º»æÖÆ£¬¼¯³É¿ªÔ´ÏîÄ¿ mxGraph¡¢°Ù¶ÈÄÔÍ¼
+- Note£º¼ÇÊÂ±¾£¨Markdown±à¼­Æ÷£©
+- ´æ´¢£ºÔÆ´æ´¢£¬¶ÔÏó´æ´¢
+- ±¸·İ£º×Ô¶¯±¸·İÊı¾İ¿âµ½ÔÆ´æ´¢
+- ÈÕÖ¾£º·ÃÎÊÈÕÖ¾¼ÇÂ¼
+
+### ÅäÖÃÏî
+- **appsettings.json** ÓĞĞí¶àÅäÖÃÏî£¬¶ÔÓ¦µÄ¹¦ÄÜĞèÒªÅäÖÃ²ÎÊıºó²ÅÄÜÕı³£Ê¹ÓÃ

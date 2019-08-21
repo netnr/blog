@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jz弹窗插件及方法封装 v1.0.2</title>
+    <script src="jz-1.0.2.js"></script>
+    <style>
+        pre {
+            padding: 5px;
+            margin: 50px 0 10px;
+            white-space: pre-wrap;
+            border: 1px solid #333;
+        }
+
+        input {
+            color: #333;
+            cursor: pointer;
+            padding: 5px 8px;
+            border: 1px solid #333;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="divJz">
+        <div style="max-width:650px;margin:50px auto;">
+            <h1>jz弹窗插件及方法封装 IE8+</h1>
+            <strong>
+                Version：<a href="/scripts/jz102/jz-1.0.2.js" target="_blank">jz-1.0.2.js</a> &nbsp;
+                Css：<a href="/scripts/jz102/jz-1.0.2.css" target="_blank">jz-1.0.2.css</a> &nbsp;
+                <span>弹窗都返回ID</span>
+            </strong><br /><br />
+            <strong>
+                Svn库：<a href="http://code.taobao.org/p/wrap/src/jz/jz102/jz-1.0.2.js" target="_blank">jz-1.0.2.js</a> &nbsp;
+                Css：<a href="http://code.taobao.org/p/wrap/src/jz/jz102/jz-1.0.2.css" target="_blank">jz-1.0.2.css</a>
+            </strong>
+            <div id="divCode">
+                <pre id="pre1">jz.msg({
+    content: "hello world " + jz.random()
+});</pre>
+                <input id="btn1" type="button" value="普通消息 运行" />
+
+                <pre id="pre1a">jz.msg({
+    content: "hello world " + jz.random(10*Math.random()),  //消息
+    time: 8,    //倒计时8秒 默认4秒 0为不关闭
+    single: false,  //允许弹窗多个 默认弹窗一个
+    drag: true  //可拖动
+});</pre>
+                <input id="btn1a" type="button" value="拖动、弹多个、时间 运行" />
+
+                <pre id="pre1b">jz.msg({
+    content: "hello world " + jz.random() + " 请滑动滚轮",  //消息
+    fixed: true,    //绝对位置 position:fixed    
+    time: 0,        //不自动关闭
+    blank: true    //点击空白关闭
+});</pre>
+                <input id="btn1b" type="button" value="空白关闭、绝对定位 运行" />
+
+
+                <pre id="pre2">jz.confirm({
+    content: "hello world " + jz.random(),
+    cancel: false
+});</pre>
+                <input id="btn2" type="button" value="有确定按钮消息 运行" />
+
+                <pre id="pre3">jz.confirm({
+    content: "hello world " + jz.random()
+});</pre>
+                <input id="btn3" type="button" value="模拟confirm询问 运行" />
+
+                <pre id="pre2a">jz.confirm({
+    content: "倒计时关闭，有遮罩层 ",
+    mask: true, //遮罩层
+    time: 2 //倒计时关闭
+});</pre>
+                <input id="btn2a" type="button" value="遮罩层、倒计时 运行" />
+
+                <pre id="pre4">jz.confirm({
+    content: "hello world " + jz.random(),
+    ok: function(){ 
+        jz.msg({ content: "你点击了确定,阻止关闭" })
+        return false;
+    },
+    cancel: function(){ 
+        jz.msg({ content: "你点击了取消或关闭" })
+    },
+});</pre>
+                <input id="btn4" type="button" value="询问回调 阻止关闭 运行" />
+
+                <pre id="pre5">jz.confirm({
+    title: "Message",
+    content: "hello world " + jz.random(),
+    cancelValue: "否",
+    okValue: "是"
+});</pre>
+                <input id="btn5" type="button" value="定义标题、按钮文本 运行" />
+
+                <pre id="pre6">jz.iframe({
+    src: "demo_son.html", //iframe src属性
+    close: function(){
+        jz.tip({
+            target:"txt6",
+            content:"弹窗返回的值，在这里！",
+            time:6,
+            focus:true
+        })
+    }
+});</pre>
+                <input id="btn6" type="button" value="iframe弹窗 传值 运行" />
+                <input id="txt6" type="text" value="接收iframe返回的值" />
+
+                <pre id="pre6a">jz.iframe({
+    title: "新窗口",   //指定标题
+    src: "http://wap.ip138.com/",
+    fixed: true,
+    width: 350, //指定宽度 
+    height: 400,    //指定高度
+    scrolling: true,    //滚动条自动
+    mask: true,  //遮罩层
+    close: function(){
+        jz.msg({content:"你关闭了弹窗"});
+    }
+});</pre>
+                <input id="btn6a" type="button" value="iframe弹窗 运行" />
+
+
+                <pre><code>
+*  弹窗实现 参数列表：
+*  title：标题    text/html（jz.msg默认无）
+*  content：文本信息    text/html（jz.msg、jz.confirm 显示的文本或html，jz.iframe不传）
+*  time：倒计时关闭 单位：秒     number（jz.msg默认4秒，jz.confirm、jz.iframe默认不关闭）
+*  blank：点击空白关闭    bool（默认false，此关闭不触发弹窗关闭事件 有遮罩层失效）    
+*  fixed：绝对位置  bool（position:fixed） 
+*  mask：遮罩层    bool（默认 false）
+*  single：只弹出一个    bool
+*  drag：拖动     bool（jz.msg默认false，jz.confirm、jz.iframe 默认true）
+*  ok：确定回调     function（确定回调）
+*  okValue：确定按钮文本      text（默认“确定”，有确定按钮则生效）
+*  cancel：取消回调  function/bool（取消回调/不显示取消按钮）
+*  cancelValue：取消按钮文本      text（默认“取消”,有取消按钮则生效）
+*  close：窗口关闭回调    function/bool（关闭回调/不显示，jz.confirm没有，合并为cancel事件）
+*  src：弹窗地址    text（jz.msg、jz.confirm不传）
+*  width：弹窗宽度 单位 px     number（默认 400）
+*  height：弹窗高度 单位 px      number（默认 200）
+*  scrolling：弹窗滚动条    bool（默认false）
+        </code></pre>
+                <br /><br /><br />
+                <pre id="pre41">jz.tip({
+    target: "select41", //下拉列表框的id
+    content: "hello world", 
+    blank: true    //点击空白关闭
+})
+</pre>
+                <input id="btn41" type="button" name="name" value="小提示" />
+                <select id="select41">
+                    <option value="">请选择方向</option>
+                    <option value="top">上</option>
+                    <option value="bottom">下</option>
+                    <option value="left">左</option>
+                    <option value="right">右</option>
+                </select>
+                <pre id="pre41a">jz.tip({
+    target: "select41",
+    content: "hello world " + jz.random(),
+    single: false,
+    time: 4,    //倒计时关闭
+    align: this.value   //指定提示方向 默认下方 top|right|left|bottom
+})
+</pre>
+                <pre><code>
+*  小提示 tip 参数列表：
+*  target：id/object（提示目标id或对象）
+*  content：提示信息    text/html
+*  single：只弹出一个    bool
+*  align：提示位置方向 默认下方 top|right|left|bottom
+*  time：倒计时关闭 单位 秒     number（默认不关闭）
+*  blank：点击空白关闭    bool（默认false）
+*  focus：焦点选中目标    bool（默认false）
+        </code></pre>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    //事件委托
+    jz("divCode").click(function (e) {
+        if (jz.getTarget(e).nodeName.toLowerCase() == "input") {
+            eval(jz(jz.getTarget(e).id.replace('btn', 'pre')).text());
+        }
+    })
+    jz("select41").change(function () { eval(jz("pre41a").text()); })
+
+    //加粗
+    jz.each(document.body.getElementsByTagName("code"), function (i, name) {
+        var newHtml = '';
+        jz.each(name.innerHTML.split("*"), function (j, item) {
+            newHtml += '<p><strong>' + item.substr(2, item.indexOf("：") - 1) + '</strong>'
+                     + item.substr(item.indexOf("：") + 1) + "</p>";
+        }); name.innerHTML = newHtml;
+    });
+
+    console.log(typeof jz);
+</script>

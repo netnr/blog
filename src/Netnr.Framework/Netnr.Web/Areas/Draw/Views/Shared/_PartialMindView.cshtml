@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "draw";
+}
+
+<partial name="_PartialGlobalLoading" />
+
+<input type="hidden" id="vid" value='@ViewData["vid"]' />
+
+<link rel="stylesheet" href="https://code.bdstatic.com/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://lib.baomitu.com/codemirror/5.47.0/codemirror.min.css" />
+<link rel="stylesheet" asp-append-version="true" href="/lib/kityminder/components/hotbox/hotbox.css" />
+<link rel="stylesheet" href="https://code.bdstatic.com/npm/kityminder-core@1.4.50/dist/kityminder.core.css" />
+<link rel="stylesheet" asp-append-version="true" href="/lib/kityminder/components/color-picker/dist/color-picker.css" />
+
+<link asp-append-version="true" rel="stylesheet" href="/lib/kityminder/dist/kityminder.editor.css">
+
+<style>
+    .eh {
+        padding: 2px;
+        display: none;
+        border-bottom: 1px solid #337ab7;
+    }
+
+        .eh ul li a {
+            padding: 10px 20px;
+        }
+</style>
+
+<div class="eh">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <b>≡</b> 菜单 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="mmmenu">
+                <li><a data-mc="save" href="javascript:void(0)">保存 (Ctrl+S)</a></li>
+                <li class="divider"></li>
+                <li><a data-mc="export" href="javascript:void(0)">导出</a></li>
+                <li class="divider"></li>
+                <li><a data-mc="import" href="javascript:void(0)">导入</a></li>
+            </ul>
+        </div>
+        <input class="form-control" id="DrName" value="" placeholder="标题名称" maxlength="30" />
+        <div class="input-group-btn">
+            <a class="btn btn-default" href="/draw/discover">Discover</a>
+            <a class="btn btn-default" href="/">Netnr</a>
+        </div>
+    </div>
+
+    <!--导出-->
+    <div class="modal fade" role="dialog" id="ehModalExport">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">导出</h4>
+                </div>
+                <div class="modal-body" id="mbef"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btnExport">导出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--导入-->
+    <div class="modal fade" role="dialog" id="ehModalImport">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">导入</h4>
+                </div>
+                <div class="modal-body" id="mbim">
+                    <label>选择文件（支持拖拽，格式：txt、md、json）</label>
+                    <input class="form-control" type="file" id="fileImport" />
+                    <hr />
+                    <label>导入的内容</label>
+                    <textarea class="form-control" id="txtImprot" rows="10" placeholder="导入的内容，可直接粘贴至此"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btnImport">导入</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<kityminder-editor on-init="initEditor(editor, minder)"></kityminder-editor>
+
+<input id="km-csrf" type="hidden" name="csrf_token" value='@Guid.NewGuid().ToString("N")' />
+
+<script src="/areas/draw/js/partial/km.js" asp-append-version="true"></script>
+
+<script src="https://code.bdstatic.com/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://code.bdstatic.com/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+
+<script src="https://lib.baomitu.com/angular.js/1.7.8/angular.min.js"></script>
+<script src="https://code.bdstatic.com/npm/angular-bootstrap@0.12.2/ui-bootstrap-tpls.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/codemirror.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/xml/xml.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/javascript/javascript.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/css/css.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/markdown/markdown.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/addon/mode/overlay.min.js"></script>
+<script src="https://lib.baomitu.com/codemirror/5.47.0/mode/gfm/gfm.min.js"></script>
+<script src="https://lib.baomitu.com/angular-ui-codemirror/0.3.0/ui-codemirror.min.js"></script>
+<script src="https://lib.baomitu.com/marked/0.7.0/marked.min.js"></script>
+<script src="https://code.bdstatic.com/npm/kity@2.0.4/dist/kity.min.js"></script>
+<script asp-append-version="true" src="/lib/kityminder/components/hotbox/hotbox.js"></script>
+<script asp-append-version="true" src="/lib/kityminder/components/json-diff/json-diff.js"></script>
+<script src="https://code.bdstatic.com/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script>
+<script asp-append-version="true" src="/lib/kityminder/components/color-picker/dist/color-picker.min.js"></script>
+
+<script asp-append-version="true" src="/lib/kityminder/dist/kityminder.editor.js"></script>

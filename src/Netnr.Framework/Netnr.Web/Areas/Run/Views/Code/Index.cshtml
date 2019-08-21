@@ -1,0 +1,23 @@
+﻿@model Netnr.Domain.Run
+@{
+    Layout = null;
+    ViewData["Title"] = Model.RunRemark + " NetnrRun";
+}
+@(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.RunContent1))
+@if (string.IsNullOrWhiteSpace(ViewData["pure"]?.ToString()))
+{
+    <div style="position:fixed;top:10px;right:10px;z-index:999;opacity:.5;filter:alpha(opacity=50)" title="The addition parameter {pure=1} is removed">
+        <a href="/run/code/@Model.RunCode/edit" style="color:#777;text-decoration:underline;">Source</a>
+        <a href="/run" style="color:#777;text-decoration:underline;">NetnrRun</a>
+    </div>
+}
+
+<style>
+    @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.RunContent3))
+</style>
+
+<script>
+    try {
+        @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.RunContent2))
+    } catch (e) { }
+</script>

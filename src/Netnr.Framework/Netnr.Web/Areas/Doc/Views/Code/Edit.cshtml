@@ -1,0 +1,58 @@
+﻿@model Netnr.Domain.DocSetDetail
+@{
+    ViewData["Title"] = "NetnrDoc";
+}
+
+<style>
+    .dmbox {
+        overflow-y: auto;
+        max-height: 300px;
+        right: 56px !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" id="savebox">
+        <div class="col-md-4 col-sm-5 my-3">
+            <input type="hidden" id="DsCode" name="DsCode" value="@Model.DsCode" />
+            <input type="hidden" id="DsdId" name="DsdId" value="@Model.DsdId" />
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-white">标题</span>
+                </div>
+                <input type="text" class="form-control" id="DsdTitle" name="DsdTitle" value="@Model.DsdTitle">
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 my-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-white">目录</span>
+                </div>
+                <input type="hidden" name="DsdPid" value="@Model.DsdPid" />
+                <input type="text" id="txtDsdPid" class="form-control dropdown-toggle" data-toggle="dropdown">
+                <div class="dropdown-menu dmbox" id="dmbox"></div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-3 my-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-white">序号</span>
+                </div>
+                <input type="text" class="form-control" name="DsdOrder" value="@Model.DsdOrder">
+            </div>
+        </div>
+        <div class="col-sm-12 mt-3" id="btnbox">
+            <button class="btn mr-3 mb-3 btn-success" id="btnSave"><i class="fa fa-save"></i>&nbsp;保存</button>
+            <button class="btn mr-3 mb-3 btn-light" data-md="api">插入API接口模版</button>
+            <button class="btn mr-3 mb-3 btn-light" data-md="dic">插入数据字典模版</button>
+            <a href="/doc/code/@Model.DsCode@(string.IsNullOrWhiteSpace(Model.DsdId)?"":"/"+Model.DsdId)" class="btn mb-3 btn-outline-dark">返回</a>
+        </div>
+        <div class="col-sm-12">
+            <textarea class="form-control" id="editor" name="DsdContentMd" placeholder='来，开始吧 ...'>@Model.DsdContentMd</textarea>
+        </div>
+    </div>
+</div>
+
+<partial name="_PartialMarkdownQuote" />
+
+<script src="/areas/doc/js/code/edit.js" asp-append-version="true"></script>

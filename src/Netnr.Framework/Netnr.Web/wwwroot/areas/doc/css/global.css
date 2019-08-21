@@ -1,0 +1,66 @@
+﻿/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #28a745;
+}
+
+body {
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+/*卡片*/
+.card-pi {
+    height: 160px;
+    overflow: hidden;
+}
+
+    .card-pi .card-tool {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: none;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .card-pi .card-tool a {
+            text-decoration: none;
+        }
+
+    .card-pi .card-title {
+        position: sticky;
+        top: 0;
+        display: block;
+        min-width: 100%;
+        margin-bottom: 0;
+        padding-bottom: .5rem;
+        background-color: white;
+    }
+
+    .card-pi:hover, .card-pi:focus {
+        overflow: auto;
+    }
+
+        .card-pi:hover .card-tool, .card-pi:focus .card-tool {
+            display: block;
+        }
+
+
+.ndnav a {
+    text-decoration: none;
+}

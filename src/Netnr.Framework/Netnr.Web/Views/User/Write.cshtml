@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "文章管理";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mb-3">
+                <button class="btn btn-warning btn-sm" id="btnEdit">编辑</button>
+                <button class="btn btn-danger btn-sm" id="btnDel">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="PGrid1" style="height:300px">
+                <div id="Grid1" class="loadingimg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="ModalWrite" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑文章</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body modalscroll" id="ModalWriteBody">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group form-group-lg">
+                            <input class="form-control" type="text" id="wtitle" placeholder=" 标题：简单的一句话 " />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" id="wcategory">
+                                <optgroup label="系统分类">
+                                    <option value="0">默认分类</option>
+                                </optgroup>
+                                <optgroup label="自定义分类"></optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-9 col-sm-8">
+                        <div class="form-group">
+                            <div class="form-control tags-box">
+                                <input type="text" name="tags" id="tags" placeholder=" 标签，如：html，可选 3 个标签 " data-tagscommon="@ViewBag.TagsCommon" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <textarea id="mdeditor" placeholder=" 此处写内容："></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveEdit">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_PartialMarkdownQuote" />
+
+<link href="/lib/jquery-easyui/themes/metro/easyui.css" rel="stylesheet" asp-append-version="true" />
+<script src="/lib/jquery-easyui/jquery.easyui.min.js" asp-append-version="true"></script>
+
+
+<script src="/js/z.js" asp-append-version="true"></script>
+
+<link href="/lib/tag/tag.css" rel="stylesheet" asp-append-version="true" />
+<script src="/lib/tag/tag.js" asp-append-version="true"></script>
+
+<script src="/js/home/write.js" asp-append-version="true"></script>
+<script src="/js/user/write.js" asp-append-version="true"></script>

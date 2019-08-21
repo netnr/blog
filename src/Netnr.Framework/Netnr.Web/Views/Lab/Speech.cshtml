@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "语音合成";
+}
+
+<partial name="_PartialLabPathNav" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <div class="form-group form-group-lg">
+                <textarea class="form-control min200" id="txtContent" placeholder="请输入文字，200字以内">Hello，Welcome net牛人，祝您美好每一天！</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="dconfig">
+        <div class="col-sm-2 my-2">
+            <button class="btn btn-primary float-left" id="btnStart">Play</button>
+        </div>
+        <div class="col-sm-2 my-2">
+            <select name="spd" class="custom-select">
+                @for (int i = 0; i < 10; i++)
+                {
+                    if (i == 5)
+                    {
+                        <option value="@i" selected>语速：@i ●</option>
+                    }
+                    else
+                    {
+                        <option value="@i">语速：@i</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-sm-2 my-2">
+            <select name="pit" class="custom-select">
+                @for (int i = 0; i < 10; i++)
+                {
+                    if (i == 5)
+                    {
+                        <option value="@i" selected>音调：@i ●</option>
+                    }
+                    else
+                    {
+                        <option value="@i">音调：@i</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-sm-2 my-2">
+            <select name="vol" class="custom-select">
+                @for (int i = 0; i < 16; i++)
+                {
+                    if (i == 9)
+                    {
+                        <option value="@i" selected>音量：@i ●</option>
+                    }
+                    else
+                    {
+                        <option value="@i">音量：@i</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-sm-3 my-2">
+            <select name="per" class="custom-select">
+                <option value="0">女声 ●</option>
+                <option value="1">男声</option>
+                <option value="3">情感合成-度逍遥</option>
+                <option value="4">情感合成-度丫丫</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <audio id="audioSpeech" controls="controls" style="width:100%"></audio>
+    </div>
+</div>
+
+<script>
+    $('#btnStart').click(function () {
+        var ops = {
+            txt: $('#txtContent').val().substring(0, 200)
+        }, pars = [];
+        $('#dconfig').find('select').each(function () {
+            ops[this.name] = this.value;
+        });
+        for (var i in ops) {
+            pars.push(i + "=" + encodeURIComponent(ops[i]));
+        }
+        $('#audioSpeech')[0].src = "/lab/speechapi?" + pars.join('&');
+        document.getElementById('audioSpeech').play();
+    });
+</script>

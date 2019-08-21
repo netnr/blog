@@ -1,0 +1,31 @@
+﻿.vbox {
+    margin: auto;
+    max-width: 320px;
+}
+
+.otherlogin {
+    clear: both;
+    margin-top: 15px;
+    text-align: center;
+}
+
+    .otherlogin a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+        .otherlogin a img {
+            width: 2rem;
+            -webkit-transition: width .3s;
+            -moz-transition: width .3s;
+            -o-transition: width .3s;
+            transition: width .3s;
+        }
+
+            .otherlogin a img:hover {
+                width: 100%;
+            }

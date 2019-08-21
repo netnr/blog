@@ -1,0 +1,115 @@
+﻿<partial name="_PartialThe" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <title>@ViewData["Title"]</title>
+
+    <partial name="_PartialMetaSEO" />
+
+</head>
+<body>
+    @{
+        var hc = ViewContext.HttpContext;
+        bool IsLogin = hc.User.Identity.IsAuthenticated;
+        var currurl = hc.Request.Path;
+
+        string ca = ViewContext.RouteData.Values["controller"].ToString().ToLower() + "/" + ViewContext.RouteData.Values["action"].ToString().ToLower();
+        string rid = ViewContext.RouteData.Values["id"]?.ToString().ToLower();
+        var caq4 = new List<string>() { "home/index", "mind/index", "code/index" };
+    }
+
+    @if (!caq4.Contains(ca) || (caq4.Contains(ca) && rid == "form"))
+    {
+        <partial name="_PartialLayoutQuote4" />
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+
+            <div class="navbar-brand dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-fw fa-paint-brush"></i> <b>Netnr</b> Draw
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/draw">绘图（Draw）</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/draw/mind">思维导图（Mind）</a>
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#drawnavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="drawnavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <form class="form-inline" action="@ViewContext.HttpContext.Request.Path" method="get" id="gsearch">
+                            <input class="form-control mr-sm-3 txtsearch" name="q" placeholder="Search..." value='@ViewData["q"]'>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/draw/discover"><i class="fa fa-fw fa-file-text"></i>Discover</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fa fa-fw fa-home"></i>Netnr</a>
+                    </li>
+                </ul>
+
+                @if (IsLogin)
+                {
+                    var uinfo = new UserAuthAid(ViewContext.HttpContext).Get();
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/draw">绘图（Draw）</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/draw/mind">思维导图（Mind）</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0);" role="button" data-toggle="dropdown">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <h6 class="dropdown-header">
+                                    Signed in as <b>@uinfo.Nickname</b>
+                                </h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/draw/user/@uinfo.UserId"><i class="fa fa-fw fa-paint-brush"></i> Your draw</a>
+                                <a class="dropdown-item" href="/user/id/@uinfo.UserId"><i class="fa fa-fw fa-user"></i> Your profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/user/setting"><i class="fa fa-fw fa-cog"></i> Settings</a>
+                                <a class="dropdown-item" href="/account/logout/draw"><i class="fa fa-fw fa-power-off"></i> Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/login?ReturnUrl=@currurl">
+                                <i class="fa fa-user"></i> Sign
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </nav>
+    }
+
+    @RenderBody()
+
+    <partial name="_PartialFun" />
+</body>
+</html>
