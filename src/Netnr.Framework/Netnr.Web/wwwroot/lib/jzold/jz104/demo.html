@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    <form id="div1" class="c1 C3 C2 cC3">
+        <ul id="ul2"></ul>
+        <ul id="ul1">
+            <li class="c1">1</li>
+            <li class="c2">2</li>
+            <li class="c3">3</li>
+        </ul>
+        <select id="se1" multiple="multiple">
+            <option></option>
+        </select>
+        <input type="text" name="name" value="12+3" />
+        <span>123</span>
+        <input id="t2" type="text" name="name" value="456" />
+        <span>456</span>
+        <input type="text" name="name" value="789" />
+        <span>789</span>
+        <input type="text" name="name" value="101" />
+        <span>101</span>
+        <input type="hidden" name="namei" value=" " />
+        <select id="s1" name="s1">
+            <option value="1">1</option>
+        </select>
+        <div id="div3" style="height:100px;font-size:3em;overflow-y:scroll;width:200px;border:1px solid red">
+            <h1>1231111111111111111111111111111111111111111</h1>
+            <h1>123</h1>
+            <h1>123</h1>
+            <h1>123</h1>
+        </div>
+    </form>
+</body>
+</html>
+<script src="jz.js"></script>
+<script src="jz.art.js"></script>
+<script src="../jquery-1.9.1.js"></script>
+
+<script>
+    j(document).dblclick(function () {
+        j.confirm({
+            content: "hello world " + j.random(),
+            ok: function () {
+                j.msg({ content: "你点击了确定,阻止关闭" })
+                return false;
+            },
+            cancel: function () {
+                j.msg({ content: "你点击了取消或关闭" })
+            }
+        });
+    });
+</script>

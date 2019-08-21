@@ -1,0 +1,75 @@
+﻿@model Netnr.Domain.Run
+
+<nav class="navbar navbar-expand-md @((Model.RunTheme=="vs"||string.IsNullOrWhiteSpace(Model.RunTheme)) ?"navbar-light":"navbar-dark") @("bg-"+(string.IsNullOrWhiteSpace(Model.RunTheme)?"vs":Model.RunTheme))" id="runav">
+    <a class="navbar-brand" href="/run"><i class="fa fa-fw fa-play"></i> <b>Netnr</b> Run</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#runavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    @{
+        var hc = ViewContext.HttpContext;
+        bool IsLogin = hc.User.Identity.IsAuthenticated;
+        var currurl = hc.Request.Path;
+        var uinfo = new UserAuthAid(ViewContext.HttpContext).Get();
+    }
+
+    <div class="collapse navbar-collapse" id="runavbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ml-5">
+                <a class="nav-link" href="javascript:RunPreview()"><i class="fa fa-play-circle-o text-success"></i> Run</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:SaveRun()"><i class="fa fa-save text-primary"></i> Save</a>
+            </li>
+
+            @if (uinfo.UserId != 0 && Model.Uid == uinfo.UserId)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/run/code/@Model.RunCode/delete" onclick="return confirm('Are you positive you want to delete this?')"><i class="fa fa-trash-o text-danger"></i> Delete</a>
+                </li>
+            }
+
+            <li class="nav-item ml-5">
+                <a class="nav-link" href="/run/discover"><i class="fa fa-fw fa-file-text"></i>Discover</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fa fa-fw fa-home"></i>Netnr</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            @if (IsLogin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href='/@ViewContext.RouteData.Values["area"].ToString().ToLower()'>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <i class="fa fa-user-circle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <h6 class="dropdown-header">
+                            Signed in as <b>@uinfo.Nickname</b>
+                        </h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/run/user/@uinfo.UserId"><i class="fa fa-fw fa-play"></i> Your run</a>
+                        <a class="dropdown-item" href="/user/id/@uinfo.UserId"><i class="fa fa-fw fa-user"></i> Your profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/user/setting"><i class="fa fa-fw fa-cog"></i> Settings</a>
+                        <a class="dropdown-item" href="/account/logout/run"><i class="fa fa-fw fa-power-off"></i> Sign out</a>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/login?ReturnUrl=@currurl">
+                        <i class="fa fa-user"></i> Sign
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>

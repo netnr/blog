@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>页面出错 NET牛人 </title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 1.5em;
+            font-family: 'Microsoft YaHei';
+        }
+
+        .diverror {
+            margin: 10% auto;
+            text-align: center;
+        }
+
+            .diverror img {
+                width: 100px;
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .diverror a, .diverror b {
+                color: #009a61;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <div class="diverror">
+        <img src="/images/smile.svg" />
+        <div>
+            @TempData["msg"]
+        </div>
+        <p>
+            <b>ERROR，</b><a href="/">回到首页</a>：<b id="CountDown">9</b>
+        </p>
+    </div>
+</body>
+</html>
+<script>
+    var si = setInterval(function () {
+        var cd = document.getElementById("CountDown"), num = parseInt(cd.innerHTML) || 0;
+        if (--num < 1) {
+            location.href = "/";
+        }
+        cd.innerHTML = num;
+    }, 1000);
+
+    document.body.onclick = function () {
+        clearInterval(si);
+    }
+</script>

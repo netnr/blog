@@ -1,0 +1,73 @@
+﻿@model Netnr.Func.ViewModel.DocTreeViewVM
+
+@{
+    var vm = new Netnr.Func.ViewModel.DocTreeViewVM()
+    {
+        DocTree = Model.DocTree,
+        DsdId = Guid.Empty.ToString()
+    };
+}
+
+<style>
+    .cpbox a {
+        padding: .3rem;
+        font-size: 1.6rem;
+        line-height: 1rem;
+        text-align: center;
+        display: inline-block;
+        margin: .1rem .1rem 0;
+        width: auto !important;
+    }
+</style>
+
+<div id="netnrnav" class="netnrnav">
+    <div class="netnrnav-wrapper">
+        <ul id="netnrnavul">
+            <li class="py-1 px-1 ">
+                <input type="text" class="form-control" name="name" placeholder="Search，Enter" autocomplete="off" id="txtSearch" />
+                <div class="cpbox text-right">
+                    <a href="/doc/code/edit/@Model.DsCode" title="Add">
+                        <i class="fa fa-fw fa-plus"></i>
+                    </a>
+                    <a href="/doc/code/catalog/@Model.DsCode" title="Menu">
+                        <i class="fa fa-fw fa-folder-open"></i>
+                    </a>
+                    <input type="hidden" id="DsdId" value="@Model.DsdId" />
+                </div>
+            </li>
+            <partial name="_PartialDocTreeLoop" model="@vm" />
+        </ul>
+    </div>
+</div>
+
+<script>
+    AutoExpand();
+    function AutoExpand() {
+        var dsdid = $('#DsdId').val();
+        if (dsdid != "") {
+            var ac = 'text-success', acbg = 'bg-light';
+            $('#netnrnav').find('a.' + ac).removeClass(ac).removeClass(acbg);
+            var cnode = $('#netnrnav').find('a[data-value="' + dsdid + '"]').first();
+            cnode.addClass(ac + " " + acbg).parents('ul').css('display', 'block');
+        }
+    }
+
+    //搜索
+    $('#txtSearch').keyup(function () {
+        var lisall = $('#netnrnavul').children(), arra = [], search = this.value.trim().toLowerCase();
+        var lis = lisall.first().siblings();
+        lis.filter('[data-item="1"]').removeClass('d-none');
+        lis.filter('[data-item="0"]').remove();
+        if (search != "") {
+            lis.addClass('d-none').attr('data-item', 1);
+            lis.find('a[data-leaf="1"]').each(function () {
+                if ($(this).text().toLowerCase().indexOf(search) >= 0) {
+                    arra.push('<li data-item="0">' + $(this).parent().html() + '</li>');
+                }
+            });
+            $('#netnrnavul').append($(arra.join('')));
+        }
+    });
+</script>
+
+<partial name="_PartialNetnrNavQuote" />

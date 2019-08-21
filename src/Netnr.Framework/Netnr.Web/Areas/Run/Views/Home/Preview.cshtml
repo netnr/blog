@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <meta name="keywords" content="NetnrRun,在线javascript代码编辑器,js代码在线测试调试,js在线运行工具,html,css,jquery,runjs类似,jsrun类似,jsfiddle国内类似" />
+    <meta name="description" content="NetnrRun，在线编写、展示html、js、css代码，拥有实时预览、分享、代码高亮、自动完成等多项特性" />
+
+    <title>Run Preview</title>
+</head>
+<body>
+</body>
+</html>
+<script src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    try {
+        var h = top.editor1.getValue(), j = top.editor2.getValue(), c = top.editor3.getValue();
+        $(document.body).html(h + '<style>' + c + '</style><script>try{' + j + '}catch(e){}</' + 'script>');
+    } catch (e) { console.log(e) }
+</script>

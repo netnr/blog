@@ -1,0 +1,16 @@
+﻿@{ var listTags = Common.TagsQuery().Take(20).ToList();}
+
+<div class="navtag">
+    <ul class="nav nav-pills">
+        <li class="nav-link">
+            <a href="/">全部</a>
+        </li>
+        @foreach (var mo in listTags)
+        {
+            <li class="nav-link">
+                <a href="/home/type/@System.Web.HttpUtility.UrlEncode(mo.TagName)">@mo.TagName</a>
+            </li>
+        }
+    </ul>
+    <a class="gotag" href="/home/tags"><i class="fa fa-tags"></i></a>
+</div>

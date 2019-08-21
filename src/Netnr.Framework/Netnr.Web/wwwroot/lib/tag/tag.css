@@ -1,0 +1,108 @@
+﻿/*容器*/
+.tags-box {
+    padding: 0;
+    height: inherit;
+    position: relative;
+}
+
+    .tags-box input {
+        width: 40%;
+        border: none;
+        padding: 6px;
+        outline: none;
+        min-width: 260px;
+        overflow: hidden;
+        margin-left: 5px;
+    }
+
+/*常用容器*/
+.tb-common {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 320px;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+    .tb-common ul.nav {
+        border-bottom: none;
+    }
+
+        .tb-common ul.nav li a {
+            font-size: 13px;
+            margin: 3px 5px;
+            padding: 2px 3px;
+        }
+
+        .tb-common ul.nav li.active a {
+            border-radius: 3px;
+            border: 1px solid #017E66;
+        }
+
+    .tb-common div.tab-content div.tab-pane ul {
+        padding: 0;
+        margin: 5px 3px;
+        list-style: none;
+    }
+
+    .tb-common .tab-content .tab-pane ul li {
+        float: left;
+        color: #017E66;
+        font-size: 13px;
+        cursor: pointer;
+        margin: 5px 3px;
+        padding: 1px 6px;
+        background-color: rgba(1,126,102,0.08);
+    }
+
+        .tb-common .tab-content .tab-pane ul li:hover, .tb-common .tab-content .tab-pane ul li.active {
+            color: white;
+            background-color: #009A61;
+        }
+/*列表容器*/
+.tb-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 320px;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+    .tb-list ul {
+        margin: 0;
+        padding: 3px 2px;
+        list-style: none;
+    }
+
+        .tb-list ul li {
+            cursor: pointer;
+            padding: 3px 15px;
+        }
+
+            .tb-list ul li.active, .tb-list ul li:hover {
+                background-color: #f5f5f5;
+            }
+
+/*已选择标签*/
+.tb-tags-i {
+    float: left;
+    color: #017E66;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin: 6px 0 0 6px;
+    background-color: rgba(1,126,102,0.08);
+}
+
+    .tb-tags-i em {
+        margin-left: 5px;
+        font-size: 1.1em;
+        font-style: initial;
+    }

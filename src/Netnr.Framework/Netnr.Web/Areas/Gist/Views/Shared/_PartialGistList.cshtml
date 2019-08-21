@@ -1,0 +1,107 @@
+﻿@model Netnr.Func.ViewModel.PageSetVM
+
+@{
+    ViewData["Title"] = "Discover gists";
+
+    var rows = Model.Rows as List<Netnr.Domain.Gist>;
+}
+
+@if (ViewData["Nickname"] != null)
+{
+    ViewData["Title"] = ViewData["Nickname"] + " gists";
+
+    <div class="container-fluid">
+        <div class="row cp-header">
+            <div class="container">
+                <div class="row mt-4 mb-3">
+                    <div class="col-12 text-right">
+                        <div class="float-left">
+                            <i class="fa fa-book fa-2x text-muted mr-sm-3"></i>
+                        </div>
+                        <div class="float-left text-left">
+                            <h5>Your gists</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4 mb-2">
+            <p>We’ve found <b>@Model.Pag.Total.ToString("N0")</b> results</p>
+        </div>
+        @foreach (var item in rows)
+        {
+            <div class="col-12 mt-3">
+                <div class="float-left">
+                    <i class="fa fa-user-circle-o fa-fw fa-2x text-muted mr-sm-2"></i>
+                </div>
+                <div class="ml-5">
+                    <a href="/gist/user/@item.Uid">@item.Spare3</a>&nbsp;/
+                    <a href="/gist/code/@item.GistCode"><b>@item.GistFilename</b></a>
+                    <small class="ml-3 badge badge-secondary">@item.GistLanguage</small>
+                    <div>
+                        <small class="text-muted">@item.GistCreateTime.Value.ToString("yyyy-MM-dd HH:mm")</small>
+                    </div>
+                    <small>@item.GistRemark</small>
+                </div>
+            </div>
+            <div class="col-12 mt-3 mb-4">
+                <div class="card gn-viewcode" data-href="/gist/code/@item.GistCode">
+                    <pre class="card-body monaco-editor vcln" style="height:@(item.GistContentPreview.Split('\n').Length*19+6)px;overflow-y:hidden;padding-left:65px;" data-lang="@item.GistLanguage">@item.GistContentPreview.TrimEnd('\r')</pre>
+                </div>
+            </div>
+        }
+
+        <div class="col-12">
+            <partial name="_PartialPaging4" model="Model" />
+        </div>
+    </div>
+</div>
+
+<partial name="_PartialMonacoEditorQuote" />
+
+<script>
+    require(['vs/editor/editor.main'], function () {
+        $('pre.vcln').each(function () {
+            var that = $(this);
+            var cv = htmlDecodeByRegExp(that.html());
+            that.html('');
+            editor = monaco.editor.create(this, {
+                value: cv,
+                language: that.attr('data-lang'),
+                automaticLayout: true,
+                roundedSelection: false,
+                scrollBeyondLastLine: false,
+                contextmenu: false,
+                scrollbar: {
+                    verticalScrollbarSize: 0,
+                    horizontalScrollbarSize: 0
+                },
+                readOnly: true,
+                theme: that.attr('data-theme'),
+                minimap: {
+                    enabled: false
+                }
+            });
+            that.css('padding-left', 0);
+        });
+    });
+
+    $('div.gn-viewcode').dblclick(function () {
+        location.href = $(this).attr('data-href');
+    });
+
+    function htmlDecodeByRegExp(str) {
+        if (str.length == 0) return "";
+        return str.replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&nbsp;/g, " ")
+            .replace(/&#39;/g, "\'")
+            .replace(/&quot;/g, "\"")
+            .replace(/&amp;/g, "&");
+    }
+</script>

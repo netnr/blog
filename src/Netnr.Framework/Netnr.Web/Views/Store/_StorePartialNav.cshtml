@@ -1,0 +1,64 @@
+﻿<link href="/css/store/storenav.css" rel="stylesheet" asp-append-version="true" />
+
+@Html.AntiForgeryToken()
+
+<!--进度条-->
+<div class="divProgress" id="divProgress"></div>
+
+<!--导航菜单-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 mb-3" id="storeMenu">
+            <a href="/store/qqcos"><img src="/images/store/favicon-qq.ico" title="腾讯云 COS" /></a>
+            <a href="/store/nenos"><img src="/images/store/favicon-ne.ico" title="网易云 NOS" /></a>
+            <a href="/store/qnkodo"><img src="/images/store/favicon-qn.ico" title="七牛云 KODO" /></a>
+        </div>
+        <div class="col-sm-8">
+            <form id="ajaxFrom">
+                <div class="btn-group btn-group-sm float-left">
+                    <label class="btn btn-dark">
+                        <input type="file" class="d-none" id="fileInput" name="file">
+                        选择文件
+                    </label>
+                </div>
+                <input id="upKey" name="key" type="hidden" value="">
+                <input id="upToken" name="token" type="hidden" value="" data-unix="@ViewData["DateUnix"]">
+            </form>
+            <div class="btn-group btn-group-sm mx-2">
+                @if (ViewContext.RouteData.Values["action"].ToString().ToLower() == "qqcos")
+                {
+                    <button class="btn btn-success" id="btnNewFolder"> 新建文件夹 </button>
+                }
+                <button class="btn btn-danger" id="btnDel"> 删除 </button>
+            </div>
+            <img class="float-right" src="/images/loading.svg" id="sploading" />
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="文件名称，区分大小写" id="txtSearch">
+                <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="btnSearch">搜索</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2 clearfix" id="divNavPath"></div>
+    </div>
+
+    @if ((ViewData["LocalIsAuth"] as int?).HasValue)
+    {
+        <div class="input-group input-group-sm mb-2">
+            <span class="input-group-prepend">
+                <button class="btn btn-success" id="btnFetch">抓取网络资源</button>
+            </span>
+            <input class="form-control" type="text" name="txtFetch" id="txtFetch" placeholder="请输入网络资源链接，回车" />
+        </div>
+    }
+
+    <div class="table-responsive" id="divBucket">
+        <center>
+            <img class="my-3" src="/images/loading.svg" />
+        </center>
+    </div>
+</div>
+
+<script src="/js/store/store.js" asp-append-version="true"></script>

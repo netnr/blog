@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <img id="img" src="../../Images/logo.png" />
+
+    <div style="position:absolute;filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);height:200px;width:200px;border:1px solid red;">内容啊</div>
+</body>
+</html>
+<script src="jz.js"></script>
+<script>
+
+    j("img").mouseover(function () {
+        clearTimeout(this.getAttribute("state"))
+        rotate(this, 1);
+    }).mouseout(function () {
+        clearTimeout(this.getAttribute("state"))
+        rotate(this)
+    });
+
+    function rotate(id, dir) {
+        var cr = j(id).attr("rotate") || 0;
+        cr = dir ? parseInt(cr) + 5 : cr - 5;
+        j(id).attr("rotate", cr);
+
+        j(id).css("transform", "rotate(" + cr + "deg)")
+             .css("-ms-transform", "rotate(" + cr + "deg)")
+             .css("-moz-transform", "rotate(" + cr + "deg)")
+             .css("-webkit-transform", "rotate(" + cr + "deg)")
+             .css("-o-transform", "rotate(" + cr + "deg)");
+        if (Math.abs(cr) % 360) {
+            j(id).attr("state", setTimeout(function () {
+                rotate(id, dir);
+            }, 10));
+        }
+    }
+
+    j.on("click", function () {
+        alert(1);
+        j.unon("click", arguments.callee, document)
+    }, document)
+</script>

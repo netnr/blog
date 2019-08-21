@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "授权访问";
+}
+
+<style>
+    body {
+        background-color: #b8b6b7;
+        background-image: url('/images/home/authbg.png');
+    }
+
+    .box {
+        margin: auto;
+        max-width: 350px;
+        margin-top: 20vh;
+    }
+
+        .box img {
+            width: 40%;
+        }
+
+        .box p {
+            color: red;
+        }
+</style>
+
+<div class="box">
+    <div class="text-center my-5">
+        <img src="/favicon.svg" />
+    </div>
+    <h4 data-now='@DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")'>@DateTime.Now.ToString("HH:mm:ss")</h4>
+    <form method="post">
+        <div class="input-group input-group-lg">
+            <input type="text" name="sk" class="form-control" placeholder=" 请输入SK，回车" autocomplete="off" autofocus maxlength="20">
+            <div class="input-group-prepend">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-success btn-lg">Enter</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p>@ViewData["AuthResult"]</p>
+</div>
+
+<script>
+    var dn = document.getElementsByTagName('h4')[0], st = new Date(dn.getAttribute('data-now')).valueOf();
+    setInterval(function () {
+        dn.innerHTML = FormatTime("HH:mm:ss", st += 1000);
+    }, 1000)
+
+    //日期格式化
+    function FormatTime(t, date) {
+        var date = new Date(date);
+        var o = {
+            "M+": date.getMonth() + 1,
+            "d+": date.getDate(),
+            "H+": date.getHours(),
+            "m+": date.getMinutes(),
+            "s+": date.getSeconds(),
+            "q+": Math.floor((date.getMonth() + 3) / 3),
+            "S": date.getMilliseconds()
+        };
+        if (/(y+)/.test(t)) {
+            t = t.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        };
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(t)) {
+                t = t.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            };
+        }
+        return t;
+    };
+</script>

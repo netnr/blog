@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "draw";
+}
+
+<partial name="_PartialGlobalLoading" />
+
+<input type="hidden" id="vid" value='@ViewData["vid"]' />
+
+<link href="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/styles/grapheditor.css" rel="stylesheet" />
+
+<style>
+    /*重写菜单样式*/
+    html td.mxPopupMenuItem {
+        font-size: 12pt;
+        padding: 3px 30px;
+    }
+
+    /*全屏*/
+    .viewFull .geDiagramContainer {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1;
+    }
+</style>
+
+<script src="/areas/draw/js/partial/mxg.js" asp-append-version="true"></script>
+
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/deflate/pako.min.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/deflate/base64.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/jscolor/jscolor.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/sanitizer/sanitizer.min.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/mxClient.min.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/EditorUi.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Editor.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Sidebar.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Graph.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Format.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Shapes.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Actions.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Menus.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Toolbar.js"></script>
+<script type="text/javascript" src="https://mxgraph.netnr.com/javascript/examples/grapheditor/www/js/Dialogs.js"></script>

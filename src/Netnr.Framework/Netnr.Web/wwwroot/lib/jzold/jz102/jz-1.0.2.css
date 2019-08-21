@@ -1,0 +1,224 @@
+﻿/*公共包*/
+.jzart {
+    color: #333;
+    display: block;
+    min-width: 10px;
+    font-size: 14px;
+    line-height: 150%;
+    position: absolute;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 1px solid #b4b4b4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 0 3px #b4b4b4;
+    -moz-box-shadow: 0 0 3px #b4b4b4;
+    box-shadow: 0 0 3px #b4b4b4;
+    font-family: "Helvetica Neue",Helvetica,Arial;
+}
+
+    .jzart a, .jzart input {
+        outline: none;
+        resize: none;
+    }
+
+    /*头部*/
+    .jzart .jzart-top {
+        height: 50px;
+        padding: 0 15px;
+        min-width: 150px;
+        line-height: 50px;
+        white-space: nowrap;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .jzart .jzart-top .jzart-top-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-right: 30px;
+            white-space: nowrap;
+        }
+
+        .jzart .jzart-top .jzart-top-cloase {
+            border: none;
+            float: right;
+            color: #b4b4b4;
+            cursor: pointer;
+            font-size: 32px;
+            line-height: 45px;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+
+            .jzart .jzart-top .jzart-top-cloase:hover {
+                color: #333;
+                text-decoration: none;
+            }
+
+    /*内容*/
+    .jzart .jzart-content {
+        _width: 20px;
+        margin: 15px;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    /*弹窗*/
+    .jzart .jzart-iframe {
+        margin: 20px;
+        width: 400px;
+        border: none;
+        height: 200px;
+    }
+
+    /*底部按钮包*/
+    .jzart .jzart-bottom {
+        text-align: right;
+        margin: 20px;
+    }
+
+    /*确定按钮*/
+    .jzart .art-ok {
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+        line-height: 1.4;
+        margin-left: 15px;
+        text-align: center;
+        white-space: nowrap;
+        display: inline-block;
+        padding: 0.4em 0.85em;
+        text-decoration: none;
+        background-color: #099;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+        .jzart .art-ok:link, .jzart .art-ok:visited {
+            color: #fff;
+            background-color: #099;
+        }
+
+        .jzart .art-ok:hover, .jzart .art-ok:active {
+            color: #fff;
+            text-decoration: none;
+            background-color: #008C8C;
+        }
+
+    /*取消按钮*/
+    .jzart .art-cancel {
+        color: #333;
+        font-size: 15px;
+        cursor: pointer;
+        line-height: 1.4;
+        text-align: center;
+        white-space: nowrap;
+        display: inline-block;
+        padding: 0.44em 0.88em;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+        .jzart .art-cancel:link, .jzart .art-cancel:visited {
+            color: #333;
+            text-decoration: none;
+            background-color: #fff;
+        }
+
+        .jzart .art-cancel:hover, .jzart .art-cancel:active {
+            color: #333;
+            text-decoration: none;
+            background-color: #f2f2f2;
+        }
+
+
+
+    /*  小提示 三角符号*/
+    .jzart .tip-em {
+        width: 0;
+        height: 0;
+        font-size: 0;
+        line-height: 0;
+        border-width: 9px;
+        position: absolute;
+        border-style: dashed;
+        border-color: transparent;
+    }
+
+    /* 上 */
+    .jzart .em-top1 {
+        left: 15px;
+        bottom: -18px;
+        border-top-style: solid;
+        border-top-color: #b4b4b4;
+    }
+
+    .jzart .em-top2 {
+        left: 15px;
+        bottom: -16px;
+        border-top-color: #fff;
+        border-top-style: solid;
+    }
+    /* 右 */
+    .jzart .em-right1 {
+        top: 15px;
+        left: -18px;
+        border-right-style: solid;
+        border-right-color: #b4b4b4;
+    }
+
+    .jzart .em-right2 {
+        top: 15px;
+        left: -16px;
+        border-right-color: #fff;
+        border-right-style: solid;
+    }
+    /* 左 */
+    .jzart .em-left1 {
+        top: 15px;
+        right: -18px;
+        border-left-style: solid;
+        border-left-color: #b4b4b4;
+    }
+
+    .jzart .em-left2 {
+        top: 15px;
+        right: -16px;
+        border-left-color: #fff;
+        border-left-style: solid;
+    }
+    /* 下 */
+    .jzart .em-bottom1 {
+        top: -18px;
+        left: 15px;
+        border-bottom-style: solid;
+        border-bottom-color: #b4b4b4;
+    }
+
+    .jzart .em-bottom2 {
+        top: -16px;
+        left: 15px;
+        border-bottom-color: #fff;
+        border-bottom-style: solid;
+    }
+    
+
+
+/*  遮罩层 */
+.jzart-mask {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.4;
+    position: fixed;
+    background-color: white;
+    filter: alpha(opacity=40);
+}

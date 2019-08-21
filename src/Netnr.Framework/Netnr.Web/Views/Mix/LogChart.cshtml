@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "日志图表";
+}
+
+<style>
+    .h300 {
+        height: 300px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4 offset-sm-8 col-md-2 offset-md-10 my-2">
+            <select class="custom-select" id="setime">
+                <option value="0">今天</option>
+                <option value="-1">昨天</option>
+                <option value="6" selected>最近7天</option>
+                <option value="29">最近30天</option>
+            </select>
+        </div>
+        <div class="col-sm-12 mb-3">
+            <div id="chart1" class="h300"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="fieldurl"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="fieldreferer"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+
+<script src="/js/mix/logchart.js" asp-append-version="true"></script>

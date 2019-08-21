@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "关于";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                var listi = new Dictionary<string, string>();
+
+                var dd = Microsoft.Extensions.DependencyModel.DependencyContext.Default;
+
+                var hc = ViewContext.HttpContext;
+                var currurl = GlobalTo.GetValue("Domain") + hc.Request.Path + "?ishttp=1";
+
+                try
+                {
+                    var resp = Netnr.Core.ClientTo.Response(currurl);
+
+                    listi.Add("站点运行时长", Math.Ceiling((DateTime.Now - DateTime.Parse("2015-05-01")).TotalDays) + " 天");
+
+                    listi.Add("内核", Environment.OSVersion.ToString());
+                    listi.Add("Server", resp.Headers["Server"]);
+                    listi.Add("框架", dd.Target.Framework);
+                }
+                catch (Exception ex)
+                {
+                    listi.Add("异常消息", ex.Message);
+                }
+            }
+
+            <div id="divSI">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>参数</th>
+                        <th>值</th>
+                    </tr>
+                    @foreach (var item in listi)
+                    {
+                        <tr>
+                            <td>@item.Key</td>
+                            <td>@item.Value</td>
+                        </tr>
+                    }
+                </table>
+                <h4 class="mt-5">服务器：</h4>
+                <div id="divAs">
+                    <img src="/images/loading.svg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/mix/about.js" asp-append-version="true"></script>

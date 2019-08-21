@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "标签";
+}
+<style>
+    a.tag {
+        margin: 1.5rem 1.5rem 0 0;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="my-3">
+                标签<br /><small>标签是最有效的内容组织形式，正确的使用标签能更快的找到信息</small>
+            </h3>
+            <input type="text" class="form-control" placeholder="搜索标签" id="txtSearch" />
+        </div>
+        <div class="col-md-12">
+            <partial name="_PartialMakeTag" model="@ViewData["tags"]" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#txtSearch').on('input', function () {
+        var key = this.value.toLowerCase().trim();
+        $('a.tag').each(function () {
+            if (this.innerText.toLowerCase().indexOf(key) >= 0 || key == "") {
+                $(this).removeClass('d-none');
+            } else {
+                $(this).addClass('d-none');
+            }
+        })
+    })
+</script>

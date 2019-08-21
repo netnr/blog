@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "写文章";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <input class="form-control" type="text" id="wtitle" placeholder=" 标题：简单的一句话 " />
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-4">
+            <div class="form-group">
+                <select class="form-control" id="wcategory">
+                    <option value="0" selected>默认分类</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-9 col-sm-8">
+            <div class="form-group">
+                <div class="form-control tags-box">
+                    <input type="text" name="tags" id="tags" placeholder=" 标签，如：html 可使用逗号,分号;分隔 " data-tagscommon="@ViewBag.TagsCommon" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <textarea id="mdeditor" class="form-control" placeholder=" 此处写内容："></textarea>
+        </div>
+        <div style="position:fixed;bottom:15px;left:15px;z-index:2">
+            <button class="btn btn-warning btn-lg" id="btnSave">保存</button>
+        </div>
+    </div>
+</div>
+
+<partial name="_PartialMarkdownQuote" />
+
+<link href="/lib/tag/tag.css" rel="stylesheet" asp-append-version="true" />
+<script src="/lib/tag/tag.js" asp-append-version="true"></script>
+<script src="/js/home/write.js" asp-append-version="true"></script>

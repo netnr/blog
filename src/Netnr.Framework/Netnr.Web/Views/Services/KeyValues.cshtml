@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "抓取百科";
+}
+
+<style>
+    .kvg .tab-pane {
+        padding-top: 15px;
+    }
+
+    .kvg textarea {
+        height: 360px;
+        overflow: auto;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+                <div class="nav nav-tabs" role="tablist">
+                    <a class=" nav-item nav-link active" href="#kv1" data-toggle="tab">KeyValues Grab（抓取百科）</a>
+                    <a class="nav-item nav-link" href="#kv2" data-toggle="tab">KeyValues Synonym（同义词处理）</a>
+                    <a class="nav-item nav-link" href="#kv3" data-toggle="tab">Tags（新增并刷新）</a>
+                </div>
+
+                <div class="tab-content kvg">
+
+                    <div class="tab-pane fade show active" id="kv1">
+
+                        <button class="btn btn-primary" id="btnRun1">执行抓取 Grab</button>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <textarea id="txt1" class="form-control" placeholder="请输入 KeyNames ；换行处理批量 ；无新增有修改；"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <textarea id="txtrt1" class="form-control" placeholder="输出处理结果" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="kv2">
+                        <button class="btn btn-primary" id="btnRun2">处理同义词 Synonym</button>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <textarea id="txt2" class="form-control" placeholder="请输入 主KeyName ；后面是同义词，主key在第一行"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <textarea id="txtrt2" class="form-control" placeholder="输出处理结果" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="kv3">
+                        <button class="btn btn-primary" id="btnRun3">新增标签 Tags</button>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <textarea id="txt3" class="form-control" placeholder="请输入 TagName ；换行处理批量 ；存在不新增 ；"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <textarea id="txtrt3" class="form-control" placeholder="输出处理结果" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/services/keyvalues.js" asp-append-version="true"></script>

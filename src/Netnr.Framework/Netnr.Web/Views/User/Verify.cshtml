@@ -1,0 +1,19 @@
+﻿@model ActionResultVM
+@{
+    ViewData["Title"] = "验证";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 py-5 text-center">
+            @if (Model.code == 200)
+            {
+                <button class="btn btn-outline-success btn-lg">@Model.msg</button>
+            }
+            else
+            {
+                <button class="btn btn-outline-danger btn-lg">@Model.msg</button>
+            }
+        </div>
+    </div>
+</div>

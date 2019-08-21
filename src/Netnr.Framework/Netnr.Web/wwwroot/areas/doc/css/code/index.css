@@ -1,0 +1,33 @@
+﻿.ndtv .ndtree {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    overflow: auto;
+    border-right: 1px solid #e5e5e5;
+}
+
+.ndtv .ndview {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 300px;
+    overflow: auto;
+}
+
+@media (max-width: 768px) {
+    .ndtv .ndtree {
+        position: relative;
+        width: auto;
+    }
+
+    .ndtv .ndview {
+        left: 0;
+    }
+}
+
+.ndtv .ndvheader {
+    height: 80px;
+}
