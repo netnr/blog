@@ -1,4 +1,4 @@
-﻿@model Netnr.Domain.Gist
+@model Netnr.Domain.Gist
 
 @{
     ViewData["Title"] = Model.GistRemark;
@@ -75,16 +75,16 @@
                         {
                             <partial name="_PartialMarkdownQuote" />
 
-                            <div class="netnrmd-body px-2 py-2">@Model.GistContent</div>
+                            <div class="markdown-body px-2 py-2">@Model.GistContent</div>
                             <script>
-                                var nmd = $('div.netnrmd-body');
+                                var nmd = $('div.markdown-body');
                                 nmd.html(new netnrmd().md.render(nmd.html()));
                                 $('#faicon').removeClass('fa-spinner fa-spin').addClass('fa-file-code-o');
                             </script>
                         }
                         else
                         {
-                            <pre class="card-body monaco-editor vcln netnrmd-body" style="height:@(19*Model.GistRow+15)px;overflow-y:hidden;padding-left:65px;" data-lang="@Model.GistLanguage" data-theme="@Model.GistTheme">@Model.GistContent</pre>
+                            <pre class="card-body monaco-editor vcln markdown-body" style="height:@(19*Model.GistRow+15)px;overflow-y:hidden;padding-left:65px;" data-lang="@Model.GistLanguage" data-theme="@Model.GistTheme">@Model.GistContent</pre>
                             <partial name="_PartialMonacoEditorQuote" />
 
                             <script>

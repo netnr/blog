@@ -1,4 +1,4 @@
-﻿.ndtv .ndtree {
+.ndtv .ndtree {
     position: fixed;
     top: 0;
     left: 0;
@@ -28,6 +28,16 @@
     }
 }
 
-.ndtv .ndvheader {
-    height: 80px;
+/*右侧菜单*/
+.ndtv .ndvmenu {
+    position: fixed;
+    top: 10px;
+    z-index: 9;
+    right: 30px;
+    width: 30px;
+    line-height: 3rem;
 }
+
+    .ndtv .ndvmenu a i {
+        cursor: pointer;
+    }

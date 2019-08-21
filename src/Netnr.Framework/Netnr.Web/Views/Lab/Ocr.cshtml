@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "文字识别(OCR)";
 }
 
@@ -52,11 +52,14 @@
             dataType: 'json',
             success: function (data) {
                 console.log(data);
-                var vls = [];
-                $(data.words_result).each(function () {
-                    vls.push(this.words);
-                });
-                $('#txtrt').val(vls.join('\r\n'));
+                if (data.code == 200) {
+                    data = data.data;
+                    var vls = [];
+                    $(data.words_result).each(function () {
+                        vls.push(this.words);
+                    });
+                    $('#txtrt').val(vls.join('\r\n'));
+                }
             },
             error: function (ex) {
                 $('#txtrt').val(ex);

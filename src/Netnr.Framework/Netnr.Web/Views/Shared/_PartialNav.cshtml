@@ -1,12 +1,12 @@
-﻿<partial name="_PartialNetnrNavQuote" />
+<partial name="_PartialNetnrNavQuote" />
 
 <!--顶部导航-->
 @{ bool IsLogin = ViewContext.HttpContext.User.Identity.IsAuthenticated;}
 
-<button type="button" class="MenuToggle show-in-mobile btn btn-primary">
+<button type="button" class="MenuToggle show-in-mobile btn btn-primary ml-3 mt-3">
     <span class="fa fa-align-justify fa-2x"></span>
 </button>
-<div id="netnrnav" class="netnrnav horizontal">
+<div class="netnrnav horizontal">
     <div class="netnrnav-wrapper">
         <ul>
             <li><a href="/" class="siteIcon"><img src="/favicon.svg" /> 首页</a></li>
@@ -16,7 +16,7 @@
             <li><a href="/doc" title="文档管理"><span class="fa fa-fw fa-book"></span> Doc</a></li>
             <li><a href="/draw/discover" title="绘制"><span class="fa fa-fw fa-paint-brush"></span> Draw</a></li>
             <li>
-                <a class="text-muted"><span class="fa fa-fw fa-ellipsis-h"></span> More <span class="indicator fa fa-sort-desc"></span></a>
+                <a class="text-muted"><span class="fa fa-fw fa-ellipsis-h"></span></a>
                 <ul>
                     <li><a href="/mix/about"><i class="fa fa-fw fa-info"></i> 关于</a></li>
                     <li><a href="/lab"><i class="fa fa-fw fa-flask"></i> 实验室</a></li>
@@ -72,4 +72,4 @@
         </ul>
     </div>
 </div>
-<div style="height:40px;"></div>
+<div style="height:40px"></div>

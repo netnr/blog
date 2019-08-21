@@ -1,24 +1,27 @@
-﻿//初始化MarkDown
-var nmd = new netnrmd('#mdeditor', {
-    storekey: "md_autosave_" + location.pathname.replace("/", "").toLowerCase(),
-    //执行命令前回调
-    cmdcallback: function (cmd) {
-        if (cmd == "full") {
-            if (nmd.obj.editor.hasClass('netnrmd-fullscreen')) {
-                $('#ModalWrite').addClass('modal');
-            } else {
-                $('#ModalWrite').removeClass('modal');
+require(['vs/editor/editor.main'], function () {
+
+    window.nmd = new netnrmd('#mdeditor', {
+        storekey: "md_autosave_" + location.pathname.replace("/", "").toLowerCase(),
+        //执行命令前回调
+        cmdcallback: function (cmd) {
+            if (cmd == "full") {
+                if (nmd.obj.editor.hasClass('netnrmd-fullscreen')) {
+                    $('#ModalWrite').addClass('modal');
+                } else {
+                    $('#ModalWrite').removeClass('modal');
+                }
             }
         }
+    });
+
+    if (location.pathname == "/home/write") {
+        //高度沉底
+        $(window).on('load resize', function () {
+            var vh = $(window).height() - nmd.obj.container.offset().top - 15;
+            nmd.height(Math.max(100, vh));
+        })
     }
 });
-
-if (location.pathname == "/home/write") {
-    $(window).on('load resize', function () {
-        var vh = $(window).height() - nmd.obj.container.offset().top - 15;
-        nmd.height(Math.max(100, vh));
-    })
-}
 
 //保存（新增）
 $('#btnSave').click(function () {
@@ -52,7 +55,7 @@ $('#btnSave').click(function () {
 
     $.ajax({
         url: "/home/writesave",
-        type: "type",
+        type: "post",
         data: {
             UwTitle: wtitle,
             UwCategory: wcategory,
@@ -60,8 +63,9 @@ $('#btnSave').click(function () {
             UwContentMd: wcontentMd,
             TagIds: tagids.join(',')
         },
+        dataType: 'json',
         success: function (data) {
-            if (data == "success") {
+            if (data.code == 200) {
                 nmd.clear();
 
                 jz.confirm({
@@ -132,7 +136,7 @@ $('#btnSaveEdit').click(function () {
 
     $.ajax({
         url: "/user/writeeditsave",
-        type: "type",
+        type: "post",
         data: {
             UwId: wid,
             UwTitle: wtitle,
@@ -141,8 +145,9 @@ $('#btnSaveEdit').click(function () {
             UwContentMd: wcontentMd,
             TagIds: tagids.join(','),
         },
+        dataType: 'json',
         success: function (data) {
-            if (data == "success") {
+            if (data.code == 200) {
                 nmd.clear();
                 $('#ModalWrite').modal("hide");
                 gd1.load();

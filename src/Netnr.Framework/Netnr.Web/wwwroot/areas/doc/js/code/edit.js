@@ -1,13 +1,16 @@
-﻿//初始化MarkDown
-var nmd = new netnrmd('#editor', {
-    storekey: "md_autosave_" + location.pathname.replace("/", "").toLowerCase()
-});
-nmd.render();
+//初始化MarkDown
+require(['vs/editor/editor.main'], function () {
+    window.nmd = new netnrmd('#editor', {
+        storekey: "md_autosave_" + location.pathname.replace("/", "").toLowerCase()
+    });
 
-$(window).on('load resize', function () {
-    var vh = $(window).height() - nmd.obj.container.offset().top - 15;
-    nmd.height(Math.max(100, vh));
-})
+    nmd.setmd(nmd.obj.mebox.attr('data-value'));
+
+    $(window).on('load resize', function () {
+        var vh = $(window).height() - nmd.obj.container.offset().top - 15;
+        nmd.height(Math.max(100, vh));
+    })
+});
 
 loadMenuTree();
 function loadMenuTree() {
@@ -102,9 +105,11 @@ $('#btnSave').click(function () {
 
     var post = {};
     var sbox = $('#savebox');
-    sbox.find('input,textarea').each(function () {
+    sbox.find('input').each(function () {
         post[this.name] = this.value;
     });
+
+    post["DsdContentMd"] = nmd.getmd();
     post["DsdContentHtml"] = nmd.gethtml();
 
     $('#btnSave')[0].disabled = true;
@@ -145,8 +150,7 @@ function InsertTemplateMd(md) {
     $.ajax({
         url: "/areas/doc/template/" + md + ".md?v1",
         success: function (data) {
-            netnrmd.insertAfterText(document.getElementById("editor"), data);
-            nmd.render();
+            netnrmd.insertAfterText(nmd.obj.me, data);
         },
         complete: function () {
             window.scrollTo(0, docstop);
