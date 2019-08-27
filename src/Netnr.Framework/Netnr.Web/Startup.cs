@@ -16,7 +16,6 @@ namespace Netnr.Web
     {
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            GlobalTo.StartTime = System.DateTime.Now;
             GlobalTo.Configuration = configuration;
             GlobalTo.HostingEnvironment = env;
 

@@ -81,7 +81,7 @@ $('#btnSave').click(function () {
                     }
                 })
             } else {
-                jz.msg("操作失败");
+                jz.msg(data.data);
             }
         },
         error: function (ex) {
@@ -152,7 +152,7 @@ $('#btnSaveEdit').click(function () {
                 $('#ModalWrite').modal("hide");
                 gd1.load();
             } else {
-                jz.msg("操作失败");
+                jz.msg(data.data);
             }
         },
         error: function (ex) {

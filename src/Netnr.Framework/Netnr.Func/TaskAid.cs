@@ -28,9 +28,9 @@ namespace Netnr.Func
             {
                 public Reg()
                 {
-                    Schedule<BackupDataBaseJob>().ToRunNow().AndEvery(2).Days();
+                    Schedule<BackupDataBaseJob>().ToRunEvery(2).Days().At(5, 5);
 
-                    Schedule<GistSyncJob>().ToRunNow().AndEvery(15).Minutes();
+                    Schedule<GistSyncJob>().ToRunEvery(15).Minutes();
                 }
             }
 
@@ -38,10 +38,7 @@ namespace Netnr.Func
             {
                 void IJob.Execute()
                 {
-                    if ((DateTime.Now - GlobalTo.StartTime).TotalSeconds > 5)
-                    {
-                        Core.ConsoleTo.Log(BackupDataBase().ToJson());
-                    }
+                    Core.ConsoleTo.Log(BackupDataBase().ToJson());
                 }
             }
 
@@ -50,10 +47,7 @@ namespace Netnr.Func
 
                 void IJob.Execute()
                 {
-                    if ((DateTime.Now - GlobalTo.StartTime).TotalSeconds > 5)
-                    {
-                        Core.ConsoleTo.Log(GistSync().ToJson());
-                    }
+                    Core.ConsoleTo.Log(GistSync().ToJson());
                 }
             }
 

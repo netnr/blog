@@ -465,38 +465,61 @@ namespace Netnr.Web.Controllers
 
         #region 任务
 
+        /// <summary>
+        /// 任务项
+        /// </summary>
+        public enum TaskItem
+        {
+            /// <summary>
+            /// 备份
+            /// </summary>
+            Backup,
+            /// <summary>
+            /// 代码片段同步
+            /// </summary>
+            GistSync,
+            /// <summary>
+            /// 链接替换
+            /// </summary>
+            ReplaceLink
+        }
+
         [Description("需要处理的事情")]
         [ResponseCache(Duration = 60)]
         [FilterConfigs.LocalAuth]
-        public ActionResultVM ExecTask(string id)
+        public ActionResultVM ExecTask(TaskItem? ti)
         {
             var vm = new ActionResultVM();
 
-            if (string.IsNullOrWhiteSpace(id))
+            try
             {
-                id = RouteData.Values["id"]?.ToString();
+                if (!ti.HasValue)
+                {
+                    ti = (TaskItem)Enum.Parse(typeof(TaskItem), RouteData.Values["id"]?.ToString(), true);
+                }
+
+                switch (ti)
+                {
+                    default:
+                        vm.Set(ARTag.invalid);
+                        break;
+
+                    case TaskItem.Backup:
+                        vm = Func.TaskAid.BackupDataBase();
+                        break;
+
+                    case TaskItem.GistSync:
+                        vm = Func.TaskAid.GistSync();
+                        break;
+
+                    case TaskItem.ReplaceLink:
+                        vm = Func.TaskAid.ReplaceLink();
+                        break;
+                }
             }
-
-            switch (id?.ToLower())
+            catch (Exception ex)
             {
-                default:
-                    vm.Set(ARTag.invalid);
-                    break;
-
-                //备份数据库
-                case "backup":
-                    vm = Func.TaskAid.BackupDataBase();
-                    break;
-
-                //替换链接
-                case "replacelink":
-                    vm = Func.TaskAid.ReplaceLink();
-                    break;
-
-                //Gist同步
-                case "gistsync":
-                    vm = Func.TaskAid.GistSync();
-                    break;
+                vm.Set(ex);
             }
 
             return vm;

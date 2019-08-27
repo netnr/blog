@@ -491,7 +491,12 @@ namespace Netnr.Web.Controllers
             using (var db = new ContextBase())
             {
                 var oldmo = db.UserWriting.Where(x => x.Uid == uid && x.UwId == UwId).FirstOrDefault();
-                if (oldmo != null)
+
+                if (oldmo.UwStatus == -1)
+                {
+                    vm.Set(ARTag.unauthorized);
+                }
+                else if (oldmo != null)
                 {
                     oldmo.UwTitle = mo.UwTitle;
                     oldmo.UwCategory = mo.UwCategory;
