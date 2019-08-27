@@ -11,6 +11,36 @@ namespace Netnr.Func
     public class Common
     {
         /// <summary>
+        /// 查询拼接
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="ivm"></param>
+        /// <param name="ru"></param>
+        /// <param name="ovm"></param>
+        public static void QueryJoin<T>(IQueryable<T> query, QueryDataInputVM ivm, ContextBase db, ref QueryDataOutputVM ovm)
+        {
+            //总条数
+            ovm.total = query.Count();
+
+            //排序
+            if (!string.IsNullOrWhiteSpace(ivm.sort))
+            {
+                query = Fast.QueryableTo.OrderBy(query, ivm.sort, ivm.order);
+            }
+
+            //分页
+            if (ivm.pagination == 1)
+            {
+                query = query.Skip((ivm.page - 1) * ivm.rows).Take(ivm.rows);
+            }
+
+            //数据
+            var data = query.ToList();
+            ovm.data = data;
+        }
+
+        /// <summary>
         /// 获取所有标签
         /// </summary>
         /// <param name="FirtCache">默认取缓存</param>
@@ -491,7 +521,6 @@ namespace Netnr.Func
         /// <param name="OwnerId">所属用户</param>
         /// <param name="UserId">登录用户</param>
         /// <param name="page">页码</param>
-        /// <param name="size">页量</param>
         /// <returns></returns>
         public static PageSetVM DocQuery(string q, int OwnerId, int UserId, int page = 1)
         {
@@ -538,7 +567,7 @@ namespace Netnr.Func
                 var pag = new PaginationVM
                 {
                     PageNumber = Math.Max(page, 1),
-                    PageSize = 11
+                    PageSize = 9
                 };
 
                 var dicQs = new Dictionary<string, string>

@@ -7,11 +7,6 @@ using Microsoft.Extensions.Configuration;
 public class GlobalTo
 {
     /// <summary>
-    /// 开始运行时间
-    /// </summary>
-    public static DateTime StartTime;
-
-    /// <summary>
     /// 全局配置
     /// </summary>
     public static IConfiguration Configuration;
