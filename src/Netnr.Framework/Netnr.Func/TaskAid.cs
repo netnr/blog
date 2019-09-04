@@ -1,16 +1,13 @@
 using FluentScheduler;
-using Microsoft.Extensions.Hosting;
 using Netnr.Data;
 using Netnr.Func.ViewModel;
 using Newtonsoft.Json.Linq;
 using Qcloud.Shared.Api;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Netnr.Func
 {

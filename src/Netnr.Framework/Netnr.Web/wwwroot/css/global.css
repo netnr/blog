@@ -91,21 +91,6 @@ a.tag {
         background-color: #009a61;
     }
 
-
-/*页脚*/
-.footer {
-    clear: both;
-    margin-top: 70px;
-    padding-top: 15px;
-    border-top: 1px solid #EEE;
-}
-
-    .footer a {
-        line-height: 2;
-        margin-right: 20px;
-        white-space: nowrap;
-    }
-
 /* Bootstrap Trim */
 div.modal-header {
     padding: 8px 15px 5px;
