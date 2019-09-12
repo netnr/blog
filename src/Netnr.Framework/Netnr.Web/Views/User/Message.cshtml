@@ -33,7 +33,14 @@
                                 @switch (item.UmAction)
                                 {
                                     case 2:
-                                        <a href="/user/id/@item.UmTriggerUid">@item.Spare1</a>
+                                        if (item.UmTriggerUid == 0)
+                                        {
+                                            <a class="badge badge-light">匿名用户</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/user/id/@item.UmTriggerUid">@item.Spare1</a>
+                                        }
                                         <span class="text-muted">回复了</span>
 
                                         var page = 1;

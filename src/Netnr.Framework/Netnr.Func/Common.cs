@@ -450,14 +450,15 @@ namespace Netnr.Func
             using (var db = new ContextBase())
             {
                 var query = from a in db.UserMessage
-                            join b in db.UserInfo on a.UmTriggerUid equals b.UserId
+                            join b in db.UserInfo on a.UmTriggerUid equals b.UserId into bg
+                            from b1 in bg.DefaultIfEmpty()
                             orderby a.UmCreateTime descending
                             where a.Uid == UserId
                             select new
                             {
                                 a,
-                                b.Nickname,
-                                b.UserPhoto
+                                b1.Nickname,
+                                b1.UserPhoto
                             };
                 if (messageType.HasValue)
                 {
@@ -477,15 +478,18 @@ namespace Netnr.Func
                 pag.Total = query.Count();
                 var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-                //分类：根据ID查询对应的标题
-                var listUwId = list.Where(x => x.a.UmType == EnumAid.MessageType.UserWriting.ToString()).Select(x => Convert.ToInt32(x.a.UmTargetId)).ToList();
-                var listUw = db.UserWriting.Where(x => listUwId.Contains(x.UwId)).Select(x => new { x.UwId, x.UwTitle }).ToList();
-
-                foreach (var item in list)
+                if (list.Count > 0)
                 {
-                    item.a.Spare1 = item.Nickname;
-                    item.a.Spare2 = item.UserPhoto;
-                    item.a.Spare3 = listUw.FirstOrDefault(x => x.UwId.ToString() == item.a.UmTargetId)?.UwTitle;
+                    //分类：根据ID查询对应的标题
+                    var listUwId = list.Where(x => x.a.UmType == EnumAid.MessageType.UserWriting.ToString()).Select(x => Convert.ToInt32(x.a.UmTargetId)).ToList();
+                    var listUw = db.UserWriting.Where(x => listUwId.Contains(x.UwId)).Select(x => new { x.UwId, x.UwTitle }).ToList();
+
+                    foreach (var item in list)
+                    {
+                        item.a.Spare1 = item.Nickname;
+                        item.a.Spare2 = item.UserPhoto;
+                        item.a.Spare3 = listUw.FirstOrDefault(x => x.UwId.ToString() == item.a.UmTargetId)?.UwTitle;
+                    }
                 }
 
                 var data = list.Select(x => x.a).ToList();

@@ -58,7 +58,7 @@ $('#btnReply').click(function () {
         jz.msg("先写点什么...");
         return false;
     }
-    var rname, rlink;
+    var rname, rlink, rmail;
     if (document.getElementById('WrAnonymousName')) {
         rname = $('#WrAnonymousName').val().trim();
         rlink = $('#WrAnonymousLink').val().trim();
