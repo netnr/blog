@@ -1,4 +1,4 @@
-﻿/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -14,9 +14,6 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 6px;
     background-color: #28a745;
-}
-
-body {
 }
 
 .form-control:focus {

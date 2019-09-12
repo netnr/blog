@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -39,7 +39,7 @@ namespace Netnr.Data
                 if (_loggerFactory == null)
                 {
                     var sc = new ServiceCollection();
-                    sc.AddLogging(builder => builder.AddConsole().AddFilter(level => level >= LogLevel.Information));
+                    sc.AddLogging(builder => builder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
                     _loggerFactory = sc.BuildServiceProvider().GetService<ILoggerFactory>();
                 }
                 return _loggerFactory;
