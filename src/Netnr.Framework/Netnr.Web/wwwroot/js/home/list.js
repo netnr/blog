@@ -177,7 +177,7 @@ function ListUserConn(action) {
 }
 
 //阅读量
-if (localStorage.getItem("wid") != wid) {
-    localStorage.setItem("wid", wid);
+if (sessionStorage.getItem("wid") != wid) {
+    sessionStorage.setItem("wid", wid);
     $.get("/home/ListReadPlus/" + wid);
 }

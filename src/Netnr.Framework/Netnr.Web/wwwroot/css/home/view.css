@@ -60,15 +60,15 @@
         padding-bottom: 8px;
     }
 
-    .uw-box .uw-item .uw-emoji svg {
+    .uw-box .uw-item .uw-emoji * {
         position: absolute;
-        top: 20px;
-        right: 5px;
-        width: 50px;
-        height: 50px;
+        top: 10px;
+        right: 10px;
+        max-width: 40px;
+        max-height: 40px;
     }
 
-        .uw-box .uw-item .uw-emoji svg:hover {
+        .uw-box .uw-item .uw-emoji *:hover {
             transition: transform 1.5s;
             transform: rotate(360deg);
         }

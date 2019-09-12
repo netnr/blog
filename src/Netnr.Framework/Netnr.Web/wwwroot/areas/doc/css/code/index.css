@@ -15,6 +15,7 @@
     bottom: 0;
     left: 300px;
     overflow: auto;
+    padding-top: 80px;
 }
 
 @media (max-width: 768px) {
@@ -25,6 +26,8 @@
 
     .ndtv .ndview {
         left: 0;
+        top: 80px;
+        padding-top: 0;
     }
 }
 
