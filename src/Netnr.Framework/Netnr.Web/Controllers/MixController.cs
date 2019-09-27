@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Netnr.Web.Filters;
 
@@ -22,11 +23,26 @@ namespace Netnr.Web.Controllers
 
         [Description("服务器状态")]
         [ValidateAntiForgeryToken]
-        [ResponseCache(Duration = 10)]
+        [ResponseCache(Duration = 5)]
         public string AboutServerStatus()
         {
             string url = GlobalTo.GetValue("ServiceApi:ServiceInfo");
-            var result = Core.HttpTo.Get(url);
+            var hwr = Core.HttpTo.HWRequest(url);
+            hwr.UserAgent = GlobalTo.GetValue("UserAgent");
+            var result = Core.HttpTo.Url(hwr);
+
+            //处理敏感信息
+            var rj = result.ToJObject();
+            var removeNodes = "available_isos email ip_addresses node_ip ptr ssh_port ve_mac1".Split(" ").ToList();
+            foreach (var item in removeNodes)
+            {
+                if (rj.ContainsKey(item))
+                {
+                    rj.Remove(item);
+                }
+            }
+            result = rj.ToJson();
+
             return result;
         }
 

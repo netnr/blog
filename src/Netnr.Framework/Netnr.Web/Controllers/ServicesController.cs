@@ -334,28 +334,26 @@ namespace Netnr.Web.Controllers
                                 string apirt = Core.HttpTo.Get(api);
                                 if (apirt.Length > 100)
                                 {
-                                    using (var db = new ContextBase())
+                                    using var db = new ContextBase();
+                                    var kvMo = db.KeyValues.Where(x => x.KeyName == key).FirstOrDefault();
+                                    if (kvMo == null)
                                     {
-                                        var kvMo = db.KeyValues.Where(x => x.KeyName == key).FirstOrDefault();
-                                        if (kvMo == null)
+                                        kvMo = new Domain.KeyValues
                                         {
-                                            kvMo = new Domain.KeyValues
-                                            {
-                                                KeyId = Guid.NewGuid().ToString(),
-                                                KeyName = key.ToLower(),
-                                                KeyValue = apirt
-                                            };
-                                            db.KeyValues.Add(kvMo);
-                                        }
-                                        else
-                                        {
-                                            kvMo.KeyValue = apirt;
-                                            db.KeyValues.Update(kvMo);
-                                        }
-
-                                        rt[0] = db.SaveChanges();
-                                        rt[1] = kvMo;
+                                            KeyId = Guid.NewGuid().ToString(),
+                                            KeyName = key.ToLower(),
+                                            KeyValue = apirt
+                                        };
+                                        db.KeyValues.Add(kvMo);
                                     }
+                                    else
+                                    {
+                                        kvMo.KeyValue = apirt;
+                                        db.KeyValues.Update(kvMo);
+                                    }
+
+                                    rt[0] = db.SaveChanges();
+                                    rt[1] = kvMo;
                                 }
                                 else
                                 {
@@ -383,18 +381,16 @@ namespace Netnr.Web.Controllers
                                     listkvs.Add(kvs);
                                 }
 
-                                using (var db = new ContextBase())
+                                using var db = new ContextBase();
+                                var mo = db.KeyValueSynonym.Where(x => x.KeyName == mainKey).FirstOrDefault();
+                                if (mo != null)
                                 {
-                                    var mo = db.KeyValueSynonym.Where(x => x.KeyName == mainKey).FirstOrDefault();
-                                    if (mo != null)
-                                    {
-                                        db.KeyValueSynonym.Remove(mo);
-                                    }
-                                    db.KeyValueSynonym.AddRange(listkvs);
-                                    int oldrow = db.SaveChanges();
-                                    rt[0] = 1;
-                                    rt[1] = " 受影响 " + oldrow + " 行";
+                                    db.KeyValueSynonym.Remove(mo);
                                 }
+                                db.KeyValueSynonym.AddRange(listkvs);
+                                int oldrow = db.SaveChanges();
+                                rt[0] = 1;
+                                rt[1] = " 受影响 " + oldrow + " 行";
                             }
                             break;
                         case "addtag":
@@ -403,41 +399,39 @@ namespace Netnr.Web.Controllers
 
                                 if (tags.Count > 0)
                                 {
-                                    using (var db = new ContextBase())
+                                    using var db = new ContextBase();
+                                    var mt = db.Tags.Where(x => tags.Contains(x.TagName)).ToList();
+                                    if (mt.Count == 0)
                                     {
-                                        var mt = db.Tags.Where(x => tags.Contains(x.TagName)).ToList();
-                                        if (mt.Count == 0)
+                                        var listMo = new List<Domain.Tags>();
+                                        var tagHs = new HashSet<string>();
+                                        foreach (var tag in tags)
                                         {
-                                            var listMo = new List<Domain.Tags>();
-                                            var tagHs = new HashSet<string>();
-                                            foreach (var tag in tags)
+                                            if (tagHs.Add(tag))
                                             {
-                                                if (tagHs.Add(tag))
+                                                var mo = new Domain.Tags
                                                 {
-                                                    var mo = new Domain.Tags
-                                                    {
-                                                        TagName = tag.ToLower(),
-                                                        TagStatus = 1,
-                                                        TagHot = 0
-                                                    };
-                                                    listMo.Add(mo);
-                                                }
+                                                    TagName = tag.ToLower(),
+                                                    TagStatus = 1,
+                                                    TagHot = 0
+                                                };
+                                                listMo.Add(mo);
                                             }
-                                            tagHs.Clear();
-
-                                            //新增&刷新缓存
-                                            db.Tags.AddRange(listMo);
-                                            rt[0] = db.SaveChanges();
-
-                                            Func.Common.TagsQuery(false);
-
-                                            rt[1] = "操作成功";
                                         }
-                                        else
-                                        {
-                                            rt[0] = 0;
-                                            rt[1] = "标签已存在：" + mt.ToJson();
-                                        }
+                                        tagHs.Clear();
+
+                                        //新增&刷新缓存
+                                        db.Tags.AddRange(listMo);
+                                        rt[0] = db.SaveChanges();
+
+                                        Func.Common.TagsQuery(false);
+
+                                        rt[1] = "操作成功";
+                                    }
+                                    else
+                                    {
+                                        rt[0] = 0;
+                                        rt[1] = "标签已存在：" + mt.ToJson();
                                     }
                                 }
                                 else

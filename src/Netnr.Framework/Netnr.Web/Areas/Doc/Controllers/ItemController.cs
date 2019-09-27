@@ -65,17 +65,15 @@ namespace Netnr.Web.Areas.Doc.Controllers
 
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var mo = db.DocSet.Find(code);
+            if (mo.Uid == uinfo.UserId)
             {
-                var mo = db.DocSet.Find(code);
-                if (mo.Uid == uinfo.UserId)
-                {
-                    return View(mo);
-                }
-                else
-                {
-                    return Content("unauthorized");
-                }
+                return View(mo);
+            }
+            else
+            {
+                return Content("unauthorized");
             }
         }
 

@@ -14,6 +14,7 @@ namespace Netnr.Data
         {
             MySQL,
             SQLite,
+            InMemory,
             SQLServer,
             PostgreSQL
         }
@@ -23,12 +24,14 @@ namespace Netnr.Data
         /// </summary>
         private readonly TypeDB TDB;
 
-        /// <summary>
-        /// 上下文
-        /// </summary>
-        public ContextBase() : base()
+        public ContextBase()
         {
-            TDB = (TypeDB)Enum.Parse(typeof(TypeDB), GlobalTo.GetValue("TypeDB"), true);
+            Enum.TryParse(GlobalTo.GetValue("TypeDB"), true, out TDB);
+        }
+
+        public ContextBase(DbContextOptions<ContextBase> options) : base(options)
+        {
+
         }
 
         private static ILoggerFactory _loggerFactory = null;
@@ -52,28 +55,34 @@ namespace Netnr.Data
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            switch (TDB)
+            if (!optionsBuilder.IsConfigured)
             {
-                case TypeDB.SQLServer:
-                    optionsBuilder.UseSqlServer(GlobalTo.GetValue("ConnectionStrings:SQLServerConn"), options =>
-                    {
-                        //启用 row_number 分页 （兼容2005、2008）
-                        //options.UseRowNumberForPaging();
-                    });
-                    break;
-                case TypeDB.MySQL:
-                    //optionsBuilder.UseMySql(GlobalVar.GetValue("ConnectionStrings:MySQLConn"));
-                    break;
-                case TypeDB.SQLite:
-                    //optionsBuilder.UseSqlite(GlobalVar.GetValue("ConnectionStrings:SQLiteConn"));
-                    break;
-                case TypeDB.PostgreSQL:
-                    //optionsBuilder.UseNpgsql(GlobalVar.GetValue("ConnectionStrings:PostgreSQLConn"));
-                    break;
-            }
+                switch (TDB)
+                {
+                    case TypeDB.MySQL:
+                        optionsBuilder.UseMySql(GlobalTo.GetValue("ConnectionStrings:MySQLConn"));
+                        break;
+                    case TypeDB.SQLite:
+                        optionsBuilder.UseSqlite(GlobalTo.GetValue("ConnectionStrings:SQLiteConn"));
+                        break;
+                    case TypeDB.InMemory:
+                        optionsBuilder.UseInMemoryDatabase(GlobalTo.GetValue("ConnectionStrings:InMemoryConn"));
+                        break;
+                    case TypeDB.SQLServer:
+                        optionsBuilder.UseSqlServer(GlobalTo.GetValue("ConnectionStrings:SQLServerConn"), options =>
+                        {
+                            //启用 row_number 分页 （兼容2005、2008）
+                            //options.UseRowNumberForPaging();
+                        });
+                        break;
+                    case TypeDB.PostgreSQL:
+                        optionsBuilder.UseNpgsql(GlobalTo.GetValue("ConnectionStrings:PostgreSQLConn"));
+                        break;
+                }
 
-            //注册日志（修改日志等级为Information，可查看执行的SQL语句）
-            optionsBuilder.UseLoggerFactory(LoggerFactory);
+                //注册日志（修改日志等级为Information，可查看执行的SQL语句）
+                optionsBuilder.UseLoggerFactory(LoggerFactory);
+            }
         }
     }
 }

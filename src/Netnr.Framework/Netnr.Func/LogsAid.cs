@@ -10,17 +10,17 @@ namespace Netnr.Func
         /// <summary>
         /// 路径
         /// </summary>
-        static readonly string dbPath = GlobalTo.GetValue("logs:path").Replace("~", GlobalTo.ContentRootPath);
+        public static readonly string dbPath = GlobalTo.GetValue("logs:path").Replace("~", GlobalTo.ContentRootPath);
 
         /// <summary>
         /// 分批写入满足的条件：缓存的日志数量
         /// </summary>
-        static readonly int cacheLogCount = GlobalTo.GetValue<int>("logs:batchwritecount");
+        public static readonly int cacheLogCount = GlobalTo.GetValue<int>("logs:batchwritecount");
 
         /// <summary>
         /// 分批写入满足的条件：缓存的时长，单位秒
         /// </summary>
-        static readonly int cacheLogTime = GlobalTo.GetValue<int>("logs:batchwritetime");
+        public static readonly int cacheLogTime = GlobalTo.GetValue<int>("logs:batchwritetime");
 
         public class LogsVM
         {
@@ -135,7 +135,7 @@ namespace Netnr.Func
         {
             try
             {
-                var db = new SQLiteConnection(dbPath);
+                using var db = new SQLiteConnection(dbPath);
                 db.CreateTable<LogsVM>();
                 db.InsertAll(logs);
             }
@@ -151,7 +151,7 @@ namespace Netnr.Func
         /// <param name="rows"></param>
         public static string Query(int page, int rows)
         {
-            var db = new SQLiteConnection(dbPath);
+            using var db = new SQLiteConnection(dbPath);
             var query = db.Table<LogsVM>();
 
             var total = query.Count();
@@ -173,7 +173,7 @@ namespace Netnr.Func
         {
             string result = string.Empty;
 
-            var db = new SQLiteConnection(dbPath);
+            using var db = new SQLiteConnection(dbPath);
             var query = db.Table<LogsVM>();
 
             var now = DateTime.Now;
@@ -254,7 +254,7 @@ namespace Netnr.Func
         {
             string result = string.Empty;
 
-            var db = new SQLiteConnection(dbPath);
+            using var db = new SQLiteConnection(dbPath);
             var query = db.Table<LogsVM>();
 
             var now = DateTime.Now;

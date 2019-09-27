@@ -21,21 +21,19 @@ namespace Netnr.Web.Areas.Run.Controllers
             if (!string.IsNullOrWhiteSpace(id) && id.ToLower().Contains(".json"))
             {
                 id = id.Replace(".json", "");
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var mo = db.Run.Where(x => x.RunCode == id && x.RunOpen == 1 && x.RunStatus == 1).FirstOrDefault();
+                if (mo != null)
                 {
-                    var mo = db.Run.Where(x => x.RunCode == id && x.RunOpen == 1 && x.RunStatus == 1).FirstOrDefault();
-                    if (mo != null)
+                    return Content(new
                     {
-                        return Content(new
-                        {
-                            code = mo.RunCode,
-                            remark = mo.RunRemark,
-                            datetime = mo.RunCreateTime,
-                            html = mo.RunContent1,
-                            javascript = mo.RunContent2,
-                            css = mo.RunContent3
-                        }.ToJson());
-                    }
+                        code = mo.RunCode,
+                        remark = mo.RunRemark,
+                        datetime = mo.RunCreateTime,
+                        html = mo.RunContent1,
+                        javascript = mo.RunContent2,
+                        css = mo.RunContent3
+                    }.ToJson());
                 }
             }
 
@@ -45,14 +43,12 @@ namespace Netnr.Web.Areas.Run.Controllers
             {
                 case "edit":
                     {
-                        using (var db = new ContextBase())
+                        using var db = new ContextBase();
+                        var mo = db.Run.Where(x => x.RunCode == id).FirstOrDefault();
+                        //有记录且为当前用户
+                        if (mo != null)
                         {
-                            var mo = db.Run.Where(x => x.RunCode == id).FirstOrDefault();
-                            //有记录且为当前用户
-                            if (mo != null)
-                            {
-                                return View("_PartialMonacoEditor", mo);
-                            }
+                            return View("_PartialMonacoEditor", mo);
                         }
                     }
                     break;
@@ -60,20 +56,18 @@ namespace Netnr.Web.Areas.Run.Controllers
                     {
                         if (User.Identity.IsAuthenticated)
                         {
-                            using (var db = new ContextBase())
+                            using var db = new ContextBase();
+                            var uinfo = new Func.UserAuthAid(HttpContext).Get();
+                            var mo = db.Run.Where(x => x.RunCode == id && x.Uid == uinfo.UserId).FirstOrDefault();
+                            db.Run.Remove(mo);
+                            int num = db.SaveChanges();
+                            if (num > 0)
                             {
-                                var uinfo = new Func.UserAuthAid(HttpContext).Get();
-                                var mo = db.Run.Where(x => x.RunCode == id && x.Uid == uinfo.UserId).FirstOrDefault();
-                                db.Run.Remove(mo);
-                                int num = db.SaveChanges();
-                                if (num > 0)
-                                {
-                                    return Redirect("/run/user/" + uinfo.UserId);
-                                }
-                                else
-                                {
-                                    return Content("Deletion failed or could not be accessed");
-                                }
+                                return Redirect("/run/user/" + uinfo.UserId);
+                            }
+                            else
+                            {
+                                return Content("Deletion failed or could not be accessed");
                             }
                         }
                         else

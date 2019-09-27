@@ -32,15 +32,13 @@ namespace Netnr.Web.Controllers
 
             if (page == 1)
             {
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var listum = db.UserMessage.Where(x => x.UmType == Func.EnumAid.MessageType.UserWriting.ToString() && x.UmAction == 2 && x.UmStatus == 1).ToList();
+                if (listum.Count > 0)
                 {
-                    var listum = db.UserMessage.Where(x => x.UmType == Func.EnumAid.MessageType.UserWriting.ToString() && x.UmAction == 2 && x.UmStatus == 1).ToList();
-                    if (listum.Count > 0)
-                    {
-                        listum.ForEach(x => x.UmStatus = 2);
-                        db.UserMessage.UpdateRange(listum);
-                        db.SaveChanges();
-                    }
+                    listum.ForEach(x => x.UmStatus = 2);
+                    db.UserMessage.UpdateRange(listum);
+                    db.SaveChanges();
                 }
             }
 
@@ -58,24 +56,22 @@ namespace Netnr.Web.Controllers
             {
                 var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var um = db.UserMessage.Find(id);
+                if (um == null)
                 {
-                    var um = db.UserMessage.Find(id);
-                    if (um == null)
-                    {
-                        vm.Set(ARTag.lack);
-                    }
-                    else if (um?.Uid != uinfo.UserId)
-                    {
-                        vm.Set(ARTag.unauthorized);
-                    }
-                    else
-                    {
-                        db.UserMessage.Remove(um);
-                        int num = db.SaveChanges();
+                    vm.Set(ARTag.lack);
+                }
+                else if (um?.Uid != uinfo.UserId)
+                {
+                    vm.Set(ARTag.unauthorized);
+                }
+                else
+                {
+                    db.UserMessage.Remove(um);
+                    int num = db.SaveChanges();
 
-                        vm.Set(num > 0);
-                    }
+                    vm.Set(num > 0);
                 }
             }
 
@@ -96,13 +92,11 @@ namespace Netnr.Web.Controllers
         {
             if (int.TryParse(RouteData.Values["id"]?.ToString(), out int uid))
             {
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var usermo = db.UserInfo.Find(uid);
+                if (usermo != null)
                 {
-                    var usermo = db.UserInfo.Find(uid);
-                    if (usermo != null)
-                    {
-                        return View("_PartialU", usermo);
-                    }
+                    return View("_PartialU", usermo);
                 }
             }
 
@@ -162,53 +156,49 @@ namespace Netnr.Web.Controllers
                         {
                             source = source.Substring(source.LastIndexOf(",") + 1);
                             byte[] bytes = Convert.FromBase64String(source);
-                            using (var ms = new MemoryStream(bytes))
+                            using var ms = new MemoryStream(bytes);
+                            using var bmp = new System.Drawing.Bitmap(ms);
+                            var hp = fullpath + upname.Replace(".", "_lg.");
+                            bmp.Save(hp, ImageFormat.Jpeg);
+                            Fast.ImageTo.MinImg(hp, fullpath, upname, 40, 40, "wh");
+
+                            using (var db = new ContextBase())
                             {
-                                using (var bmp = new System.Drawing.Bitmap(ms))
+                                var usermo = db.UserInfo.Find(uinfo.UserId);
+                                usermo.UserPhoto = npnew;
+                                db.UserInfo.Update(usermo);
+                                int num = db.SaveChanges();
+                                if (num > 0)
                                 {
-                                    var hp = fullpath + upname.Replace(".", "_lg.");
-                                    bmp.Save(hp, ImageFormat.Jpeg);
-                                    Fast.ImageTo.MinImg(hp, fullpath, upname, 40, 40, "wh");
-
-                                    using (var db = new ContextBase())
-                                    {
-                                        var usermo = db.UserInfo.Find(uinfo.UserId);
-                                        usermo.UserPhoto = npnew;
-                                        db.UserInfo.Update(usermo);
-                                        int num = db.SaveChanges();
-                                        if (num > 0)
-                                        {
-                                            new Func.UserAuthAid(HttpContext).Set(usermo);
-                                        }
-                                    }
-
-                                    vm.Set(ARTag.success);
+                                    using var ac = new AccountController();
+                                    ac.SetAuth(usermo);
                                 }
                             }
+
+                            vm.Set(ARTag.success);
                         }
                         break;
                     case "link":
                         {
-                            using (var wc = new System.Net.WebClient())
+                            using var wc = new System.Net.WebClient();
+                            var hp = fullpath + upname.Replace(".", "_lg.");
+                            wc.DownloadFile(source, hp);
+                            Fast.ImageTo.MinImg(hp, fullpath, upname, 40, 40, "wh");
+
+                            using (var db = new ContextBase())
                             {
-                                var hp = fullpath + upname.Replace(".", "_lg.");
-                                wc.DownloadFile(source, hp);
-                                Fast.ImageTo.MinImg(hp, fullpath, upname, 40, 40, "wh");
-
-                                using (var db = new ContextBase())
+                                var usermo = db.UserInfo.Find(uinfo.UserId);
+                                usermo.UserPhoto = npnew;
+                                db.UserInfo.Update(usermo);
+                                int num = db.SaveChanges();
+                                if (num > 0)
                                 {
-                                    var usermo = db.UserInfo.Find(uinfo.UserId);
-                                    usermo.UserPhoto = npnew;
-                                    db.UserInfo.Update(usermo);
-                                    int num = db.SaveChanges();
-                                    if (num > 0)
-                                    {
-                                        new Func.UserAuthAid(HttpContext).Set(usermo);
-                                    }
+                                    using var ac = new AccountController();
+                                    ac.SetAuth(usermo);
                                 }
-
-                                vm.Set(ARTag.success);
                             }
+
+                            vm.Set(ARTag.success);
                         }
                         break;
                 }
@@ -303,7 +293,10 @@ namespace Netnr.Web.Controllers
                 var num = db.SaveChanges();
 
                 //更新授权信息
-                new Func.UserAuthAid(HttpContext).Set(usermo);
+                using (var ac = new AccountController())
+                {
+                    ac.SetAuth(usermo);
+                }
 
                 vm.Set(num > 0);
             };
@@ -315,13 +308,14 @@ namespace Netnr.Web.Controllers
         [Authorize]
         public IActionResult OAuth()
         {
-            //写入绑定标识cookie
-            Response.Cookies.Append("AccountBindOAuth", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), new CookieOptions()
+            var authType = RouteData.Values["id"]?.ToString();
+            if ("weibo taobao".Contains(authType, StringComparison.OrdinalIgnoreCase))
             {
-                Expires = DateTime.Now.AddMinutes(2)
-            });
+                return Content("暂受限制使用，请换其它方式");
+            }
 
-            return Redirect("/account/auth/" + RouteData.Values["id"]?.ToString());
+            var url = Func.UserAuthAid.ThirdLogin.LoginLink(authType, "bind");
+            return Redirect(url);
         }
 
         [Description("解绑账号")]
@@ -331,32 +325,33 @@ namespace Netnr.Web.Controllers
             if (Enum.TryParse(RouteData.Values["id"]?.ToString().ToLower(), out AccountController.ValidateloginType vtype))
             {
                 int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var mo = db.UserInfo.Find(uid);
+
+                switch (vtype)
                 {
-                    var mo = db.UserInfo.Find(uid);
-
-                    switch (vtype)
-                    {
-                        case AccountController.ValidateloginType.qq:
-                            mo.OpenId1 = "";
-                            break;
-                        case AccountController.ValidateloginType.weibo:
-                            mo.OpenId2 = "";
-                            break;
-                        case AccountController.ValidateloginType.github:
-                            mo.OpenId3 = "";
-                            break;
-                        case AccountController.ValidateloginType.taobao:
-                            mo.OpenId4 = "";
-                            break;
-                        case AccountController.ValidateloginType.microsoft:
-                            mo.OpenId5 = "";
-                            break;
-                    }
-
-                    db.UserInfo.Update(mo);
-                    db.SaveChanges();
+                    case AccountController.ValidateloginType.qq:
+                        mo.OpenId1 = "";
+                        break;
+                    case AccountController.ValidateloginType.weibo:
+                        mo.OpenId2 = "";
+                        break;
+                    case AccountController.ValidateloginType.github:
+                        mo.OpenId3 = "";
+                        break;
+                    case AccountController.ValidateloginType.taobao:
+                        mo.OpenId4 = "";
+                        break;
+                    case AccountController.ValidateloginType.microsoft:
+                        mo.OpenId5 = "";
+                        break;
+                    case AccountController.ValidateloginType.dingtalk:
+                        mo.OpenId6 = "";
+                        break;
                 }
+
+                db.UserInfo.Update(mo);
+                db.SaveChanges();
             }
             return Redirect("/user/setting");
         }
@@ -423,38 +418,36 @@ namespace Netnr.Web.Controllers
 
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query = from a in db.UserWriting
+                        where a.Uid == uid
+                        select new
+                        {
+                            a.UwId,
+                            a.UwTitle,
+                            a.UwCreateTime,
+                            a.UwUpdateTime,
+                            a.UwReadNum,
+                            a.UwReplyNum,
+                            a.UwOpen,
+                            a.UwStatus,
+                            a.UwLaud,
+                            a.UwMark,
+                            a.UwCategory
+                        };
+
+            query = Fast.QueryableTo.OrderBy(query, sort, order);
+
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+
+            result = new
             {
-                var query = from a in db.UserWriting
-                            where a.Uid == uid
-                            select new
-                            {
-                                a.UwId,
-                                a.UwTitle,
-                                a.UwCreateTime,
-                                a.UwUpdateTime,
-                                a.UwReadNum,
-                                a.UwReplyNum,
-                                a.UwOpen,
-                                a.UwStatus,
-                                a.UwLaud,
-                                a.UwMark,
-                                a.UwCategory
-                            };
+                data = list,
+                total = pag.Total
+            }.ToJson();
 
-                query = Fast.QueryableTo.OrderBy(query, sort, order);
-
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
-
-                result = new
-                {
-                    data = list,
-                    total = pag.Total
-                }.ToJson();
-
-                return result;
-            }
+            return result;
         }
 
         [Description("获取一篇文章")]
@@ -575,50 +568,48 @@ namespace Netnr.Web.Controllers
                         {
                             if (User.Identity.IsAuthenticated)
                             {
-                                using (var db = new ContextBase())
+                                using var db = new ContextBase();
+                                var usermo = db.UserInfo.Find(uinfo.UserId);
+                                if (usermo.UserMailValid == 1)
                                 {
-                                    var usermo = db.UserInfo.Find(uinfo.UserId);
-                                    if (usermo.UserMailValid == 1)
+                                    vm.msg = "邮箱已经完成验证";
+                                }
+                                else if (string.IsNullOrWhiteSpace(usermo.UserMail))
+                                {
+                                    vm.msg = "邮箱不能为空";
+                                }
+                                else
+                                {
+                                    var cacheKey = "Global_VerifyMail_" + usermo.UserMail;
+                                    var issend = Core.CacheTo.Get(cacheKey) as bool?;
+                                    if (issend == true)
                                     {
-                                        vm.msg = "邮箱已经完成验证";
-                                    }
-                                    else if (string.IsNullOrWhiteSpace(usermo.UserMail))
-                                    {
-                                        vm.msg = "邮箱不能为空";
+                                        vm.msg = "1分钟内只能发送一次验证信息";
                                     }
                                     else
                                     {
-                                        var cacheKey = "Global_VerifyMail_" + usermo.UserMail;
-                                        var issend = Core.CacheTo.Get(cacheKey) as bool?;
-                                        if (issend == true)
+                                        //发送验证
+
+                                        var ToMail = usermo.UserMail;
+
+                                        var vjson = new
                                         {
-                                            vm.msg = "1分钟内只能发送一次验证信息";
-                                        }
-                                        else
+                                            mail = ToMail,
+                                            ts = DateTime.Now.ToTimestamp()
+                                        }.ToJson();
+                                        var vcode = Core.CalcTo.EnDES(vjson, GlobalTo.GetValue("VerifyCode:Key")).ToLower();
+
+                                        var VerifyLink = string.Format(GlobalTo.GetValue("VerifyCode:Url"), vcode);
+
+                                        var txt = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/template/", "sendmailverify.html");
+                                        txt = txt.Replace("@ToMail@", ToMail).Replace("@VerifyLink@", VerifyLink);
+
+                                        vm = Func.MailAid.Send(ToMail, "[Netnr] 验证你的邮箱", txt);
+
+                                        if (vm.code == 200)
                                         {
-                                            //发送验证
-
-                                            var ToMail = usermo.UserMail;
-
-                                            var vjson = new
-                                            {
-                                                mail = ToMail,
-                                                ts = DateTime.Now.ToTimestamp()
-                                            }.ToJson();
-                                            var vcode = Core.CalcTo.EnDES(vjson, GlobalTo.GetValue("VerifyCode:Key")).ToLower();
-
-                                            var VerifyLink = string.Format(GlobalTo.GetValue("VerifyCode:Url"), vcode);
-
-                                            var txt = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/template/", "sendmailverify.html");
-                                            txt = txt.Replace("@ToMail@", ToMail).Replace("@VerifyLink@", VerifyLink);
-
-                                            vm = Func.MailAid.Send(ToMail, "[Netnr] 验证你的邮箱", txt);
-
-                                            if (vm.code == 200)
-                                            {
-                                                vm.msg = "已发送成功";
-                                                Core.CacheTo.Set(cacheKey, true, 60, false);
-                                            }
+                                            vm.msg = "已发送成功";
+                                            Core.CacheTo.Set(cacheKey, true, 60, false);
                                         }
                                     }
                                 }
@@ -644,34 +635,32 @@ namespace Netnr.Web.Controllers
                                 }
                                 else
                                 {
-                                    using (var db = new ContextBase())
+                                    using var db = new ContextBase();
+                                    var usermo = db.UserInfo.FirstOrDefault(x => x.UserMail == mail);
+                                    if (usermo != null)
                                     {
-                                        var usermo = db.UserInfo.FirstOrDefault(x => x.UserMail == mail);
-                                        if (usermo != null)
+                                        if (usermo.UserMailValid == 1)
                                         {
-                                            if (usermo.UserMailValid == 1)
-                                            {
-                                                vm.msg = "已验证，勿重复验证";
-                                            }
-                                            else
-                                            {
-                                                usermo.UserMailValid = 1;
-
-                                                db.UserInfo.Update(usermo);
-
-                                                int num = db.SaveChanges();
-
-                                                vm.Set(num > 0);
-                                                if (vm.code == 200)
-                                                {
-                                                    vm.msg = "恭喜你，验证成功";
-                                                }
-                                            }
+                                            vm.msg = "已验证，勿重复验证";
                                         }
                                         else
                                         {
-                                            vm.msg = "邮件地址无效";
+                                            usermo.UserMailValid = 1;
+
+                                            db.UserInfo.Update(usermo);
+
+                                            int num = db.SaveChanges();
+
+                                            vm.Set(num > 0);
+                                            if (vm.code == 200)
+                                            {
+                                                vm.msg = "恭喜你，验证成功";
+                                            }
                                         }
+                                    }
+                                    else
+                                    {
+                                        vm.msg = "邮件地址无效";
                                     }
                                 }
                             }

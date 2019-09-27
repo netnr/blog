@@ -18,14 +18,12 @@ namespace Netnr.Web.Areas.Gist.Controllers
             string id = RouteData.Values["id"]?.ToString();
             if (!string.IsNullOrWhiteSpace(id))
             {
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var mo = db.Gist.Where(x => x.GistCode == id && x.GistStatus == 1 && x.GistOpen == 1).FirstOrDefault();
+                if (mo != null)
                 {
-                    var mo = db.Gist.Where(x => x.GistCode == id && x.GistStatus == 1 && x.GistOpen == 1).FirstOrDefault();
-                    if (mo != null)
-                    {
-                        result = mo.GistContent;
-                        filename = mo.GistFilename;
-                    }
+                    result = mo.GistContent;
+                    filename = mo.GistFilename;
                 }
             }
 

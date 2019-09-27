@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Netnr.Login;
 
 namespace Netnr.Func
 {
@@ -19,49 +19,114 @@ namespace Netnr.Func
         }
 
         /// <summary>
-        /// 写入授权
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="isremember"></param>
-        /// <returns></returns>
-        public void Set(Domain.UserInfo user, bool isremember = true)
-        {
-            //登录信息
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            identity.AddClaim(new Claim(ClaimTypes.Sid, user.UserId.ToString()));
-            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, user.Nickname ?? ""));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "1"));
-            identity.AddClaim(new Claim(ClaimTypes.SerialNumber, user.UserSign));
-            identity.AddClaim(new Claim(ClaimTypes.UserData, user.UserPhoto ?? ""));
-
-            //配置
-            var authParam = new AuthenticationProperties();
-            if (isremember)
-            {
-                authParam.IsPersistent = true;
-                authParam.ExpiresUtc = DateTime.Now.AddDays(10);
-            }
-
-            //写入
-            context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authParam);
-        }
-
-        /// <summary>
         /// 获取授权用户
         /// </summary>
         /// <returns></returns>
         public Domain.UserInfo Get()
         {
+            var user = context.User;
+
             var usermo = new Domain.UserInfo
             {
-                UserId = Convert.ToInt32(context.User.FindFirst(ClaimTypes.Sid)?.Value),
-                UserName = context.User.FindFirst(ClaimTypes.Name)?.Value,
-                Nickname = context.User.FindFirst(ClaimTypes.GivenName)?.Value,
-                UserPhoto = context.User.FindFirst(ClaimTypes.UserData)?.Value
+                UserId = Convert.ToInt32(user.FindFirst(ClaimTypes.PrimarySid)?.Value),
+                UserName = user.FindFirst(ClaimTypes.Name)?.Value,
+                Nickname = user.FindFirst(ClaimTypes.GivenName)?.Value,
+                UserSign = user.FindFirst(ClaimTypes.Sid)?.Value,
+                UserPhoto = user.FindFirst(ClaimTypes.UserData)?.Value
             };
 
             return usermo;
+        }
+
+        /// <summary>
+        /// 第三方登录
+        /// </summary>
+        public class ThirdLogin
+        {
+            /// <summary>
+            /// 登录链接
+            /// </summary>
+            /// <param name="LoginType">登录类型</param>
+            /// <param name="AuthType">登录防伪追加标识，区分登录、注册</param>
+            /// <returns></returns>
+            public static string LoginLink(string loginType, string authType = "")
+            {
+                string url = string.Empty;
+
+                if (Enum.TryParse(loginType, true, out LoginBase.LoginType vtype))
+                {
+                    switch (vtype)
+                    {
+                        case LoginBase.LoginType.QQ:
+                            {
+                                var reqe = new QQ_Authorization_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = QQ.AuthorizationHref(reqe);
+                            }
+                            break;
+                        case LoginBase.LoginType.WeiBo:
+                            {
+                                var reqe = new Weibo_Authorize_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = Weibo.AuthorizeHref(reqe);
+                            }
+                            break;
+                        case LoginBase.LoginType.GitHub:
+                            {
+                                var reqe = new GitHub_Authorize_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = GitHub.AuthorizeHref(reqe);
+                            }
+                            break;
+                        case LoginBase.LoginType.TaoBao:
+                            {
+                                var reqe = new TaoBao_Authorize_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = TaoBao.AuthorizeHref(reqe);
+                            }
+                            break;
+                        case LoginBase.LoginType.MicroSoft:
+                            {
+                                var reqe = new MicroSoft_Authorize_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = MicroSoft.AuthorizeHref(reqe);
+                            }
+                            break;
+                        case LoginBase.LoginType.DingTalk:
+                            {
+                                var reqe = new DingTalk_Authorize_RequestEntity();
+                                if (!string.IsNullOrWhiteSpace(authType))
+                                {
+                                    reqe.state = authType + reqe.state;
+                                }
+                                url = DingTalk.AuthorizeHref_ScanCode(reqe);
+                            }
+                            break;
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    url = "/account/login";
+                }
+
+                return url;
+            }
         }
     }
 }

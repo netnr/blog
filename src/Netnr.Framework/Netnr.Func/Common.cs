@@ -18,7 +18,7 @@ namespace Netnr.Func
         /// <param name="ivm"></param>
         /// <param name="ru"></param>
         /// <param name="ovm"></param>
-        public static void QueryJoin<T>(IQueryable<T> query, QueryDataInputVM ivm, ContextBase db, ref QueryDataOutputVM ovm)
+        public static void QueryJoin<T>(IQueryable<T> query, QueryDataInputVM ivm, ref QueryDataOutputVM ovm)
         {
             //总条数
             ovm.total = query.Count();
@@ -49,11 +49,9 @@ namespace Netnr.Func
         {
             if (!(Core.CacheTo.Get("Table_Tags_List") is List<Domain.Tags> lt) || !FirtCache)
             {
-                using (var db = new ContextBase())
-                {
-                    lt = db.Tags.Where(x => x.TagStatus == 1).OrderByDescending(x => x.TagHot).ToList();
-                    Core.CacheTo.Set("Table_Tags_List", lt, 300, false);
-                }
+                using var db = new ContextBase();
+                lt = db.Tags.Where(x => x.TagStatus == 1).OrderByDescending(x => x.TagHot).ToList();
+                Core.CacheTo.Set("Table_Tags_List", lt, 300, false);
             }
             return lt;
         }
@@ -67,27 +65,25 @@ namespace Netnr.Func
         {
             if (!(Core.CacheTo.Get("Table_WritingTags_GroupBy") is Dictionary<string, int> rt) || !FirtCache)
             {
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var query = from a in db.UserWritingTags
+                            group a by a.TagName into m
+                            orderby m.Count() descending
+                            select new
+                            {
+                                m.Key,
+                                total = m.Count()
+                            };
+                var qs = query.Take(20).OrderByDescending(x => x.total).ToList();
+
+                var dic = new Dictionary<string, int>();
+                foreach (var item in qs)
                 {
-                    var query = from a in db.UserWritingTags
-                                group a by a.TagName into m
-                                orderby m.Count() descending
-                                select new
-                                {
-                                    m.Key,
-                                    total = m.Count()
-                                };
-                    var qs = query.Take(20).OrderByDescending(x => x.total).ToList();
-
-                    var dic = new Dictionary<string, int>();
-                    foreach (var item in qs)
-                    {
-                        dic.Add(item.Key, item.total);
-                    }
-
-                    rt = dic;
-                    Core.CacheTo.Set("Table_WritingTags_GroupBy", rt, 300, false);
+                    dic.Add(item.Key, item.total);
                 }
+
+                rt = dic;
+                Core.CacheTo.Set("Table_WritingTags_GroupBy", rt, 300, false);
             }
             return rt;
         }
@@ -101,7 +97,7 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM UserWritingQuery(string KeyWords, int page, string TagName = "")
         {
-            KeyWords = KeyWords ?? "";
+            KeyWords ??= "";
 
             var pag = new PaginationVM
             {
@@ -114,88 +110,87 @@ namespace Netnr.Func
                 { "k", KeyWords }
             };
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            IQueryable<UserWriting> query;
+
+            if (!string.IsNullOrWhiteSpace(TagName))
             {
-                IQueryable<UserWriting> query;
+                query = from a in db.UserWritingTags.Where(x => x.TagName == TagName)
+                        join b in db.UserWriting on a.UwId equals b.UwId
+                        select b;
+                query = query.Distinct();
+            }
+            else
+            {
+                query = from a in db.UserWriting select a;
+            }
 
-                if (!string.IsNullOrWhiteSpace(TagName))
+            query = query.Where(x => x.UwOpen == 1 && x.UwStatus == 1);
+
+            if (!string.IsNullOrWhiteSpace(KeyWords))
+            {
+                query = query.Where(x => x.UwTitle.Contains(KeyWords));
+            }
+
+            pag.Total = query.Count();
+
+            query = query.OrderByDescending(x => x.UwId).Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
+
+            var list = query.ToList();
+
+            //文章ID
+            var listUwId = list.Select(x => x.UwId).ToList();
+
+            //文章的所有的标签
+            var listUwTags = (from a in db.Tags
+                              join b in db.UserWritingTags on a.TagName equals b.TagName into bg
+                              from b in bg.DefaultIfEmpty()
+                              where listUwId.Contains(b.UwId) || a.TagName == TagName
+                              select new
+                              {
+                                  UwId = b == null ? 0 : b.UwId,
+                                  TagName = b == null ? TagName : b.TagName,
+                                  a.TagIcon
+                              }).ToList();
+
+            //文章人员ID
+            var listUwUid = list.Select(x => x.UwLastUid).Concat(list.Select(x => x.Uid)).Distinct();
+
+            //文章人员ID对应的信息
+            var listUwUserInfo = db.UserInfo.Where(x => listUwUid.Contains(x.UserId)).Select(x => new { x.UserId, x.Nickname }).ToList();
+
+            //把信息赋值到文章表的备用字段上
+            foreach (var item in list)
+            {
+                //标签
+                item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
+
+                if (item.UwLastUid > 0)
                 {
-                    query = from a in db.UserWritingTags.Where(x => x.TagName == TagName)
-                            join b in db.UserWriting on a.UwId equals b.UwId
-                            select b;
-                    query = query.Distinct();
+                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
+                    item.Spare3 = item.UwLastUid.ToString();
                 }
-                else
+                if (string.IsNullOrWhiteSpace(item.Spare2))
                 {
-                    query = from a in db.UserWriting select a;
+                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
+                    item.Spare3 = item.Uid.ToString();
                 }
+            }
 
-                query = query.Where(x => x.UwOpen == 1 && x.UwStatus == 1);
+            var vm = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
 
-                if (!string.IsNullOrWhiteSpace(KeyWords))
+            if (!string.IsNullOrWhiteSpace(TagName))
+            {
+                try
                 {
-                    query = query.Where(x => x.UwTitle.Contains(KeyWords));
-                }
+                    var jt = KeyValuesQuery(new List<string> { TagName }).FirstOrDefault().KeyValue.ToJObject();
 
-                pag.Total = query.Count();
-
-                query = query.OrderByDescending(x => x.UwId).Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
-
-                var list = query.ToList();
-
-                //文章ID
-                var listUwId = list.Select(x => x.UwId).ToList();
-
-                //文章的所有的标签
-                var listUwTags = (from a in db.Tags
-                                  join b in db.UserWritingTags on a.TagName equals b.TagName into bg
-                                  from b in bg.DefaultIfEmpty()
-                                  where listUwId.Contains(b.UwId) || a.TagName == TagName
-                                  select new
-                                  {
-                                      UwId = b == null ? 0 : b.UwId,
-                                      TagName = b == null ? TagName : b.TagName,
-                                      a.TagIcon
-                                  }).ToList();
-
-                //文章人员ID
-                var listUwUid = list.Select(x => x.UwLastUid).Concat(list.Select(x => x.Uid)).Distinct();
-
-                //文章人员ID对应的信息
-                var listUwUserInfo = db.UserInfo.Where(x => listUwUid.Contains(x.UserId)).Select(x => new { x.UserId, x.Nickname }).ToList();
-
-                //把信息赋值到文章表的备用字段上
-                foreach (var item in list)
-                {
-                    //标签
-                    item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
-
-                    if (item.UwLastUid > 0)
-                    {
-                        item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
-                        item.Spare3 = item.UwLastUid.ToString();
-                    }
-                    if (string.IsNullOrWhiteSpace(item.Spare2))
-                    {
-                        item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
-                        item.Spare3 = item.Uid.ToString();
-                    }
-                }
-
-                var vm = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag,
-                    QueryString = dicQs
-                };
-
-                if (!string.IsNullOrWhiteSpace(TagName))
-                {
-                    try
-                    {
-                        var jt = KeyValuesQuery(new List<string> { TagName }).FirstOrDefault().KeyValue.ToJObject();
-
-                        var tags = new List<object>
+                    var tags = new List<object>
                         {
                             new
                             {
@@ -204,24 +199,23 @@ namespace Netnr.Func
                             }
                         };
 
-                        vm.Temp = new
-                        {
-                            abs = new List<string>
+                    vm.Temp = new
+                    {
+                        abs = new List<string>
                             {
                                 jt["abstract"].ToString(),
                                 jt["url"].ToString()
                             },
-                            tags
-                        }.ToJson();
-                    }
-                    catch (Exception)
-                    {
-
-                    }
+                        tags
+                    }.ToJson();
                 }
+                catch (Exception)
+                {
 
-                return vm;
+                }
             }
+
+            return vm;
         }
 
         /// <summary>
@@ -240,80 +234,78 @@ namespace Netnr.Func
                 PageSize = 20
             };
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            IQueryable<UserWriting> query = null;
+
+            switch (connectionType)
             {
-                IQueryable<UserWriting> query = null;
-
-                switch (connectionType)
-                {
-                    case EnumAid.ConnectionType.UserWriting:
-                        {
-                            query = from a in db.UserConnection
-                                    join b in db.UserWriting on a.UconnTargetId equals b.UwId.ToString()
-                                    where a.Uid == OwnerId && a.UconnTargetType == connectionType.ToString() && a.UconnAction == action
-                                    orderby a.UconnCreateTime descending
-                                    select b;
-                        }
-                        break;
-                }
-
-                if (query == null)
-                {
-                    return null;
-                }
-
-                pag.Total = query.Count();
-
-                query = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
-
-                var list = query.ToList();
-
-                //文章ID
-                var listUwId = list.Select(x => x.UwId).ToList();
-
-                //文章的所有的标签
-                var listUwTags = (from a in db.Tags
-                                  join b in db.UserWritingTags on a.TagName equals b.TagName
-                                  where listUwId.Contains(b.UwId)
-                                  select new
-                                  {
-                                      b.UwId,
-                                      b.TagName,
-                                      a.TagIcon
-                                  }).ToList();
-
-                //文章人员ID
-                var listUwUid = list.Select(x => x.UwLastUid).Concat(list.Select(x => x.Uid)).Distinct();
-
-                //文章人员ID对应的信息
-                var listUwUserInfo = db.UserInfo.Where(x => listUwUid.Contains(x.UserId)).Select(x => new { x.UserId, x.Nickname }).ToList();
-
-                //把信息赋值到文章表的备用字段上
-                foreach (var item in list)
-                {
-                    //标签
-                    item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
-
-                    if (item.UwLastUid > 0)
+                case EnumAid.ConnectionType.UserWriting:
                     {
-                        item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
-                        item.Spare3 = item.UwLastUid.ToString();
+                        query = from a in db.UserConnection
+                                join b in db.UserWriting on a.UconnTargetId equals b.UwId.ToString()
+                                where a.Uid == OwnerId && a.UconnTargetType == connectionType.ToString() && a.UconnAction == action
+                                orderby a.UconnCreateTime descending
+                                select b;
                     }
-                    if (string.IsNullOrWhiteSpace(item.Spare2))
-                    {
-                        item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
-                        item.Spare3 = item.Uid.ToString();
-                    }
-                }
-
-                var vm = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag
-                };
-
-                return vm;
+                    break;
             }
+
+            if (query == null)
+            {
+                return null;
+            }
+
+            pag.Total = query.Count();
+
+            query = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
+
+            var list = query.ToList();
+
+            //文章ID
+            var listUwId = list.Select(x => x.UwId).ToList();
+
+            //文章的所有的标签
+            var listUwTags = (from a in db.Tags
+                              join b in db.UserWritingTags on a.TagName equals b.TagName
+                              where listUwId.Contains(b.UwId)
+                              select new
+                              {
+                                  b.UwId,
+                                  b.TagName,
+                                  a.TagIcon
+                              }).ToList();
+
+            //文章人员ID
+            var listUwUid = list.Select(x => x.UwLastUid).Concat(list.Select(x => x.Uid)).Distinct();
+
+            //文章人员ID对应的信息
+            var listUwUserInfo = db.UserInfo.Where(x => listUwUid.Contains(x.UserId)).Select(x => new { x.UserId, x.Nickname }).ToList();
+
+            //把信息赋值到文章表的备用字段上
+            foreach (var item in list)
+            {
+                //标签
+                item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
+
+                if (item.UwLastUid > 0)
+                {
+                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
+                    item.Spare3 = item.UwLastUid.ToString();
+                }
+                if (string.IsNullOrWhiteSpace(item.Spare2))
+                {
+                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
+                    item.Spare3 = item.Uid.ToString();
+                }
+            }
+
+            var vm = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag
+            };
+
+            return vm;
         }
 
         /// <summary>
@@ -323,31 +315,29 @@ namespace Netnr.Func
         /// <returns></returns>
         public static UserWriting UserWritingOneQuery(int UwId)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var one = db.UserWriting.Find(UwId);
+            if (one == null)
             {
-                var one = db.UserWriting.Find(UwId);
-                if (one == null)
-                {
-                    return null;
-                }
-
-                //标签
-                var onetags = (from a in db.UserWritingTags
-                               join b in db.Tags on a.TagName equals b.TagName
-                               where a.UwId == one.UwId
-                               select new
-                               {
-                                   a.TagName,
-                                   b.TagIcon
-                               }).ToList();
-                one.Spare1 = onetags.ToJson();
-
-                //昵称
-                var usermo = db.UserInfo.FirstOrDefault(x => x.UserId == one.Uid);
-                one.Spare2 = usermo?.Nickname;
-
-                return one;
+                return null;
             }
+
+            //标签
+            var onetags = (from a in db.UserWritingTags
+                           join b in db.Tags on a.TagName equals b.TagName
+                           where a.UwId == one.UwId
+                           select new
+                           {
+                               a.TagName,
+                               b.TagIcon
+                           }).ToList();
+            one.Spare1 = onetags.ToJson();
+
+            //昵称
+            var usermo = db.UserInfo.FirstOrDefault(x => x.UserId == one.Uid);
+            one.Spare2 = usermo?.Nickname;
+
+            return one;
         }
 
         /// <summary>
@@ -359,38 +349,36 @@ namespace Netnr.Func
         /// <returns></returns>
         public static List<UserReply> ReplyOneQuery(EnumAid.ReplyType replyType, string UrTargetId, PaginationVM pag)
         {
-            using (var db = new ContextBase())
-            {
-                var query = from a in db.UserReply
-                            join b in db.UserInfo on a.Uid equals b.UserId into bg
-                            from b1 in bg.DefaultIfEmpty()
-                            where a.UrTargetType == replyType.ToString() && a.UrTargetId == UrTargetId
-                            orderby a.UrCreateTime ascending
-                            select new UserReply
-                            {
-                                Uid = a.Uid,
-                                UrId = a.UrId,
-                                UrStatus = a.UrStatus,
-                                UrCreateTime = a.UrCreateTime,
-                                UrContent = a.UrContent,
-                                UrAnonymousLink = a.UrAnonymousLink,
-                                UrAnonymousMail = a.UrAnonymousMail,
-                                UrAnonymousName = a.UrAnonymousName,
+            using var db = new ContextBase();
+            var query = from a in db.UserReply
+                        join b in db.UserInfo on a.Uid equals b.UserId into bg
+                        from b1 in bg.DefaultIfEmpty()
+                        where a.UrTargetType == replyType.ToString() && a.UrTargetId == UrTargetId
+                        orderby a.UrCreateTime ascending
+                        select new UserReply
+                        {
+                            Uid = a.Uid,
+                            UrId = a.UrId,
+                            UrStatus = a.UrStatus,
+                            UrCreateTime = a.UrCreateTime,
+                            UrContent = a.UrContent,
+                            UrAnonymousLink = a.UrAnonymousLink,
+                            UrAnonymousMail = a.UrAnonymousMail,
+                            UrAnonymousName = a.UrAnonymousName,
 
-                                UrTargetId = a.UrTargetId,
+                            UrTargetId = a.UrTargetId,
 
-                                Spare1 = b1.Nickname,
-                                Spare2 = b1.UserPhoto
-                            };
+                            Spare1 = b1.Nickname,
+                            Spare2 = b1.UserPhoto
+                        };
 
-                pag.Total = query.Count();
+            pag.Total = query.Count();
 
-                query = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
+            query = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize);
 
-                var list = query.ToList();
+            var list = query.ToList();
 
-                return list;
-            }
+            return list;
         }
 
         /// <summary>
@@ -400,42 +388,40 @@ namespace Netnr.Func
         /// <returns></returns>
         public static List<KeyValues> KeyValuesQuery(List<string> ListKeyName)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var listKv = db.KeyValues.Where(x => ListKeyName.Contains(x.KeyName)).ToList();
+            if (listKv.Count != ListKeyName.Count)
             {
-                var listKv = db.KeyValues.Where(x => ListKeyName.Contains(x.KeyName)).ToList();
-                if (listKv.Count != ListKeyName.Count)
+                var hasK = listKv.Select(x => x.KeyName).ToList();
+                var noK = new List<string>();
+                foreach (var item in ListKeyName)
                 {
-                    var hasK = listKv.Select(x => x.KeyName).ToList();
-                    var noK = new List<string>();
-                    foreach (var item in ListKeyName)
+                    if (!hasK.Contains(item))
                     {
-                        if (!hasK.Contains(item))
-                        {
-                            noK.Add(item);
-                        }
-                    }
-                    if (noK.Count > 0)
-                    {
-                        var listKvs = db.KeyValueSynonym.Where(x => noK.Contains(x.KsName)).ToList();
-                        if (listKvs.Count > 0)
-                        {
-                            var appendKey = listKvs.Select(x => x.KeyName).ToList();
-                            var appendKv = db.KeyValues.Where(x => appendKey.Contains(x.KeyName)).ToList();
-                            foreach (var item in appendKv)
-                            {
-                                var mc = listKvs.Where(x => x.KeyName == item.KeyName).FirstOrDefault();
-                                if (mc != null)
-                                {
-                                    item.KeyName = mc.KsName;
-                                }
-                            }
-                            listKv.AddRange(appendKv);
-                        }
+                        noK.Add(item);
                     }
                 }
-
-                return listKv;
+                if (noK.Count > 0)
+                {
+                    var listKvs = db.KeyValueSynonym.Where(x => noK.Contains(x.KsName)).ToList();
+                    if (listKvs.Count > 0)
+                    {
+                        var appendKey = listKvs.Select(x => x.KeyName).ToList();
+                        var appendKv = db.KeyValues.Where(x => appendKey.Contains(x.KeyName)).ToList();
+                        foreach (var item in appendKv)
+                        {
+                            var mc = listKvs.Where(x => x.KeyName == item.KeyName).FirstOrDefault();
+                            if (mc != null)
+                            {
+                                item.KeyName = mc.KsName;
+                            }
+                        }
+                        listKv.AddRange(appendKv);
+                    }
+                }
             }
+
+            return listKv;
         }
 
         /// <summary>
@@ -447,61 +433,59 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM MessageQuery(int UserId, EnumAid.MessageType? messageType, int? action, int page = 1)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query = from a in db.UserMessage
+                        join b in db.UserInfo on a.UmTriggerUid equals b.UserId into bg
+                        from b1 in bg.DefaultIfEmpty()
+                        orderby a.UmCreateTime descending
+                        where a.Uid == UserId
+                        select new
+                        {
+                            a,
+                            b1.Nickname,
+                            b1.UserPhoto
+                        };
+            if (messageType.HasValue)
             {
-                var query = from a in db.UserMessage
-                            join b in db.UserInfo on a.UmTriggerUid equals b.UserId into bg
-                            from b1 in bg.DefaultIfEmpty()
-                            orderby a.UmCreateTime descending
-                            where a.Uid == UserId
-                            select new
-                            {
-                                a,
-                                b1.Nickname,
-                                b1.UserPhoto
-                            };
-                if (messageType.HasValue)
-                {
-                    query = query.Where(x => x.a.UmType == messageType.ToString());
-                }
-                if (action.HasValue)
-                {
-                    query = query.Where(x => x.a.UmAction == action);
-                }
-
-                var pag = new PaginationVM
-                {
-                    PageNumber = Math.Max(page, 1),
-                    PageSize = 10
-                };
-
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
-
-                if (list.Count > 0)
-                {
-                    //分类：根据ID查询对应的标题
-                    var listUwId = list.Where(x => x.a.UmType == EnumAid.MessageType.UserWriting.ToString()).Select(x => Convert.ToInt32(x.a.UmTargetId)).ToList();
-                    var listUw = db.UserWriting.Where(x => listUwId.Contains(x.UwId)).Select(x => new { x.UwId, x.UwTitle }).ToList();
-
-                    foreach (var item in list)
-                    {
-                        item.a.Spare1 = item.Nickname;
-                        item.a.Spare2 = item.UserPhoto;
-                        item.a.Spare3 = listUw.FirstOrDefault(x => x.UwId.ToString() == item.a.UmTargetId)?.UwTitle;
-                    }
-                }
-
-                var data = list.Select(x => x.a).ToList();
-
-                PageSetVM pageSet = new PageSetVM()
-                {
-                    Rows = data,
-                    Pag = pag
-                };
-
-                return pageSet;
+                query = query.Where(x => x.a.UmType == messageType.ToString());
             }
+            if (action.HasValue)
+            {
+                query = query.Where(x => x.a.UmAction == action);
+            }
+
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 10
+            };
+
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+
+            if (list.Count > 0)
+            {
+                //分类：根据ID查询对应的标题
+                var listUwId = list.Where(x => x.a.UmType == EnumAid.MessageType.UserWriting.ToString()).Select(x => Convert.ToInt32(x.a.UmTargetId)).ToList();
+                var listUw = db.UserWriting.Where(x => listUwId.Contains(x.UwId)).Select(x => new { x.UwId, x.UwTitle }).ToList();
+
+                foreach (var item in list)
+                {
+                    item.a.Spare1 = item.Nickname;
+                    item.a.Spare2 = item.UserPhoto;
+                    item.a.Spare3 = listUw.FirstOrDefault(x => x.UwId.ToString() == item.a.UmTargetId)?.UwTitle;
+                }
+            }
+
+            var data = list.Select(x => x.a).ToList();
+
+            PageSetVM pageSet = new PageSetVM()
+            {
+                Rows = data,
+                Pag = pag
+            };
+
+            return pageSet;
         }
 
         /// <summary>
@@ -511,11 +495,9 @@ namespace Netnr.Func
         /// <returns></returns>
         public static int NewMessageQuery(int UserId)
         {
-            using (var db = new ContextBase())
-            {
-                int num = db.UserMessage.Where(x => x.Uid == UserId && x.UmStatus == 1).Count();
-                return num;
-            }
+            using var db = new ContextBase();
+            int num = db.UserMessage.Where(x => x.Uid == UserId && x.UmStatus == 1).Count();
+            return num;
         }
 
         /// <summary>
@@ -528,69 +510,67 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM DocQuery(string q, int OwnerId, int UserId, int page = 1)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query = from a in db.DocSet
+                        join b in db.UserInfo on a.Uid equals b.UserId
+                        where a.DsStatus == 1
+                        orderby a.DsCreateTime descending
+                        select new DocSet
+                        {
+                            DsCode = a.DsCode,
+                            DsCreateTime = a.DsCreateTime,
+                            DsName = a.DsName,
+                            DsOpen = a.DsOpen,
+                            DsRemark = a.DsRemark,
+                            Uid = a.Uid,
+
+                            Spare3 = b.Nickname
+                        };
+
+            //所属用户
+            if (OwnerId != 0)
             {
-                var query = from a in db.DocSet
-                            join b in db.UserInfo on a.Uid equals b.UserId
-                            where a.DsStatus == 1
-                            orderby a.DsCreateTime descending
-                            select new DocSet
-                            {
-                                DsCode = a.DsCode,
-                                DsCreateTime = a.DsCreateTime,
-                                DsName = a.DsName,
-                                DsOpen = a.DsOpen,
-                                DsRemark = a.DsRemark,
-                                Uid = a.Uid,
+                query = query.Where(x => x.Uid == OwnerId);
+            }
 
-                                Spare3 = b.Nickname
-                            };
+            //未登录
+            if (UserId == 0)
+            {
+                query = query.Where(x => x.DsOpen == 1);
+            }
+            else
+            {
+                //已登录：公开&登录用户的所有
+                query = query.Where(x => x.DsOpen == 1 || x.Uid == UserId);
+            }
 
-                //所属用户
-                if (OwnerId != 0)
-                {
-                    query = query.Where(x => x.Uid == OwnerId);
-                }
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query = query.Where(x => x.DsName.Contains(q) || x.DsRemark.Contains(q));
+            }
 
-                //未登录
-                if (UserId == 0)
-                {
-                    query = query.Where(x => x.DsOpen == 1);
-                }
-                else
-                {
-                    //已登录：公开&登录用户的所有
-                    query = query.Where(x => x.DsOpen == 1 || x.Uid == UserId);
-                }
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 9
+            };
 
-                if (!string.IsNullOrWhiteSpace(q))
-                {
-                    query = query.Where(x => x.DsName.Contains(q) || x.DsRemark.Contains(q));
-                }
-
-                var pag = new PaginationVM
-                {
-                    PageNumber = Math.Max(page, 1),
-                    PageSize = 9
-                };
-
-                var dicQs = new Dictionary<string, string>
+            var dicQs = new Dictionary<string, string>
                 {
                     { "q", q }
                 };
 
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-                PageSetVM pageSet = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag,
-                    QueryString = dicQs
-                };
+            PageSetVM pageSet = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
 
-                return pageSet;
-            }
+            return pageSet;
         }
 
         /// <summary>
@@ -604,53 +584,57 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM GistQuery(string q, string lang, int OwnerId = 0, int UserId = 0, int page = 1)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query1 = from a in db.Gist
+                         join b in db.UserInfo on a.Uid equals b.UserId
+                         where a.GistStatus == 1
+                         orderby a.GistCreateTime descending
+                         select new
+                         {
+                             a,
+                             b.Nickname
+                         };
+
+            if (!string.IsNullOrWhiteSpace(lang))
             {
-                var query1 = from a in db.Gist
-                             join b in db.UserInfo on a.Uid equals b.UserId
-                             where a.GistStatus == 1
-                             orderby a.GistCreateTime descending
-                             select new
-                             {
-                                 a,
-                                 b.Nickname
-                             };
+                query1 = query1.Where(x => x.a.GistLanguage == lang);
+            }
 
-                if (!string.IsNullOrWhiteSpace(lang))
-                {
-                    query1 = query1.Where(x => x.a.GistLanguage == lang);
-                }
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query1 = query1.Where(x => x.a.GistFilename.Contains(q) || x.a.GistContent.Contains(q) || x.a.GistRemark.Contains(q));
+            }
 
-                if (!string.IsNullOrWhiteSpace(q))
-                {
-                    query1 = query1.Where(x => x.a.GistFilename.Contains(q) || x.a.GistContent.Contains(q) || x.a.GistRemark.Contains(q));
-                }
+            //所属用户
+            if (OwnerId != 0)
+            {
+                query1 = query1.Where(x => x.a.Uid == OwnerId);
+            }
 
-                //所属用户
-                if (OwnerId != 0)
-                {
-                    query1 = query1.Where(x => x.a.Uid == OwnerId);
-                }
+            //未登录
+            if (UserId == 0)
+            {
+                query1 = query1.Where(x => x.a.GistOpen == 1);
+            }
+            else
+            {
+                //已登录：公开&登录用户的所有
+                query1 = query1.Where(x => x.a.GistOpen == 1 || x.a.Uid == UserId);
+            }
 
-                //未登录
-                if (UserId == 0)
-                {
-                    query1 = query1.Where(x => x.a.GistOpen == 1);
-                }
-                else
-                {
-                    //已登录：公开&登录用户的所有
-                    query1 = query1.Where(x => x.a.GistOpen == 1 || x.a.Uid == UserId);
-                }
+            IQueryable<Gist> query = null;
 
+            //搜索
+            if (!string.IsNullOrWhiteSpace(q))
+            {
                 var query2 = query1.Select(x => new
                 {
                     SearchOrder = (x.a.GistFilename.Contains(q) ? 4 : 0) + (x.a.GistContent.Contains(q) ? 2 : 0) + (x.a.GistRemark.Contains(q) ? 1 : 0),
                     x.Nickname,
                     x.a
-                });
+                }).OrderByDescending(x => x.SearchOrder);
 
-                var query = query2.OrderByDescending(x => x.SearchOrder).Select(x => new Gist
+                query = query2.Select(x => new Gist
                 {
                     GistCode = x.a.GistCode,
                     GistContentPreview = x.a.GistContentPreview,
@@ -666,30 +650,49 @@ namespace Netnr.Func
 
                     Spare3 = x.Nickname
                 });
-
-                var pag = new PaginationVM
+            }
+            else
+            {
+                query = query1.Select(x => new Gist
                 {
-                    PageNumber = Math.Max(page, 1),
-                    PageSize = 10
-                };
+                    GistCode = x.a.GistCode,
+                    GistContentPreview = x.a.GistContentPreview,
+                    GistCreateTime = x.a.GistCreateTime,
+                    GistFilename = x.a.GistFilename,
+                    GistId = x.a.GistId,
+                    GistLanguage = x.a.GistLanguage,
+                    GistRemark = x.a.GistRemark,
+                    GistRow = x.a.GistRow,
+                    GistTags = x.a.GistTags,
+                    GistTheme = x.a.GistTheme,
+                    Uid = x.a.Uid,
 
-                var dicQs = new Dictionary<string, string>
+                    Spare3 = x.Nickname
+                });
+            }
+
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 10
+            };
+
+            var dicQs = new Dictionary<string, string>
                 {
                     { "q", q }
                 };
 
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-                PageSetVM pageSet = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag,
-                    QueryString = dicQs
-                };
+            PageSetVM pageSet = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
 
-                return pageSet;
-            }
+            return pageSet;
         }
 
         /// <summary>
@@ -702,71 +705,69 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM RunQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query = from a in db.Run
+                        join b in db.UserInfo on a.Uid equals b.UserId
+                        where a.RunStatus == 1
+                        orderby a.RunCreateTime descending
+                        select new Run
+                        {
+                            RunCode = a.RunCode,
+                            RunCreateTime = a.RunCreateTime,
+                            RunId = a.RunId,
+                            RunRemark = a.RunRemark,
+                            RunTags = a.RunTags,
+                            RunTheme = a.RunTheme,
+                            Uid = a.Uid,
+                            RunOpen = a.RunOpen,
+
+                            Spare3 = b.Nickname,
+                        };
+
+            //所属用户
+            if (OwnerId != 0)
             {
-                var query = from a in db.Run
-                            join b in db.UserInfo on a.Uid equals b.UserId
-                            where a.RunStatus == 1
-                            orderby a.RunCreateTime descending
-                            select new Run
-                            {
-                                RunCode = a.RunCode,
-                                RunCreateTime = a.RunCreateTime,
-                                RunId = a.RunId,
-                                RunRemark = a.RunRemark,
-                                RunTags = a.RunTags,
-                                RunTheme = a.RunTheme,
-                                Uid = a.Uid,
-                                RunOpen = a.RunOpen,
+                query = query.Where(x => x.Uid == OwnerId);
+            }
 
-                                Spare3 = b.Nickname,
-                            };
+            //未登录
+            if (UserId == 0)
+            {
+                query = query.Where(x => x.RunOpen == 1);
+            }
+            else
+            {
+                //已登录：公开&登录用户的所有
+                query = query.Where(x => x.RunOpen == 1 || x.Uid == UserId);
+            }
 
-                //所属用户
-                if (OwnerId != 0)
-                {
-                    query = query.Where(x => x.Uid == OwnerId);
-                }
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query = query.Where(x => x.RunTheme.Contains(q) || x.RunRemark.Contains(q));
+            }
 
-                //未登录
-                if (UserId == 0)
-                {
-                    query = query.Where(x => x.RunOpen == 1);
-                }
-                else
-                {
-                    //已登录：公开&登录用户的所有
-                    query = query.Where(x => x.RunOpen == 1 || x.Uid == UserId);
-                }
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 4
+            };
 
-                if (!string.IsNullOrWhiteSpace(q))
-                {
-                    query = query.Where(x => x.RunTheme.Contains(q) || x.RunRemark.Contains(q));
-                }
-
-                var pag = new PaginationVM
-                {
-                    PageNumber = Math.Max(page, 1),
-                    PageSize = 4
-                };
-
-                var dicQs = new Dictionary<string, string>
+            var dicQs = new Dictionary<string, string>
                 {
                     { "q", q }
                 };
 
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-                PageSetVM pageSet = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag,
-                    QueryString = dicQs
-                };
+            PageSetVM pageSet = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
 
-                return pageSet;
-            }
+            return pageSet;
         }
 
         /// <summary>
@@ -779,73 +780,71 @@ namespace Netnr.Func
         /// <returns></returns>
         public static PageSetVM DrawQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
         {
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var query = from a in db.Draw
+                        join b in db.UserInfo on a.Uid equals b.UserId
+                        where a.DrStatus == 1
+                        orderby a.DrCreateTime descending
+                        select new Draw
+                        {
+                            DrId = a.DrId,
+                            Uid = a.Uid,
+                            DrType = a.DrType,
+                            DrName = a.DrName,
+                            DrRemark = a.DrRemark,
+                            DrCategory = a.DrCategory,
+                            DrOrder = a.DrOrder,
+                            DrCreateTime = a.DrCreateTime,
+                            DrStatus = a.DrStatus,
+                            DrOpen = a.DrOpen,
+
+                            Spare3 = b.Nickname
+                        };
+
+            //所属用户
+            if (OwnerId != 0)
             {
-                var query = from a in db.Draw
-                            join b in db.UserInfo on a.Uid equals b.UserId
-                            where a.DrStatus == 1
-                            orderby a.DrCreateTime descending
-                            select new Draw
-                            {
-                                DrId = a.DrId,
-                                Uid = a.Uid,
-                                DrType = a.DrType,
-                                DrName = a.DrName,
-                                DrRemark = a.DrRemark,
-                                DrCategory = a.DrCategory,
-                                DrOrder = a.DrOrder,
-                                DrCreateTime = a.DrCreateTime,
-                                DrStatus = a.DrStatus,
-                                DrOpen = a.DrOpen,
+                query = query.Where(x => x.Uid == OwnerId);
+            }
 
-                                Spare3 = b.Nickname
-                            };
+            //未登录
+            if (UserId == 0)
+            {
+                query = query.Where(x => x.DrOpen == 1);
+            }
+            else
+            {
+                //已登录：公开&登录用户的所有
+                query = query.Where(x => x.DrOpen == 1 || x.Uid == UserId);
+            }
 
-                //所属用户
-                if (OwnerId != 0)
-                {
-                    query = query.Where(x => x.Uid == OwnerId);
-                }
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query = query.Where(x => x.DrName.Contains(q) || x.DrRemark.Contains(q));
+            }
 
-                //未登录
-                if (UserId == 0)
-                {
-                    query = query.Where(x => x.DrOpen == 1);
-                }
-                else
-                {
-                    //已登录：公开&登录用户的所有
-                    query = query.Where(x => x.DrOpen == 1 || x.Uid == UserId);
-                }
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 20
+            };
 
-                if (!string.IsNullOrWhiteSpace(q))
-                {
-                    query = query.Where(x => x.DrName.Contains(q) || x.DrRemark.Contains(q));
-                }
-
-                var pag = new PaginationVM
-                {
-                    PageNumber = Math.Max(page, 1),
-                    PageSize = 20
-                };
-
-                var dicQs = new Dictionary<string, string>
+            var dicQs = new Dictionary<string, string>
                 {
                     { "q", q }
                 };
 
-                pag.Total = query.Count();
-                var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-                PageSetVM pageSet = new PageSetVM()
-                {
-                    Rows = list,
-                    Pag = pag,
-                    QueryString = dicQs
-                };
+            PageSetVM pageSet = new PageSetVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
 
-                return pageSet;
-            }
+            return pageSet;
         }
 
     }

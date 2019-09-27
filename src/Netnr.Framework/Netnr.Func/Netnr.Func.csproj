@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentScheduler" Version="5.3.0" />
     <PackageReference Include="MailKit" Version="2.3.1.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
-    <PackageReference Include="Netnr.Core" Version="1.1.1" />
+    <PackageReference Include="Netnr.Core" Version="1.2.0" />
+    <PackageReference Include="Netnr.Login" Version="3.2.0-beta1" />
     <PackageReference Include="Qcloud.Shared.NetCore" Version="1.0.0" />
-    <PackageReference Include="Shell.NET" Version="0.2.2" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.302-beta" />
   </ItemGroup>
 
   <ItemGroup>

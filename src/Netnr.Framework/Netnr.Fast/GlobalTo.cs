@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 public class GlobalTo
 {
@@ -13,15 +13,8 @@ public class GlobalTo
 
     /// <summary>
     /// 托管环境信息
-    /// 
-    /// //内部访问（项目根路径）
-    /// HostingEnvironment.ContentRootPath
-    /// 
-    /// //web外部访问（wwwroot）
-    /// HostingEnvironment.WebRootPath
-    /// 
     /// </summary>
-    public static IHostingEnvironment HostingEnvironment;
+    public static IHostEnvironment HostEnvironment;
 
     /// <summary>
     /// 内部访问（项目根路径）
@@ -30,7 +23,7 @@ public class GlobalTo
     {
         get
         {
-            return HostingEnvironment.ContentRootPath;
+            return HostEnvironment.ContentRootPath;
         }
     }
 
@@ -41,7 +34,7 @@ public class GlobalTo
     {
         get
         {
-            return HostingEnvironment.WebRootPath;
+            return ContentRootPath + "/wwwroot";
         }
     }
 

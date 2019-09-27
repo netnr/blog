@@ -1,23 +1,22 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Netnr.Login;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using Netnr.Data;
-using Netnr.Login;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Netnr.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
             GlobalTo.Configuration = configuration;
-            GlobalTo.HostingEnvironment = env;
+            GlobalTo.HostEnvironment = env;
 
             #region 第三方登录
             QQConfig.APPID = GlobalTo.GetValue("OAuthLogin:QQ:APPID");
@@ -33,22 +32,24 @@ namespace Netnr.Web
             GitHubConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:GitHub:Redirect_Uri");
             GitHubConfig.ApplicationName = GlobalTo.GetValue("OAuthLogin:GitHub:ApplicationName");
 
-            TaobaoConfig.AppKey = GlobalTo.GetValue("OAuthLogin:Taobao:AppKey");
-            TaobaoConfig.AppSecret = GlobalTo.GetValue("OAuthLogin:Taobao:AppSecret");
-            TaobaoConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:Taobao:Redirect_Uri");
+            TaoBaoConfig.AppKey = GlobalTo.GetValue("OAuthLogin:TaoBao:AppKey");
+            TaoBaoConfig.AppSecret = GlobalTo.GetValue("OAuthLogin:TaoBao:AppSecret");
+            TaoBaoConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:TaoBao:Redirect_Uri");
 
             MicroSoftConfig.ClientID = GlobalTo.GetValue("OAuthLogin:MicroSoft:ClientID");
             MicroSoftConfig.ClientSecret = GlobalTo.GetValue("OAuthLogin:MicroSoft:ClientSecret");
             MicroSoftConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:MicroSoft:Redirect_Uri");
+
+            DingTalkConfig.appId= GlobalTo.GetValue("OAuthLogin:DingTalk:AppId");
+            DingTalkConfig.appSecret = GlobalTo.GetValue("OAuthLogin:DingTalk:AppSecret");
+            DingTalkConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:DingTalk:Redirect_Uri");
             #endregion
 
             try
             {
                 //无创建，有忽略
-                using (var db = new ContextBase())
-                {
-                    db.Database.EnsureCreated();
-                }
+                using var db = new Data.ContextBase();
+                db.Database.EnsureCreated();
             }
             catch (System.Exception)
             {
@@ -61,15 +62,24 @@ namespace Netnr.Web
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                //cookie存储需用户同意，欧盟新标准，暂且关闭，否则用户没同意无法写入
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //跨域，用法：[EnableCors("any")]
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddMvc(options =>
+            services.AddRazorPages();
+            services.AddControllersWithViews(options =>
             {
                 //注册全局错误过滤器
                 options.Filters.Add(new Filters.FilterConfigs.ErrorActionFilter());
@@ -79,7 +89,8 @@ namespace Netnr.Web
 
                 //注册全局授权访问时登录标记是否有效
                 options.Filters.Add(new Filters.FilterConfigs.LogonSignValid());
-            }).AddJsonOptions(options =>
+            });
+            services.AddControllers().AddNewtonsoftJson(options =>
             {
                 //Action原样输出JSON
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
@@ -87,24 +98,10 @@ namespace Netnr.Web
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
 
-            //cookie共享
-            //services.AddDataProtection()
-            //    .SetApplicationName("cookieshare")
-            //    .PersistKeysToFileSystem(new DirectoryInfo(GlobalTo.StartPath + ".aspnetcore-cookieshare"));
-
             //授权访问信息
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.Cookie.Name = "NetnrAuth";
-                options.LoginPath = new PathString("/account/login");
-                options.AccessDeniedPath = new PathString("/account/login");
-                options.ExpireTimeSpan = System.DateTime.Now.AddDays(10) - System.DateTime.Now;
-
-                string cd = GlobalTo.GetValue("AuthCookieDomain");
-                if (!string.IsNullOrWhiteSpace(cd))
-                {
-                    options.Cookie.Domain = cd;
-                }
+                options.LoginPath = "/account/login";
             });
 
             //session
@@ -112,20 +109,6 @@ namespace Netnr.Web
 
             //定时任务
             FluentScheduler.JobManager.Initialize(new Func.TaskAid.TaskComponent.Reg());
-
-            //跨域（ 用法：[EnableCors("Cors")] ）
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Cors", builder =>
-                {
-                    //允许任何来源的主机访问
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-                    //指定处理cookie
-                });
-            });
 
             //配置上传文件大小限制（详细信息：FormOptions）
             services.Configure<FormOptions>(options =>
@@ -137,8 +120,11 @@ namespace Netnr.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IMemoryCache memoryCache)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCache memoryCache)
         {
+            //缓存
+            Core.CacheTo.memoryCache = memoryCache;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -162,38 +148,33 @@ namespace Netnr.Web
                     x.Context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 }
             });
-            app.UseCookiePolicy();
 
-            //授权访问
-            app.UseAuthentication();
+            //跨域
+            app.UseCors("any");
 
             //session
             app.UseSession();
 
-            //跨域
-            app.UseCors("Cors");
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            //授权访问
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                   name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapRoute(
-                   name: "U",
-                  template: "{controller=U}/{id}", new { action = "index" });
+                endpoints.MapControllerRoute("U", "{controller=U}/{id}", new { action = "index" });
+                endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("Code", "{area:exists}/{controller=Code}/{id?}/{sid?}", new { action = "index" });
+                endpoints.MapControllerRoute("Raw", "{area:exists}/{controller=Raw}/{id?}", new { action = "index" });
+                endpoints.MapControllerRoute("User", "{area:exists}/{controller=User}/{id?}", new { action = "index" });
 
-                routes.MapRoute(
-                    name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute("Code", "{area:exists}/{controller=Code}/{id?}/{sid?}", new { action = "index" });
-                routes.MapRoute("Raw", "{area:exists}/{controller=Raw}/{id?}", new { action = "index" });
-                routes.MapRoute("User", "{area:exists}/{controller=User}/{id?}", new { action = "index" });
+                endpoints.MapRazorPages();
             });
-
-            //缓存
-            Core.CacheTo.memoryCache = memoryCache;
         }
     }
 }

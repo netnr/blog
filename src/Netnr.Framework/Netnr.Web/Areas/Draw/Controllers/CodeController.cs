@@ -33,20 +33,18 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 if (!string.IsNullOrWhiteSpace(sid))
                 {
                     var vm = new ActionResultVM();
-                    using (var db = new Data.ContextBase())
+                    using var db = new Data.ContextBase();
+                    var mo = db.Draw.Find(sid);
+                    if (mo?.DrOpen == 1 || mo?.Uid == uinfo.UserId)
                     {
-                        var mo = db.Draw.Find(sid);
-                        if (mo?.DrOpen == 1 || mo?.Uid == uinfo.UserId)
-                        {
-                            vm.Set(ARTag.success);
-                            vm.data = mo;
-                        }
-                        else
-                        {
-                            vm.Set(ARTag.unauthorized);
-                        }
-                        return Content(vm.ToJson());
+                        vm.Set(ARTag.success);
+                        vm.data = mo;
                     }
+                    else
+                    {
+                        vm.Set(ARTag.unauthorized);
+                    }
+                    return Content(vm.ToJson());
                 }
                 return Ok();
             }
@@ -58,13 +56,11 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 {
                     if (!string.IsNullOrWhiteSpace(sid))
                     {
-                        using (var db = new Data.ContextBase())
+                        using var db = new Data.ContextBase();
+                        var mo = db.Draw.Find(sid);
+                        if (mo.Uid == uinfo.UserId)
                         {
-                            var mo = db.Draw.Find(sid);
-                            if (mo.Uid == uinfo.UserId)
-                            {
-                                model = mo;
-                            }
+                            model = mo;
                         }
                     }
                 }
@@ -77,34 +73,32 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 var vm = new ActionResultVM();
                 if (User.Identity.IsAuthenticated)
                 {
-                    using (var db = new Data.ContextBase())
+                    using var db = new Data.ContextBase();
+                    int num = 0;
+                    if (string.IsNullOrWhiteSpace(mof.DrId))
                     {
-                        int num = 0;
-                        if (string.IsNullOrWhiteSpace(mof.DrId))
-                        {
-                            mof.DrId = mof.DrType[0] + Core.UniqueTo.LongId().ToString();
-                            mof.DrCreateTime = DateTime.Now;
-                            mof.Uid = uinfo.UserId;
-                            mof.DrOrder = 100;
+                        mof.DrId = mof.DrType[0] + Core.UniqueTo.LongId().ToString();
+                        mof.DrCreateTime = DateTime.Now;
+                        mof.Uid = uinfo.UserId;
+                        mof.DrOrder = 100;
 
-                            db.Draw.Add(mof);
+                        db.Draw.Add(mof);
+                        num = db.SaveChanges();
+                    }
+                    else
+                    {
+                        var newmo = db.Draw.Find(mof.DrId);
+                        if (newmo.Uid == uinfo.UserId)
+                        {
+                            newmo.DrRemark = mof.DrRemark;
+                            newmo.DrName = mof.DrName;
+                            newmo.DrOpen = mof.DrOpen;
+
+                            db.Draw.Update(newmo);
                             num = db.SaveChanges();
                         }
-                        else
-                        {
-                            var newmo = db.Draw.Find(mof.DrId);
-                            if (newmo.Uid == uinfo.UserId)
-                            {
-                                newmo.DrRemark = mof.DrRemark;
-                                newmo.DrName = mof.DrName;
-                                newmo.DrOpen = mof.DrOpen;
-
-                                db.Draw.Update(newmo);
-                                num = db.SaveChanges();
-                            }
-                        }
-                        vm.Set(num > 0);
                     }
+                    vm.Set(num > 0);
                 }
                 else
                 {
@@ -127,48 +121,46 @@ namespace Netnr.Web.Areas.Draw.Controllers
 
                 if (User.Identity.IsAuthenticated)
                 {
-                    using (var db = new Data.ContextBase())
+                    using var db = new Data.ContextBase();
+                    //新增
+                    if (string.IsNullOrWhiteSpace(sid))
                     {
-                        //新增
-                        if (string.IsNullOrWhiteSpace(sid))
+                        var mo = new Domain.Draw
                         {
-                            var mo = new Domain.Draw
-                            {
-                                DrName = filename,
-                                DrContent = xml,
+                            DrName = filename,
+                            DrContent = xml,
 
-                                DrId = mof.DrType[0] + Core.UniqueTo.LongId().ToString(),
-                                DrType = mof.DrType,
-                                DrCreateTime = DateTime.Now,
-                                DrOpen = 1,
-                                DrOrder = 100,
-                                DrStatus = 1,
-                                Uid = uinfo.UserId
-                            };
+                            DrId = mof.DrType[0] + Core.UniqueTo.LongId().ToString(),
+                            DrType = mof.DrType,
+                            DrCreateTime = DateTime.Now,
+                            DrOpen = 1,
+                            DrOrder = 100,
+                            DrStatus = 1,
+                            Uid = uinfo.UserId
+                        };
 
-                            db.Draw.Add(mo);
+                        db.Draw.Add(mo);
+
+                        var num = db.SaveChanges();
+                        vm.Set(num > 0);
+                        vm.data = mo.DrId;
+                    }
+                    else
+                    {
+                        var mo = db.Draw.Find(sid);
+                        if (mo?.Uid == uinfo.UserId)
+                        {
+                            mo.DrName = filename;
+                            mo.DrContent = xml;
+
+                            db.Draw.Update(mo);
 
                             var num = db.SaveChanges();
                             vm.Set(num > 0);
-                            vm.data = mo.DrId;
                         }
                         else
                         {
-                            var mo = db.Draw.Find(sid);
-                            if (mo?.Uid == uinfo.UserId)
-                            {
-                                mo.DrName = filename;
-                                mo.DrContent = xml;
-
-                                db.Draw.Update(mo);
-
-                                var num = db.SaveChanges();
-                                vm.Set(num > 0);
-                            }
-                            else
-                            {
-                                vm.Set(ARTag.unauthorized);
-                            }
+                            vm.Set(ARTag.unauthorized);
                         }
                     }
                 }
@@ -186,19 +178,17 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 var result = "fail";
                 if (User.Identity.IsAuthenticated)
                 {
-                    using (var db = new Data.ContextBase())
+                    using var db = new Data.ContextBase();
+                    var mo = db.Draw.Find(sid);
+                    if (mo.Uid == uinfo.UserId)
                     {
-                        var mo = db.Draw.Find(sid);
-                        if (mo.Uid == uinfo.UserId)
-                        {
-                            db.Remove(mo);
-                            int num = db.SaveChanges();
-                            result = num > 0 ? "success" : "fail";
-                        }
-                        else
-                        {
-                            result = "unauthorized";
-                        }
+                        db.Remove(mo);
+                        int num = db.SaveChanges();
+                        result = num > 0 ? "success" : "fail";
+                    }
+                    else
+                    {
+                        result = "unauthorized";
                     }
                 }
                 else

@@ -29,35 +29,33 @@ namespace Netnr.Web.Gist.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var uinfo = new Func.UserAuthAid(HttpContext).Get();
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                switch (cmd)
                 {
-                    switch (cmd)
-                    {
-                        case "edit":
+                    case "edit":
+                        {
+                            var mo = db.Gist.Where(x => x.GistCode == id).FirstOrDefault();
+                            //有记录且为当前用户
+                            if (mo != null && mo.Uid == uinfo.UserId)
                             {
-                                var mo = db.Gist.Where(x => x.GistCode == id).FirstOrDefault();
-                                //有记录且为当前用户
-                                if (mo != null && mo.Uid == uinfo.UserId)
-                                {
-                                    return View("_PartialMonacoEditor", mo);
-                                }
+                                return View("_PartialMonacoEditor", mo);
                             }
-                            break;
-                        case "delete":
+                        }
+                        break;
+                    case "delete":
+                        {
+                            var mo = db.Gist.Where(x => x.GistCode == id && x.Uid == uinfo.UserId).FirstOrDefault();
+                            db.Gist.Remove(mo);
+                            int num = db.SaveChanges();
+                            if (num > 0)
                             {
-                                var mo = db.Gist.Where(x => x.GistCode == id && x.Uid == uinfo.UserId).FirstOrDefault();
-                                db.Gist.Remove(mo);
-                                int num = db.SaveChanges();
-                                if (num > 0)
-                                {
-                                    return Redirect("/gist/user/" + uinfo.UserId);
-                                }
-                                else
-                                {
-                                    return Content("Deletion failed or could not be accessed");
-                                }
+                                return Redirect("/gist/user/" + uinfo.UserId);
                             }
-                    }
+                            else
+                            {
+                                return Content("Deletion failed or could not be accessed");
+                            }
+                        }
                 }
             }
 

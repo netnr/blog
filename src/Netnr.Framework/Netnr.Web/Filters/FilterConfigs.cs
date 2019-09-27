@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -89,10 +89,10 @@ namespace Netnr.Web.Filters
                     string url = hc.Request.Path.ToString() + hc.Request.QueryString.Value;
                     var referer = hc.Request.Headers["referer"].ToString();
                     var requestid = Core.UniqueTo.LongId().ToString();
-                    hc.Response.Headers.Add("_qid", requestid);
+                    hc.Response.Headers.Add("X-Request-Id", requestid);
 
                     //客户端信息
-                    var ct = new Core.ClientTo(hc);
+                    var ct = new Fast.ClientTo(hc);
 
                     //用户信息
                     var userinfo = new Func.UserAuthAid(hc).Get();
@@ -105,7 +105,7 @@ namespace Netnr.Web.Filters
                         LogRequestId = requestid,
                         LogAction = controller + "/" + action,
                         LogUrl = url,
-                        LogIp = ct.IPv4,
+                        LogIp = ct.IPv4.Split(',')[0].Trim(),
                         LogReferer = referer,
                         LogCreateTime = DateTime.Now,
                         LogBrowserName = ct.BrowserName,
@@ -132,16 +132,17 @@ namespace Netnr.Web.Filters
         {
             public void OnAuthorization(AuthorizationFilterContext context)
             {
-                string UserId = context.HttpContext.User.FindFirstValue(ClaimTypes.Sid);
-                string LocalSign = context.HttpContext.User.FindFirstValue(ClaimTypes.SerialNumber);
-                if (UserId != null && LocalSign != null && LocalSign.Length == 9)
+                //验证登录标记是最新
+                if (context.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    string ServerSign = HelpFuncTo.GetLogonSign(Convert.ToInt32(UserId));
-                    if (LocalSign != ServerSign || LocalSign == "")
+                    var uinfo = new Func.UserAuthAid(context.HttpContext).Get();
+
+                    string ServerSign = HelpFuncTo.GetLogonSign(uinfo.UserId);
+                    if (uinfo.UserSign != ServerSign)
                     {
                         context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                     }
-                };
+                }
             }
         }
 
@@ -234,14 +235,12 @@ namespace Netnr.Web.Filters
                 }
                 else
                 {
-                    using (var db = new ContextBase())
+                    using var db = new ContextBase();
+                    var uiMo = db.UserInfo.Find(UserId);
+                    if (uiMo != null)
                     {
-                        var uiMo = db.UserInfo.Find(UserId);
-                        if (uiMo != null)
-                        {
-                            result = uiMo.UserSign;
-                            Core.CacheTo.Set("UserSign", result, 5 * 60, false);
-                        }
+                        result = uiMo.UserSign;
+                        Core.CacheTo.Set("UserSign", result, 5 * 60, false);
                     }
                 }
                 return result;

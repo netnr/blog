@@ -32,16 +32,14 @@ namespace Netnr.Func
                     HtmlBody = Content
                 }.ToMessageBody();
 
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                    client.Connect(GlobalTo.GetValue("MailKit:Host"), GlobalTo.GetValue<int>("MailKit:Port"), true);
-                    client.Authenticate(GlobalTo.GetValue("MailKit:Auth:UserName"), GlobalTo.GetValue("MailKit:Auth:Password"));
-                    client.Send(message);
-                    client.Disconnect(true);
+                using var client = new SmtpClient();
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.Connect(GlobalTo.GetValue("MailKit:Host"), GlobalTo.GetValue<int>("MailKit:Port"), true);
+                client.Authenticate(GlobalTo.GetValue("MailKit:Auth:UserName"), GlobalTo.GetValue("MailKit:Auth:Password"));
+                client.Send(message);
+                client.Disconnect(true);
 
-                    vm.Set(ARTag.success);
-                }
+                vm.Set(ARTag.success);
             }
             catch (Exception ex)
             {

@@ -49,7 +49,7 @@ namespace Netnr.Web.Controllers
                     query = query.Where(x => x.NoteTitle.Contains(ivm.pe1));
                 }
 
-                Func.Common.QueryJoin(query, ivm, db, ref ovm);
+                Func.Common.QueryJoin(query, ivm, ref ovm);
             }
             return ovm;
         }

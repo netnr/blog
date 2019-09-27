@@ -15,50 +15,51 @@ namespace Netnr.Fast
         /// 生成图片验证码
         /// </summary>
         /// <param name="num">随机码</param>
-        public static byte[] CreateImg(string num)
+        public static byte[] CreateImg(string code)
         {
-            Bitmap image = new Bitmap(110, 38);
-            Graphics g = Graphics.FromImage(image);
-            try
-            {
-                //生成随机生成器
-                Random random = new Random();
-                //清空图片背景色
-                g.Clear(Color.White);
-                //画图片的干扰线
-                //for (int i = 0; i < 50; i++)
-                //{
-                //    int x1 = random.Next(image.Width);
-                //    int x2 = random.Next(image.Width);
-                //    int y1 = random.Next(image.Height);
-                //    int y2 = random.Next(image.Height);
-                //    g.DrawLine(new Pen(Color.FromArgb(random.Next())), x1, y1, x2, y2);
-                //}
+            Random random = new Random();
 
-                Font font = new Font("Ravie", 19, (FontStyle.Italic | FontStyle.Bold));
-                LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, image.Width, image.Height),
-                 Color.FromArgb(67, 205, 128), Color.DarkRed, 1.9f, true);
-                g.DrawString(num, font, brush, 3, 2);
-                //画图片的前景干扰点
-                //for (int i = 0; i < 50; i++)
-                //{
-                //    int x = random.Next(image.Width);
-                //    int y = random.Next(image.Height);
-                //    image.SetPixel(x, y, Color.Blue);
-                //}
-                //画图片的边框线
-                //g.DrawRectangle(new Pen(Color.Silver), 0, 0, image.Width - 1, image.Height - 1);
-                //保存图片数据
-                MemoryStream stream = new MemoryStream();
-                image.Save(stream, ImageFormat.Jpeg);
-                //输出图片流
-                return stream.ToArray();
-            }
-            finally
+            //为验证码插入空格
+            for (int i = 0; i < 2; i++)
             {
-                g.Dispose();
-                image.Dispose();
+                code = code.Insert(random.Next(code.Length - 1), " ");
             }
+
+            //验证码颜色集合  
+            Color[] c = { Color.LightBlue, Color.LightCoral, Color.LightGreen, Color.LightPink, Color.LightSkyBlue, Color.LightSteelBlue, Color.LightSalmon };
+
+            //定义图像的大小，生成图像的实例  
+            Bitmap Img = new Bitmap(code.Length * 22, 38);
+            Graphics g = Graphics.FromImage(Img);
+
+            g.Clear(Color.White);//背景设为白色  
+
+            //验证码绘制在g中   
+            for (int i = 0; i < code.Length; i++)
+            {
+                Font f = new Font(FontFamily.GenericSerif, 24, (FontStyle.Italic | FontStyle.Bold));//字体  
+                Brush b = new SolidBrush(c[random.Next(c.Length - 1)]);//颜色  
+
+                //控制验证码不在同一高度
+                int ii = random.Next(20) * (random.Next(1) % 2 == 0 ? -1 : 1) + 10;
+                g.DrawString(code.Substring(i, 1), f, b, (i * 20), ii);//绘制一个验证字符
+            }
+
+            //在随机位置画背景点  
+            for (int i = 0; i < 200; i++)
+            {
+                int x = random.Next(Img.Width);
+                int y = random.Next(Img.Height);
+                g.DrawRectangle(new Pen(c[random.Next(c.Length - 1)], 0), x, y, 1, 1);
+            }
+
+            MemoryStream ms = new MemoryStream();
+            Img.Save(ms, ImageFormat.Jpeg);
+
+            //回收资源  
+            g.Dispose();
+            Img.Dispose();
+            return ms.ToArray();
         }
 
         /// <summary>

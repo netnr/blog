@@ -10,8 +10,8 @@
 }
 
     .otherlogin a {
-        width: 50px;
-        height: 50px;
+        width: 42px;
+        height: 42px;
         line-height: 50px;
         text-align: center;
         display: inline-block;
@@ -19,7 +19,7 @@
     }
 
         .otherlogin a img {
-            width: 2rem;
+            width: 1.8rem;
             -webkit-transition: width .3s;
             -moz-transition: width .3s;
             -o-transition: width .3s;

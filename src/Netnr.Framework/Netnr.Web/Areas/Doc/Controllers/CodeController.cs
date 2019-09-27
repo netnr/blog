@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Netnr.Data;
 using Netnr.Domain;
@@ -123,10 +123,8 @@ namespace Netnr.Web.Areas.Doc.Controllers
 
             if (!string.IsNullOrWhiteSpace(dsdid))
             {
-                using (var db = new ContextBase())
-                {
-                    mo = db.DocSetDetail.Where(x => x.DsdId == dsdid).FirstOrDefault();
-                }
+                using var db = new ContextBase();
+                mo = db.DocSetDetail.Where(x => x.DsdId == dsdid).FirstOrDefault();
             }
 
             return View(mo);
@@ -193,19 +191,17 @@ namespace Netnr.Web.Areas.Doc.Controllers
 
             if (!string.IsNullOrWhiteSpace(dsdid))
             {
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var ds = db.DocSet.Find(code);
+                if (ds?.Uid != uinfo.UserId)
                 {
-                    var ds = db.DocSet.Find(code);
-                    if (ds?.Uid != uinfo.UserId)
-                    {
-                        return Content("unauthorized");
-                    }
-
-                    var mo = db.DocSetDetail.Find(dsdid);
-                    db.DocSetDetail.Remove(mo);
-
-                    db.SaveChanges();
+                    return Content("unauthorized");
                 }
+
+                var mo = db.DocSetDetail.Find(dsdid);
+                db.DocSetDetail.Remove(mo);
+
+                db.SaveChanges();
             }
 
             return Redirect("/doc/code/" + code);
@@ -237,43 +233,41 @@ namespace Netnr.Web.Areas.Doc.Controllers
         {
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var ds = db.DocSet.Find(mo.DsCode);
+            if (ds?.Uid != uinfo.UserId)
             {
-                var ds = db.DocSet.Find(mo.DsCode);
-                if (ds?.Uid != uinfo.UserId)
-                {
-                    return "unauthorized";
-                }
-
-                mo.DsdOrder = mo.DsdOrder ?? 99;
-                mo.DsdUpdateTime = DateTime.Now;
-                if (string.IsNullOrWhiteSpace(mo.DsdPid))
-                {
-                    mo.DsdPid = Guid.Empty.ToString();
-                }
-
-                if (string.IsNullOrWhiteSpace(mo.DsdId))
-                {
-                    mo.DsdId = Guid.NewGuid().ToString();
-                    mo.DsdCreateTime = mo.DsdUpdateTime;
-                    mo.Uid = uinfo.UserId;
-
-
-                    db.DocSetDetail.Add(mo);
-                }
-                else
-                {
-                    var currmo = db.DocSetDetail.Where(x => x.DsdId == mo.DsdId).FirstOrDefault();
-                    currmo.DsdTitle = mo.DsdTitle;
-                    currmo.DsdOrder = mo.DsdOrder;
-                    currmo.DsdPid = mo.DsdPid;
-
-                    db.DocSetDetail.Update(currmo);
-                }
-                int num = db.SaveChanges();
-
-                return num > 0 ? "success" : "fail";
+                return "unauthorized";
             }
+
+            mo.DsdOrder ??= 99;
+            mo.DsdUpdateTime = DateTime.Now;
+            if (string.IsNullOrWhiteSpace(mo.DsdPid))
+            {
+                mo.DsdPid = Guid.Empty.ToString();
+            }
+
+            if (string.IsNullOrWhiteSpace(mo.DsdId))
+            {
+                mo.DsdId = Guid.NewGuid().ToString();
+                mo.DsdCreateTime = mo.DsdUpdateTime;
+                mo.Uid = uinfo.UserId;
+
+
+                db.DocSetDetail.Add(mo);
+            }
+            else
+            {
+                var currmo = db.DocSetDetail.Where(x => x.DsdId == mo.DsdId).FirstOrDefault();
+                currmo.DsdTitle = mo.DsdTitle;
+                currmo.DsdOrder = mo.DsdOrder;
+                currmo.DsdPid = mo.DsdPid;
+
+                db.DocSetDetail.Update(currmo);
+            }
+            int num = db.SaveChanges();
+
+            return num > 0 ? "success" : "fail";
         }
 
         [Description("删除目录")]
@@ -282,54 +276,48 @@ namespace Netnr.Web.Areas.Doc.Controllers
         {
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var ds = db.DocSet.Find(code);
+            if (ds?.Uid != uinfo.UserId)
             {
-                var ds = db.DocSet.Find(code);
-                if (ds?.Uid != uinfo.UserId)
-                {
-                    return "unauthorized";
-                }
-
-                var listdsd = db.DocSetDetail.Where(x => x.DsCode == code && string.IsNullOrEmpty(x.DsdContentMd)).ToList();
-                var removelist = Core.TreeTo.FindToTree(listdsd, "DsdPid", "DsdId", new List<string> { id });
-                removelist.Add(listdsd.Where(x => x.DsdId == id).FirstOrDefault());
-                db.DocSetDetail.RemoveRange(removelist);
-
-                db.SaveChanges();
-
-                return "success";
+                return "unauthorized";
             }
+
+            var listdsd = db.DocSetDetail.Where(x => x.DsCode == code && string.IsNullOrEmpty(x.DsdContentMd)).ToList();
+            var removelist = Core.TreeTo.FindToTree(listdsd, "DsdPid", "DsdId", new List<string> { id });
+            removelist.Add(listdsd.Where(x => x.DsdId == id).FirstOrDefault());
+            db.DocSetDetail.RemoveRange(removelist);
+
+            db.SaveChanges();
+
+            return "success";
         }
 
         [Description("导出")]
         public IActionResult Export()
         {
             var code = RouteData.Values["id"]?.ToString();
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var list = db.DocSetDetail.Where(x => x.DsCode == code).OrderBy(x => x.DsdOrder).Select(x => new
             {
-                var list = db.DocSetDetail.Where(x => x.DsCode == code)
-                    .OrderBy(x => x.DsdOrder)
-                    .Select(x => new
-                    {
-                        x.DsdId,
-                        x.DsdPid,
-                        x.DsdTitle,
-                        x.DsdOrder,
-                        IsCatalog = string.IsNullOrEmpty(x.DsdContentMd),
-                        x.DsdContentHtml
-                    }).ToList();
+                x.DsdId,
+                x.DsdPid,
+                x.DsdTitle,
+                x.DsdOrder,
+                IsCatalog = string.IsNullOrEmpty(x.DsdContentMd),
+                x.DsdContentHtml
+            }).ToList();
 
-                var htmlbody = ListTreeEach(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
+            var htmlbody = ListTreeEach(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
 
-                //读取模版
-                var tm = Core.FileTo.ReadText(Core.MapPathTo.Map("/template/", GlobalTo.HostingEnvironment), "htmltoword.html");
-                tm = tm.Replace("@netnrmd@", htmlbody);
+            //读取模版
+            var tm = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/template/", "htmltoword.html");
+            tm = tm.Replace("@netnrmd@", htmlbody);
 
-                //文件名
-                var filename = db.DocSet.Where(x => x.DsCode == code).FirstOrDefault()?.DsName ?? "netnrdoc";
+            //文件名
+            var filename = db.DocSet.Where(x => x.DsCode == code).FirstOrDefault()?.DsName ?? "netnrdoc";
 
-                return File(Encoding.Default.GetBytes(tm), "application/msword", filename + ".doc");
-            }
+            return File(Encoding.Default.GetBytes(tm), "application/msword", filename + ".doc");
         }
 
         private string ListTreeEach<T>(List<T> list, string pidField, string idField, List<string> startPid, List<int> listNo = null, int deep = 1)
@@ -404,25 +392,22 @@ namespace Netnr.Web.Areas.Doc.Controllers
         {
             var code = RouteData.Values["id"]?.ToString();
 
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var list = db.DocSetDetail.Where(x => x.DsCode == code).OrderBy(x => x.DsdOrder).Select(x => new
             {
-                var list = db.DocSetDetail.Where(x => x.DsCode == code).OrderBy(x => x.DsdOrder)
-                    .Select(x => new
-                    {
-                        x.DsdId,
-                        x.DsdPid,
-                        x.DsdTitle,
-                        x.DsdOrder,
-                        IsCatalog = string.IsNullOrEmpty(x.DsdContentMd)
-                    }).ToList();
+                x.DsdId,
+                x.DsdPid,
+                x.DsdTitle,
+                x.DsdOrder,
+                IsCatalog = string.IsNullOrEmpty(x.DsdContentMd)
+            }).ToList();
 
-                var listtree = Core.TreeTo.ListToTree(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
-                if (string.IsNullOrWhiteSpace(listtree))
-                {
-                    listtree = "[]";
-                }
-                return listtree;
+            var listtree = Core.TreeTo.ListToTree(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
+            if (string.IsNullOrWhiteSpace(listtree))
+            {
+                listtree = "[]";
             }
+            return listtree;
         }
 
     }

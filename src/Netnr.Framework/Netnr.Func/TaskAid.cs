@@ -66,7 +66,7 @@ namespace Netnr.Func
                 //执行命令
                 var cmd = GlobalTo.GetValue(kp + "cmd");
                 var rt = Core.CmdTo.Shell(cmd);
-                listMsg.Add(rt.ToJObject());
+                listMsg.Add(rt);
 
                 //上传配置
                 string bucketName = GlobalTo.GetValue(kp + "upload:bucketName");
@@ -107,216 +107,220 @@ namespace Netnr.Func
                 //日志
                 var listLog = new List<object>();
 
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var listGist = db.Gist.Where(x => x.Uid == UserId).OrderBy(x => x.GistCreateTime).ToList();
+
+                var codes = listGist.Select(x => x.GistCode).ToList();
+
+                var listGs = db.GistSync.Where(x => x.Uid == UserId).ToList();
+
+                //执行命令记录
+                var dicSync = new Dictionary<string, string>();
+
+                foreach (var gist in listGist)
                 {
-                    var listGist = db.Gist.Where(x => x.Uid == UserId).OrderBy(x => x.GistCreateTime).ToList();
-
-                    var codes = listGist.Select(x => x.GistCode).ToList();
-
-                    var listGs = db.GistSync.Where(x => x.Uid == UserId).ToList();
-
-                    //执行命令记录
-                    var dicSync = new Dictionary<string, string>();
-
-                    foreach (var gist in listGist)
+                    var gs = listGs.FirstOrDefault(x => x.GistCode == gist.GistCode);
+                    //新增
+                    if (gs == null)
                     {
-                        var gs = listGs.FirstOrDefault(x => x.GistCode == gist.GistCode);
-                        //新增
-                        if (gs == null)
-                        {
-                            dicSync.Add(gist.GistCode, "add");
-                        }
-                        else if (gs?.GsGitHubTime != gist.GistUpdateTime || gs?.GsGiteeTime != gist.GistUpdateTime)
-                        {
-                            dicSync.Add(gist.GistCode, "update");
-                        }
+                        dicSync.Add(gist.GistCode, "add");
                     }
-
-                    //删除
-                    var delCode = listGs.Select(x => x.GistCode).Except(listGist.Select(x => x.GistCode)).ToList();
-
-                    var token_gh = GlobalTo.GetValue("ApiKey:GitHub:GistToken");
-                    var token_ge = GlobalTo.GetValue("ApiKey:Gitee:GistToken");
-
-                    listLog.Add("同步新增、修改：" + dicSync.Count + " 条");
-                    listLog.Add(dicSync);
-
-                    //同步新增、修改
-                    if (dicSync.Count > 0)
+                    else if (gs?.GsGitHubTime != gist.GistUpdateTime || gs?.GsGiteeTime != gist.GistUpdateTime)
                     {
-                        foreach (var key in dicSync.Keys)
-                        {
-                            var st = dicSync[key];
-                            var gist = listGist.FirstOrDefault(x => x.GistCode == key);
-                            var gs = listGs.FirstOrDefault(x => x.GistCode == key);
-
-                            //发送主体
-                            #region MyRegion
-                            var jo = new JObject
-                            {
-                                ["access_token"] = token_ge,//only gitee 
-
-                                ["description"] = gist.GistRemark,
-                                ["public"] = gist.GistOpen == 1
-                            };
-
-                            var jc = new JObject
-                            {
-                                ["content"] = gist.GistContent
-                            };
-
-                            var jf = new JObject
-                            {
-                                [gist.GistFilename] = jc
-                            };
-
-                            jo["files"] = jf;
-                            #endregion
-
-                            switch (st)
-                            {
-                                case "add":
-                                    {
-                                        var gsmo = new Domain.GistSync()
-                                        {
-                                            GistCode = key,
-                                            Uid = UserId,
-                                            GistFilename = gist.GistFilename
-                                        };
-
-                                        //GitHub
-                                        {
-                                            var hwr = Core.HttpTo.HWRequest("https://api.github.com/gists", "POST", jo.ToJson());
-                                            hwr.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
-                                            hwr.ContentType = "application/json";
-                                            hwr.UserAgent = GlobalTo.GetValue("UserAgent");
-
-                                            var rt = Core.HttpTo.Url(hwr);
-
-                                            gsmo.GsGitHubId = rt.ToJObject()["id"].ToString();
-                                            gsmo.GsGitHubTime = gist.GistUpdateTime;
-                                        }
-
-                                        //Gitee
-                                        {
-                                            var hwr = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists", "POST", jo.ToJson());
-                                            hwr.ContentType = "application/json";
-
-                                            var rt = Core.HttpTo.Url(hwr);
-
-                                            gsmo.GsGiteeId = rt.ToJObject()["id"].ToString();
-                                            gsmo.GsGiteeTime = gist.GistUpdateTime;
-                                        }
-
-                                        _ = db.GistSync.Add(gsmo);
-                                        _ = db.SaveChanges();
-
-                                        listLog.Add("新增一条成功");
-                                        listLog.Add(gsmo);
-                                    }
-                                    break;
-                                case "update":
-                                    {
-                                        if (gs.GistFilename != gist.GistFilename)
-                                        {
-                                            jo["files"][gs.GistFilename] = null;
-                                            gs.GistFilename = gist.GistFilename;
-                                        }
-
-                                        //GitHub
-                                        {
-                                            var hwr = Core.HttpTo.HWRequest("https://api.github.com/gists/" + gs.GsGitHubId, "PATCH", jo.ToJson());
-                                            hwr.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
-                                            hwr.ContentType = "application/json";
-                                            hwr.UserAgent = GlobalTo.GetValue("UserAgent");
-
-                                            _ = Core.HttpTo.Url(hwr);
-
-                                            gs.GsGitHubTime = gist.GistUpdateTime;
-                                        }
-
-                                        //Gitee
-                                        {
-                                            var hwr = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists/" + gs.GsGiteeId, "PATCH", jo.ToJson());
-                                            hwr.ContentType = "application/json";
-
-                                            _ = Core.HttpTo.Url(hwr);
-
-                                            gs.GsGiteeTime = gist.GistUpdateTime;
-                                        }
-
-                                        _ = db.GistSync.Update(gs);
-                                        _ = db.SaveChanges();
-
-                                        listLog.Add("更新一条成功");
-                                        listLog.Add(gs);
-                                    }
-                                    break;
-                            }
-
-                            Thread.Sleep(1000 * 2);
-                        }
+                        dicSync.Add(gist.GistCode, "update");
                     }
-
-                    listLog.Add("同步删除：" + delCode.Count + " 条");
-                    listLog.Add(delCode);
-
-                    //同步删除
-                    if (delCode.Count > 0)
-                    {
-                        foreach (var code in delCode)
-                        {
-                            var gs = listGs.FirstOrDefault(x => x.GistCode == code);
-
-                            var dc = "00".ToCharArray();
-
-                            #region GitHub
-                            var hwr_gh = Core.HttpTo.HWRequest("https://api.github.com/gists/" + gs.GsGitHubId, "DELETE");
-                            hwr_gh.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
-                            hwr_gh.UserAgent = GlobalTo.GetValue("UserAgent");
-                            var resp_gh = (HttpWebResponse)hwr_gh.GetResponse();
-                            if (resp_gh.StatusCode == HttpStatusCode.NoContent)
-                            {
-                                dc[0] = '1';
-                            }
-                            #endregion
-
-                            #region Gitee
-                            var hwr_ge = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists/" + gs.GsGiteeId + "?access_token=" + token_ge, "DELETE");
-                            var resp_ge = (HttpWebResponse)hwr_ge.GetResponse();
-                            if (resp_ge.StatusCode == HttpStatusCode.NoContent)
-                            {
-                                dc[1] = '1';
-                            }
-                            #endregion
-
-                            if (string.Join("", dc) == "11")
-                            {
-                                _ = db.GistSync.Remove(gs);
-                                _ = db.SaveChanges();
-
-                                listLog.Add("删除一条成功");
-                                listLog.Add(gs);
-                            }
-                            else
-                            {
-                                listLog.Add("删除一条异常");
-                                listLog.Add(dc);
-                            }
-
-                            Thread.Sleep(1000 * 2);
-                        }
-                    }
-
-                    listLog.Add("完成同步");
-
-                    vm.Set(ARTag.success);
-                    vm.data = listLog;
                 }
+
+                //删除
+                var delCode = listGs.Select(x => x.GistCode).Except(listGist.Select(x => x.GistCode)).ToList();
+
+                var token_gh = GlobalTo.GetValue("ApiKey:GitHub:GistToken");
+                var token_ge = GlobalTo.GetValue("ApiKey:Gitee:GistToken");
+
+                listLog.Add("同步新增、修改：" + dicSync.Count + " 条");
+                listLog.Add(dicSync);
+
+                //同步新增、修改
+                if (dicSync.Count > 0)
+                {
+                    foreach (var key in dicSync.Keys)
+                    {
+                        var st = dicSync[key];
+                        var gist = listGist.FirstOrDefault(x => x.GistCode == key);
+                        var gs = listGs.FirstOrDefault(x => x.GistCode == key);
+
+                        //发送主体
+                        #region MyRegion
+                        var jo = new JObject
+                        {
+                            ["access_token"] = token_ge,//only gitee 
+
+                            ["description"] = gist.GistRemark,
+                            ["public"] = gist.GistOpen == 1
+                        };
+
+                        var jc = new JObject
+                        {
+                            ["content"] = gist.GistContent
+                        };
+
+                        var jf = new JObject
+                        {
+                            [gist.GistFilename] = jc
+                        };
+
+                        jo["files"] = jf;
+                        #endregion
+
+                        switch (st)
+                        {
+                            case "add":
+                                {
+                                    var gsmo = new Domain.GistSync()
+                                    {
+                                        GistCode = key,
+                                        Uid = UserId,
+                                        GistFilename = gist.GistFilename
+                                    };
+
+                                    //GitHub
+                                    {
+                                        var hwr = Core.HttpTo.HWRequest("https://api.github.com/gists", "POST", jo.ToJson());
+                                        hwr.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
+                                        hwr.ContentType = "application/json";
+                                        hwr.UserAgent = GlobalTo.GetValue("UserAgent");
+
+                                        var rt = Core.HttpTo.Url(hwr);
+
+                                        gsmo.GsGitHubId = rt.ToJObject()["id"].ToString();
+                                        gsmo.GsGitHubTime = gist.GistUpdateTime;
+                                    }
+
+                                    //Gitee
+                                    {
+                                        var hwr = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists", "POST", jo.ToJson());
+                                        hwr.ContentType = "application/json";
+
+                                        var rt = Core.HttpTo.Url(hwr);
+
+                                        gsmo.GsGiteeId = rt.ToJObject()["id"].ToString();
+                                        gsmo.GsGiteeTime = gist.GistUpdateTime;
+                                    }
+
+                                    _ = db.GistSync.Add(gsmo);
+                                    _ = db.SaveChanges();
+
+                                    listLog.Add("新增一条成功");
+                                    listLog.Add(gsmo);
+                                }
+                                break;
+                            case "update":
+                                {
+                                    if (gs.GistFilename != gist.GistFilename)
+                                    {
+                                        jo["files"][gs.GistFilename] = null;
+                                        gs.GistFilename = gist.GistFilename;
+                                    }
+
+                                    //GitHub
+                                    {
+                                        var hwr = Core.HttpTo.HWRequest("https://api.github.com/gists/" + gs.GsGitHubId, "PATCH", jo.ToJson());
+                                        hwr.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
+                                        hwr.ContentType = "application/json";
+                                        hwr.UserAgent = GlobalTo.GetValue("UserAgent");
+
+                                        _ = Core.HttpTo.Url(hwr);
+
+                                        gs.GsGitHubTime = gist.GistUpdateTime;
+                                    }
+
+                                    //Gitee
+                                    {
+                                        var hwr = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists/" + gs.GsGiteeId, "PATCH", jo.ToJson());
+                                        hwr.ContentType = "application/json";
+
+                                        _ = Core.HttpTo.Url(hwr);
+
+                                        gs.GsGiteeTime = gist.GistUpdateTime;
+                                    }
+
+                                    _ = db.GistSync.Update(gs);
+                                    _ = db.SaveChanges();
+
+                                    listLog.Add("更新一条成功");
+                                    listLog.Add(gs);
+                                }
+                                break;
+                        }
+
+                        Thread.Sleep(1000 * 2);
+                    }
+                }
+
+                listLog.Add("同步删除：" + delCode.Count + " 条");
+                listLog.Add(delCode);
+
+                //同步删除
+                if (delCode.Count > 0)
+                {
+                    foreach (var code in delCode)
+                    {
+                        var gs = listGs.FirstOrDefault(x => x.GistCode == code);
+
+                        var dc = "00".ToCharArray();
+
+                        #region GitHub
+                        var hwr_gh = Core.HttpTo.HWRequest("https://api.github.com/gists/" + gs.GsGitHubId, "DELETE");
+                        hwr_gh.Headers.Add(HttpRequestHeader.Authorization, "token " + token_gh);
+                        hwr_gh.UserAgent = GlobalTo.GetValue("UserAgent");
+                        var resp_gh = (HttpWebResponse)hwr_gh.GetResponse();
+                        if (resp_gh.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            dc[0] = '1';
+                        }
+                        #endregion
+
+                        #region Gitee
+                        var hwr_ge = Core.HttpTo.HWRequest("https://gitee.com/api/v5/gists/" + gs.GsGiteeId + "?access_token=" + token_ge, "DELETE");
+                        var resp_ge = (HttpWebResponse)hwr_ge.GetResponse();
+                        if (resp_ge.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            dc[1] = '1';
+                        }
+                        #endregion
+
+                        if (string.Join("", dc) == "11")
+                        {
+                            _ = db.GistSync.Remove(gs);
+                            _ = db.SaveChanges();
+
+                            listLog.Add("删除一条成功");
+                            listLog.Add(gs);
+                        }
+                        else
+                        {
+                            listLog.Add("删除一条异常");
+                            listLog.Add(dc);
+                        }
+
+                        Thread.Sleep(1000 * 2);
+                    }
+                }
+
+                listLog.Add("完成同步");
+
+                vm.Set(ARTag.success);
+                vm.data = listLog;
             }
             catch (Exception ex)
             {
                 vm.Set(ex);
+                Console.WriteLine(ex);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine(ex.InnerException.Message);
+                }
+                Core.ConsoleTo.Log(ex, true);
             }
 
             return vm;
@@ -335,41 +339,39 @@ namespace Netnr.Func
                 var linka = "https://gs.zme.ink/";
                 var linkb = "https://static.netnr.com/";
 
-                using (var db = new ContextBase())
+                using var db = new ContextBase();
+                var list1 = db.UserWriting.Where(x => x.UwContent.Contains(linka) || x.UwContentMd.Contains(linka)).ToList();
+                var list2 = db.UserReply.Where(x => x.UrContent.Contains(linka) || x.UrContentMd.Contains(linka)).ToList();
+                var needo = false;
+                foreach (var item in list1)
                 {
-                    var list1 = db.UserWriting.Where(x => x.UwContent.Contains(linka) || x.UwContentMd.Contains(linka)).ToList();
-                    var list2 = db.UserReply.Where(x => x.UrContent.Contains(linka) || x.UrContentMd.Contains(linka)).ToList();
-                    var needo = false;
-                    foreach (var item in list1)
-                    {
-                        item.UwContent = item.UwContent.Replace(linka, linkb);
-                        item.UwContentMd = item.UwContentMd.Replace(linka, linkb);
-                    }
-                    foreach (var item in list2)
-                    {
-                        item.UrContent = item.UrContent.Replace(linka, linkb);
-                        item.UrContentMd = item.UrContentMd.Replace(linka, linkb);
-                    }
-                    if (list1.Count > 0)
-                    {
-                        db.UserWriting.UpdateRange(list1);
-                        needo = true;
-                    }
-                    if (list2.Count > 0)
-                    {
-                        db.UserReply.UpdateRange(list2);
-                        needo = true;
-                    }
-
-                    int num = 0;
-                    if (needo)
-                    {
-                        num = db.SaveChanges();
-                    }
-
-                    vm.Set(ARTag.success);
-                    vm.data = "受影响行数：" + num;
+                    item.UwContent = item.UwContent.Replace(linka, linkb);
+                    item.UwContentMd = item.UwContentMd.Replace(linka, linkb);
                 }
+                foreach (var item in list2)
+                {
+                    item.UrContent = item.UrContent.Replace(linka, linkb);
+                    item.UrContentMd = item.UrContentMd.Replace(linka, linkb);
+                }
+                if (list1.Count > 0)
+                {
+                    db.UserWriting.UpdateRange(list1);
+                    needo = true;
+                }
+                if (list2.Count > 0)
+                {
+                    db.UserReply.UpdateRange(list2);
+                    needo = true;
+                }
+
+                int num = 0;
+                if (needo)
+                {
+                    num = db.SaveChanges();
+                }
+
+                vm.Set(ARTag.success);
+                vm.data = "受影响行数：" + num;
             }
             catch (Exception ex)
             {

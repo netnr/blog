@@ -1,6 +1,6 @@
-﻿var pObject = {
+var pObject = {
     bucket: "netnr",
-    domain: "http://ts.netnr.top/",
+    domain: "https://kodo.netnr.top/",
     opt: {
         fileInputID: "fileInput"
     },
@@ -85,7 +85,7 @@
             }
         };
 
-        xhr.open("post", "//upload.qiniu.com/", true);
+        xhr.open("post", "//upload.qiniup.com", true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(fd);
         xhr.onreadystatechange = function (e) {

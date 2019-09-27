@@ -1,19 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cors;
 using System.IO;
 using System.ComponentModel;
 using Netnr.Func.ViewModel;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 namespace Netnr.Web.Controllers
 {
     /// <summary>
     /// 开放接口
     /// </summary>
-    [EnableCors("Cors")]
     public class ApiController : Controller
     {
         [Description("首页列表")]
@@ -30,6 +29,7 @@ namespace Netnr.Web.Controllers
 
         #region API 方法
 
+        [HttpGet]
         [Description("获取GUID")]
         public ActionResultVM API81(int? count = 10)
         {
@@ -54,6 +54,7 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
+        [HttpGet]
         [Description("获取GUID To long")]
         public ActionResultVM API82(int? count = 10)
         {
@@ -84,6 +85,9 @@ namespace Netnr.Web.Controllers
         /// <param name="form">表单</param>
         /// <param name="cp">自定义路径，如：static/draw</param>
         /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        [HttpOptions]
         [Description("公共上传文件")]
         public ActionResultVM API98([FromForm] IFormCollection form, string cp = null)
         {

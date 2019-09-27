@@ -197,23 +197,3 @@ pre.card-body {
         color: white !important;
         background-color: #009a61;
     }
-
-/*footer*/
-.footer {
-    width: 100%;
-    display: block;
-    margin-top: 70px;
-    padding: 20px 0;
-    text-align: center;
-    border-top: 1px solid #eee;
-}
-
-@keyframes myrotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}

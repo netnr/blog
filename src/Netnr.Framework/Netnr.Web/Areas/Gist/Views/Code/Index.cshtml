@@ -130,20 +130,23 @@
                     </div>
                 </div>
 
-                @if (!string.IsNullOrWhiteSpace(Model.Spare1))
-                {
-                    <div class="col-md-12 mt-3">
-                        <p title="每天同步一次">同步镜像</p>
-                        <div title="GitHub">
+                <!--同步镜像-->
+                <div class="col-md-12 mt-3">
+                    @if (!string.IsNullOrWhiteSpace(Model.Spare1))
+                    {
+                        <div title="GitHub 镜像">
                             <i class="fa fa-fw fa-github"></i>
                             <a target="_blank" href="https://gist.github.com/netnr/@Model.Spare1">https://gist.github.com/netnr/@Model.Spare1</a>
                         </div>
-                        <div title="Gitee">
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Spare2))
+                    {
+                        <div title="Gitee 镜像">
                             <i class="fa fa-fw fa-git"></i>
                             <a target="_blank" href="https://gitee.com/netnr/codes/@Model.Spare2">https://gitee.com/netnr/codes/@Model.Spare2</a>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>

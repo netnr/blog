@@ -169,6 +169,19 @@
                         }
                     </td>
                 </tr>
+                <tr>
+                    <td class="siteIcon"><img class="mr-2" src="/images/login/dingtalk.svg" />钉钉</td>
+                    <td>
+                        @if (Model.OpenId6?.Length > 1)
+                        {
+                            <span class="text-success mr-3">已绑定</span><a href="/user/ridoauth/dingtalk">解除</a>
+                        }
+                        else
+                        {
+                            <a href="/user/oauth/dingtalk">立即绑定账号</a>
+                        }
+                    </td>
+                </tr>
             </table>
 
             <h4 class="mt-5">更改密码</h4>

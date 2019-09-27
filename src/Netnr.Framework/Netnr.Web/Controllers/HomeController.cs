@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using Netnr.Func.ViewModel;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Cors;
 
 namespace Netnr.Web.Controllers
 {
@@ -84,6 +85,8 @@ namespace Netnr.Web.Controllers
         {
             var vm = new ActionResultVM();
 
+            var uinfo = new Func.UserAuthAid(HttpContext).Get();
+
             using (var db = new ContextBase())
             {
                 var lisTagId = new List<int>();
@@ -91,7 +94,7 @@ namespace Netnr.Web.Controllers
 
                 var lisTagName = Func.Common.TagsQuery().Where(x => lisTagId.Contains(x.TagId)).ToList();
 
-                mo.Uid = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                mo.Uid = uinfo.UserId;
                 mo.UwCreateTime = DateTime.Now;
                 mo.UwUpdateTime = mo.UwCreateTime;
                 mo.UwLastUid = mo.Uid;
@@ -164,13 +167,11 @@ namespace Netnr.Web.Controllers
                 if (User.Identity.IsAuthenticated)
                 {
                     var uinfo = new Func.UserAuthAid(HttpContext).Get();
-                    using (var db = new ContextBase())
-                    {
-                        var listuc = db.UserConnection.Where(x => x.Uid == uinfo.UserId && x.UconnTargetType == Func.EnumAid.ConnectionType.UserWriting.ToString() && x.UconnTargetId == wid.ToString()).ToList();
+                    using var db = new ContextBase();
+                    var listuc = db.UserConnection.Where(x => x.Uid == uinfo.UserId && x.UconnTargetType == Func.EnumAid.ConnectionType.UserWriting.ToString() && x.UconnTargetId == wid.ToString()).ToList();
 
-                        ViewData["uca1"] = listuc.Any(x => x.UconnAction == 1) ? "yes" : "";
-                        ViewData["uca2"] = listuc.Any(x => x.UconnAction == 2) ? "yes" : "";
-                    }
+                    ViewData["uca1"] = listuc.Any(x => x.UconnAction == 1) ? "yes" : "";
+                    ViewData["uca2"] = listuc.Any(x => x.UconnAction == 2) ? "yes" : "";
                 }
 
                 return View(vm);
@@ -310,15 +311,13 @@ namespace Netnr.Web.Controllers
         public void ListReadPlus()
         {
             int wid = Convert.ToInt32(RouteData.Values["id"]?.ToString());
-            using (var db = new ContextBase())
+            using var db = new ContextBase();
+            var mo = db.UserWriting.Find(wid);
+            if (mo != null)
             {
-                var mo = db.UserWriting.Find(wid);
-                if (mo != null)
-                {
-                    mo.UwReadNum += 1;
-                    db.UserWriting.Update(mo);
-                    db.SaveChanges();
-                }
+                mo.UwReadNum += 1;
+                db.UserWriting.Update(mo);
+                db.SaveChanges();
             }
         }
 
