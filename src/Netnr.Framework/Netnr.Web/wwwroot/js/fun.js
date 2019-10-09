@@ -1,9 +1,7 @@
-/**\
-
-Author：netnr
-Date：2018-12-01
-
-\**/
+/*
+ * netnr
+ * 2019-09-29
+ */
 
 (function (console) {
 
@@ -44,6 +42,27 @@ Date：2018-12-01
                     clearInterval(window.funsi);
                 }
             }, 10)
+        }
+
+        //节日
+        switch (new Date().toISOString().substring(5, 10)) {
+            case "10-01":
+            case "10-02":
+            case "10-03":
+            case "10-04":
+            case "10-05":
+            case "10-06":
+            case "10-07":
+                {
+                    if(location.pathname.indexOf("/draw/mind") == -1){
+                        var dh = document.createElement('div');
+                        dh.innerHTML = '<div class="d-none d-md-block text-center h4 py-2 text-warning bg-danger">'
+                            + '伟大的中华人民共和国万岁!'.split('').join(' ')
+                            + '</div>';
+                        document.body.insertBefore(dh, document.body.firstChild);
+                    }
+                }
+                break;
         }
     }
 

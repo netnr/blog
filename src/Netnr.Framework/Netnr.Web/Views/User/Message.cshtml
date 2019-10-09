@@ -23,8 +23,15 @@
                 <ul class="list-unstyled">
                     @foreach (var item in listUm)
                     {
+                        var imgup = "/favicon.svg";
+                        if (!string.IsNullOrWhiteSpace(item.Spare2))
+                        {
+                            imgup = "https://gs.zme.ink/static/avatar/" + item.Spare2;
+                        }
+
                         <li class="media uwo-reply-item py-3">
-                            <img class="imgup" src="https://gs.zme.ink/static/avatar/@item.Spare2" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
+
+                            <img class="imgup" src="@imgup" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
                             <div class="media-body ml-2">
                                 @if (item.UmStatus == 1)
                                 {
@@ -35,7 +42,7 @@
                                     case 2:
                                         if (item.UmTriggerUid == 0)
                                         {
-                                            <a class="badge badge-light">匿名用户</a>
+                                            <span class="badge badge-light" title="匿名用户">Guest</span>
                                         }
                                         else
                                         {

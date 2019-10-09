@@ -225,6 +225,7 @@ namespace Netnr.Web.Controllers
                 {
                     mow.UwReplyNum += 1;
                     mow.UwLastUid = mo.Uid;
+                    mow.UwLastDate = now;
 
                     um.UmTargetIndex = mow.UwReplyNum;
 

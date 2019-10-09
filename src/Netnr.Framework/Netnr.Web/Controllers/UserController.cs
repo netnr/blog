@@ -309,11 +309,6 @@ namespace Netnr.Web.Controllers
         public IActionResult OAuth()
         {
             var authType = RouteData.Values["id"]?.ToString();
-            if ("weibo taobao".Contains(authType, StringComparison.OrdinalIgnoreCase))
-            {
-                return Content("暂受限制使用，请换其它方式");
-            }
-
             var url = Func.UserAuthAid.ThirdLogin.LoginLink(authType, "bind");
             return Redirect(url);
         }

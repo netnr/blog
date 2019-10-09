@@ -61,7 +61,7 @@
                                 htm_file.push('<tr>'
                                     + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
                                     + '<td class="item-tool"><i class="fa fa-file text-muted"></i> &nbsp;<a href="javascript:void(0);" class="it-name" data-mime="file" data-url="' + url + '" >' + name + '</a>'
-                                    + '<div class="it-control"><a href="' + url + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del">✖</a></div></td>'
+                                    + '<div class="it-control"><a href="' + url + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
                                     + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
                                     + '<td class="text-right text-muted">' + size + '</td>'
                                     + '</tr>');
@@ -69,7 +69,7 @@
                                 htm_folder.push('<tr>'
                                     + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
                                     + '<td class="item-tool"><i class="fa fa-folder text-primary"></i> &nbsp;<a href="javascript:void(0);" class="it-name text-primary" data-mime="folder">' + name.substring(0, name.length - 1) + '</a>'
-                                    + '<div class="it-control"><a href="javascript:void(0)" class="ic-del">✖</a></div></td>'
+                                    + '<div class="it-control"><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
                                     + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
                                     + '<td class="text-right text-muted">' + size + '</td>'
                                     + '</tr>');

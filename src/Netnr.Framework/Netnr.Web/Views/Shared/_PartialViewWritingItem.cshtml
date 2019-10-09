@@ -10,39 +10,46 @@
 
     @foreach (var mo in Model)
     {
-        <div class="uw-item pl-3 pr-5 py-3">
+        <div class="uw-item pl-3 pr-4 py-3">
             <span class="uw-emoji"></span>
             <div class="uw-title">
-                <a href="/home/list/@mo.UwId">@mo.UwTitle</a>
-                <partial name="_PartialMakeTag" model="mo.Spare1" />
-            </div>
-            <div class="mt-3 small text-muted">
                 @if (mo.UwLaud > 0)
                 {
                     <span class="mr-3" title="点赞">
                         <i class="fa fa-thumbs-up text-success"></i> @mo.UwLaud
                     </span>
                 }
-                <span>
-                    @if (mo.UwLastUid == 0)
+                <a href="/home/list/@mo.UwId">@mo.UwTitle</a>
+                <partial name="_PartialMakeTag" model="mo.Spare1" />
+            </div>
+            <div class="mt-3 small text-muted clearfix">
+                <span class="float-left">
+                    <i class="fa fa-user text-muted"></i>
+                    <a href='/user/id/@mo.Uid' class="uid">@mo.Spare3</a>
+                </span>
+                <span class="float-left mx-3">
+                    <i class="fa fa-clock-o text-muted"></i>
+                    @VisualFormat.Duration(mo.UwCreateTime.Value)
+                </span>
+                @if (mo.UwReplyNum > 0)
+                {
+                    if (mo.UwLastUid == 0)
                     {
-                        <i class="fa fa-user text-muted"></i>
-                        <a class="uid">匿名回复</a>
+                        <span class="float-left d-none d-sm-block mr-3">
+                            最后回复 <a class="uid">Guest</a>
+                        </span>
                     }
                     else
                     {
-                        <i class="fa fa-user text-muted"></i>
-                        <a href='/user/id/@mo.Spare3' class="uid">@mo.Spare2</a>
+                        <span class="float-left d-none d-sm-block mr-3">
+                            最后回复 <a href='/user/id/@mo.UwLastUid' class="uid">@mo.Spare2</a>
+                        </span>
                     }
-                </span>
-                <span class="mx-3">
-                    <i class="fa fa-clock-o text-muted"></i>
-                    @VisualFormat.Duration(mo.UwLastDate ?? mo.UwCreateTime.Value, mo.UwReplyNum.Value)
-                </span>
-                <span title="阅读量">
+                }
+                <span class="float-left d-none d-sm-block" title="阅读量">
                     <i class="fa fa-eye text-muted"></i> @VisualFormat.Count(mo.UwReadNum.Value)
                 </span>
-                <span class="mx-3" title="回复数">
+                <span class="float-left d-none d-sm-block mx-3" title="回复数">
                     <i class="fa fa-commenting-o"></i> @mo.UwReplyNum.Value
                 </span>
             </div>

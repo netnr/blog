@@ -43,7 +43,7 @@ namespace Netnr.Func
                     }
                     else
                     {
-                        result = "1分钟前";
+                        result = "几秒前";
                     }
                 }
             }

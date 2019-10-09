@@ -165,15 +165,14 @@ namespace Netnr.Func
                 //标签
                 item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
 
+                //写主昵称
+                item.Spare3 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
+
+                //有回复
                 if (item.UwLastUid > 0)
                 {
+                    //回复用户昵称
                     item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
-                    item.Spare3 = item.UwLastUid.ToString();
-                }
-                if (string.IsNullOrWhiteSpace(item.Spare2))
-                {
-                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
-                    item.Spare3 = item.Uid.ToString();
                 }
             }
 
@@ -287,15 +286,14 @@ namespace Netnr.Func
                 //标签
                 item.Spare1 = listUwTags.Where(x => x.UwId == item.UwId).Select(x => new { x.TagName, x.TagIcon }).ToJson();
 
+                //写主昵称
+                item.Spare3 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
+
+                //有回复
                 if (item.UwLastUid > 0)
                 {
+                    //回复用户昵称
                     item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.UwLastUid)?.Nickname;
-                    item.Spare3 = item.UwLastUid.ToString();
-                }
-                if (string.IsNullOrWhiteSpace(item.Spare2))
-                {
-                    item.Spare2 = listUwUserInfo.FirstOrDefault(x => x.UserId == item.Uid)?.Nickname;
-                    item.Spare3 = item.Uid.ToString();
                 }
             }
 

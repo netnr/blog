@@ -8,7 +8,7 @@
 - EF + Linq
 - 支持：SQLServer、MySQL、PostgreSQL、SQLite等
 
----
+
 - Baidu.AI（实验室）
 - FluentScheduler（定时任务）
 - MailKit（邮箱验证）
@@ -18,7 +18,6 @@
 - Netnr.WeChat（微信公众号）
 - Qcloud.Shared.NetCore（腾讯对象存储）
 - Qiniu.Shared（七牛对象存储）
-- Shell.NET（执行Linux命令）
 - sqlite-net-pcl（SQLite，日志）
 
 ### 功能模块
@@ -32,8 +31,7 @@
 - Draw：绘制，集成开源项目 mxGraph、百度脑图
 - Note：记事本（Markdown编辑器）
 - 存储：云存储，对象存储
-- 备份：自动备份数据库到云存储
+- 备份：自动备份数据库
 - 日志：访问日志记录
 
-### 配置项
-- **appsettings.json** 有许多配置项，对应的功能需要配置参数后才能正常使用
+

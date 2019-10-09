@@ -67,7 +67,7 @@ $.ajax({
         htm.push('</tr>');
 
         htm.push('<tr>');
-        htm.push('<td>流量<br/><small class="text-muted">每月10号重置</small></td>');
+        htm.push('<td>流量<br/><small class="text-muted">10号重置</small></td>');
         p1 = data.plan_monthly_data / 1024 / 1024 / 1024;
         p2 = (data.data_counter / 1024 / 1024 / 1024).toFixed(2);
         p3 = (p2 / p1 * 100).toFixed(2);

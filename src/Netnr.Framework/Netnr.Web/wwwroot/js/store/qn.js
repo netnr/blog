@@ -1,6 +1,6 @@
 var pObject = {
     bucket: "netnr",
-    domain: "https://kodo.netnr.top/",
+    domain: "http://kodo.netnr.top/",
     opt: {
         fileInputID: "fileInput"
     },
@@ -38,7 +38,7 @@ var pObject = {
                         htm.push('<tr>'
                             + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
                             + '<td class="item-tool"><i class="fa fa-file text-muted"></i> &nbsp;<a href="javascript:void(0);" class="it-name">' + name + '</a>'
-                            + '<div class="it-control"><a href="' + (pObject.domain + name) + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del">✖</a></div></td>'
+                            + '<div class="it-control"><a href="' + (pObject.domain + name) + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
                             + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
                             + '<td class="text-right text-muted">' + size + '</td>'
                             + '</tr>');

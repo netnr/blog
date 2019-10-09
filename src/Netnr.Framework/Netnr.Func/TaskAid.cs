@@ -1,4 +1,5 @@
 using FluentScheduler;
+using Microsoft.EntityFrameworkCore;
 using Netnr.Data;
 using Netnr.Func.ViewModel;
 using Newtonsoft.Json.Linq;
@@ -51,7 +52,7 @@ namespace Netnr.Func
         }
 
         /// <summary>
-        /// 备份数据库&上传腾讯云对象存储
+        /// 备份数据库
         /// </summary>
         public static ActionResultVM BackupDataBase()
         {
@@ -64,23 +65,14 @@ namespace Netnr.Func
                 var kp = "Work:BackupDataBase:SQLServer:";
 
                 //执行命令
-                var cmd = GlobalTo.GetValue(kp + "cmd");
-                var rt = Core.CmdTo.Shell(cmd);
-                listMsg.Add(rt);
+                using var db = new ContextBase();
+                using var conn = db.Database.GetDbConnection();
+                conn.Open();
+                var connCmd = conn.CreateCommand();
+                connCmd.CommandText = GlobalTo.GetValue(kp + "cmd");
+                int en = connCmd.ExecuteNonQuery();
 
-                //上传配置
-                string bucketName = GlobalTo.GetValue(kp + "upload:bucketName");
-                string remotePath = string.Format(GlobalTo.GetValue(kp + "upload:remotePath"), DateTime.Now.ToString("yyyyMMdd_HHmmss"));
-                string localPath = GlobalTo.GetValue(kp + "upload:localPath");
-
-                int APPID = Convert.ToInt32(GlobalTo.GetValue("ApiKey:AccessCOS:APPID"));
-                string SecretId = GlobalTo.GetValue("ApiKey:AccessCOS:SecretId");
-                string SecretKey = GlobalTo.GetValue("ApiKey:AccessCOS:SecretKey");
-                //上传
-                var cos = new CosCloud(APPID, SecretId, SecretKey, UrlType.HB);
-                var cu = cos.UploadFile(bucketName, remotePath, localPath);
-
-                listMsg.Add(cu.ToJObject());
+                listMsg.Add(en);
 
                 vm.Set(ARTag.success);
                 vm.data = listMsg;
