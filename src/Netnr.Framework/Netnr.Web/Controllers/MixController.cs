@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Netnr.Func.ViewModel;
 using Netnr.Web.Filters;
 
 namespace Netnr.Web.Controllers
@@ -11,39 +12,22 @@ namespace Netnr.Web.Controllers
     public class MixController : Controller
     {
         [Description("关于页面")]
-        public IActionResult About(string ishttp)
+        public IActionResult About()
         {
-            if (!string.IsNullOrWhiteSpace(ishttp))
-            {
-                return Content("about");
-            }
-
             return View();
         }
 
         [Description("服务器状态")]
         [ValidateAntiForgeryToken]
-        [ResponseCache(Duration = 5)]
-        public string AboutServerStatus()
+        [ResponseCache(Duration = 10)]
+        public ActionResultVM AboutServerStatus()
         {
-            string url = GlobalTo.GetValue("ServiceApi:ServiceInfo");
-            var hwr = Core.HttpTo.HWRequest(url);
-            hwr.UserAgent = GlobalTo.GetValue("UserAgent");
-            var result = Core.HttpTo.Url(hwr);
-
-            //处理敏感信息
-            var rj = result.ToJObject();
-            var removeNodes = "available_isos email ip_addresses node_ip ptr ssh_port ve_mac1".Split(" ").ToList();
-            foreach (var item in removeNodes)
+            var vm = new ActionResultVM
             {
-                if (rj.ContainsKey(item))
-                {
-                    rj.Remove(item);
-                }
-            }
-            result = rj.ToJson();
+                data = new Fast.OSInfoTo()
+            };
 
-            return result;
+            return vm;
         }
 
         [Description("日志页面")]

@@ -6,9 +6,8 @@
 - jQuery + Bootstrap4
 - .NET Core (latest)
 - EF + Linq
-- 支持：SQLServer、MySQL、PostgreSQL、SQLite等
-
-
+- 支持：SQLServer、MySQL、PostgreSQL、SQLite、InMemory等
+- ==========================================
 - Baidu.AI（实验室）
 - FluentScheduler（定时任务）
 - MailKit（邮箱验证）
@@ -33,5 +32,3 @@
 - 存储：云存储，对象存储
 - 备份：自动备份数据库
 - 日志：访问日志记录
-
-

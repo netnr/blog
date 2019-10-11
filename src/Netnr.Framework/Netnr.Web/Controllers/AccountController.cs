@@ -110,21 +110,25 @@ namespace Netnr.Web.Controllers
         [HttpGet]
         public IActionResult Login(string ReturnUrl)
         {
-            TempData["ReturnUrl"] = ReturnUrl;
+            //记录登录跳转
+            Response.Cookies.Append("ReturnUrl", ReturnUrl ?? "");
+
             return View();
         }
 
         [Description("登录验证")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Login(Domain.UserInfo mo, int? remember, string returnurl)
+        public IActionResult Login(Domain.UserInfo mo, int? remember)
         {
             var isRemember = remember == 1;
             var vm = ValidateLogin(ValidateloginType.local, mo, isRemember);
             if (vm.code == 200)
             {
-                var url = string.IsNullOrWhiteSpace(returnurl) ? "/" : returnurl;
-                return Redirect(url);
+                var rurl = Request.Cookies["ReturnUrl"];
+                rurl = string.IsNullOrWhiteSpace(rurl) ? "/" : rurl;
+
+                return Redirect(rurl);
             }
             else
             {
@@ -578,7 +582,10 @@ namespace Netnr.Web.Controllers
             //成功
             if (vm.code == 200)
             {
-                return Redirect("/");
+                var rurl = Request.Cookies["ReturnUrl"];
+                rurl = string.IsNullOrWhiteSpace(rurl) ? "/" : rurl;
+
+                return Redirect(rurl);
             }
             else
             {

@@ -1,5 +1,7 @@
 @{
     ViewData["Title"] = "关于";
+
+    var rtd = Math.Ceiling((DateTime.Now - new DateTime(2015, 5, 1)).TotalDays);
 }
 
 @Html.AntiForgeryToken()
@@ -7,48 +9,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @{
-                var listi = new Dictionary<string, string>();
-
-                var dd = Microsoft.Extensions.DependencyModel.DependencyContext.Default;
-
-                var req = ViewContext.HttpContext.Request;
-                var currurl = req.Scheme + "://" + req.Host.ToString() + req.Path + "?ishttp=1";
-
-                try
-                {
-                    var resp = ClientTo.Response(currurl);
-
-                    listi.Add("运行时长", Math.Ceiling((DateTime.Now - DateTime.Parse("2015-05-01")).TotalDays) + " 天");
-
-                    listi.Add("内核", Environment.OSVersion.ToString());
-                    listi.Add("Server", resp.Headers["Server"]);
-                    listi.Add("框架", dd.Target.Framework);
-                }
-                catch (Exception ex)
-                {
-                    listi.Add("异常消息", ex.Message);
-                }
-            }
-
-            <div id="divSI">
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th>参数</th>
-                        <th>值</th>
-                    </tr>
-                    @foreach (var item in listi)
-                    {
-                        <tr>
-                            <td>@item.Key</td>
-                            <td>@item.Value</td>
-                        </tr>
-                    }
-                </table>
-                <h4 class="mt-5">服务器：</h4>
-                <div id="divAs">
-                    <img src="/images/loading.svg" />
-                </div>
+            <input type="hidden" id="hid_rt" value="@rtd" />
+            <div id="divAs">
+                <img src="/images/loading.svg" />
             </div>
         </div>
     </div>

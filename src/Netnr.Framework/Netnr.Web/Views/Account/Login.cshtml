@@ -25,7 +25,6 @@
         <div class="card-body">
             <form action="/account/login" method="post">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="returnurl" value="@TempData["ReturnUrl"]" />
                 <input type="hidden" name="remember" value="1" />
 
                 <div class="form-group">

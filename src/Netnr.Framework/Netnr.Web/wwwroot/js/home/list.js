@@ -78,6 +78,8 @@ $('#btnReply').click(function () {
     }
     var content = nmd.gethtml();
 
+    $('#btnReply')[0].disabled = true;
+
     $.ajax({
         url: "/home/lsitreplysave",
         type: "type",
@@ -112,6 +114,9 @@ $('#btnReply').click(function () {
         },
         error: function () {
             jz.msg("网络错误");
+        },
+        complete: function () {
+            $('#btnReply')[0].disabled = false;
         }
     });
 });
