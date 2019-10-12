@@ -47,10 +47,7 @@ function loadOSinfo() {
 
             htm.push('<tr>');
             htm.push('<td>CPU</td>');
-            var p3 = data.CPULoad.toFixed(0);
-            var pp = '<div class="progress mt-2"><div class="progress-bar bg-warning" aria-valuenow="' + p3 + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + p3 + '%;">' + p3 + '%</div></div>';
-            htm.push('<td>' + pp + data.ProcessorCount + ' Core</td>');
-
+            htm.push('<td>' + data.ProcessorName + ' ，' + data.ProcessorCount + ' Core</td>');
             htm.push('</tr>');
 
             htm.push('<tr>');
@@ -89,7 +86,7 @@ function loadOSinfo() {
             htm.push('<tr>');
             htm.push('<td>开机</td>');
 
-            var p1 = new Date(data.TickCount);
+            var p1 = new Date(data.TickCount - 8 * 1000 * 3600);
             var p2 = (p1.getFullYear() - 1970).toString();
             while (p2.length < 4) {
                 p2 = "0" + p2;
@@ -98,7 +95,7 @@ function loadOSinfo() {
             p3 < 10 && (p3 = "0" + p3);
             var p4 = p1.getDate() - 1;
             p4 < 10 && (p4 = "0" + p4);
-            var p5 = p1.getHours() - 8;
+            var p5 = p1.getHours();
             p5 < 10 && (p5 = "0" + p5);
             var p6 = p1.getMinutes();
             p6 < 10 && (p6 = "0" + p6);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -29,6 +28,10 @@ namespace Netnr.Fast
         /// 获取当前计算机上的处理器数量
         /// </summary>
         public int ProcessorCount { get; set; } = Environment.ProcessorCount;
+        /// <summary>
+        /// 处理器名称
+        /// </summary>
+        public string ProcessorName { get; set; }
         /// <summary>
         /// 获取系统目录的标准路径
         /// </summary>
@@ -85,10 +88,6 @@ namespace Netnr.Fast
         /// 逻辑磁盘
         /// </summary>
         public object LogicalDisk { get; set; }
-        /// <summary>
-        /// CPU使用率
-        /// </summary>
-        public float CPULoad { get; set; }
 
         public OSInfoTo()
         {
@@ -100,7 +99,8 @@ namespace Netnr.Fast
                 FreePhysicalMemory = PlatformForWindows.FreePhysicalMemory();
 
                 LogicalDisk = PlatformForWindows.LogicalDisk();
-                CPULoad = PlatformForWindows.CPULoad();
+
+                ProcessorName = PlatformForWindows.ProcessorName();
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -114,7 +114,8 @@ namespace Netnr.Fast
                 SwapTotal = PlatformForLinux.MemInfo("SwapTotal:");
 
                 LogicalDisk = PlatformForLinux.LogicalDisk();
-                CPULoad = PlatformForLinux.CPULoad();
+
+                ProcessorName = PlatformForLinux.CpuInfo("model name");
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -125,7 +126,8 @@ namespace Netnr.Fast
                 FreePhysicalMemory = PlatformForLinux.MemInfo("MemAvailable:");
 
                 LogicalDisk = PlatformForLinux.LogicalDisk();
-                CPULoad = PlatformForLinux.CPULoad();
+
+                ProcessorName = PlatformForLinux.CpuInfo("model name");
             }
 
         }
@@ -207,21 +209,15 @@ namespace Netnr.Fast
             }
 
             /// <summary>
-            /// 获取CPU使用率 %
+            /// 获取处理器名称
             /// </summary>
             /// <returns></returns>
-            public static float CPULoad()
+            public static string ProcessorName()
             {
-                using var PCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-
-                int wn = 2;
-                while (--wn > 0)
-                {
-                    PCounter.NextValue();
-                    System.Threading.Thread.Sleep(500);
-                }
-
-                return PCounter.NextValue();
+                var cmd = "wmic cpu get name";
+                var cr = Core.CmdTo.Run(cmd).TrimEnd(Environment.NewLine.ToCharArray());
+                var pvalue = cr.Split(Environment.NewLine).LastOrDefault();
+                return pvalue;
             }
         }
 
@@ -233,6 +229,16 @@ namespace Netnr.Fast
                 var pitem = meminfo.Split(Environment.NewLine).FirstOrDefault(x => x.StartsWith(pkey));
 
                 var pvalue = 1024 * long.Parse(pitem.Replace(pkey, "").ToLower().Replace("kb", "").Trim());
+
+                return pvalue;
+            }
+
+            public static string CpuInfo(string pkey)
+            {
+                var meminfo = Core.FileTo.ReadText("/proc/", "cpuinfo");
+                var pitem = meminfo.Split(Environment.NewLine).FirstOrDefault(x => x.StartsWith(pkey));
+
+                var pvalue = pitem.Split(":")[1].Trim();
 
                 return pvalue;
             }

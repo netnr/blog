@@ -10,7 +10,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Netnr.Core" Version="1.2.1" />
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.6.0" />
     <PackageReference Include="System.Drawing.Common">
       <Version>4.6.0</Version>
     </PackageReference>
