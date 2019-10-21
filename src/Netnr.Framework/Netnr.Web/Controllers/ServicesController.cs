@@ -25,7 +25,7 @@ namespace Netnr.Web.Controllers
         #region 微信公众号
 
         [Description("开发者接管")]
-        public void WeChat(string signature, string timestamp, string nonce, string echostr, string encrypt_type, string msg_signature)
+        public async void WeChat(string signature, string timestamp, string nonce, string echostr, string encrypt_type, string msg_signature)
         {
             string result = string.Empty;
 
@@ -63,7 +63,7 @@ namespace Netnr.Web.Controllers
 
                 using (var ms = new MemoryStream())
                 {
-                    Request.Body.CopyTo(ms);
+                    await Request.Body.CopyToAsync(ms);
                     var myByteArray = ms.ToArray();
 
                     var decryptMsg = string.Empty;
@@ -109,8 +109,8 @@ namespace Netnr.Web.Controllers
 
             //输出
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(result);
-            Response.Body.Write(buffer, 0, buffer.Length);
-            Response.Body.Flush();
+            await Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            await Response.Body.FlushAsync();
         }
 
         public class WeChatExecutor : IWeChatExecutor
@@ -132,8 +132,8 @@ namespace Netnr.Web.Controllers
 
                 var news = new WeChatNews
                 {
-                    title = "NET牛人（Gist,Run,Doc）",
-                    description = "NET牛人，技术分享博客、代码片段、在线运行代码、接口文档 等等",
+                    title = "NET牛人（Gist,Run,Doc,Draw）",
+                    description = "NET牛人，技术分享博客、代码片段、在线运行代码、接口文档、绘制 等等",
                     picurl = myPic,
                     url = myDomain
                 };
@@ -413,7 +413,8 @@ namespace Netnr.Web.Controllers
                                                 {
                                                     TagName = tag.ToLower(),
                                                     TagStatus = 1,
-                                                    TagHot = 0
+                                                    TagHot = 0,
+                                                    TagIcon = tag.ToLower() + ".svg"
                                                 };
                                                 listMo.Add(mo);
                                             }
