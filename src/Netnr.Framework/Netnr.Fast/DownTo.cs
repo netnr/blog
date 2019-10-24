@@ -30,12 +30,17 @@ namespace Netnr.Fast
             fileStream.Read(bytes, 0, bytes.Length);
             fileStream.Close();
 
+            Stream(bytes, fileName);
+        }
+
+        public void Stream(byte[] bytes, string fileName)
+        {
             Response.ContentType = "application/octet-stream";
 
             // 通知浏览器下载而不是打开  
-                Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileName, System.Text.Encoding.UTF8));
-            Response.Body.Write(bytes, 0, bytes.Length);
-            Response.Body.Flush();
+            Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileName, System.Text.Encoding.UTF8));
+            Response.Body.WriteAsync(bytes, 0, bytes.Length).Wait();
+            Response.Body.FlushAsync().Wait();
         }
     }
 }

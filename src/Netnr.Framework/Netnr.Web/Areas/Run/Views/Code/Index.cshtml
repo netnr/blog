@@ -17,7 +17,5 @@
 </style>
 
 <script>
-    try {
-        @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.RunContent2))
-    } catch (e) { }
+    @(new Microsoft.AspNetCore.Html.HtmlContentBuilder().AppendHtml(Model.RunContent2))
 </script>

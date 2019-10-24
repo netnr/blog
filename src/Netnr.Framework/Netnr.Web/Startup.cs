@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Newtonsoft.Json.Linq;
 
 namespace Netnr.Web
 {
@@ -40,19 +41,40 @@ namespace Netnr.Web
             MicroSoftConfig.ClientSecret = GlobalTo.GetValue("OAuthLogin:MicroSoft:ClientSecret");
             MicroSoftConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:MicroSoft:Redirect_Uri");
 
-            DingTalkConfig.appId= GlobalTo.GetValue("OAuthLogin:DingTalk:AppId");
+            DingTalkConfig.appId = GlobalTo.GetValue("OAuthLogin:DingTalk:AppId");
             DingTalkConfig.appSecret = GlobalTo.GetValue("OAuthLogin:DingTalk:AppSecret");
             DingTalkConfig.Redirect_Uri = GlobalTo.GetValue("OAuthLogin:DingTalk:Redirect_Uri");
             #endregion
 
-            try
+            //无创建，有忽略
+            using var db = new Data.ContextBase();
+            if (db.Database.EnsureCreated())
             {
-                //无创建，有忽略
-                using var db = new Data.ContextBase();
-                db.Database.EnsureCreated();
-            }
-            catch (System.Exception)
-            {
+                var jodb = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/scripts/example/", "data.json").ToJObject();
+
+                db.UserInfo.AddRange(jodb["UserInfo"].ToString().ToEntitys<Domain.UserInfo>());
+
+                db.Tags.AddRange(jodb["Tags"].ToString().ToEntitys<Domain.Tags>());
+
+                db.UserWriting.AddRange(jodb["UserWriting"].ToString().ToEntitys<Domain.UserWriting>());
+
+                db.UserWritingTags.AddRange(jodb["UserWritingTags"].ToString().ToEntitys<Domain.UserWritingTags>());
+
+                db.UserReply.AddRange(jodb["UserReply"].ToString().ToEntitys<Domain.UserReply>());
+
+                db.Run.AddRange(jodb["Run"].ToString().ToEntitys<Domain.Run>());
+
+                db.KeyValues.AddRange(jodb["KeyValues"].ToString().ToEntitys<Domain.KeyValues>());
+
+                db.Gist.AddRange(jodb["Gist"].ToString().ToEntitys<Domain.Gist>());
+
+                db.Draw.AddRange(jodb["Draw"].ToString().ToEntitys<Domain.Draw>());
+
+                db.DocSet.AddRange(jodb["DocSet"].ToString().ToEntitys<Domain.DocSet>());
+
+                db.DocSetDetail.AddRange(jodb["DocSetDetail"].ToString().ToEntitys<Domain.DocSetDetail>());
+
+                db.SaveChanges();
             }
         }
 

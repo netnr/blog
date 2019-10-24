@@ -183,10 +183,6 @@
     padding: 5px;
 }
 
-    .rld .card-footer a, .rld .card-footer small {
-        white-space: nowrap;
-    }
-
 .rld iframe {
     position: absolute;
     height: 100%;

@@ -18,7 +18,10 @@ namespace Netnr.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls(args[0]);
+                    if (args.Length > 0)
+                    {
+                        webBuilder.UseUrls(args[0]);
+                    }
                 });
     }
 }

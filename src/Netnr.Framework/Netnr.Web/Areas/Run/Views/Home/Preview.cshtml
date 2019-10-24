@@ -23,8 +23,6 @@
 </html>
 <script src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
 <script>
-    try {
-        var h = top.editor1.getValue(), j = top.editor2.getValue(), c = top.editor3.getValue();
-        $(document.body).html(h + '<style>' + c + '</style><script>try{' + j + '}catch(e){}</' + 'script>');
-    } catch (e) { console.log(e) }
+    var h = top.editor1.getValue(), j = top.editor2.getValue(), c = top.editor3.getValue();
+    $(document.body).html(h + '<style>' + c + '</style><script>' + j + '</' + 'script>');
 </script>

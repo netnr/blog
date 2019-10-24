@@ -294,7 +294,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
         }
 
         [Description("导出")]
-        public IActionResult Export()
+        public void Export()
         {
             var code = RouteData.Values["id"]?.ToString();
             using var db = new ContextBase();
@@ -317,7 +317,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
             //文件名
             var filename = db.DocSet.Where(x => x.DsCode == code).FirstOrDefault()?.DsName ?? "netnrdoc";
 
-            return File(Encoding.Default.GetBytes(tm), "application/msword", filename + ".doc");
+            new Fast.DownTo(Response).Stream(Encoding.Default.GetBytes(tm), filename + ".doc");
         }
 
         private string ListTreeEach<T>(List<T> list, string pidField, string idField, List<string> startPid, List<int> listNo = null, int deep = 1)

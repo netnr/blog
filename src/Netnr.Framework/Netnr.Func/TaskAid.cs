@@ -64,18 +64,25 @@ namespace Netnr.Func
 
                 var kp = "Work:BackupDataBase:SQLServer:";
 
-                //执行命令
-                using var db = new ContextBase();
-                using var conn = db.Database.GetDbConnection();
-                conn.Open();
-                var connCmd = conn.CreateCommand();
-                connCmd.CommandText = GlobalTo.GetValue(kp + "cmd");
-                int en = connCmd.ExecuteNonQuery();
+                if (GlobalTo.GetValue<bool>(kp + "enable") == true)
+                {
+                    //执行命令
+                    using var db = new ContextBase();
+                    using var conn = db.Database.GetDbConnection();
+                    conn.Open();
+                    var connCmd = conn.CreateCommand();
+                    connCmd.CommandText = GlobalTo.GetValue(kp + "cmd");
+                    int en = connCmd.ExecuteNonQuery();
 
-                listMsg.Add(en);
+                    listMsg.Add(en);
 
-                vm.Set(ARTag.success);
-                vm.data = listMsg;
+                    vm.Set(ARTag.success);
+                    vm.data = listMsg;
+                }
+                else
+                {
+                    vm.Set(ARTag.lack);
+                }
             }
             catch (Exception ex)
             {

@@ -1,0 +1,291 @@
+﻿{
+  "UserInfo": [
+    {
+      "UserId": 1,
+      "UserName": "netnr",
+      "UserPwd": "e10adc3949ba59abbe56e057f20f883e",
+      "UserCreateTime": "2015-05-18T17:25:49",
+      "UserLoginTime": "2019-10-24T14:10:15.480",
+      "LoginLimit": 0,
+      "UserSign": "1571897415",
+      "Nickname": "netnr",
+      "UserPhoto": "5431600270384321483.jpg?1565354419",
+      "UserSex": 1,
+      "UserMail": "netnr@netnr.com",
+      "UserSay": "一个热爱前端的后台程序员"
+    }
+  ],
+  "Tags": [
+    {
+      "TagId": 58,
+      "TagName": "https",
+      "TagIcon": "https.svg",
+      "TagStatus": 1,
+      "TagHot": 0
+    },
+    {
+      "TagId": 79,
+      "TagName": "网页浏览器",
+      "TagIcon": "网页浏览器.svg",
+      "TagPid": 0,
+      "TagOwner": 0,
+      "TagOrder": 0,
+      "TagStatus": 1,
+      "TagHot": 1
+    }
+  ],
+  "UserWriting": [
+    {
+      "UwId": 117,
+      "Uid": 1,
+      "UwCategory": 0,
+      "UwTitle": "删除Chrome和Firefox的HSTS，不再强制跳转HTTPS",
+      "UwContent": "<h3>HSTS是什么<\/h3>\n<p>自己的理解：<strong>设置一个网站在指定时间内，所有的HTTP强制跳转HTTPS请求<\/strong> <\/p>\n<p>浏览器本地会记录，如果不清除记录，那么始终会以https访问<\/p>\n<h3>有什么问题<\/h3>\n<p>如果一个站点设置了HSTS，后面不再支持HTTPS只支持HTTP访问，就需要删除HSTS<\/p>\n<h3>删除HSTS<\/h3>\n<ul>\n<li>Chrome 或 谷歌内核的浏览器<br>打开 <code>chrome:\/\/net-internals\/#hsts<\/code><br><strong>Delete domain security policies<\/strong> 输入域名 点击  <strong>Delete<\/strong>  按钮<\/li>\n<li>Firefox<br>打开 <code>about:support<\/code><br>配置文件夹， <strong>打开文件夹<\/strong> 找到  <strong>SiteSecurityServiceState.txt<\/strong> 记事本<br>搜索域名，删除对应的一行记录<\/li>\n<\/ul>\n",
+      "UwContentMd": "### HSTS是什么\n自己的理解：**设置一个网站在指定时间内，所有的HTTP强制跳转HTTPS请求** \n\n浏览器本地会记录，如果不清除记录，那么始终会以https访问\n\n### 有什么问题\n如果一个站点设置了HSTS，后面不再支持HTTPS只支持HTTP访问，就需要删除HSTS\n\n### 删除HSTS\n- Chrome 或 谷歌内核的浏览器  \n  打开 `chrome:\/\/net-internals\/#hsts`  \n  **Delete domain security policies** 输入域名 点击  **Delete**  按钮\n- Firefox  \n  打开 `about:support`  \n  配置文件夹， **打开文件夹** 找到  **SiteSecurityServiceState.txt** 记事本  \n  搜索域名，删除对应的一行记录",
+      "UwCreateTime": "2019-05-05T17:26:09.867",
+      "UwUpdateTime": "2019-10-11T10:53:34.667",
+      "UwLastUid": 1,
+      "UwLastDate": "2019-05-05T17:26:09.867",
+      "UwReplyNum": 1,
+      "UwReadNum": 176,
+      "UwOpen": 1,
+      "UwLaud": 0,
+      "UwMark": 0,
+      "UwStatus": 1
+    }
+  ],
+  "UserWritingTags": [
+    {
+      "UwtId": 517,
+      "UwId": 117,
+      "TagId": 79,
+      "TagName": "网页浏览器"
+    },
+    {
+      "UwtId": 518,
+      "UwId": 117,
+      "TagId": 58,
+      "TagName": "https"
+    }
+  ],
+  "UserReply": [
+    {
+      "UrId": 59,
+      "Uid": 0,
+      "UrAnonymousName": "netnr",
+      "UrAnonymousLink": "https:\/\/zme.ink",
+      "UrAnonymousMail": "netnr@netnr.com",
+      "UrTargetType": "UserWriting",
+      "UrTargetId": "117",
+      "UrContent": "<p>不用登录，支持匿名留言啦<\/p>\n",
+      "UrContentMd": "不用登录，支持匿名留言啦",
+      "UrCreateTime": "2019-06-27T17:19:04.130",
+      "UrStatus": 1,
+      "UrTargetPid": 0
+    }
+  ],
+  "Run": [
+    {
+      "RunId": "c0875be3-25cd-4811-a282-4ef0c003fbf7",
+      "Uid": 1,
+      "RunCode": "5211713099190887635",
+      "RunContent1": "<!DOCTYPE html>\r\n<html>\r\n\r\n<head>\r\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" \/>\r\n\r\n\t<meta charset=\"utf-8\" \/>\r\n\t<meta name=\"referrer\" content=\"never\">\r\n\r\n\t<script src=\"https:\/\/lib.baomitu.com\/jquery\/1.12.4\/jquery.min.js\"><\/script>\r\n\r\n\t<title>NetnRun Demo<\/title>\r\n\r\n<\/head>\r\n\r\n<body>\r\n\t<div class='content'>\r\n\t\t<div style='padding-right:40px'>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t<\/div>\r\n\t\t<div style='padding-right:20px'>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:122px'>\r\n\t\t\t<\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:142px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:82px' class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:62px' class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:42px' class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:62px' class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:82px' class=\"play\"><\/div>\r\n\t\t\t<div class=\"play\"><\/div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div style='margin-right:22px'><\/div>\r\n\t\t\t<div style='margin-right:142px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:102px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div style='margin-right:62px'><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:82px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div style='margin-right:42px'><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:102px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div style='margin-right:22px'><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:122px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:142px'><\/div>\r\n\t\t<\/div>\r\n\t\t<div>\r\n\t\t\t<div><\/div>\r\n\t\t\t<div style='margin-right:162px'><\/div>\r\n\t\t<\/div>\r\n\t<\/div>\r\n<\/body>\r\n\r\n<\/html>",
+      "RunContent2": "animate();\r\n$(\".play\").click(animate).mouseover(function () {\r\n  $(\".play\").css({ \"background-color\": \"#A55\" });\r\n}).mouseout(function () {\r\n  $(\".play\").css({ \"background-color\": \"#060\" });\r\n});\r\nfunction animate() {\r\n  $('div>div>div').each(function (id) {\r\n    $(this).css({\r\n      position: 'relative',\r\n      top: '-200px',\r\n      opacity: 0\r\n    });\r\n    var wait = Math.floor((Math.random() * 2500) + 1);\r\n    $(this).delay(wait).animate({\r\n      top: '0px',\r\n      opacity: 1\r\n    }, 1000);\r\n\r\n  });\r\n}",
+      "RunContent3": "body {\r\n\tmargin:30px;\r\n  \tbackground-color:#1e1e1e;\r\n}\r\n.content {\r\n\tdisplay:inline-block;\r\n\twidth:350px;\r\n\theight:239px;\r\n\tmargin-right:-4px;\r\n}\r\n.play {\r\n\tcursor:pointer;\r\n\tbackground-color:#060;\r\n}\r\ndiv>div {\r\n\tdisplay:block;\r\n\theight:20px;\r\n}\r\ndiv>div>div {\r\n\twidth:16px;\r\n\theight:16px;\r\n\tbackground-color:rgb(57, 142, 182);\r\n\tfloat:right;\r\n\tmargin:2px;\r\n}",
+      "RunTheme": "vs-dark",
+      "RunRemark": "NetnRun Demo",
+      "RunCreateTime": "2018-07-22T23:03:32",
+      "RunOpen": 1,
+      "RunStatus": 1
+    }
+  ],
+  "KeyValues": [
+    {
+      "KeyId": "dd6f40a9-9dac-4a40-8fbd-0345da0b5a1c",
+      "KeyName": "https",
+      "KeyValue": "{\"id\":14121,\"subLemmaId\":14121,\"newLemmaId\":285356,\"key\":\"https\",\"desc\":\"https\",\"title\":\"https\",\"card\":[{\"key\":\"m25_nameC\",\"name\":\"\\u4e2d\\u6587\\u540d\",\"value\":[\"\\u8d85\\u6587\\u672c\\u4f20\\u8f93\\u5b89\\u5168\\u534f\\u8bae\"],\"format\":[\"\\u8d85\\u6587\\u672c\\u4f20\\u8f93\\u5b89\\u5168\\u534f\\u8bae\"]},{\"key\":\"m25_nameE\",\"name\":\"\\u5916\\u6587\\u540d\",\"value\":[\"HTTPS\"],\"format\":[\"HTTPS\"]},{\"key\":\"m25_ext_0\",\"name\":\"\\u76ee\\u6807\",\"value\":[\"\\u5b89\\u5168\"],\"format\":[\"\\u5b89\\u5168\"]},{\"key\":\"m25_ext_1\",\"name\":\"\\u5e94\\u7528\",\"value\":[\"\\u5b89\\u5168\\u6570\\u636e\\u4f20\\u8f93\"],\"format\":[\"\\u5b89\\u5168\\u6570\\u636e\\u4f20\\u8f93\"]}],\"image\":\"https:\\\/\\\/gss2.bdstatic.com\\\/-fo3dSag_xI4khGkpoWK1HF6hhy\\\/baike\\\/pic\\\/item\\\/cefc1e178a82b90104b542f1728da9773812efdc.jpg\",\"src\":\"cefc1e178a82b90104b542f1728da9773812efdc\",\"imageHeight\":420,\"imageWidth\":610,\"isSummaryPic\":\"y\",\"abstract\":\"HTTPS\\uff08\\u5168\\u79f0\\uff1aHyper Text Transfer Protocol over Secure Socket Layer \\u6216 Hypertext Transfer Protocol Secure\\uff0c\\u8d85\\u6587\\u672c\\u4f20\\u8f93\\u5b89\\u5168\\u534f\\u8bae\\uff09\\uff0c\\u662f\\u4ee5\\u5b89\\u5168\\u4e3a\\u76ee\\u6807\\u7684HTTP\\u901a\\u9053\\uff0c\\u7b80\\u5355\\u8bb2\\u662fHTTP\\u7684\\u5b89\\u5168\\u7248\\u3002\\u5373HTTP\\u4e0b\\u52a0\\u5165SSL\\u5c42\\uff0cHTTPS\\u7684\\u5b89\\u5168\\u57fa\\u7840\\u662fSSL\\uff0c\\u56e0\\u6b64\\u52a0\\u5bc6\\u7684\\u8be6\\u7ec6\\u5185\\u5bb9\\u5c31\\u9700\\u8981SSL\\u3002 \\u5b83\\u662f\\u4e00\\u4e2aURI scheme\\uff08\\u62bd\\u8c61\\u6807\\u8bc6\\u7b26\\u4f53\\u7cfb\\uff09\\uff0c\\u53e5\\u6cd5\\u7c7b\\u540chttp:\\u4f53\\u7cfb\\u3002\\u7528\\u4e8e\\u5b89\\u5168\\u7684HTTP\\u6570\\u636e\\u4f20\\u8f93\\u3002https:URL\\u8868\\u660e\\u5b83\\u4f7f\\u7528\\u4e86HTTP\\uff0c\\u4f46HTTPS\\u5b58\\u5728\\u4e0d\\u540c\\u4e8eHTTP\\u7684\\u9ed8\\u8ba4\\u7aef\\u53e3\\u53ca\\u4e00\\u4e2a\\u52a0\\u5bc6\\\/\\u8eab\\u4efd\\u9a8c\\u8bc1\\u5c42\\uff08\\u5728HTTP\\u4e0eTCP\\u4e4b\\u95f4\\uff09\\u3002\\u8fd9\\u4e2a\\u7cfb\\u7edf\\u7684\\u6700\\u521d\\u7814\\u53d1\\u7531\\u7f51\\u666f\\u516c\\u53f8(Netscape)\\u8fdb\\u884c\\uff0c\\u5e76\\u5185\\u7f6e\\u4e8e\\u5176\\u6d4f\\u89c8\\u5668Netscape Navigator\\u4e2d\\uff0c\\u63d0\\u4f9b\\u4e86\\u8eab\\u4efd\\u9a8c\\u8bc1\\u4e0e\\u52a0\\u5bc6\\u901a\\u8baf\\u65b9\\u6cd5\\u3002\\u73b0\\u5728\\u5b83\\u88ab\\u5e7f\\u6cdb\\u7528\\u4e8e\\u4e07\\u7ef4\\u7f51\\u4e0a\\u5b89\\u5168\\u654f\\u611f\\u7684\\u901a\\u8baf\\uff0c\\u4f8b\\u5982\\u4ea4\\u6613\\u652f\\u4ed8\\u65b9\\u9762\\u3002\",\"moduleIds\":[],\"url\":\"http:\\\/\\\/baike.baidu.com\\\/view\\\/14121.htm\",\"wapUrl\":\"http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/https\\\/285356\",\"hasOther\":0,\"catalog\":[\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/14121.htm#1'>\\u5386\\u53f2<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/14121.htm#2'>\\u533a\\u522b<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/14121.htm#3'>\\u89e3\\u51b3\\u95ee\\u9898<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/14121.htm#4'>\\u9650\\u5236<\\\/a>\"],\"wapCatalog\":[\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/https\\\/285356#1'>\\u5386\\u53f2<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/https\\\/285356#2'>\\u533a\\u522b<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/https\\\/285356#3'>\\u89e3\\u51b3\\u95ee\\u9898<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/https\\\/285356#4'>\\u9650\\u5236<\\\/a>\"],\"logo\":\"https:\\\/\\\/gss0.baidu.com\\\/70cFsjip0QIZ8tyhnq\\\/img\\\/baike\\\/logo-baike.gif\",\"copyrights\":\"\\u4ee5\\u4e0a\\u5185\\u5bb9\\u6765\\u81ea\\u767e\\u5ea6\\u767e\\u79d1\\u5e73\\u53f0\\uff0c\\u7531\\u767e\\u5ea6\\u767e\\u79d1\\u7f51\\u53cb\\u521b\\u4f5c\\u3002\",\"customImg\":\"\",\"redirect\":[]}"
+    },
+    {
+      "KeyId": "78d507e3-1b47-4954-a761-23683d4ae2aa",
+      "KeyName": "网页浏览器",
+      "KeyValue": "{\"id\":455968,\"subLemmaId\":455968,\"newLemmaId\":8309940,\"key\":\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\",\"desc\":\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\",\"title\":\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\",\"card\":[{\"key\":\"m90_nameC\",\"name\":\"\\u4e2d\\u6587\\u540d\",\"value\":[\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\"],\"format\":[\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\"]},{\"key\":\"m90_nameE\",\"name\":\"\\u5916\\u6587\\u540d\",\"value\":[\"web browser\"],\"format\":[\"web browser\"]},{\"key\":\"m90_ext_0\",\"name\":\"\\u7b80\\u79f0\",\"value\":[\"\\u6d4f\\u89c8\\u5668\"],\"format\":[\"\\u6d4f\\u89c8\\u5668\"]},{\"key\":\"m90_ext_1\",\"name\":\"\\u5b9a\\u4e49\",\"value\":[\"\\u5c55\\u793a<a target=_blank href=\\\"\\\/item\\\/%E4%B8%87%E7%BB%B4%E7%BD%91\\\">\\u4e07\\u7ef4\\u7f51<\\\/a>\\u4fe1\\u606f\\u8d44\\u6e90\\u7684<a target=_blank href=\\\"\\\/item\\\/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F\\\">\\u5e94\\u7528\\u7a0b\\u5e8f<\\\/a>\"],\"format\":[\"\\u5c55\\u793a<a target=_blank href=\\\"\\\/item\\\/%E4%B8%87%E7%BB%B4%E7%BD%91\\\">\\u4e07\\u7ef4\\u7f51<\\\/a>\\u4fe1\\u606f\\u8d44\\u6e90\\u7684<a target=_blank href=\\\"\\\/item\\\/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F\\\">\\u5e94\\u7528\\u7a0b\\u5e8f<\\\/a>\"]}],\"image\":\"https:\\\/\\\/gss2.bdstatic.com\\\/-fo3dSag_xI4khGkpoWK1HF6hhy\\\/baike\\\/pic\\\/item\\\/4034970a304e251ff34e81aca686c9177f3e532c.jpg\",\"src\":\"4034970a304e251ff34e81aca686c9177f3e532c\",\"imageHeight\":325,\"imageWidth\":450,\"isSummaryPic\":\"y\",\"abstract\":\"\\u7f51\\u9875\\u6d4f\\u89c8\\u5668\\uff08\\u82f1\\u8bed\\uff1aweb browser\\uff09\\uff0c\\u5e38\\u88ab\\u7b80\\u79f0\\u4e3a\\u6d4f\\u89c8\\u5668\\uff0c\\u662f\\u4e00\\u79cd\\u7528\\u4e8e\\u68c0\\u7d22\\u5e76\\u5c55\\u793a\\u4e07\\u7ef4\\u7f51\\u4fe1\\u606f\\u8d44\\u6e90\\u7684\\u5e94\\u7528\\u7a0b\\u5e8f\\u3002\\u8fd9\\u4e9b\\u4fe1\\u606f\\u8d44\\u6e90\\u53ef\\u4e3a\\u7f51\\u9875\\u3001\\u56fe\\u7247\\u3001\\u5f71\\u97f3\\u6216\\u5176\\u4ed6\\u5185\\u5bb9\\uff0c\\u5b83\\u4eec\\u7531\\u7edf\\u4e00\\u8d44\\u6e90\\u6807\\u5fd7\\u7b26\\u6807\\u5fd7\\u3002\\u4fe1\\u606f\\u8d44\\u6e90\\u4e2d\\u7684\\u8d85\\u94fe\\u63a5\\u53ef\\u4f7f\\u7528\\u6237\\u65b9\\u4fbf\\u5730\\u6d4f\\u89c8\\u76f8\\u5173\\u4fe1\\u606f\\u3002\",\"moduleIds\":[],\"url\":\"http:\\\/\\\/baike.baidu.com\\\/view\\\/455968.htm\",\"wapUrl\":\"http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8\\\/8309940\",\"hasOther\":0,\"catalog\":[\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/455968.htm#1'>\\u4ecb\\u7ecd<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/455968.htm#2'>\\u5386\\u53f2<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/455968.htm#3'>\\u7279\\u70b9<\\\/a>\",\"<a href='http:\\\/\\\/baike.baidu.com\\\/view\\\/455968.htm#4'>\\u624b\\u673a\\u6d4f\\u89c8\\u5668<\\\/a>\"],\"wapCatalog\":[\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8\\\/8309940#1'>\\u4ecb\\u7ecd<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8\\\/8309940#2'>\\u5386\\u53f2<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8\\\/8309940#3'>\\u7279\\u70b9<\\\/a>\",\"<a href='http:\\\/\\\/wapbaike.baidu.com\\\/item\\\/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8\\\/8309940#4'>\\u624b\\u673a\\u6d4f\\u89c8\\u5668<\\\/a>\"],\"logo\":\"https:\\\/\\\/gss0.baidu.com\\\/70cFsjip0QIZ8tyhnq\\\/img\\\/baike\\\/logo-baike.gif\",\"copyrights\":\"\\u4ee5\\u4e0a\\u5185\\u5bb9\\u6765\\u81ea\\u767e\\u5ea6\\u767e\\u79d1\\u5e73\\u53f0\\uff0c\\u7531\\u767e\\u5ea6\\u767e\\u79d1\\u7f51\\u53cb\\u521b\\u4f5c\\u3002\",\"customImg\":\"\",\"redirect\":[]}"
+    }
+  ],
+  "Gist": [
+    {
+      "GistId": "a5b35411-817d-4d67-9e33-d1c53be608f6",
+      "Uid": 1,
+      "GistCode": "5373307231488995367",
+      "GistFilename": "cat-name",
+      "GistContent": "# Linux内核版本\r\nuname -a\r\nuname -r\r\ncat \/proc\/version\r\ncat \/etc\/issue\r\n\r\n# RedHat（centos）\r\ncat \/etc\/redhat-release",
+      "GistContentPreview": "# Linux内核版本\r\nuname -a\r\nuname -r\r\ncat \/proc\/version\r\ncat \/etc\/issue\r\n\r\n# RedHat（centos）\r\ncat \/etc\/redhat-release",
+      "GistRow": 8,
+      "GistLanguage": "shell",
+      "GistTheme": "vs",
+      "GistRemark": "查看linux系统的版本名称",
+      "GistCreateTime": "2019-09-26T15:51:51.710",
+      "GistUpdateTime": "2019-09-26T15:51:51.710",
+      "GistOpen": 1,
+      "GistStatus": 1
+    }
+  ],
+  "Draw": [
+    {
+      "DrId": "d4969500168496794720",
+      "Uid": 1,
+      "DrType": "draw",
+      "DrName": "绘图示例",
+      "DrContent": "<mxGraphModel dx=\"868\" dy=\"476\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"827\" pageHeight=\"1169\"><root><mxCell id=\"0\"\/><mxCell id=\"1\" parent=\"0\"\/><mxCell id=\"2\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\" parent=\"1\" source=\"3\" target=\"5\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"\/><\/mxCell><mxCell id=\"3\" value=\"开始\" style=\"ellipse;whiteSpace=wrap;html=1;aspect=fixed;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"160\" y=\"360\" width=\"80\" height=\"80\" as=\"geometry\"\/><\/mxCell><mxCell id=\"4\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;\" parent=\"1\" source=\"5\" target=\"6\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"\/><\/mxCell><mxCell id=\"5\" value=\"任务\" style=\"rounded=0;whiteSpace=wrap;html=1;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"353\" y=\"370\" width=\"120\" height=\"60\" as=\"geometry\"\/><\/mxCell><mxCell id=\"6\" value=\"结束\" style=\"whiteSpace=wrap;html=1;aspect=fixed;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"373\" y=\"540\" width=\"80\" height=\"80\" as=\"geometry\"\/><\/mxCell><\/root><\/mxGraphModel>",
+      "DrOrder": 100,
+      "DrCreateTime": "2019-07-12T17:44:00.030",
+      "DrStatus": 1,
+      "DrOpen": 1
+    },
+    {
+      "DrId": "m4976065893797151245",
+      "Uid": 1,
+      "DrType": "mind",
+      "DrName": "思维导图示例",
+      "DrContent": "{\"root\":{\"data\":{\"id\":\"bvn8uyhsyx40\",\"created\":1563540527801,\"text\":\"项目开发\"},\"children\":[{\"data\":{\"id\":\"bvn9tsdqdeg0\",\"created\":1563543257240,\"text\":\"项目结构\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdqnu80\",\"created\":1563543257240,\"text\":\"010 项目立项\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdrrog0\",\"created\":1563543257242,\"text\":\"会议纪要\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdrkg00\",\"created\":1563543257242,\"text\":\"技术方案\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdrj680\",\"created\":1563543257242,\"text\":\"施工组织方案\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdrka00\",\"created\":1563543257242,\"text\":\"项目人员通讯录\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdsgrs0\",\"created\":1563543257243,\"text\":\"020 项目计划\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdsuig0\",\"created\":1563543257244,\"text\":\"整体计划\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdskdc0\",\"created\":1563543257244,\"text\":\"详细计划表\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdsz940\",\"created\":1563543257244,\"text\":\"030 需求开发\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdsmrk0\",\"created\":1563543257244,\"text\":\"需求规格说明书\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdt0mo0\",\"created\":1563543257244,\"text\":\"调研报告\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdtd2w0\",\"created\":1563543257245,\"text\":\"流程图\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdttwg0\",\"created\":1563543257246,\"text\":\"040 系统设计\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdtrbc0\",\"created\":1563543257246,\"text\":\"原型图\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdui340\",\"created\":1563543257247,\"text\":\"系统数据库设计表\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdunqo0\",\"created\":1563543257247,\"text\":\"系统详细设计说明书\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdv4zc0\",\"created\":1563543257248,\"text\":\"050 编码\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdv5fc0\",\"created\":1563543257248,\"text\":\"项目源代码\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdv4ww0\",\"created\":1563543257248,\"text\":\"060 测试\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdv0ww0\",\"created\":1563543257248,\"text\":\"070 用户文档\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdvaxs0\",\"created\":1563543257248,\"text\":\"080 产品验收\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdvits0\",\"created\":1563543257249,\"text\":\"090 项目结项\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdvy1s0\",\"created\":1563543257249,\"text\":\"100 项目管理\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdwc280\",\"created\":1563543257250,\"text\":\"110 质保管理\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdwb0g0\",\"created\":1563543257250,\"text\":\"120 规范性文档\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdwioo0\",\"created\":1563543257250,\"text\":\"项目开发规范性说明\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdw7u00\",\"created\":1563543257250,\"text\":\"130 参考资料\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdwogg0\",\"created\":1563543257251,\"text\":\"客户提供的资料\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9tsdwu9k0\",\"created\":1563543257251,\"text\":\"140 项目培训\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdwoao0\",\"created\":1563543257251,\"text\":\"150 招标文件\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdxxmg0\",\"created\":1563543257253,\"text\":\"160 投标文件\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9tsdy5qg0\",\"created\":1563543257253,\"text\":\"170 问题列表\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9tsdy7mw0\",\"created\":1563543257253,\"text\":\"项目开发中遇到的问题\",\"layout\":null},\"children\":[]}]}]},{\"data\":{\"id\":\"bvn9u63zh6w0\",\"created\":1563543287126,\"text\":\"01 启动\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9u640m7c0\",\"created\":1563543287127,\"text\":\"调研报告\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9u6413s00\",\"created\":1563543287128,\"text\":\"合同信息\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9u641q940\",\"created\":1563543287129,\"text\":\"技术方案\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9u641qgo0\",\"created\":1563543287129,\"text\":\"人员通讯（甲、乙）\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9u641okg0\",\"created\":1563543287129,\"text\":\"总体计划\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvn9uf7yixs0\",\"created\":1563543306957,\"text\":\"02 过程\",\"layout\":null},\"children\":[{\"data\":{\"id\":\"bvn9uf7zf2o0\",\"created\":1563543306958,\"text\":\"调研报告\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9uf7z08o0\",\"created\":1563543306958,\"text\":\"需求说明书\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9uf7zh680\",\"created\":1563543306958,\"text\":\"系统详细设计说明书\",\"layout\":null},\"children\":[]},{\"data\":{\"id\":\"bvn9uf7z3ls0\",\"created\":1563543306958,\"text\":\"系统数据库设计表\",\"layout\":null},\"children\":[]}]},{\"data\":{\"id\":\"bvnoouiloqw0\",\"created\":1563585186716,\"text\":\"周报\",\"layout\":null},\"children\":[]}]},\"template\":\"right\",\"theme\":\"fresh-blue\",\"version\":\"1.4.43\"}",
+      "DrOrder": 100,
+      "DrCreateTime": "2019-07-20T08:07:48.177",
+      "DrStatus": 1,
+      "DrOpen": 1
+    }
+  ],
+  "DocSet": [
+    {
+      "DsCode": "4840050256984581805",
+      "Uid": 1,
+      "DsName": "字典示例",
+      "DsRemark": "数据字典例子",
+      "DsCreateTime": "2019-01-16T16:07:01",
+      "DsOpen": 1,
+      "DsStatus": 1
+    },
+    {
+      "DsCode": "5036967707833574483",
+      "Uid": 1,
+      "DsName": "文档示例",
+      "DsRemark": "展示文档示例",
+      "DsCreateTime": "2019-01-16T15:48:38",
+      "DsOpen": 1,
+      "DsStatus": 1
+    }
+  ],
+  "DocSetDetail": [
+    {
+      "DsdId": "5107490705099038924",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "4840050256984581805",
+      "DsdTitle": "item",
+      "DsdContentMd": "-  项目表，储存项目信息\n\n|字段|类型|空|默认|注释|\n|:----|:-------|:---|----|------|\n|item_id\t  |int(10)     |否\t|\t |\t 项目id、自增id          |\n|item_name |varchar(50) |否\t|    |\t 项目名\t|\n|item_description |varchar(225) |否   |    |\t 项目描述\t\t |\n|uid     |int(10) |是   |    |    创建人uid     |\n|username |varchar(50)     |否   |   |   创建人用户名  |\n|password |varchar(50)     |否   |   |   项目密码。可为空。空表示可以公开访问的项目  |\n|addtime |int(11)     |否   |   |   项目添加的时间，时间戳  |\n|last_update_time |int(11)     |否   |   |   项目最后更新时间，时间戳  |\n- 备注：无",
+      "DsdContentHtml": "<ul>\n<li>项目表，储存项目信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">item_id<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目id、自增id<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_name<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目名<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_description<\/td><td style=\"text-align:left\">varchar(225)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目描述<\/td><\/tr>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>创建人uid<\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>创建人用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目密码。可为空。空表示可以公开访问的项目<\/td><\/tr>\n<tr><td style=\"text-align:left\">addtime<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目添加的时间，时间戳<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_update_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目最后更新时间，时间戳<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T16:08:34",
+      "DsdUpdateTime": "2019-01-16T16:08:34",
+      "DsdOrder": 2
+    },
+    {
+      "DsdId": "5749984065357804376",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "4840050256984581805",
+      "DsdTitle": "说明",
+      "DsdContentMd": "这是系统生成的数据字典示例。",
+      "DsdContentHtml": "<p>这是系统生成的数据字典示例。<\/p>",
+      "DsdCreateTime": "2019-01-16T16:07:27",
+      "DsdUpdateTime": "2019-01-16T16:07:27",
+      "DsdOrder": 1
+    },
+    {
+      "DsdId": "5759987597722086789",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "4840050256984581805",
+      "DsdTitle": "user",
+      "DsdContentMd": "-  用户表，储存用户信息\n\n|字段|类型|空|默认|注释|\n|:----    |:-------    |:--- |----|------      |\n|uid\t  |int(10)     |否\t|\t |\t           |\n|username |varchar(20) |否\t|    |\t 用户名\t|\n|groupid  |tinyint(2)   |否\t|  2  |\t 1为管理员，2为普通用户。此字段保留方便以后扩展\t|\n|password |varchar(50) |否   |    |\t 密码\t\t |\n|cookie_token |varchar(50) |否   |    |\t  |\n|cookie_token_expire |int(11) |否   |    |\t 过期时间\t\t |\n|avatar |varchar(200) |是   |    |\t 头像\t\t |\n|avatar_small |varchar(200) |是   |    |\t 小头像\t |\n|email |varchar(50) |否   |    |\t 邮箱\t\t |\n|name     |varchar(15) |是   |    |    昵称     |\n|reg_time |int(11)     |否   | 0  |   注册时间  |\n|last_login_time |int(11)     |否   | 0  |   最后一次登录时间  |\n\n- 备注：无",
+      "DsdContentHtml": "<ul>\n<li>用户表，储存用户信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(20)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">groupid<\/td><td style=\"text-align:left\">tinyint(2)<\/td><td style=\"text-align:left\">否<\/td><td>2<\/td><td>1为管理员，2为普通用户。此字段保留方便以后扩展<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token_expire<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>过期时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar_small<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>小头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">email<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>邮箱<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:left\">varchar(15)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>昵称<\/td><\/tr>\n<tr><td style=\"text-align:left\">reg_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>注册时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_login_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>最后一次登录时间<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
+      "DsdUpdateTime": "2019-01-16T16:09:12",
+      "DsdOrder": 3
+    },
+    {
+      "DsdId": "4984161198208022738",
+      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "城市数据",
+      "DsdContentMd": "**简要描述：** \n\n- 获取某个省份的城市数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/citys `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n|参数名|必选|类型|说明|\n|:----    |:---|:----- |-----   |\n|code |是  |string |省份代码   |\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"28241\",\n            \"code\": \"4401\",\n            \"parentid\": \"44\",\n            \"name\": \"广州市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28421\",\n            \"code\": \"4402\",\n            \"parentid\": \"44\",\n            \"name\": \"韶关市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28558\",\n            \"code\": \"4403\",\n            \"parentid\": \"44\",\n            \"name\": \"深圳市\",\n            \"level\": \"2\"\n        },\n       ....\n    ]\n}\n```\n **返回参数说明** \n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取某个省份的城市数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/citys<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">必选<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">code<\/td><td style=\"text-align:left\">是<\/td><td style=\"text-align:left\">string<\/td><td>省份代码<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28241\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4401\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"广州市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28421\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4402\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"韶关市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28558\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4403\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"深圳市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n       ....\n    ]\n}\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong>\n无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T15:59:56",
+      "DsdUpdateTime": "2019-01-16T15:59:56",
+      "DsdOrder": 2
+    },
+    {
+      "DsdId": "5024548689808552515",
+      "DsdPid": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "API接口模版",
+      "DsdContentMd": "**简要描述：**\n\n- 用户注册接口\n\n**请求URL：** \n- `http:\/\/xx.com\/api\/user\/register`\n  \n**请求方式：**\n\n- POST\n\n**参数：**\n\n|参数名|必选|类型|说明|\n|:----|:----:|:-----|:-----|\n|username |是 |string |用户名 |\n|password |是 |string |密码 |\n|name |否 |string | 昵称 |\n\n **返回示例**\n\n``` \n  {\n    \"error_code\": 0,\n    \"data\": {\n      \"uid\": \"1\",\n      \"username\": \"12345\",\n      \"name\": \"汤姆\",\n      \"sex\": 2 ,\n      \"reg_time\": \"1436865212\"\n    }\n  }\n```\n\n **返回参数说明** \n\n|参数名|类型|说明|\n|:-----|:-----|-----|\n|sex |int |性别编码，1：男；2：女 |\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>用户注册接口<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/user\/register<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>POST<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:center\">必选<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:center\">否<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">昵称<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>  {\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: {\n      <span class=\"hljs-attr\">\"uid\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n      <span class=\"hljs-attr\">\"username\"<\/span>: <span class=\"hljs-string\">\"12345\"<\/span>,\n      <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"汤姆\"<\/span>,\n      <span class=\"hljs-attr\">\"sex\"<\/span>: <span class=\"hljs-number\">2<\/span> ,\n      <span class=\"hljs-attr\">\"reg_time\"<\/span>: <span class=\"hljs-string\">\"1436865212\"<\/span>\n    }\n  }\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">sex<\/td><td style=\"text-align:left\">int<\/td><td>性别编码，1：男；2：女<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T15:57:40",
+      "DsdUpdateTime": "2019-01-16T15:57:40",
+      "DsdOrder": 1
+    },
+    {
+      "DsdId": "5194555992964224291",
+      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "国内数据",
+      "DsdContentMd": "**简要描述：** \n\n- 获取全国省份数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/province `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n无\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"1\",\n            \"code\": \"11\",\n            \"parentid\": \"0\",\n            \"name\": \"北京市\",\n            \"level\": \"1\"\n        },\n        {\n            \"id\": \"636\",\n            \"code\": \"13\",\n            \"parentid\": \"0\",\n            \"name\": \"河北省\",\n            \"level\": \"1\"\n        },\n     .....     \n    ]\n}\n\n```\n **返回参数说明** \n\n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取全国省份数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/province<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<p>无<\/p>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"11\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"北京市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"636\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"13\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"河北省\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n     .....     \n    ]\n}\n\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<p>无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdUpdateTime": "2019-01-16T15:59:24",
+      "DsdOrder": 1
+    },
+    {
+      "DsdId": "5333340956490622048",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "结束",
+      "DsdContentMd": "示例结束",
+      "DsdContentHtml": "<p>示例结束<\/p>",
+      "DsdCreateTime": "2019-01-16T15:56:18",
+      "DsdUpdateTime": "2019-01-16T15:56:18",
+      "DsdOrder": 99
+    },
+    {
+      "DsdId": "5763077273797768752",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "说明",
+      "DsdContentMd": "这是由系统生成的APi文档示例项目。",
+      "DsdContentHtml": "<p>这是由系统生成的APi文档示例项目。<\/p>\n",
+      "DsdUpdateTime": "2019-08-19T10:57:46.840",
+      "DsdOrder": 1
+    },
+    {
+      "DsdId": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "一级目录A",
+      "DsdCreateTime": "2019-01-16T15:50:24",
+      "DsdUpdateTime": "2019-01-16T15:50:24",
+      "DsdOrder": 2
+    },
+    {
+      "DsdId": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
+      "DsdPid": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "一级目录 AA",
+      "DsdCreateTime": "2019-01-16T15:55:21",
+      "DsdUpdateTime": "2019-01-16T15:55:21",
+      "DsdOrder": 2
+    }
+  ]
+}
