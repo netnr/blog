@@ -4,6 +4,12 @@
     ViewData["Title"] = "Discover gists";
 
     var rows = Model.Rows as List<Netnr.Domain.Gist>;
+
+    //如果搜索只有一条，直接跳转
+    if (rows.Count == 1 && Model.QueryString.ContainsKey("q") && !string.IsNullOrWhiteSpace(Model.QueryString["q"]))
+    {
+        ViewContext.HttpContext.Response.Redirect("/gist/code/" + rows.FirstOrDefault().GistCode);
+    }
 }
 
 @if (ViewData["Nickname"] != null)

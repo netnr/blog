@@ -129,7 +129,7 @@ namespace Netnr.Func
 
             if (!string.IsNullOrWhiteSpace(KeyWords))
             {
-                query = query.Where(x => x.UwTitle.Contains(KeyWords));
+                query = query.Where(x => x.UwTitle.Contains(KeyWords, StringComparison.OrdinalIgnoreCase));
             }
 
             pag.Total = query.Count();
