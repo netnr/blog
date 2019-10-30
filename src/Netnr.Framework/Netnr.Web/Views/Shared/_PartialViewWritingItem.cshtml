@@ -23,25 +23,29 @@
                 <partial name="_PartialMakeTag" model="mo.Spare1" />
             </div>
             <div class="mt-3 small text-muted clearfix">
-                <span class="float-left">
+                <span class="float-left mr-3">
                     <i class="fa fa-user text-muted"></i>
                     <a href='/user/id/@mo.Uid' class="uid">@mo.Spare3</a>
                 </span>
-                <span class="float-left mx-3">
+                <span class="float-left text-nowrap d-none d-md-block mr-3">
                     <i class="fa fa-clock-o text-muted"></i>
-                    @VisualFormat.Duration(mo.UwCreateTime.Value)
+                    发布于：@VisualFormat.Duration(mo.UwCreateTime.Value)
+                </span>
+                <span class="float-left text-nowrap mr-3">
+                    <i class="fa fa-clock-o text-muted"></i>
+                    更新于：@VisualFormat.Duration(mo.UwUpdateTime.Value)
                 </span>
                 @if (mo.UwReplyNum > 0)
                 {
                     if (mo.UwLastUid == 0)
                     {
-                        <span class="float-left d-none d-sm-block mr-3">
+                        <span class="float-left text-nowrap d-none d-md-block mr-3">
                             最后回复 <a class="uid">Guest</a>
                         </span>
                     }
                     else
                     {
-                        <span class="float-left d-none d-sm-block mr-3">
+                        <span class="float-left text-nowrap d-none d-md-block mr-3">
                             最后回复 <a href='/user/id/@mo.UwLastUid' class="uid">@mo.Spare2</a>
                         </span>
                     }

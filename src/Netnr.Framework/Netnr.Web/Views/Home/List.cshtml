@@ -66,11 +66,15 @@
                     <a href="/user/id/@uw.Uid">@uw.Spare2</a>
                     <input id="hid_uid" type="hidden" value="@uw.Uid" />
                 </span>
-                <span>
+                <span class="text-nowrap mr-3">
                     <i class="fa fa-clock-o text-muted"></i>
-                    @VisualFormat.Duration(uw.UwLastDate ?? uw.UwCreateTime.Value, 0)
+                    发布于：@VisualFormat.Duration(uw.UwCreateTime.Value)
                 </span>
-                <span class="mx-3">
+                <span class="text-nowrap mr-3">
+                    <i class="fa fa-clock-o text-muted"></i>
+                    更新于：@VisualFormat.Duration(uw.UwUpdateTime.Value)
+                </span>
+                <span>
                     <i class="fa fa-eye text-muted"></i> @uw.UwReadNum
                 </span>
             </div>
