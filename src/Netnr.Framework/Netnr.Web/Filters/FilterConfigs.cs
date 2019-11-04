@@ -132,7 +132,7 @@ namespace Netnr.Web.Filters
         {
             public void OnAuthorization(AuthorizationFilterContext context)
             {
-                //验证登录标记是最新
+                //验证登录标记是最新，不是则注销登录（即同一用户不允许同时在线，按缓存时间生效）
                 if (context.HttpContext.User.Identity.IsAuthenticated)
                 {
                     var uinfo = new Func.UserAuthAid(context.HttpContext).Get();
@@ -142,6 +142,72 @@ namespace Netnr.Web.Filters
                     {
                         context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是管理员
+        /// </summary>
+        public class IsAdmin : Attribute, IActionFilter
+        {
+            public void OnActionExecuted(ActionExecutedContext context)
+            {
+
+            }
+
+            public void OnActionExecuting(ActionExecutingContext context)
+            {
+                bool isv = false;
+
+                if (context.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    var uinfo = new Func.UserAuthAid(context.HttpContext).Get();
+                    isv = uinfo.UserId == GlobalTo.GetValue<int>("AdminId");
+                }
+
+                if (!isv)
+                {
+                    context.Result = new ContentResult()
+                    {
+                        Content = "unauthorized",
+                        StatusCode = 401
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// 有效验证（邮箱）
+        /// </summary>
+        public class IsValid : Attribute, IActionFilter
+        {
+            public void OnActionExecuted(ActionExecutedContext context)
+            {
+
+            }
+
+            public void OnActionExecuting(ActionExecutingContext context)
+            {
+                bool isv = false;
+
+                if (context.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    var uinfo = new Func.UserAuthAid(context.HttpContext).Get();
+
+                    //已验证邮箱
+                    using var db = new ContextBase();
+                    uinfo = db.UserInfo.Find(uinfo.UserId);
+                    if (uinfo.UserId == 1 || uinfo.UserMailValid == 1)
+                    {
+                        isv = true;
+                    }
+                }
+
+                if (!isv)
+                {
+                    var url = "/home/valid";
+                    context.Result = new RedirectResult(url);
                 }
             }
         }

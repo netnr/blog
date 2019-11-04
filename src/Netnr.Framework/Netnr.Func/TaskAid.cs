@@ -28,7 +28,7 @@ namespace Netnr.Func
                 {
                     Schedule<BackupDataBaseJob>().ToRunEvery(2).Days().At(5, 5);
 
-                    Schedule<GistSyncJob>().ToRunEvery(15).Minutes();
+                    Schedule<GistSyncJob>().ToRunEvery(2).Hours();
                 }
             }
 

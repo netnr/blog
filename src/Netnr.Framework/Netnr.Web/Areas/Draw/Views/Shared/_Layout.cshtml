@@ -1,4 +1,4 @@
-﻿<partial name="_PartialThe" />
+﻿<partial name="_PartialQuote" model="@("the")" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +11,7 @@
 
     <title>@ViewData["Title"]</title>
 
-    <partial name="_PartialMetaSEO" />
-
+    <partial name="_PartialQuote" model="@("seo")" />
 </head>
 <body>
     @{
@@ -27,7 +26,7 @@
 
     @if (!caq4.Contains(ca) || (caq4.Contains(ca) && rid == "form"))
     {
-        <partial name="_PartialLayoutQuote4" />
+        <partial name="_PartialQuote" model="@("bootstrap.css,fa.css,jquery.js,bootstrap.js")" />
 
         <nav class="navbar navbar-expand-md navbar-light bg-light">
 
@@ -110,6 +109,6 @@
 
     @RenderBody()
 
-    <partial name="_PartialFun" />
+    <partial name="_PartialQuote" model="@("fun.js")" />
 </body>
 </html>

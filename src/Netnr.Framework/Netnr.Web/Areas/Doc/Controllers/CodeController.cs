@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Netnr.Data;
 using Netnr.Domain;
 using Netnr.Func.ViewModel;
@@ -73,6 +74,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
                 {
                     vm.DsdTitle = ds.DsName;
                     vm.DsdContentHtml = ds.DsRemark;
+                    vm.DsdCreateTime = ds.DsCreateTime;
                 }
                 else
                 {
@@ -84,13 +86,17 @@ namespace Netnr.Web.Areas.Doc.Controllers
                             .Select(x => new
                             {
                                 x.DsdTitle,
-                                x.DsdContentHtml
+                                x.DsdContentHtml,
+                                x.DsdCreateTime,
+                                x.DsdUpdateTime
                             }).FirstOrDefault();
 
                         if (queryView != null)
                         {
                             vm.DsdTitle = queryView.DsdTitle;
                             vm.DsdContentHtml = queryView.DsdContentHtml;
+                            vm.DsdCreateTime = queryView.DsdCreateTime;
+                            vm.DsdUpdateTime = queryView.DsdUpdateTime;
                         }
                     }
                 }
@@ -163,12 +169,16 @@ namespace Netnr.Web.Areas.Doc.Controllers
                     if (string.IsNullOrWhiteSpace(mo.DsdId))
                     {
                         mo.DsdId = Core.UniqueTo.LongId().ToString();
-                        mo.DsdCreateTime = DateTime.Now;
+                        mo.DsdCreateTime = mo.DsdUpdateTime;
 
                         db.DocSetDetail.Add(mo);
                     }
                     else
                     {
+                        //查询原创建时间
+                        var currmo = db.DocSetDetail.AsNoTracking().FirstOrDefault(x => x.DsdId == mo.DsdId);
+                        mo.DsdCreateTime = currmo.DsdCreateTime;
+
                         db.DocSetDetail.Update(mo);
                     }
 
@@ -351,12 +361,12 @@ namespace Netnr.Web.Areas.Doc.Controllers
                 //标题
                 var title = drgt.GetProperty("DsdTitle").GetValue(dr, null).ToString();
 
-                sbTree.AppendLine($"<h{hn}>{string.Join(".", listNo)}、{title}</h{hn}>");
-
                 //是目录
                 var iscatalog = Convert.ToBoolean(drgt.GetProperty("IsCatalog").GetValue(dr, null));
                 if (!iscatalog)
                 {
+                    sbTree.AppendLine($"<h{hn}>{string.Join(".", listNo)}、{title}</h{hn}>");
+
                     sbTree.AppendLine(drgt.GetProperty("DsdContentHtml").GetValue(dr, null).ToString());
                 }
 

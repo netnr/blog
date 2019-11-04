@@ -62,6 +62,8 @@ namespace Netnr.Web.Controllers
         }
 
         [Description("写")]
+        [Authorize]
+        [FilterConfigs.IsValid]
         public IActionResult Write()
         {
             return View();
@@ -74,7 +76,7 @@ namespace Netnr.Web.Controllers
             if (!string.IsNullOrWhiteSpace(keys))
             {
                 keys = keys.ToLower();
-                list = Func.Common.TagsQuery().Where(x => x.TagName.Contains(keys, StringComparison.OrdinalIgnoreCase)).Take(7).ToList();
+                list = Func.Common.TagsQuery().Where(x => x.TagName.Contains(keys)).Take(7).ToList();
             }
             return list.ToJson();
         }
@@ -89,6 +91,17 @@ namespace Netnr.Web.Controllers
 
             using (var db = new ContextBase())
             {
+                //已验证邮箱
+                uinfo = db.UserInfo.Find(uinfo.UserId);
+                if (uinfo.UserId != 1 && uinfo.UserMailValid != 1)
+                {
+                    vm.Set(ARTag.unauthorized);
+                    vm.msg = "请验证邮箱后再操作";
+
+                    return vm;
+                }
+
+
                 var lisTagId = new List<int>();
                 TagIds.Split(',').ToList().ForEach(x => lisTagId.Add(Convert.ToInt32(x)));
 
@@ -341,6 +354,12 @@ namespace Netnr.Web.Controllers
                     ViewData["AuthResult"] = "SK无效";
                 }
             }
+            return View();
+        }
+
+        [Description("请先验证")]
+        public IActionResult Valid()
+        {
             return View();
         }
 

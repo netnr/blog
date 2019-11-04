@@ -35,7 +35,7 @@
             <div class="modal-body modalscroll" id="ModalNoteBody">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="input-group input-group-sm mb-2">
+                        <div class="input-group mb-2">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">标题</span>
                             </div>
@@ -63,10 +63,6 @@
     </div>
 </div>
 
-<link href="/lib/jquery-easyui/themes/metro/easyui.css" rel="stylesheet" asp-append-version="true" />
-<script src="/lib/jquery-easyui/jquery.easyui.min.js" asp-append-version="true"></script>
-<script src="/js/z.js" asp-append-version="true"></script>
-
-<partial name="_PartialMarkdownQuote" />
+<partial name="_PartialQuote" model="@("netnrmd.css,netnrmd.js,monaco-editor,easyui.css,easyui.js")" />
 
 <script src="/js/note/index.js" asp-append-version="true"></script>

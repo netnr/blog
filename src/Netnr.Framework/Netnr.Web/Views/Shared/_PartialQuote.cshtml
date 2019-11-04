@@ -1,0 +1,87 @@
+﻿@model string
+@{
+    var listQuote = Model.Split(',').ToList();
+}
+@foreach (var item in listQuote)
+{
+    switch (item)
+    {
+        case "fa.css":
+            <link href="https://code.bdstatic.com/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            break;
+
+        case "jquery.js":
+            <script src="https://code.bdstatic.com/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+            break;
+
+        case "bootstrap.css":
+            <link href="https://code.bdstatic.com/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+            break;
+
+        case "bootstrap.js":
+            <script src="https://code.bdstatic.com/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+            break;
+
+        case "jz.js":
+            <script src="https://code.bdstatic.com/npm/jzjs@2.0.2/2.0.2/jz.min.js"></script>
+            break;
+
+        case "easyui.css":
+            <link href="/lib/jquery-easyui/themes/metro/easyui.css" rel="stylesheet" asp-append-version="true" />
+            <link href="/lib/jquery-easyui/z.css" rel="stylesheet" asp-append-version="true" />
+            break;
+
+        case "easyui.js":
+            <script src="/lib/jquery-easyui/jquery.easyui.min.js" asp-append-version="true"></script>
+            <script src="/lib/jquery-easyui/z.js" asp-append-version="true"></script>
+            break;
+
+        case "netnrmd.css":
+            <link href="https://code.bdstatic.com/npm/netnrmd@2.2.2/src/netnrmd.css" rel="stylesheet" />
+            break;
+
+        case "netnrmd.js":
+            <script src="https://code.bdstatic.com/npm/netnrmd@2.2.2/src/netnrmd.bundle.min.js"></script>
+            break;
+
+        case "netnrnav.css":
+            <link href="https://code.bdstatic.com/npm/netnrnav@1.1.0/src/netnrnav.css" rel="stylesheet" />
+            break;
+
+        case "netnrnav.js":
+            <script src="https://code.bdstatic.com/npm/netnrnav@1.1.0/src/netnrnav.js" defer async></script>
+            break;
+
+        case "monaco-editor":
+            <script src="https://code.bdstatic.com/npm/monaco-editor@0.18.1/min/vs/loader.js"></script>
+            <script>
+                require.config({
+                    paths: { vs: "https://code.bdstatic.com/npm/monaco-editor@0.18.1/min/vs" },
+                    'vs/nls': { availableLanguages: { '*': 'zh-cn' } }
+                });
+            </script>
+            break;
+
+        case "seo":
+            <meta name="keywords" content="netnr,NET牛人,Gist,Run,Doc,Draw" />
+            <meta name="description" content="netnr,NET牛人,Gist,Run,Doc,Draw" />
+            break;
+
+        case "the":
+            <!--
+            https://github.com/netnr
+            https://gitee.com/netnr
+            https://www.netnr.com
+            https://zme.ink
+            -->
+            break;
+
+        case "loading":
+            <div id="LoadingMask" style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: white; z-index: 19999; background-image:url('/images/loading.svg');background-repeat:no-repeat;background-position:49% 49%"></div>
+            break;
+
+        case "fun.js":
+            <script src="/js/fun.js" asp-append-version="true" async defer></script>
+            break;
+    }
+}

@@ -186,3 +186,37 @@ if (sessionStorage.getItem("wid") != wid) {
     sessionStorage.setItem("wid", wid);
     $.get("/home/ListReadPlus/" + wid);
 }
+
+//点击图片
+$('.markdown-body').click(function (e) {
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    if (target.nodeName == "IMG") {
+        var image = new Image();
+        image.src = target.src;
+        image.onload = function () {
+            if (this.width > 300) {
+                var im = document.createElement('div');
+                im.style.cssText = "position:fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:999;background-color:rgba(0, 0, 0, .6);padding:15px;opacity:0;transition: opacity .4s";
+                im.className = "nav flex-column justify-content-center";
+                im.onclick = function (e) {
+                    e = e || window.event;
+                    if ((e.target || e.srcElement).nodeName != "IMG") {
+                        im.style.opacity = 0;
+                        setTimeout(function () {
+                            try {
+                                document.body.removeChild(im)
+                            } catch (e) { }
+                        }, 400);
+                    }
+                }
+                image.className = "m-auto rounded mw-100 mh-100";
+                im.appendChild(image);
+                document.body.appendChild(im);
+                setTimeout(function () {
+                    im.style.opacity = 1;
+                }, 50)
+            }
+        }
+    }
+})

@@ -1,4 +1,5 @@
-﻿require(['vs/editor/editor.main'], function () {
+﻿var editor = null;
+require(['vs/editor/editor.main'], function () {
     var modesIds = monaco.languages.getLanguages().map(function (lang) { return lang.id }).sort();
 
     var te = $("#editor"), selang = $('#selanguage'), languagehtm = [];

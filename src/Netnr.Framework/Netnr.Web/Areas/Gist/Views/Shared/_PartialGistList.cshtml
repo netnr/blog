@@ -68,9 +68,10 @@
     </div>
 </div>
 
-<partial name="_PartialMonacoEditorQuote" />
+<partial name="_PartialQuote" model="@("monaco-editor")" />
 
 <script>
+    var editor = null;
     require(['vs/editor/editor.main'], function () {
         $('pre.vcln').each(function () {
             var that = $(this);

@@ -26,13 +26,13 @@
         <div class="col-md-12">
             <div id="mdeditor"></div>
         </div>
-        <div style="position:fixed;bottom:15px;left:15px;z-index:2">
-            <button class="btn btn-warning btn-lg" id="btnSave">保存</button>
+        <div style="position:fixed;bottom:15px;left:17px;z-index:2">
+            <button class="btn btn-warning btn-lg" id="btnSave" title="Ctrl + S 快捷保存">保存</button>
         </div>
     </div>
 </div>
 
-<partial name="_PartialMarkdownQuote" />
+<partial name="_PartialQuote" model="@("netnrmd.css,netnrmd.js,monaco-editor")" />
 
 <link href="/lib/tag/tag.css" rel="stylesheet" asp-append-version="true" />
 <script src="/lib/tag/tag.js" asp-append-version="true"></script>

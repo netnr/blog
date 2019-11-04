@@ -8,11 +8,11 @@
         <div class="col-md-12 py-5 text-center">
             @if (Model.code == 200)
             {
-                <button class="btn btn-outline-success btn-lg">@Model.msg</button>
+                <span class="badge badge-success py-3 px-3 fa-lg">@Model.msg</span>
             }
             else
             {
-                <button class="btn btn-outline-danger btn-lg">@Model.msg</button>
+                <span class="badge badge-danger py-3 px-3 fa-lg">@Model.msg</span>
             }
         </div>
     </div>

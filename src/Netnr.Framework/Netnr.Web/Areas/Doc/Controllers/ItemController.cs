@@ -12,6 +12,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
     {
         [Description("新增项目")]
         [Authorize]
+        [Filters.FilterConfigs.IsValid]
         public IActionResult Add()
         {
             return View();

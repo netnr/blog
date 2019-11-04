@@ -1,7 +1,7 @@
 ﻿SELECT '{' + '"UserInfo":' +
        (
            SELECT UserId,
-                  UserName,
+                  UserName = 'netnr',
                   UserPwd = SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', '123456')), 3, 32),
                   UserCreateTime,
                   UserLoginTime,
@@ -17,7 +17,7 @@
            FOR JSON AUTO
        ) + ',' + '"Tags":' +
        (
-           SELECT * FROM dbo.Tags WHERE TagId IN ( 58, 79 ) FOR JSON AUTO
+           SELECT * FROM dbo.Tags WHERE TagId IN ( 58, 96 ) FOR JSON AUTO
        ) + ',' + '"UserWriting":' +
        (
            SELECT * FROM dbo.UserWriting WHERE UwId = 117 FOR JSON AUTO
@@ -37,7 +37,10 @@
            SELECT TOP 1 * FROM dbo.Run ORDER BY RunCreateTime FOR JSON AUTO
        ) + ',' + '"KeyValues":' +
        (
-           SELECT * FROM dbo.KeyValues WHERE KeyName IN ( 'https' ) FOR JSON AUTO
+           SELECT *
+           FROM dbo.KeyValues
+           WHERE KeyName IN ( 'https', 'browser' )
+           FOR JSON AUTO
        ) + ',' + '"Gist":' +
        (
            SELECT *

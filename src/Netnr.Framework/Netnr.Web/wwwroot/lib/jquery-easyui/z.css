@@ -1,0 +1,828 @@
+﻿body {
+    opacity: 0;
+    transition: opacity .5s;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*跟随body*/
+.dropdown-menu, .formui .btn, .formui .form-control, .formui .form-control-static {
+    font-size: inherit;
+}
+
+.btn {
+    border-radius: 1px;
+}
+
+.nav-tabs > li > a {
+    border-radius: 1px 1px 0 0;
+}
+
+.mc {
+    color: #00796a;
+}
+
+/*选项卡*/
+.mtab {
+    position: relative;
+    margin-top: 3px;
+    border-bottom: 1px solid #2C6AA0;
+}
+
+    .mtab .mtab-btn {
+        width: 38px;
+        height: 38px;
+        border: none;
+        outline: none;
+        line-height: 38px;
+        text-align: center;
+        display: inline-block;
+        background-color: white;
+    }
+
+        .mtab .mtab-btn:hover {
+            background-color: #f2f2f2;
+        }
+
+    .mtab .mtab-body, .mtab .mtab-main {
+        position: absolute;
+        top: 0;
+        left: 38px;
+        right: 120px;
+        height: 38px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .mtab .mtab-main {
+        left: 0;
+        right: 0;
+        -webkit-transition: left .5s;
+        -moz-transition: left .5s;
+        -o-transition: left .5s;
+        transition: left .5s;
+    }
+
+        .mtab .mtab-main a {
+            color: #000;
+            margin: 0 3px 0 0;
+            white-space: nowrap;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+            padding: 10px 12px 8px !important;
+            border-radius: 2px 2px 0 0 !important;
+        }
+
+            .mtab .mtab-main a.active {
+                color: #fff !important;
+                background-color: #438eb9;
+            }
+
+            .mtab .mtab-main a:hover {
+                color: #FFF !important;
+                background-color: #438eb9;
+            }
+
+            .mtab .mtab-main a em:hover {
+                color: #ecbfbf;
+            }
+
+        .mtab .mtab-main .fa-close {
+            font-size: 16px;
+            margin-left: 5px;
+        }
+
+/* 选项卡·内容 */
+.tab-content {
+    padding: 0;
+}
+
+    .tab-content .tab-pane {
+        position: relative;
+    }
+
+    .tab-content iframe {
+        position: absolute;
+        height: 100%;
+        border: none;
+        width: 100%;
+    }
+
+
+/*大三角*/
+.caret-lg {
+    border-top-width: 8px;
+    border-right-width: 6px;
+    border-left-width: 6px;
+}
+
+/*下拉菜单*/
+.dropdown-menu {
+    font-size: inherit;
+}
+
+.dropdown-yellow > li > a {
+    cursor: pointer;
+    padding: 5px 15px;
+}
+
+    .dropdown-yellow > li > a:hover, .dropdown-yellow > li > a:focus, .dropdown-yellow > li > a:active, .dropdown-yellow > li.active > a, .dropdown-yellow > li.active > a:hover, .dropdown-yellow .dropdown-submenu:hover > a {
+        color: #444;
+        background: #fee188;
+    }
+
+/*单色*/
+.orange {
+    color: #ff892a !important;
+}
+
+.blue {
+    color: #478fca !important;
+}
+
+.white {
+    color: #fff !important;
+}
+
+.red {
+    color: #dd5a43 !important;
+}
+
+.green {
+    color: #69aa46 !important;
+}
+
+/*小屏菜单按钮*/
+.navbar-toggle {
+    margin: 5px 15px 0 5px;
+}
+
+/*Ext*/
+.required::before {
+    color: red;
+    content: "✶";
+    font-weight: 600;
+}
+
+@media (min-width: 1124px) {
+    .modal-lg {
+        width: 1110px;
+    }
+}
+
+@media (min-width: 1555px) {
+    .modal-big {
+        width: 1500px;
+    }
+}
+
+@media (min-width: 1777px) {
+    .modal-big {
+        width: 1700px;
+    }
+}
+
+/*模态框显示*/
+.modal-open, .modal-open .modal {
+    overflow: initial;
+    padding-right: 0 !important;
+}
+
+/*间距*/
+.mt5 {
+    margin-top: 5px;
+}
+
+.mb5 {
+    margin-bottom: 5px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.mr15 {
+    margin-right: 15px;
+}
+
+.px-0 {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.py-0 {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.selectbig {
+    width: 22px;
+    height: 22px;
+}
+
+/*grid编辑，modal类型*/
+.dimodal {
+    position: relative;
+}
+
+    .dimodal .datagrid-editable-input {
+        padding-right: 20px;
+    }
+
+    .dimodal .form-control-feedback {
+        position: absolute;
+        top: 0;
+        right: -4px;
+        cursor: pointer;
+        line-height: 33px;
+        text-align: center;
+        pointer-events: initial;
+    }
+
+/*dropdown*/
+.dropdown-yellow > li > a {
+    padding: 5px 15px;
+}
+
+    .dropdown-yellow > li > a:hover, .dropdown-yellow > li > a:focus, .dropdown-yellow > li > a:active, .dropdown-yellow > li.active > a, .dropdown-yellow > li.active > a:hover, .dropdown-yellow .dropdown-submenu:hover > a {
+        color: #444;
+        background: #fee188;
+    }
+
+/*modal*/
+.modal-content {
+    border-radius: 1px;
+}
+
+.modal-header {
+    padding: 10px 15px 5px;
+}
+
+.modal-dialog {
+    margin: 15px auto 0;
+}
+
+.modal-title i {
+    font-size: 1.6em;
+    vertical-align: middle;
+}
+
+.modal-title span {
+    margin: 0 15px;
+}
+
+.modal-title em {
+    color: red;
+    font-size: 13px;
+}
+
+.modal-footer {
+    padding: 8px 10px;
+}
+
+button.close {
+    font-size: 1.9em;
+}
+
+.modal-backdrop.in {
+    filter: alpha(opacity=35);
+    opacity: .35;
+}
+
+.modal-full {
+    width: auto;
+    margin: 15px;
+    margin-bottom: 0;
+}
+
+/*modal 高自适应*/
+.modalautoheight .modal-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modalautoheight .modalscroll {
+    overflow-y: auto;
+    position: relative;
+}
+
+
+/* 选项卡重写 */
+.modalautoheight .nav-tabs {
+    border-bottom-color: #438eb9;
+}
+
+    .modalautoheight .nav-tabs > li > a {
+        padding: 6px 10px;
+    }
+
+        .modalautoheight .nav-tabs > li > a:hover {
+            color: #fff;
+            background-color: #438eb9;
+            border: 1px solid #438eb9;
+            border-bottom-color: transparent;
+        }
+
+    .modalautoheight .nav-tabs > li.active > a:hover {
+        color: inherit;
+        background-color: #fff;
+        border: 1px solid #438eb9;
+        border-bottom-color: transparent;
+    }
+
+    .modalautoheight .nav-tabs > li.active > a, .modalautoheight .nav-tabs > li.active > a:hover, .modalautoheight .nav-tabs > li.active > a:focus {
+        border: 1px solid #438eb9;
+        border-bottom-color: transparent;
+    }
+
+.modalautoheight .tab-content .active {
+    border: 1px solid #438eb9;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+}
+
+@media screen and (max-width: 992px) {
+    .modalautoheight .modal-lg {
+        width: auto;
+    }
+}
+
+.modalautoheight .panel-heading {
+    padding: 7px 15px;
+}
+
+/*form*/
+.form-group, .formui .textbox {
+    min-height: 34px;
+}
+
+/*页面按钮*/
+.btn-menu {
+    margin-bottom: 10px;
+    background-color: #F8FAFC;
+    border-bottom: 1px solid #eaeaea;
+}
+
+    .btn-menu button {
+        margin-top: 3px;
+        padding: 5px 8px;
+        margin-bottom: 3px;
+        font-size: inherit;
+    }
+
+    .btn-menu i.fa {
+        min-width: 16px;
+    }
+
+    .btn-menu .btn.disabled, .btn-menu .btn[disabled] {
+        opacity: .2;
+    }
+
+
+/*页面按钮-白色*/
+.bgwhite .btn {
+    outline: none;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+    .bgwhite .btn:hover {
+        background-color: #ededed;
+    }
+
+.bgwhite .btn-success, .bgwhite .btn-success:hover {
+    color: #648A5E;
+}
+
+.bgwhite .btn-info, .bgwhite .btn-info:hover {
+    color: #70a0c1;
+}
+
+.bgwhite .btn-primary, .bgwhite .btn-primary:hover {
+    color: #428bca;
+}
+
+.bgwhite .btn-warning, .bgwhite .btn-warning:hover {
+    color: #DAA458;
+}
+
+.bgwhite .btn-danger, .bgwhite .btn-danger:hover {
+    color: #d9534f;
+}
+
+
+
+/* 表单 */
+.formui .row {
+    margin-bottom: -15px;
+}
+
+.formui .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+    .formui .form-group label.control-label {
+        float: left;
+        width: 140px;
+        padding-top: 7px;
+        overflow: hidden;
+        text-align: right;
+        margin-right: 15px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .formui .form-group > div {
+        overflow: hidden;
+    }
+
+        .formui .form-group > div i.fa {
+            right: 25px;
+            width: 20px;
+            color: #66afe9;
+            text-align: left;
+            margin-top: 10px;
+            cursor: pointer;
+            pointer-events: painted;
+        }
+
+.formui .form-control {
+    border-radius: 0;
+    padding: 6px 25px 6px 6px;
+}
+
+.formui .form-group label.checkbox {
+    padding: 0;
+    height: 34px;
+    line-height: 34px;
+    padding-left: 20px;
+}
+
+    .formui .form-group label.checkbox input {
+        width: 18px;
+        height: 28px;
+    }
+
+/*combo 调整*/
+.form-group span.combo, span.combo {
+    width: 100% !important;
+}
+
+    .form-group span.combo input, span.combo input {
+        margin: 0 !important;
+        width: 100% !important;
+        line-height: normal !important;
+        padding: 6px 25px 6px 6px !important;
+    }
+
+    span.combo a.combo-arrow:focus, span.combo a.combo-arrow:focus {
+        outline: none;
+    }
+
+.combo input[readonly] {
+    cursor: pointer;
+}
+
+/* timespinner 调整*/
+.form-group span.spinner, span.spinner {
+    width: 100% !important;
+}
+
+/*禁用样式*/
+.formui .form-control[disabled], .formui .form-control[readonly], .formui fieldset[disabled] .form-control, .formui .textbox-text[disabled] {
+    background-color: #fff;
+}
+
+.formui .input[disabled], .formui .input[readonly] {
+    cursor: not-allowed;
+}
+
+.formui .nav-tabs, .formui .tab-content {
+    margin: 0 15px 0;
+}
+    /*选项卡时 上间距*/
+    .formui .tab-content > .tab-pane {
+        padding-top: 15px;
+        margin-bottom: 15px;
+    }
+
+/*图标*/
+.formui .form-group > div i.form-control-feedback {
+    z-index: 1;
+    right: 15px;
+    width: 26px;
+    margin: 1px;
+    height: 32px;
+    font-size: 16px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #f6f7f9;
+}
+
+    .formui .form-group > div i.form-control-feedback:hover {
+        color: #23527c;
+    }
+
+.formui .form-group .form-control-static {
+    padding-top: 6px;
+    padding-bottom: 5px;
+}
+
+/*文本域高度*/
+.formui .area-height {
+    resize: none;
+    height: 83px;
+}
+
+/*禁用透明度*/
+.formui .textbox-disabled, .formui.textbox-label-disabled {
+    opacity: .9;
+}
+
+/*复选框样式*/
+.checkbox {
+    border: none;
+}
+
+/*文本框样式*/
+.textbox {
+    border-radius: 0;
+    border-color: #cccccc;
+}
+
+    /*文本框高度*/
+    .textbox .textbox-text {
+        height: 31px;
+        font-size: inherit;
+    }
+
+/*grid行高*/
+.datagrid-header-row, .datagrid-row {
+    height: 34px;
+}
+
+/*grid字体大小*/
+.datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber {
+    font-size: inherit;
+    height: inherit;
+    line-height: inherit;
+}
+
+.datagrid-header .datagrid-cell span {
+    font-size: inherit;
+}
+
+.datagrid-view .datagrid-editable-input {
+    font-size: inherit;
+    height: 33px !important;
+}
+
+/*grid查询符号*/
+.datagrid-filter-icon {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    color: #777;
+    cursor: pointer;
+    font-size: 1.3em !important;
+    border: 1px solid transparent;
+}
+
+    .datagrid-filter-icon:hover {
+        color: #d9534f;
+    }
+
+/*combobox字体大小*/
+.combobox-item, .combobox-group, .combobox-stick {
+    font-size: inherit;
+}
+
+/*tree 调整*/
+.tree-title {
+    font-size: inherit;
+}
+
+.tree-node {
+    height: 30px;
+}
+
+.tree-hit {
+    cursor: pointer;
+}
+
+.tree-checkbox {
+    margin: initial;
+    font-size: 1.2em !important;
+}
+
+.tree-collapsed, .tree-expanded, .tree-folder, .tree-folder-open, .tree-file, .tree-checkbox0, .tree-checkbox1, .tree-checkbox2 {
+    height: 22px;
+    margin: 3px 3px 0;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    font: normal normal normal 15px/1.1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: none;
+    color: #ff892a !important;
+}
+
+.tree-expanded {
+    background: initial;
+}
+
+.tree-expanded-hover {
+    background: initial;
+}
+
+.tree-collapsed {
+    background: initial;
+}
+
+.tree-collapsed-hover {
+    background: initial;
+}
+
+.tree-lines .tree-expanded,
+.tree-lines .tree-root-first .tree-expanded {
+    background: initial;
+}
+
+.tree-lines .tree-collapsed,
+.tree-lines .tree-root-first .tree-collapsed {
+    background: initial;
+}
+
+.tree-lines .tree-node-last .tree-expanded,
+.tree-lines .tree-root-one .tree-expanded {
+    background: initial;
+}
+
+.tree-lines .tree-node-last .tree-collapsed,
+.tree-lines .tree-root-one .tree-collapsed {
+    background: initial;
+}
+
+.tree-line {
+    background: initial;
+}
+
+.tree-join {
+    background: initial;
+}
+
+.tree-joinbottom {
+    background: initial;
+}
+
+.tree-collapsed:before {
+    content: "\f067" !important;
+}
+
+.tree-expanded:before {
+    content: "\f068" !important;
+}
+
+.tree-folder {
+    background: initial;
+}
+
+.tree-folder-open {
+    background: initial;
+}
+
+    .tree-folder-open:before {
+        content: "\f07c" !important;
+    }
+
+.tree-folder:before {
+    content: "\f07b";
+}
+
+.tree-file {
+    margin-top: 5px;
+    background: initial;
+}
+
+    .tree-file:before {
+        content: "\f016";
+    }
+
+.tree-checkbox0 {
+    background: initial;
+}
+
+.tree-checkbox1 {
+    background: initial;
+}
+
+.tree-checkbox2 {
+    background: initial;
+}
+
+.tree-checkbox0:before {
+    content: "\f096";
+}
+
+.tree-checkbox1:before {
+    content: "\f14a";
+}
+
+.tree-checkbox2:before {
+    content: "\f046";
+}
+
+.tree-title {
+    margin-top: 5px;
+    height: initial;
+    font-size: inherit;
+    vertical-align: initial;
+}
+
+.tree-node-proxy {
+    font-size: inherit;
+    line-height: initial;
+}
+
+.panel-body, .pagination-info, .pagination span {
+    font-size: inherit;
+}
+
+/*combo*/
+.combobox-item, .combobox-group, .combobox-stick {
+    padding: 6px;
+}
+
+/*Grid载入前*/
+.loadingimg {
+    display: none;
+    text-align: center;
+    line-height: 150px;
+}
+
+/*请求提示*/
+.httploading {
+    height: 30px;
+    display: none;
+    margin-right: 15px;
+}
+
+.inb {
+    display: inline-block;
+}
+
+/*表单配置*/
+.ief {
+    position: absolute;
+    top: 10px;
+    z-index: 9;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.eef {
+    top: 3px;
+    left: 3px;
+    color: red;
+    font-size: 1.2em;
+    font-weight: 600;
+    position: absolute;
+}
+
+/*清除值*/
+.comboclear::before {
+    content: "✖";
+}
+
+.comboclear {
+    opacity: .3;
+    font-size: 14px;
+    line-height: 2.4;
+    text-align: center;
+    outline: none !important;
+    filter: alpha(opacity=30);
+    text-decoration: none !important;
+}
+
+/*单据标题*/
+.invoiceTitle {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #999;
+}

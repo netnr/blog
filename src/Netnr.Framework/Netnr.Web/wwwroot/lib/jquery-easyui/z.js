@@ -1,6 +1,6 @@
 ﻿/*                      *\
     Author：netnr
-    Date：2018-09-28
+    Date：2019-09-04
 
     z.Grid：datagrid、treegrid、propertygrid、datalist
     z.Combo：combobox、combotree、tree
@@ -63,240 +63,264 @@
     z.isPC = function () { return !navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i) }
 
     /**
-     * Grid：datagrid、treegrid、propertygrid、datalist
-     * @param {any} ops EasyUI 提供的API
+     * 载入配置
+     * @param {any} that this对象
+     * @param {any} options 配置项
      */
-    z.Grid = function (ops) { return new z.Grid.fn.init(ops) };
+    z.thisInit = function (that, options) {
+        for (var i in options) {
+            that[i] = options[i];
+        }
+        return that;
+    }
+
+    /**
+     * 隐去/恢复 对象属性值
+     * @param {any} that 对象
+     * @param {any} name 属性名称
+     * @param {any} ishide 隐去/恢复
+     */
+    z.hideAttr = function (that, name, ishide) {
+        ishide = ishide == null ? true : ishide;
+        if (ishide) {
+            that["_" + name] = that[name];
+            delete that[name];
+        } else {
+            that[name] = that["_" + name]
+            delete that["_" + name];
+        }
+    }
+
+    /**
+     * Grid：datagrid、treegrid、propertygrid、datalist
+     */
+    z.Grid = function () { return new z.Grid.fn.init() };
 
     z.Grid.fn = z.Grid.prototype = {
-        init: function (ops) { return this },
-        isinit: true,/*是初始化*/
-        id: "#Grid1",/*容器#ID*/
-        pageNumber: 1,/*页码*/
-        pageSize: 30,/*页量*/
-        pageList: [10, 30, 50, 100, 200],/*可选页量*/
-        total: 0,/*总条数*/
-        type: "datagrid",/*类型：datagrid、treegrid、propertygrid、datalist*/
-        method: "POST",
-        urlHide: function (isHide) {
-            isHide = isHide == null ? true : isHide;
-            if (isHide) {
-                this._url = this.url;
-                delete this.url;
-            } else {
-                this.url = this._url;
-                delete this._url;
-            }
-        },/*url切换，用于发起请求时*/
-        pagination: true,/*启用分页*/
-        rownumbers: true,/*显示行号*/
-        rownumberWidth: 30,/*行号宽度*/
-        singleSelect: true,/*单选*/
-        frozenColumns: [[]],/*冻结列*/
-        loadMsg: "加载中...",/*加载提示*/
-        queryParams: {},/*请求参数*/
-        queryMark: true, /*启用查询标记*/
-        autosize: "xy",/*调整大小，请参考z.GridAuto方法*/
-        autosizePid: "#myBody",/*自适应父容器#ID*/
-        onBeforeBind: function (ops) { },/*绑定前回调，return false阻止绑定*/
-        sortName: null,/*排序字段，支持多个，逗号分割*/
-        sortOrder: "asc",/*排序类型，支持多个，逗号分割*/
-        completeIndex: 0,/*完成事件索引，用于支持多次调用*/
-        /*完成事件回调，支持多次调用 (注意死循环，在完成事件重绑数据需加标记跳出循环绑定)*/
-        onComplete: function (fn) {
-            this.completeIndex += 1;
-            this["_onComplete" + this.completeIndex] = fn;
-        },
-        //绑定
-        bind: function () {
-            var that = this;
-
-            that.target = $(that.id);
-
-            //复选框
-            var hone = that.frozenColumns[0];
-            for (var i in hone) {
-                if ("checkbox" in hone[i]) {
-                    hone.splice(i, 1);
-                    break;
-                }
-            }
-            that.checkbox && that.frozenColumns[0].splice(0, 0, { field: "ck", checkbox: true });
-
-            //自定义页量处理
-            if (that.pagination && that.isinit) {
-                if (("," + that.pageList.join(',') + ",").indexOf("," + that.pageSize + ",") == -1) {
-                    that.pageList.push(that.pageSize);
-                    that.pageList = that.pageList.sort(function (x, y) {
-                        return x > y;
-                    });
-                }
-            }
-
-            //绑定前回调
-            if (that.onBeforeBind.call(that, that) == false) { return false; }
-
-            that.urlHide();
-
-            //绑定
-            that.target[that.type](that);
-
-            that.urlHide(false);
-
-            //分页
-            if (that.pagination) {
-                that.func('options').pageNumber = that.pageNumber;
-
-                that.func('getPager').pagination({
-                    pageNumber: that.pageNumber,
-                    pageSize: that.pageSize,
-                    total: that.total,
-                    onSelectPage: function (pageNumber, pageSize) {
-                        that.pageNumber = pageNumber;
-                        that.pageSize = pageSize;
-                        that.load();
-                    }
-                });
-            }
-
-            //调整大小
-            if (z.isPC()) {
-                if (that.target.data('autosize') != 1) {
-                    z.GridAuto(that);
-                    $(window).resize(function () { z.GridAuto(that) });
-                    that.target.data('autosize', 1);
-                } else {
-                    //刷新内部会调整大小，所以需要再次调用调整大小
-                    if ("treegrid,propertygrid".indexOf(that.type) >= 0) {
-                        z.GridAuto(that);
-                    }
-                }
-            }
-
-            //查询标记
-            if (that.queryMark && z.GridQueryMark) {
-                z.GridQueryMark(that);
-            }
-
-            //执行完成事件
-            for (var i = 1; i < that.completeIndex + 1; i++) {
-                typeof that["_onComplete" + i] == "function" && that["_onComplete" + i](that);
-            }
-
-            that.isinit = false;
-
-            return this;
-        },
-        //载入
-        load: function () {
-            var that = this;
-
-            that.target = $(that.id);
-
-            if (that.p == null) {
-                that.p = {};
-                that.p.sortName = that.sortName;
-                that.p.sortOrder = that.sortOrder;
-            }
-
-            //点击排序
-            if (typeof that.onSortColumn != "function") {
-                that.onSortColumn = function (sort, order) {
-                    that.sortName = sort;
-                    that.sortOrder = order;
-                    that.load();
-                };
-            }
-
-            //参数
-            that.queryParams = {};
-            that.queryParams.pagination = that.pagination == true ? 1 : 0;
-            that.queryParams.sort = that.sortName || that.p.sortName;
-            that.queryParams.order = that.sortOrder || that.p.sortOrder;
-            that.queryParams.page = that.pageNumber;
-            that.queryParams.rows = that.pageSize;
-            that.columnsExists = (that.columns && that.columns.length) ? 1 : 0;
-            that.queryParams.columnsExists = that.columnsExists;
-
-            //行号宽度自适应            
-            that.rownumberWidth = Math.max(30, (that.pageNumber * that.pageSize).toString().length * 12);
-
-            //请求前回调且修改别名（因两次）
-            if (typeof that.onBeforeLoad == "function") {
-                that._onBeforeLoad = that.onBeforeLoad;
-                delete that.onBeforeLoad;
-            }
-            if (typeof that._onBeforeLoad == "function") {
-                var rownode;
-                try { rownode = that.func('getSelected'); } catch (e) { }
-                if (that._onBeforeLoad(rownode, that.queryParams) == false) { return false; }
-            }
-
-            //载入提示
-            z.GridLoading(that);
-            try { that.target.datagrid("loading") } catch (e) { }
-
-            $.ajax({
-                url: that.url,
-                type: that.method,
-                data: that.queryParams,
-                dataType: "json",
-                success: function (data) {
-                    that.dataCache = data;
-
-                    that.total = data.total || 0;
-                    that.data = data.data || [];
-
-                    //创建表头信息
-                    if (!that.columnsExists) {
-                        var columns = [], frozens = [];
-                        $(data.columns).each(function (k, v) {
-                            var column = {
-                                field: this.ColField,
-                                title: this.ColTitle,
-                                width: this.ColWidth == 0 ? null : this.ColWidth,
-                                hidden: this.ColHide >= 1 ? true : false,
-                                halign: "center",
-                                align: this.ColAlign == 2 ? "center" : this.ColAlign == 3 ? "right" : "left",
-                                sortable: this.ColSort == 1 ? true : false,
-                                FormType: this.FormType,
-                                FormUrl: this.FormUrl,
-                                FormPlaceholder: this.FormPlaceholder || "",
-                                ColQuery: this.ColQuery == null ? 0 : this.ColQuery,
-                                formatter: function (value, row) { return z.GridFormat(value, row, v) }
-                            }
-                            if (this.ColFrozen == 1) { frozens.push(column); }
-                            else { columns.push(column); }
-                        });
-                        if (columns.length) {
-                            that.columns = [];
-                            that.columns.push(columns);
-                        }
-
-                        if (frozens.length) {
-                            that.frozenColumns = [];
-                            that.frozenColumns.push(frozens);
-                        }
-                        that.columnsExists = 1;
-                    }
-                    that.bind();
+        init: function () {
+            return z.thisInit(this, this.defaultOptions = {
+                isinit: true,/*是初始化*/
+                id: "#Grid1",/*容器#ID*/
+                pageNumber: 1,/*页码*/
+                pageSize: 30,/*页量*/
+                pageList: [10, 30, 50, 100, 200],/*可选页量*/
+                total: 0,/*总条数*/
+                type: "datagrid",/*类型：datagrid、treegrid、propertygrid、datalist*/
+                method: "POST",
+                pagination: true,/*启用分页*/
+                rownumbers: true,/*显示行号*/
+                rownumberWidth: 30,/*行号宽度*/
+                singleSelect: true,/*单选*/
+                autoRowHeight: false,/*自动行高*/
+                frozenColumns: [[]],/*冻结列*/
+                loadMsg: "加载中...",/*加载提示*/
+                queryParams: {},/*请求参数*/
+                queryMark: true, /*启用查询标记*/
+                autosize: "xy",/*调整大小，请参考z.GridAuto方法*/
+                autosizePid: "#myBody",/*自适应父容器#ID*/
+                onBeforeBind: function (ops) { },/*绑定前回调，return false阻止绑定*/
+                sortName: null,/*排序字段，支持多个，逗号分割*/
+                sortOrder: "asc",/*排序类型，支持多个，逗号分割*/
+                completeIndex: 0,/*完成事件索引，用于支持多次调用*/
+                /*完成事件回调，支持多次调用 (注意死循环，在完成事件重绑数据需加标记跳出循环绑定)*/
+                onComplete: function (fn) {
+                    this.completeIndex += 1;
+                    this["_onComplete" + this.completeIndex] = fn;
                 },
-                error: function (ex) {
-                    that.total = 0;
-                    that.data = [];
-                    //错误回调
-                    typeof that.onLoadError == "function" && that.onLoadError(ex);
+                //绑定
+                bind: function () {
+                    var that = this;
+
+                    that.target = $(that.id);
+
+                    //复选框
+                    var hone = that.frozenColumns[0];
+                    for (var i in hone) {
+                        if ("checkbox" in hone[i]) {
+                            hone.splice(i, 1);
+                            break;
+                        }
+                    }
+                    that.checkbox && that.frozenColumns[0].splice(0, 0, { field: "ck", checkbox: true });
+
+                    //自定义页量处理
+                    if (that.pagination && that.isinit) {
+                        if (("," + that.pageList.join(',') + ",").indexOf("," + that.pageSize + ",") == -1) {
+                            that.pageList.push(that.pageSize);
+                            that.pageList = that.pageList.sort(function (x, y) {
+                                return x > y;
+                            });
+                        }
+                    }
+
+                    //绑定前回调
+                    if (that.onBeforeBind.call(that, that) == false) { return false; }
+
+                    z.hideAttr(this, 'url');
+
+                    //绑定
+                    that.target[that.type](that);
+
+                    z.hideAttr(this, 'url', false);
+
+                    //分页
+                    if (that.pagination) {
+                        that.func('options').pageNumber = that.pageNumber;
+
+                        that.func('getPager').pagination({
+                            pageNumber: that.pageNumber,
+                            pageSize: that.pageSize,
+                            total: that.total,
+                            links: 7,
+                            layout: ['list', 'sep', 'first', 'prev', 'links', 'next', 'last', 'sep', 'refresh', 'info'],
+                            onSelectPage: function (pageNumber, pageSize) {
+                                that.pageNumber = pageNumber || 1;
+                                that.pageSize = pageSize;
+                                that.load();
+                            }
+                        });
+                    }
+
+                    //调整大小
+                    if (that.target.data('autosize') != 1) {
+                        z.GridAuto(that);
+                        $(window).resize(function () { z.GridAuto(that) });
+                        that.target.data('autosize', 1);
+                    } else {
+                        //刷新内部会调整大小，所以需要再次调用调整大小
+                        if ("treegrid,propertygrid".indexOf(that.type) >= 0) {
+                            z.GridAuto(that);
+                        }
+                    }
+
+                    //查询标记
+                    if (that.queryMark && z.GridQueryMark) {
+                        z.GridQueryMark(that);
+                    }
+
+                    //执行完成事件
+                    for (var i = 1; i < that.completeIndex + 1; i++) {
+                        typeof that["_onComplete" + i] == "function" && that["_onComplete" + i](that);
+                    }
+
+                    that.isinit = false;
+
+                    return this;
+                },
+                //载入
+                load: function () {
+                    var that = this;
+
+                    that.target = $(that.id);
+
+                    if (that.p == null) {
+                        that.p = {};
+                        that.p.sortName = that.sortName;
+                        that.p.sortOrder = that.sortOrder;
+                    }
+
+                    //点击排序
+                    if (typeof that.onSortColumn != "function") {
+                        that.onSortColumn = function (sort, order) {
+                            that.sortName = sort;
+                            that.sortOrder = order;
+                            that.load();
+                        };
+                    }
+
+                    //参数
+                    that.queryParams = {
+                        pagination: that.pagination == true ? 1 : 0,
+                        sort: that.sortName || that.p.sortName,
+                        order: that.sortOrder || that.p.sortOrder,
+                        page: that.pageNumber,
+                        rows: that.pageSize,
+                        columnsExists: that.columnsExists = (that.columns && that.columns.length) ? 1 : 0
+                    };
+
+                    //行号宽度自适应            
+                    that.rownumberWidth = Math.max(30, (that.pageNumber * that.pageSize).toString().length * 12);
+
+                    //请求前回调且修改别名（因两次）
+                    if (typeof that.onBeforeLoad == "function") {
+                        that._onBeforeLoad = that.onBeforeLoad;
+                        delete that.onBeforeLoad;
+                    }
+                    if (typeof that._onBeforeLoad == "function") {
+                        var rownode;
+                        try { rownode = that.func('getSelected'); } catch (e) { }
+                        if (that._onBeforeLoad(rownode, that.queryParams) == false) { return false; }
+                    }
+
+                    //载入提示
+                    z.GridLoading(that);
+                    try { that.target.datagrid("loading") } catch (e) { }
+
+                    $.ajax({
+                        url: that.url,
+                        type: that.method,
+                        data: that.queryParams,
+                        dataType: "json",
+                        success: function (data) {
+                            that.dataCache = data;
+
+                            that.total = data.total || 0;
+                            that.data = data.data || [];
+
+                            //创建表头信息
+                            if (!that.columnsExists) {
+                                var columns = [], frozens = [];
+                                $(data.columns).each(function (k, v) {
+                                    var column = {
+                                        field: this.ColField,
+                                        title: this.ColTitle,
+                                        width: this.ColWidth == 0 ? null : this.ColWidth,
+                                        hidden: this.ColHide >= 1 ? true : false,
+                                        halign: "center",
+                                        align: this.ColAlign == 2 ? "center" : this.ColAlign == 3 ? "right" : "left",
+                                        sortable: this.ColSort == 1 ? true : false,
+                                        FormType: this.FormType,
+                                        FormUrl: this.FormUrl,
+                                        FormRequired: this.FormRequired == 1,
+                                        FormPlaceholder: this.FormPlaceholder || "",
+                                        ColQuery: this.ColQuery == null ? 0 : this.ColQuery,
+                                        ColRelation: this.ColRelation,
+                                        formatter: function (value, row) { return z.GridFormat(value, row, v) }
+                                    }
+                                    if (this.ColFrozen == 1) { frozens.push(column); }
+                                    else { columns.push(column); }
+                                });
+                                if (columns.length) {
+                                    that.columns = [];
+                                    that.columns.push(columns);
+                                }
+
+                                if (frozens.length) {
+                                    that.frozenColumns = [];
+                                    that.frozenColumns.push(frozens);
+                                }
+                                that.columnsExists = 1;
+                            }
+                            that.bind();
+                        },
+                        error: function (ex) {
+                            that.total = 0;
+                            that.data = [];
+                            //错误回调
+                            typeof that.onLoadError == "function" && that.onLoadError(ex);
+                        }
+                    });
+                    return this;
+                },
+                //方法
+                func: function () {
+                    return $(this.id)[this.type](arguments[0], arguments[1]);
                 }
             });
-            return this;
-        },
-        //方法
-        func: function () {
-            return $(this.id)[this.type](arguments[0], arguments[1]);
         }
     };
 
-    z.Grid.prototype.init.prototype = z.Grid.prototype;
+    z.Grid.fn.init.prototype = z.Grid.fn;
 
     /**
      * Grid格式化
@@ -367,17 +391,14 @@
     z.GridAuto = function (gd) {
         if (!$(gd.id).length) { return gd; }
 
-        //不显示滚动条
-        document.documentElement.style.overflowY = "hidden";
-
-        var h = $(window).height() - $(gd.id).parents('.datagrid')[0].getBoundingClientRect().top;
+        var h = $(window).height() - $(gd.id).parents('.datagrid').offset().top - 10;
         h < 150 && (h = 150);
         var ro = { width: null, height: null };
         switch (gd.autosize) {
             /*宽度自适应，高度保持沉底*/
             case 'xy':
                 ro.width = $(gd.autosizePid).width();
-                ro.height = h - 5;
+                ro.height = h;
                 break;
             /*宽度自适应，高度不变*/
             case 'x':
@@ -387,7 +408,7 @@
             /*宽度不变，高度保持沉底*/
             case 'y':
                 ro.width = null;
-                ro.height = h - 5;
+                ro.height = h;
                 break;
             /*宽高自适应父容器*/
             case 'p':
@@ -398,8 +419,6 @@
                 ro = null;
         }
         $(gd.id).datagrid('resize', ro);
-        //显示滚动条
-        document.documentElement.style.overflowY = "";
 
         return gd;
     }
@@ -411,7 +430,7 @@
     z.GridLoading = function (gd) {
         var target = $(gd.id);
         if (target.hasClass('loadingimg') && target.data('loadingimg') != 1) {
-            target.html('<img src="/images/loading.gif" />').show().data('loadingimg', 1);
+            target.html('<img src="/images/loading.svg" />').show().data('loadingimg', 1);
         }
     }
 
@@ -464,8 +483,11 @@
                         } else {
                             var cb = z.Combo();
                             cb.data = z.DC[lowerUrl].data;
-                            cb.editable = false;
                             cb.height = 33;
+                            if (ec.FormType == "combobox") {
+                                cb.panelHeight = Math.min(7, cb.data.length) * cb.height + 5;
+                            }
+                            cb.editable = false;
                             cb.type = ec.FormType;
                             //不显示清除按钮
                             cb.icons = null;
@@ -528,100 +550,95 @@
 
     /**
      * Combo：combobox、combotree、tree
-     * @param {any} ops EasyUI 提供的API
      */
-    z.Combo = function (ops) { return new z.Combo.fn.init(ops) };
+    z.Combo = function () { return new z.Combo.fn.init() };
 
     z.Combo.fn = z.Combo.prototype = {
-        init: function (ops) { return this; },
-        method: "POST",/*请求类型*/
-        queryParams: {},/*请求参数*/
-        type: "combobox",/*类型：combobox、combotree tree*/
-        //默认拓展清除按钮
-        icons: [{
-            iconCls: 'comboclear',
-            handler: function (e) {
-                var tt = $(e.data.target);
-                tt[tt.data().textbox.options.type]('clear');
-            }
-        }],
-        urlHide: function (isHide) {
-            isHide = isHide == null ? true : isHide;
-            if (isHide) {
-                this._url = this.url;
-                delete this.url;
-            } else {
-                this.url = this._url;
-                delete this._url;
-            }
-        },/*url切换，用于发起请求时*/
-        onBeforeBind: function (ops) { },/*绑定前回调，return false阻止绑定*/
-        completeIndex: 0,/*完成事件索引，用于支持多次调用*/
-        /*完成事件回调，支持多次调用 (注意死循环，在完成事件重绑数据需加标记跳出循环绑定)*/
-        onComplete: function (fn) {
-            this.completeIndex += 1;
-            this["_onComplete" + this.completeIndex] = fn;
-        },
-        //绑定
-        bind: function () {
-            var that = this;
-
-            if (typeof that.onBeforeLoad == "function") {
-                that._onBeforeLoad = that.onBeforeLoad;
-                delete that.onBeforeLoad;
-            }
-
-            //绑定前回调
-            if (that.onBeforeBind(that) == false) { return false; }
-
-            that.urlHide();
-
-            $(that.id)[that.type](that);
-
-            that.urlHide(false);
-
-            //执行完成事件
-            for (var i = 1; i < that.completeIndex + 1; i++) {
-                typeof that["_onComplete" + i] == "function" && that["_onComplete" + i](that);
-            }
-
-            return this;
-        },
-        //载入
-        load: function () {
-            var that = this;
-
-            //请求前回调且修改别名（因两次）
-            if (typeof that.onBeforeLoad == "function") {
-                that._onBeforeLoad = that.onBeforeLoad;
-                delete that.onBeforeLoad;
-                if (that._onBeforeLoad(that.queryParams) == false) { return false; }
-            }
-
-            $.ajax({
-                url: that.url,
-                type: that.method,
-                data: that.queryParams,
-                dataType: "json",
-                success: function (data) {
-                    that.dataCache = data;
-                    that.data = data || [];
-                    that.bind();
+        init: function () {
+            return z.thisInit(this, this.defaultOptions = {
+                method: "POST",/*请求类型*/
+                queryParams: {},/*请求参数*/
+                type: "combobox",/*类型：combobox、combotree tree*/
+                //默认拓展清除按钮
+                icons: [{
+                    iconCls: 'comboclear',
+                    handler: function (e) {
+                        var tt = $(e.data.target);
+                        tt[tt.data().textbox.options.type]('clear');
+                    }
+                }],
+                onBeforeBind: function (ops) { },/*绑定前回调，return false阻止绑定*/
+                completeIndex: 0,/*完成事件索引，用于支持多次调用*/
+                /*完成事件回调，支持多次调用 (注意死循环，在完成事件重绑数据需加标记跳出循环绑定)*/
+                onComplete: function (fn) {
+                    this.completeIndex += 1;
+                    this["_onComplete" + this.completeIndex] = fn;
                 },
-                error: function (ex) {
-                    that.data = [];
-                    typeof that.onLoadError == "function" && that.onLoadError(ex);
+                //绑定
+                bind: function () {
+                    var that = this;
+
+                    if (typeof that.onBeforeLoad == "function") {
+                        that._onBeforeLoad = that.onBeforeLoad;
+                        delete that.onBeforeLoad;
+                    }
+
+                    //绑定前回调
+                    if (that.onBeforeBind(that) == false) { return false; }
+
+                    z.hideAttr(this, 'url')
+
+                    $(that.id)[that.type](that);
+
+                    z.hideAttr(this, 'url', false)
+
+                    //拷贝输入框提示信息
+                    $(that.id).next().find('input').first().attr('placeholder', $(that.id).attr('placeholder'));
+
+                    //执行完成事件
+                    for (var i = 1; i < that.completeIndex + 1; i++) {
+                        typeof that["_onComplete" + i] == "function" && that["_onComplete" + i](that);
+                    }
+
+                    return this;
+                },
+                //载入
+                load: function () {
+                    var that = this;
+
+                    //请求前回调且修改别名（因两次）
+                    if (typeof that.onBeforeLoad == "function") {
+                        that._onBeforeLoad = that.onBeforeLoad;
+                        delete that.onBeforeLoad;
+                        if (that._onBeforeLoad(that.queryParams) == false) { return false; }
+                    }
+
+                    $.ajax({
+                        url: that.url,
+                        type: that.method,
+                        data: that.queryParams,
+                        dataType: "json",
+                        success: function (data) {
+                            that.dataCache = data;
+                            that.data = data || [];
+                            that.bind();
+                        },
+                        error: function (ex) {
+                            that.data = [];
+                            typeof that.onLoadError == "function" && that.onLoadError(ex);
+                        }
+                    });
+                    return this;
+                },
+                //方法
+                func: function () {
+                    return $(this.id)[this.type](arguments[0], arguments[1]);
                 }
-            });
-            return this;
-        },
-        //方法
-        func: function () {
-            return $(this.id)[this.type](arguments[0], arguments[1]);
+            })
         }
     };
 
-    z.Combo.prototype.init.prototype = z.Combo.prototype;
+    z.Combo.fn.init.prototype = z.Combo.fn;
 
     /**
      * 表单类型映射
@@ -708,24 +725,30 @@
                     var cb = z.Combo();
                     cb.id = target;
                     cb.data = z.DC[url].data;
+                    cb.height = 33;
+                    if (dtype == "combobox") {
+                        cb.panelHeight = Math.min(7, cb.data.length) * cb.height + 5;
+                    }
                     cb.editable = false;
-                    cb.height = 34;
                     cb.type = dtype;
                     if (typeof z.DC[url].init == "function") {
                         z.DC[url].init.call(cb, cb);
                     }
+                    cb.DCkey = url;
                     cb.bind();
                     z.DC[url].obj = cb;
                     cb.func('textbox').attr('placeholder', target.attr('placeholder'));
+                    //存储创建的对象
+                    target[0].zobj = cb;
                     target.attr('data-state', 'bind');
                 }
                 break;
             case 'datetime':
             case 'date':
             case 'time':
-                target[z.FormTypeMap[dtype]]({
-                    showSeconds: true
-                });
+                var dtfn = z.FormTypeMap[dtype];
+                target[dtfn]({ showSeconds: true });
+                target.data('textbox').textbox.find('input').first().attr('placeholder', target.attr('placeholder'));
                 break;
             case 'modal':
                 {
@@ -802,7 +825,7 @@
         var form = $(FormId || "#fv_form_1"), arrLab = [];
         form.find('label.required').each(function () {
             var ipt = $(this).parent().find('input,select,textarea').first(),
-                dtype = ipt.attr('data-type'), val = '', colorTarget;
+                dtype = ipt.attr('data-type') || ipt[0].type, val = '', colorTarget;
             switch (dtype) {
                 case 'combobox':
                 case 'combotree':
@@ -878,7 +901,10 @@
                 case 'combobox':
                     if (rdi != null) {
                         if (t[dtype]("options").multiple) {
-                            var arr = $.trim(rdi).split(',') || [];
+                            var arr = [];
+                            if ($.trim(rdi) != "") {
+                                arr = $.trim(rdi).split(',');
+                            }
                             t[dtype]('setValues', arr);
                         } else {
                             t[dtype]('setValue', rdi.toString());
@@ -891,7 +917,10 @@
 
                     var oda = z.DC[durl.toLowerCase()].obj.data;
                     if (t[dtype]("options").multiple && rdi != null) {
-                        var arr = $.trim(rdi).split(',') || [];
+                        var arr = [];
+                        if ($.trim(rdi) != "") {
+                            arr = $.trim(rdi).split(',');
+                        }
                         var nodes = [];
                         for (var u = 0; u < arr.length; u++) {
                             var node = z.FindTreeNode(oda, arr[u], "id");
@@ -1198,7 +1227,7 @@
         }
     };
 
-    z.Modal.prototype.init.prototype = z.Modal.prototype;
+    z.Modal.fn.init.prototype = z.Modal.fn;
 
 
     //Sql查询
@@ -1267,8 +1296,52 @@
         }
     };
 
-    z.SqlQuery.prototype.init.prototype = z.SqlQuery.prototype;
+    z.SqlQuery.fn.init.prototype = z.SqlQuery.fn;
 
+    //全屏
+    z.FullScreen = {
+        //iframe全屏
+        iframe: function (ifs) {
+            z.ifs = !(z.ifs || false);
+            if (ifs != null) {
+                z.ifs = ifs;
+            }
+            if (z.ifs) {
+                this.open();
+            } else {
+                this.close();
+            }
+        },
+        //打开
+        open: function () {
+            var element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            }
+        },
+        //关闭
+        close: function () {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        },
+        //是否打开
+        isopen: function () {
+            return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
+        }
+    };
 
     //数据缓存，以 url 为键时是小写
     z.DC = {};
@@ -1440,7 +1513,7 @@ if ($.fn.datagrid) {
 if ($.fn.pagination) {
     $.fn.pagination.defaults.beforePageText = '第';
     $.fn.pagination.defaults.afterPageText = '共 {pages} 页';
-    $.fn.pagination.defaults.displayMsg = '显示 {from} 到 {to},共 {total} 记录';
+    $.fn.pagination.defaults.displayMsg = '显示 <b>{from}</b> 到 <b>{to}</b>，共 <b>{total}</b> 记录';
 }
 if ($.messager) {
     $.messager.defaults.ok = '确定';
@@ -1562,6 +1635,9 @@ setTimeout(function () {
             })
         }
     });
+
+    //透明
+    document.body.style.opacity = 1;
 }, 0);
 
 /**

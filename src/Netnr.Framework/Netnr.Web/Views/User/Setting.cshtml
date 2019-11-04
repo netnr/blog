@@ -32,7 +32,7 @@
                         <a class="mr-3" href="mailto:@Model.UserMail">@Model.UserMail</a>
                         @if (Model.UserMailValid == 1)
                         {
-                            <span class="text-success">已验证</span>
+                            <span class="badge badge-success">已验证</span>
                         }
                         else if (!string.IsNullOrWhiteSpace(Model.UserMail))
                         {

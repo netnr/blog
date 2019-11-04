@@ -1,4 +1,4 @@
-<partial name="_PartialNetnrNavQuote" />
+<partial name="_PartialQuote" model="@("netnrnav.css,netnrnav.js")" />
 
 <!--顶部导航-->
 @{ bool IsLogin = ViewContext.HttpContext.User.Identity.IsAuthenticated;}
@@ -21,7 +21,6 @@
                     <li><a href="/mix/about"><i class="fa fa-fw fa-info"></i> 关于</a></li>
                     <li><a href="/lab"><i class="fa fa-fw fa-flask"></i> 实验室</a></li>
                     <li><a href="/store"><i class="fa fa-fw fa-hdd-o"></i> 云存储</a></li>
-                    <li><a href="/note"><i class="fa fa-fw fa-file-text-o"></i> 记事本</a></li>
                     <li class="divider"></li>
                     <li><a target="_blank" title="码云" href="https://gitee.com/netnr"><i class="fa fa-fw fa-git"></i> Gitee <sup><i class="fa small fa-external-link"></i></sup></a></li>
                     <li><a target="_blank" title="GitHub" href="https://github.com/netnr"><i class="fa fa-fw fa-github"></i> GitHub <sup><i class="fa small fa-external-link"></i></sup></a></li>
@@ -52,6 +51,8 @@
                     <ul>
                         <li><a href="/user/id/@uinfo.UserId"><span class="fa fa-fw fa-user text-primary"></span> 我的主页</a></li>
                         <li><a href="/user/setting"><span class="fa fa-fw fa-cog text-primary"></span> 个人设置</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/note"><i class="fa fa-fw fa-file-text-o"></i> 记事本</a></li>
                         <li class="divider"></li>
                         <li><a href="/home/write"><span class="fa fa-fw fa-pencil text-info"></span> 写</a></li>
                         <li><a href="/user/write"><span class="fa fa-fw fa-file-text-o text-info"></span> 我的文章</a></li>

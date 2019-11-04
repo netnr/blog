@@ -60,10 +60,15 @@ namespace Netnr.Web.Controllers
         {
             var vm = new ActionResultVM();
 
-            var uinfo = new Func.UserAuthAid(HttpContext).Get();
-
-            using (var db = new ContextBase())
+            if (string.IsNullOrWhiteSpace(mo.NoteTitle) || string.IsNullOrWhiteSpace(mo.NoteContent))
             {
+                vm.Set(ARTag.lack);
+            }
+            else
+            {
+                var uinfo = new Func.UserAuthAid(HttpContext).Get();
+
+                using var db = new ContextBase();
                 var now = DateTime.Now;
                 if (mo.NoteId == 0)
                 {

@@ -21,6 +21,15 @@ require(['vs/editor/editor.main'], function () {
             nmd.height(Math.max(100, vh));
         })
     }
+
+    //快捷键
+    nmd.obj.me.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function () {
+        if (document.getElementById("btnSave")) {
+            $('#btnSave')[0].click();
+        } else {
+            $('#btnSaveEdit')[0].click();
+        }
+    })
 });
 
 //保存（新增）
@@ -152,7 +161,7 @@ $('#btnSaveEdit').click(function () {
                 $('#ModalWrite').modal("hide");
                 gd1.load();
             } else {
-                jz.msg(data.data);
+                jz.msg(data.msg);
             }
         },
         error: function (ex) {

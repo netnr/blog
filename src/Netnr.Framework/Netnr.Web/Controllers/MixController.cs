@@ -70,5 +70,11 @@ namespace Netnr.Web.Controllers
         {
             return View();
         }
+
+        [Description("FAQ")]
+        public IActionResult FAQ()
+        {
+            return View();
+        }
     }
 }

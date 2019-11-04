@@ -27,6 +27,7 @@ $('#txtSearch').keydown(function (e) {
     }
 })
 $('#btnSearch').click(function () {
+    gd1.pageNumber = 1;
     gd1.load();
 });
 
@@ -44,7 +45,11 @@ require(['vs/editor/editor.main'], function () {
             }
         },
         input: function () {
-            $('#spwordcount').html("共 <b>" + (nmd ? nmd.getmd().length : 0) + "</b> 个字");
+            try {
+                $('#spwordcount').html("共 <b>" + nmd.getmd().length + "</b> 个字");
+            } catch (e) {
+                $('#spwordcount').html("共 <b>0</b> 个字");
+            }
         }
     });
 
@@ -119,8 +124,8 @@ $('#btnSave').click(function () {
     $('#btnSave')[0].disabled = true;
 
     $.ajax({
-        url: "/Note/SaveNote",
-        type: "type",
+        url: "/note/savenote",
+        type: "post",
         data: {
             NoteTitle: title,
             NoteContent: md,
@@ -187,6 +192,6 @@ $('#ModalNote').on('shown.bs.modal', function () {
 })
 
 function mdautoheight() {
-    var vh = $(window).height() - 115;
+    var vh = $(window).height() - 130;
     nmd.height(Math.max(100, vh));
 }

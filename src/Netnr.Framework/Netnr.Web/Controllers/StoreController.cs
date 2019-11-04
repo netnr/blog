@@ -358,6 +358,7 @@ namespace Netnr.Web.Controllers
 
         #region Qiniu对象存储
         [Description("Qiniu对象存储")]
+        [FilterConfigs.LocalAuth]
         public IActionResult QNKodo()
         {
             ViewData["DateUnix"] = DateTime.Now.AddHours(1).ToTimestamp();

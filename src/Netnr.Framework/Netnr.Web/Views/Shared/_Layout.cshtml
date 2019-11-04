@@ -1,4 +1,4 @@
-﻿<partial name="_PartialThe" />
+﻿<partial name="_PartialQuote" model="@("the")" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +11,9 @@
 
     <title>@ViewData["Title"] NET牛人</title>
 
-    <partial name="_PartialMetaSEO" />
+    <partial name="_PartialQuote" model="@("seo,bootstrap.css,fa.css,jquery.js,bootstrap.js,jz.js")" />
 
-    <partial name="_PartialLayoutQuote4" />
-
-    <partial name="_PartialJzQuote" />
-
-    <link href="/css/global.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/global.css" rel="stylesheet" asp-append-version="true" />
 
 </head>
 <body>
@@ -26,7 +22,7 @@
         string ca = (vrv["controller"].ToString() + "/" + vrv["action"].ToString()).ToLower();
 
         var canav = "account/login,account/register,home/auth,mix/log,mix/logchart,mix/terms".Split(',');
-        var cafooter = "account/login,account/register,home/auth,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,mix/log,mix/logchart,mix/terms,note/index".Split(',');
+        var cafooter = "account/login,account/register,home/auth,home/valid,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,admin/index,mix/log,mix/logchart,mix/terms,mix/faq,note/index".Split(',');
     }
 
     @if (!canav.Contains(ca))
@@ -48,6 +44,6 @@
         <a href="javascript:void(0);" onclick="$('html,body').animate({scrollTop:0}, 400)" class="totop" title="返回顶部">ˆ</a>
     }
 
-    <partial name="_PartialFun" />
+    <partial name="_PartialQuote" model="@("fun.js")" />
 </body>
 </html>

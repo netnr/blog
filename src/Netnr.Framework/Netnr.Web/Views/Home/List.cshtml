@@ -82,6 +82,11 @@
 
         <div class="col-md-12">
             <hr />
+
+            @if (uw.UwStatus != 1)
+            {
+                <h3 class="bg-danger text-white text-center py-3">受 限 制 的 文 章</h3>
+            }
         </div>
 
         <!--内容-->
@@ -192,6 +197,6 @@
     </div>
 </div>
 
-<partial name="_PartialMarkdownQuote" />
+<partial name="_PartialQuote" model="@("netnrmd.css,netnrmd.js,monaco-editor")" />
 
 <script src="/js/home/list.js" async defer asp-append-version="true"></script>

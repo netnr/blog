@@ -225,7 +225,7 @@ namespace Netnr.Web.Controllers
                 Core.CacheTo.Set("UserSign", outMo.UserSign, 5 * 60, false);
 
                 //写入授权
-                SetAuth(outMo, isremember);
+                SetAuth(HttpContext, outMo, isremember);
 
                 vm.Set(ARTag.success);
             }
@@ -607,9 +607,10 @@ namespace Netnr.Web.Controllers
         /// <summary>
         /// 写入授权
         /// </summary>
+        /// <param name="context">当前上下文</param>
         /// <param name="user"></param>
         /// <param name="isremember"></param>
-        public void SetAuth(Domain.UserInfo user, bool isremember = true)
+        public void SetAuth(HttpContext context, Domain.UserInfo user, bool isremember = true)
         {
             var claims = new List<Claim>
             {
@@ -631,7 +632,7 @@ namespace Netnr.Web.Controllers
             }
 
             //写入授权
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, cp, authProperties).Wait();
+            context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, cp, authProperties).Wait();
         }
     }
 }

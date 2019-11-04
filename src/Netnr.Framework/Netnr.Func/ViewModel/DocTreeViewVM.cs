@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Netnr.Func.ViewModel
 {
@@ -24,6 +25,8 @@ namespace Netnr.Func.ViewModel
         /// 页内容
         /// </summary>
         public string DsdContentHtml { get; set; }
+        public DateTime? DsdCreateTime { get; set; }
+        public DateTime? DsdUpdateTime { get; set; }
     }
 
     public class DocTreeVM

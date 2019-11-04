@@ -129,7 +129,11 @@ namespace Netnr.Func
 
             if (!string.IsNullOrWhiteSpace(KeyWords))
             {
-                query = query.Where(x => x.UwTitle.Contains(KeyWords, StringComparison.OrdinalIgnoreCase));
+                //按空格分割后搜索
+                KeyWords.Split(' ').ToList().ForEach(k =>
+                {
+                    query = query.Where(x => x.UwTitle.Contains(k));
+                });
             }
 
             pag.Total = query.Count();

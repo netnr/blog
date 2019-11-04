@@ -171,7 +171,7 @@ namespace Netnr.Web.Controllers
                                 if (num > 0)
                                 {
                                     using var ac = new AccountController();
-                                    ac.SetAuth(usermo);
+                                    ac.SetAuth(HttpContext, usermo);
                                 }
                             }
 
@@ -194,7 +194,7 @@ namespace Netnr.Web.Controllers
                                 if (num > 0)
                                 {
                                     using var ac = new AccountController();
-                                    ac.SetAuth(usermo);
+                                    ac.SetAuth(HttpContext, usermo);
                                 }
                             }
 
@@ -295,7 +295,7 @@ namespace Netnr.Web.Controllers
                 //更新授权信息
                 using (var ac = new AccountController())
                 {
-                    ac.SetAuth(usermo);
+                    ac.SetAuth(HttpContext, usermo, true);
                 }
 
                 vm.Set(num > 0);
@@ -401,7 +401,7 @@ namespace Netnr.Web.Controllers
 
         [Description("文章列表")]
         [Authorize]
-        public string WriteList(string sort, string order, int page = 1, int rows = 30)
+        public string WriteList(string sort, string order, int page = 1, int rows = 30, string pe1 = null)
         {
             string result = string.Empty;
 
@@ -430,6 +430,11 @@ namespace Netnr.Web.Controllers
                             a.UwMark,
                             a.UwCategory
                         };
+
+            if (!string.IsNullOrWhiteSpace(pe1))
+            {
+                query = query.Where(x => x.UwTitle.Contains(pe1));
+            }
 
             query = Fast.QueryableTo.OrderBy(query, sort, order);
 
@@ -522,25 +527,31 @@ namespace Netnr.Web.Controllers
 
         [Description("删除 一篇文章")]
         [Authorize]
-        public string WriteDel(int id)
+        public ActionResultVM WriteDel(int id)
         {
-            string result = "fail";
+            var vm = new ActionResultVM();
 
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {
                 var mo1 = db.UserWriting.Where(x => x.Uid == uid && x.UwId == id).FirstOrDefault();
-                db.UserWriting.Remove(mo1);
-                var mo2 = db.UserWritingTags.Where(x => x.UwId == id).ToList();
-                db.UserWritingTags.RemoveRange(mo2);
-                var mo3 = db.UserReply.Where(x => x.UrTargetId == id.ToString()).ToList();
-                db.UserReply.RemoveRange(mo3);
+                if (mo1.UwStatus == -1)
+                {
+                    vm.Set(ARTag.unauthorized);
+                }
+                else
+                {
+                    db.UserWriting.Remove(mo1);
+                    var mo2 = db.UserWritingTags.Where(x => x.UwId == id).ToList();
+                    db.UserWritingTags.RemoveRange(mo2);
+                    var mo3 = db.UserReply.Where(x => x.UrTargetId == id.ToString()).ToList();
+                    db.UserReply.RemoveRange(mo3);
 
-                db.SaveChanges();
-                result = "success";
+                    vm.Set(db.SaveChanges() > 0);
+                }
             }
 
-            return result;
+            return vm;
         }
         #endregion
 
@@ -666,7 +677,7 @@ namespace Netnr.Web.Controllers
                         }
                         catch (Exception)
                         {
-                            vm.msg = "验证失败";
+                            vm.msg = "链接已失效";
                         }
                         break;
                 }

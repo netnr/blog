@@ -73,11 +73,12 @@
                         </div>
                         @if (Model.GistLanguage == "markdown")
                         {
-                            <partial name="_PartialMarkdownQuote" />
+                            <partial name="_PartialQuote" model="@("netnrmd.css,netnrmd.js,monaco-editor")" />
 
                             <div class="markdown-body px-2 py-2">@Model.GistContent</div>
                             <script>
                                 var nmd = $('div.markdown-body');
+
                                 nmd.html(DOMPurify.sanitize(marked(nmd.html(), {
                                     headerIds: false,
                                     highlight: function (str, lang) {
@@ -97,10 +98,11 @@
                         }
                         else
                         {
-                            <pre class="card-body monaco-editor vcln markdown-body" style="height:@(19*Model.GistRow+15)px;overflow-y:hidden;padding-left:65px;" data-lang="@Model.GistLanguage" data-theme="@Model.GistTheme">@Model.GistContent</pre>
-                            <partial name="_PartialMonacoEditorQuote" />
+                            <pre class="card-body monaco-editor vcln markdown-body" style="height:@((19*Model.GistRow+15).ToString()+"px");overflow-y:hidden;padding-left:65px;" data-lang="@Model.GistLanguage" data-theme="@Model.GistTheme">@Model.GistContent</pre>
+                            <partial name="_PartialQuote" model="@("monaco-editor")" />
 
                             <script>
+                                var editor = null;
                                 require(['vs/editor/editor.main'], function () {
                                     var gc = $('pre.vcln');
                                     var cv = htmlDecodeByRegExp(gc.html());

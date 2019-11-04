@@ -1,4 +1,4 @@
-﻿<partial name="_PartialThe" />
+﻿<partial name="_PartialQuote" model="@("the")" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,17 +11,14 @@
 
     <title>@ViewData["Title"]</title>
 
-    <partial name="_PartialMetaSEO" />
-
-    <partial name="_PartialLayoutQuote4" />
+    <partial name="_PartialQuote" model="@("seo,bootstrap.css,fa.css,jquery.js,bootstrap.js,jz.js")" />
 
     <link href="/areas/doc/css/global.css" rel="stylesheet" asp-append-version="true" />
     <script src="/areas/doc/js/global.js" asp-append-version="true"></script>
 
-    <partial name="_PartialJzQuote" />
 </head>
 <body>
-    <partial name="_PartialGlobalLoading" />
+    <partial name="_PartialQuote" model="@("loading")" />
 
     @{
         var hc = ViewContext.HttpContext;
@@ -82,6 +79,6 @@
 
     @RenderBody()
 
-    <partial name="_PartialFun" />
+    <partial name="_PartialQuote" model="@("fun.js")" />
 </body>
 </html>
