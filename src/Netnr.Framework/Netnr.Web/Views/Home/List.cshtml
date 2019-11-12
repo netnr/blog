@@ -119,7 +119,10 @@
                                 }
                                 else
                                 {
-                                    <img class="imgup" src="https://gs.zme.ink/static/avatar/@item.Spare2" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
+                                    var avatarpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:AvatarPath");
+                                    avatarpath += "/" + item.Spare2;
+
+                                    <img class="imgup" src="@avatarpath" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
                                 }
 
                                 <div class="media-body ml-2" id="r_@item.UrId">

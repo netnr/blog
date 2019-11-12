@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json.Linq;
+using Microsoft.OpenApi.Models;
 
 namespace Netnr.Web
 {
@@ -78,7 +79,6 @@ namespace Netnr.Web
             }
         }
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -100,7 +100,20 @@ namespace Netnr.Web
                 });
             });
 
-            services.AddRazorPages();
+            //配置swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Netnr API v1",
+                    Version = "v1",
+                    License = new OpenApiLicense { Name = "Terms", Url = new System.Uri("https://www.netnr.com/mix/terms") }
+                });
+
+                var cp = System.AppContext.BaseDirectory + "Netnr.Web.xml";
+                c.IncludeXmlComments(cp);
+            });
+
             services.AddControllersWithViews(options =>
             {
                 //注册全局错误过滤器
@@ -112,6 +125,7 @@ namespace Netnr.Web
                 //注册全局授权访问时登录标记是否有效
                 options.Filters.Add(new Filters.FilterConfigs.LogonSignValid());
             });
+
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 //Action原样输出JSON
@@ -119,6 +133,9 @@ namespace Netnr.Web
                 //日期格式化
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
+
+            //路由小写
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             //授权访问信息
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -135,8 +152,7 @@ namespace Netnr.Web
             //配置上传文件大小限制（详细信息：FormOptions）
             services.Configure<FormOptions>(options =>
             {
-                //100MB
-                options.ValueLengthLimit = 1024 * 1024 * 100;
+                options.ValueLengthLimit = GlobalTo.GetValue<int>("StaticResource:MaxSize") * 1024 * 1024;
                 options.MultipartBodyLengthLimit = options.ValueLengthLimit;
             });
         }
@@ -177,14 +193,21 @@ namespace Netnr.Web
             //session
             app.UseSession();
 
-            app.UseRouting();
-
             //授权访问
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            //配置swagger
+            app.UseSwagger().UseSwaggerUI(c =>
             {
+                c.DocumentTitle = "Netnr API";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Netnr API v1");
+            });
+
+            app.UseRouting().UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -194,8 +217,6 @@ namespace Netnr.Web
                 endpoints.MapControllerRoute("Code", "{area:exists}/{controller=Code}/{id?}/{sid?}", new { action = "index" });
                 endpoints.MapControllerRoute("Raw", "{area:exists}/{controller=Raw}/{id?}", new { action = "index" });
                 endpoints.MapControllerRoute("User", "{area:exists}/{controller=User}/{id?}", new { action = "index" });
-
-                endpoints.MapRazorPages();
             });
         }
     }

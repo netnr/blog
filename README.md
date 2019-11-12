@@ -18,6 +18,7 @@
 - Qcloud.Shared.NetCore（腾讯对象存储）
 - Qiniu.Shared（七牛对象存储）
 - sqlite-net-pcl（SQLite，日志）
+- Swashbuckle.AspNetCore（Swagger 生成接口）
 
 ### 功能模块
 - 登录、注册（第三方直接登录：QQ、微博、GitHub、淘宝、Microsoft）
@@ -32,6 +33,10 @@
 - 存储：云存储，对象存储
 - 备份：自动备份数据库
 - 日志：访问日志记录
+
+### 更新日志
+- <https://www.netnr.com/home/list/131>
+- 个站更新后才会更新源代码，非同步更新
 
 ### FQA
 

@@ -1,6 +1,8 @@
 ﻿@model Netnr.Func.ViewModel.ActionResultVM
 @{
     ViewData["Title"] = "登录";
+
+    var loginpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:LoginPath");
 }
 
 <link href="/css/account/login.css" rel="stylesheet" asp-append-version="true" />
@@ -39,22 +41,22 @@
             </form>
             <div class="otherlogin">
                 <a href="/account/auth/qq">
-                    <img src="/images/login/qq.svg" title="QQ" />
+                    <img src="@(loginpath+"/qq.svg")" title="QQ" />
                 </a>
                 <a href="/account/auth/weibo">
-                    <img src="/images/login/weibo.svg" title="微博" />
+                    <img src="@(loginpath+"/weibo.svg")" title="微博" />
                 </a>
                 <a href="/account/auth/github">
-                    <img src="/images/login/github.svg" title="GitHub" />
+                    <img src="@(loginpath+"/github.svg")" title="GitHub" />
                 </a>
                 <a href="/account/auth/taobao">
-                    <img src="/images/login/taobao.svg" title="淘宝/天猫" />
+                    <img src="@(loginpath+"/taobao.svg")" title="淘宝/天猫" />
                 </a>
                 <a href="/account/auth/microsoft">
-                    <img src="/images/login/microsoft.svg" title="微软" />
+                    <img src="@(loginpath+"/microsoft.svg")" title="微软" />
                 </a>
                 <a href="/account/auth/dingtalk">
-                    <img src="/images/login/dingtalk.svg" title="钉钉" />
+                    <img src="@(loginpath+"/dingtalk.svg")" title="钉钉" />
                 </a>
             </div>
         </div>

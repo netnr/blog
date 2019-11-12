@@ -1,6 +1,8 @@
 @model Netnr.Domain.UserInfo
 @{
     ViewData["Title"] = "个人设置";
+
+    var loginpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:LoginPath");
 }
 
 <div class="container">
@@ -105,7 +107,7 @@
             <table class="table">
                 <colgroup><col style="width:30%" /></colgroup>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/qq.svg" />QQ</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/qq.svg")" />QQ</td>
                     <td>
                         @if (Model.OpenId1?.Length > 1)
                         {
@@ -118,7 +120,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/weibo.svg" />微博</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/weibo.svg")" />微博</td>
                     <td>
                         @if (Model.OpenId2?.Length > 1)
                         {
@@ -131,7 +133,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/github.svg" />GitHub</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/github.svg")" />GitHub</td>
                     <td>
                         @if (Model.OpenId3?.Length > 1)
                         {
@@ -144,7 +146,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/taobao.svg" />淘宝</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/taobao.svg")" />淘宝</td>
                     <td>
                         @if (Model.OpenId4?.Length > 1)
                         {
@@ -157,7 +159,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/microsoft.svg" />Microsoft</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/microsoft.svg")" />Microsoft</td>
                     <td>
                         @if (Model.OpenId5?.Length > 1)
                         {
@@ -170,7 +172,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="siteIcon"><img class="mr-2" src="/images/login/dingtalk.svg" />钉钉</td>
+                    <td class="siteIcon"><img class="mr-2" src="@(loginpath+"/dingtalk.svg")" />钉钉</td>
                     <td>
                         @if (Model.OpenId6?.Length > 1)
                         {

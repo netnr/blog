@@ -1,34 +1,25 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Netnr.Func.ViewModel;
 using Newtonsoft.Json.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Cors;
 
 namespace Netnr.Web.Controllers
 {
-    /// <summary>
-    /// 开放接口
-    /// </summary>
-    public class ApiController : Controller
+    [Route("api/v1/[action]")]
+    [ApiController]
+    public partial class APIController : ControllerBase
     {
-        [Description("首页列表")]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [Description("测试")]
-        public IActionResult Test()
-        {
-            return View();
-        }
-
-        #region API 方法
-
+        /// <summary>
+        /// 获取GUID
+        /// </summary>
+        /// <param name="count">条数，默认10</param>
+        /// <returns></returns>
         [HttpGet]
         [Description("获取GUID")]
         public ActionResultVM API81(int? count = 10)
@@ -54,6 +45,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// 获取GUID To long
+        /// </summary>
+        /// <param name="count">条数，默认10</param>
+        /// <returns></returns>
         [HttpGet]
         [Description("获取GUID To long")]
         public ActionResultVM API82(int? count = 10)
@@ -83,15 +79,20 @@ namespace Netnr.Web.Controllers
         /// 公共上传
         /// </summary>
         /// <param name="form">表单</param>
-        /// <param name="cp">自定义路径，如：static/draw</param>
+        /// <param name="cp">可选，自定义路径，如：static/draw</param>
         /// <returns></returns>
-        [HttpGet]
         [HttpPost]
         [HttpOptions]
         [Description("公共上传文件")]
         public ActionResultVM API98([FromForm] IFormCollection form, string cp = null)
         {
             var vm = new ActionResultVM();
+
+            if (Request.Method == "OPTIONS")
+            {
+                vm.Set(ARTag.success);
+                return vm;
+            }
 
             try
             {
@@ -100,7 +101,7 @@ namespace Netnr.Web.Controllers
                 {
                     var file = files[0];
 
-                    int maxsize = GlobalTo.GetValue<int>("APIOut:API98:MaxSize");
+                    int maxsize = GlobalTo.GetValue<int>("StaticResource:MaxSize");
                     if (file.Length > 1024 * 1024 * maxsize)
                     {
                         vm.code = 1;
@@ -126,7 +127,7 @@ namespace Netnr.Web.Controllers
                             }
 
                             var path = cp + now.ToString("yyyy/MM/dd/");
-                            var rootdir = GlobalTo.WebRootPath + "/" + (GlobalTo.GetValue("APIOut:API98:RootDir").TrimStart('/').TrimEnd('/') + "/");
+                            var rootdir = GlobalTo.WebRootPath + "/" + (GlobalTo.GetValue("StaticResource:RootDir") + "/");
                             string fullpath = rootdir + path;
 
                             if (!Directory.Exists(fullpath))
@@ -144,7 +145,7 @@ namespace Netnr.Web.Controllers
 
                             var jo = new JObject
                             {
-                                ["server"] = GlobalTo.GetValue("APIOut:API98:Server").TrimEnd('/') + '/',
+                                ["server"] = GlobalTo.GetValue("StaticResource:Server").TrimEnd('/') + '/',
                                 ["path"] = FilePath
                             };
 
@@ -168,6 +169,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// 系统错误码说明
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         [Description("系统错误码说明")]
         public ActionResultVM API9999()
         {
@@ -191,7 +197,5 @@ namespace Netnr.Web.Controllers
 
             return vm;
         }
-
-        #endregion
     }
 }

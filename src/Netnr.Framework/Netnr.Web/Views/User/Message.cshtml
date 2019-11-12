@@ -6,7 +6,8 @@
     ViewData["Title"] = "消息";
 }
 
-<link href="https://code.bdstatic.com/npm/netnrmd@1.2.0/src/netnrmd.css" rel="stylesheet" />
+<partial name="_PartialQuote" model="@("netnrmd.css")" />
+
 <link href="/css/home/view.css" rel="stylesheet" asp-append-version="true" />
 
 <div class="container">
@@ -26,7 +27,8 @@
                         var imgup = "/favicon.svg";
                         if (!string.IsNullOrWhiteSpace(item.Spare2))
                         {
-                            imgup = "https://gs.zme.ink/static/avatar/" + item.Spare2;
+                            var avatarpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:AvatarPath");
+                            imgup = avatarpath += "/" + item.Spare2;
                         }
 
                         <li class="media uwo-reply-item py-3">

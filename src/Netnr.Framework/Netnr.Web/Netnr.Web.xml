@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.Web</name>
+    </assembly>
+    <members>
+        <member name="M:Netnr.Web.Controllers.AccountController.SetAuth(Microsoft.AspNetCore.Http.HttpContext,Netnr.Domain.UserInfo,System.Boolean)">
+            <summary>
+            写入授权
+            </summary>
+            <param name="context">当前上下文</param>
+            <param name="user"></param>
+            <param name="isremember"></param>
+        </member>
+        <member name="M:Netnr.Web.Controllers.APIController.API81(System.Nullable{System.Int32})">
+            <summary>
+            获取GUID
+            </summary>
+            <param name="count">条数，默认10</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.APIController.API82(System.Nullable{System.Int32})">
+            <summary>
+            获取GUID To long
+            </summary>
+            <param name="count">条数，默认10</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.APIController.API98(Microsoft.AspNetCore.Http.IFormCollection,System.String)">
+            <summary>
+            公共上传
+            </summary>
+            <param name="form">表单</param>
+            <param name="cp">可选，自定义路径，如：static/draw</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.APIController.API9999">
+            <summary>
+            系统错误码说明
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.HomeController">
+            <summary>
+            主体
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.LabController.SpeechAPI(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            语音合成
+            txt String 合成的文本，使用UTF-8编码，请注意文本长度必须小于1024字节
+            spd	Int	语速，取值0-9，默认为5中语速
+            pit Int 音调，取值0-9，默认为5中语调
+            vol Int 音量，取值0-15，默认为5中音量
+            per Int 发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.MixController">
+            <summary>
+            混合、综合、其它
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.ServicesController">
+            <summary>
+            服务、对接
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.WeChatExecutor.Execute(Netnr.WeChat.WeChatMessage)">
+            <summary>
+            处理微信消息
+            </summary>
+            <param name="message"></param>
+            <returns>已经打包成xml的用于回复用户的消息包</returns>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.JoPush">
+            <summary>
+            推送的JSON包
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.Pemail">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.PrepositoryName">
+            <summary>
+            仓库名
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.PcommitMessage">
+            <summary>
+            提交的信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.PgitUrl">
+            <summary>
+            clone url
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.PhomePage">
+            <summary>
+            仓库主页链接
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.WebHookService.#ctor(System.String)">
+            <summary>
+            构造 部署
+            </summary>
+            <param name="postStr">推送的JSON包</param>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.WebHookService.Deploy">
+            <summary>
+            部署
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.ServicesController.WebHookService.CmdFor">
+            <summary>
+            命令
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.ServicesController.TaskItem">
+            <summary>
+            任务项
+            </summary>
+        </member>
+        <member name="F:Netnr.Web.Controllers.ServicesController.TaskItem.Backup">
+            <summary>
+            备份
+            </summary>
+        </member>
+        <member name="F:Netnr.Web.Controllers.ServicesController.TaskItem.GistSync">
+            <summary>
+            代码片段同步
+            </summary>
+        </member>
+        <member name="F:Netnr.Web.Controllers.ServicesController.TaskItem.ReplaceLink">
+            <summary>
+            链接替换
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.StoreController">
+            <summary>
+            存储
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.StoreController.AccessCOS">
+            <summary>
+            秘钥
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QQAPI(System.String,System.String)">
+            <summary>
+            QCloud COS API
+            </summary>
+            <param name="bucket">桶</param>
+            <param name="path">文件（夹）路径</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.StoreController.AccessNOS">
+            <summary>
+            秘钥
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Controllers.UController">
+            <summary>
+            用户主页
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs">
+            <summary>
+            过滤器
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.ErrorActionFilter">
+            <summary>
+            全局错误处理
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.GlobalFilter">
+            <summary>
+            全局过滤器
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.LogonSignValid">
+            <summary>
+            需要授权访问
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.IsAdmin">
+            <summary>
+            是管理员
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.IsValid">
+            <summary>
+            有效验证（邮箱）
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.LocalAuth">
+            <summary>
+            LocalAuth 过滤，本地授权
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Filters.FilterConfigs.HelpFuncTo.LocalIsAuth(System.String)">
+            <summary>
+            本地授权：被减数与当前小时、分钟分别求差，满足容错分钟数即有效的KEY
+            
+            举例：
+            配置 小时被减数80，分钟被减数80，假定现在时间是 16:50
+            那么对应的KEY是 80-16=64,80-50=30 即 6430
+            
+            </summary>
+            <param name="sk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Filters.FilterConfigs.HelpFuncTo.GetLogonSign(System.Int32,System.Boolean)">
+            <summary>
+            获取最新登录标记，用于对比本地，踢出下线
+            </summary>
+            <param name="UserId">登录的UserId</param>
+            <param name="Cache">优先取缓存</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -212,7 +212,7 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 var msg = "fail";
                 var url = "";
 
-                var vm = new Web.Controllers.ApiController().API98(Request.Form, GlobalTo.GetValue("StaticResource:DrawPath"));
+                var vm = new Web.Controllers.APIController().API98(Request.Form, GlobalTo.GetValue("StaticResource:DrawPath"));
 
                 if (vm.code == 200)
                 {
