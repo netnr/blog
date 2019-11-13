@@ -9,7 +9,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json.Linq;
-using Microsoft.OpenApi.Models;
 
 namespace Netnr.Web
 {
@@ -100,20 +99,6 @@ namespace Netnr.Web
                 });
             });
 
-            //配置swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Netnr API v1",
-                    Version = "v1",
-                    License = new OpenApiLicense { Name = "Terms", Url = new System.Uri("https://www.netnr.com/mix/terms") }
-                });
-
-                var cp = System.AppContext.BaseDirectory + "Netnr.Web.xml";
-                c.IncludeXmlComments(cp);
-            });
-
             services.AddControllersWithViews(options =>
             {
                 //注册全局错误过滤器
@@ -132,6 +117,21 @@ namespace Netnr.Web
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 //日期格式化
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
+
+            //配置swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Netnr API",
+                    Version = "v1"
+                });
+
+                var cp1 = System.AppContext.BaseDirectory + "Netnr.Web.xml";
+                var cp2 = System.AppContext.BaseDirectory + "Netnr.Func.xml";
+                c.IncludeXmlComments(cp1);
+                c.IncludeXmlComments(cp2);
             });
 
             //路由小写
@@ -173,6 +173,13 @@ namespace Netnr.Web
                 app.UseHsts();
             }
 
+            //配置swagger
+            app.UseSwagger().UseSwaggerUI(c =>
+            {
+                c.DocumentTitle = "Netnr API";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Netnr API");
+            });
+
             //默认起始页index.html
             DefaultFilesOptions options = new DefaultFilesOptions();
             options.DefaultFileNames.Add("index.html");
@@ -187,27 +194,20 @@ namespace Netnr.Web
                 }
             });
 
+            app.UseRouting();
+
+            //授权访问
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             //跨域
             app.UseCors("any");
 
             //session
             app.UseSession();
 
-            //授权访问
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            //配置swagger
-            app.UseSwagger().UseSwaggerUI(c =>
+            app.UseEndpoints(endpoints =>
             {
-                c.DocumentTitle = "Netnr API";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Netnr API v1");
-            });
-
-            app.UseRouting().UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
