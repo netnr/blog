@@ -62,7 +62,7 @@
 
     .uw-box .uw-item .uw-emoji * {
         position: absolute;
-        top: 3px;
+        top: 17px;
         right: 3px;
         max-width: 28px;
         max-height: 28px;
@@ -142,6 +142,7 @@ img.imgup {
 /*显示部分*/
 .display-section {
     overflow: hidden;
+    overflow-y: auto;
     max-height: 460px;
     padding: 5px 15px;
     border: 1px dashed transparent;
@@ -149,6 +150,5 @@ img.imgup {
 }
 
     .display-section:hover {
-        overflow-y: auto;
         border-color: #ddd;
     }

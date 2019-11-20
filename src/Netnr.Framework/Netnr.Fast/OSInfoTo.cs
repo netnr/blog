@@ -89,6 +89,9 @@ namespace Netnr.Fast
         /// </summary>
         public object LogicalDisk { get; set; }
 
+        /// <summary>
+        /// 构造
+        /// </summary>
         public OSInfoTo()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -221,8 +224,16 @@ namespace Netnr.Fast
             }
         }
 
+        /// <summary>
+        /// Linux系统
+        /// </summary>
         public class PlatformForLinux
         {
+            /// <summary>
+            /// 获取 /proc/meminfo
+            /// </summary>
+            /// <param name="pkey"></param>
+            /// <returns></returns>
             public static long MemInfo(string pkey)
             {
                 var meminfo = Core.FileTo.ReadText("/proc/", "meminfo");
@@ -233,6 +244,11 @@ namespace Netnr.Fast
                 return pvalue;
             }
 
+            /// <summary>
+            /// 获取 /proc/cpuinfo
+            /// </summary>
+            /// <param name="pkey"></param>
+            /// <returns></returns>
             public static string CpuInfo(string pkey)
             {
                 var meminfo = Core.FileTo.ReadText("/proc/", "cpuinfo");

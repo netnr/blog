@@ -1,6 +1,6 @@
 ﻿@model Netnr.Domain.DocSet
 @{
-    ViewData["Title"] = "Setting Doc";
+    ViewData["Title"] = ViewContext.RouteData.Values["action"].ToString() + " Doc";
     var uinfo = new UserAuthAid(ViewContext.HttpContext).Get();
 }
 <style>
@@ -25,12 +25,17 @@
                     <textarea class="form-control" name="DsRemark" placeholder="描述" maxlength="200">@Model?.DsRemark</textarea>
                 </div>
                 <div class="form-group">
-                    <select class="custom-select" name="DsOpen" data-value="@Model?.DsOpen">
+                    <select class="custom-select" name="DsOpen" data-value="@(Model?.DsOpen??1)">
                         <option value="1">公开（只读）</option>
                         <option value="0">私有</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="Spare1" value="@Model?.Spare1" placeholder="分享码，不需要分享可不填写" maxlength="4" />
+                    <small class="form-text text-muted">私有时，可根据分享码 <b>查看</b></small>
+                </div>
                 <input type="hidden" name="DsCode" value="@Model?.DsCode" />
+                <input type="hidden" id="hid_uid" name="Uid" value="@uinfo.UserId" />
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-save"></i>&nbsp;保存
                 </button>
@@ -38,34 +43,49 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="hid_uid" value="@uinfo.UserId" />
 <script>
-    var open = $('select[name="DsOpen"]');
+    var open = $('select[name="DsOpen"]'), sc = $('input[name="Spare1"]');
     open.val(open.attr('data-value'));
 
     function savedoc() {
-        if ($('input[name="DsName"]').val().trim() != "") {
+
+        var err = [];
+        if ($('input[name="DsName"]').val().trim() == "") {
+            err.push('名称 必填');
+        }
+        if (sc.val() != "" && sc.val().length != 4) {
+            err.push('分享码为 4 位数字');
+        }
+
+        if (err.length) {
+            jz.alert(err.join('<br/>'));
+        } else {
             $.ajax({
                 url: "/doc/item/SaveDocSet",
                 type: 'post',
+                dataType: 'json',
                 data: $('form').serialize(),
                 success: function (data) {
-                    if (data == "success") {
+                    if (data.code == 200) {
                         location.href = "/doc/user/" + $('#hid_uid').val();
                     } else {
-                        alert(data);
+                        alert(data.msg);
                     }
                 }
             })
-        } else {
-            var target = $('input[name="DsName"]')[0];
-            jz.tip({
-                target: target,
-                content: "请输入名称",
-                align: "top"
-            });
-            target.focus();
         }
+
         return false;
     }
+
+    //分享码
+    sc[0].readOnly = open.val() == 1;
+    open.change(function () {
+        sc[0].readOnly = open.val() == 1;
+    });
+    sc.on('input', function () {
+        if (this.value.length > 4) {
+            this.value = String(this.value).substr(0, 4);
+        }
+    });
 </script>

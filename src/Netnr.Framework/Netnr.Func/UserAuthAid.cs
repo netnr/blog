@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Netnr.Login;
@@ -13,6 +12,10 @@ namespace Netnr.Func
     {
         private readonly HttpContext context;
 
+        /// <summary>
+        /// 构造，拿到当前上下文
+        /// </summary>
+        /// <param name="httpContext"></param>
         public UserAuthAid(HttpContext httpContext)
         {
             context = httpContext;
@@ -46,8 +49,8 @@ namespace Netnr.Func
             /// <summary>
             /// 登录链接
             /// </summary>
-            /// <param name="LoginType">登录类型</param>
-            /// <param name="AuthType">登录防伪追加标识，区分登录、注册</param>
+            /// <param name="loginType">登录类型</param>
+            /// <param name="authType">登录防伪追加标识，区分登录、注册</param>
             /// <returns></returns>
             public static string LoginLink(string loginType, string authType = "")
             {

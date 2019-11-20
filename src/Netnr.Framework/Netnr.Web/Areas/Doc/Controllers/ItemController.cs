@@ -15,47 +15,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
         [Filters.FilterConfigs.IsValid]
         public IActionResult Add()
         {
-            return View();
-        }
-
-        [Description("保存项目")]
-        [Authorize]
-        public string SaveDocSet(Domain.DocSet mo, string savetype)
-        {
-            string result = "fail";
-
-            var uinfo = new Func.UserAuthAid(HttpContext).Get();
-
-            using (var db = new ContextBase())
-            {
-                if (savetype == "add")
-                {
-                    mo.DsCode = Core.UniqueTo.LongId().ToString();
-                    mo.Uid = uinfo.UserId;
-                    mo.DsStatus = 1;
-                    mo.DsCreateTime = DateTime.Now;
-
-                    db.DocSet.Add(mo);
-                }
-                else
-                {
-                    var currmo = db.DocSet.Find(mo.DsCode);
-                    if (currmo.Uid != uinfo.UserId)
-                    {
-                        return "unauthorized";
-                    }
-
-                    currmo.DsName = mo.DsName;
-                    currmo.DsRemark = mo.DsRemark;
-                    currmo.DsOpen = mo.DsOpen;
-
-                    db.DocSet.Update(currmo);
-                }
-                var num = db.SaveChanges();
-
-                result = num > 0 ? "success" : "fail";
-            }
-            return result;
+            return View("_PartialItemForm");
         }
 
         [Description("修改项目")]
@@ -70,12 +30,58 @@ namespace Netnr.Web.Areas.Doc.Controllers
             var mo = db.DocSet.Find(code);
             if (mo.Uid == uinfo.UserId)
             {
-                return View(mo);
+                return View("_PartialItemForm", mo);
             }
             else
             {
                 return Content("unauthorized");
             }
+        }
+
+        /// <summary>
+        /// 保存项目
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
+        [Authorize]
+        public ActionResultVM SaveDocSet(Domain.DocSet mo)
+        {
+            var vm = new ActionResultVM();
+
+            var uinfo = new Func.UserAuthAid(HttpContext).Get();
+
+            using (var db = new ContextBase())
+            {
+                if (string.IsNullOrWhiteSpace(mo.DsCode))
+                {
+                    mo.DsCode = Core.UniqueTo.LongId().ToString();
+                    mo.Uid = uinfo.UserId;
+                    mo.DsStatus = 1;
+                    mo.DsCreateTime = DateTime.Now;
+
+                    db.DocSet.Add(mo);
+                }
+                else
+                {
+                    var currmo = db.DocSet.Find(mo.DsCode);
+                    if (currmo.Uid != uinfo.UserId)
+                    {
+                        vm.Set(ARTag.unauthorized);
+                    }
+
+                    currmo.DsName = mo.DsName;
+                    currmo.DsRemark = mo.DsRemark;
+                    currmo.DsOpen = mo.DsOpen;
+                    currmo.Spare1 = mo.Spare1;
+
+                    db.DocSet.Update(currmo);
+                }
+                var num = db.SaveChanges();
+
+                vm.Set(num > 0);
+            }
+
+            return vm;
         }
 
         [Description("删除项目")]
@@ -96,7 +102,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
                     db.DocSetDetail.RemoveRange(moDetail);
                     db.SaveChanges();
 
-                    return Redirect("/doc/item");
+                    return Redirect("/doc/user/" + uinfo.UserId);
                 }
             }
             return Content("Bad");

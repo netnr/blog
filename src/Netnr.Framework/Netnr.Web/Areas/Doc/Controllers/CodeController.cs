@@ -15,9 +15,22 @@ namespace Netnr.Web.Areas.Doc.Controllers
     [Area("Doc")]
     public class CodeController : Controller
     {
-        [Description("目录页面")]
-        public IActionResult Index()
+        /// <summary>
+        /// 目录页面
+        /// </summary>
+        /// <param name="code">分享码</param>
+        /// <returns></returns>
+        public IActionResult Index(string code)
         {
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                code = Request.Cookies["DocCode"]?.ToString();
+            }
+            else
+            {
+                Response.Cookies.Append("DocCode", code);
+            }
+
             var vm = new DocTreeViewVM
             {
                 //文档集编号
@@ -39,7 +52,10 @@ namespace Netnr.Web.Areas.Doc.Controllers
                     return Content("bad");
                 }
 
-                if (ds.DsOpen != 1)
+                //分享码
+                var isShare = !string.IsNullOrWhiteSpace(code) && ds.Spare1 == code;
+
+                if (!isShare && ds.DsOpen != 1)
                 {
                     if (HttpContext.User.Identity.IsAuthenticated)
                     {

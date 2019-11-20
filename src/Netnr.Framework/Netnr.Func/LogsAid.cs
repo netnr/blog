@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Netnr.Func
 {
+    /// <summary>
+    /// 日志
+    /// </summary>
     public class LogsAid
     {
         /// <summary>
@@ -22,8 +25,14 @@ namespace Netnr.Func
         /// </summary>
         public static readonly int cacheLogTime = GlobalTo.GetValue<int>("logs:batchwritetime");
 
+        /// <summary>
+        /// 日志
+        /// </summary>
         public class LogsVM
         {
+            /// <summary>
+            /// ID
+            /// </summary>
             [PrimaryKey, AutoIncrement]
             public int LogId { get; set; }
             /// <summary>
@@ -89,7 +98,7 @@ namespace Netnr.Func
         /// <summary>
         /// 新增（间隔分批写入）
         /// </summary>
-        /// <param name="logs"></param>
+        /// <param name="mo"></param>
         public static void Insert(LogsVM mo)
         {
             try

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Netnr.Web
 {
@@ -128,10 +129,10 @@ namespace Netnr.Web
                     Version = "v1"
                 });
 
-                var cp1 = System.AppContext.BaseDirectory + "Netnr.Web.xml";
-                var cp2 = System.AppContext.BaseDirectory + "Netnr.Func.xml";
-                c.IncludeXmlComments(cp1);
-                c.IncludeXmlComments(cp2);
+                "Web,Func,Fast".Split(',').ToList().ForEach(x =>
+                {
+                    c.IncludeXmlComments(System.AppContext.BaseDirectory + "Netnr." + x + ".xml");
+                });
             });
 
             //路由小写

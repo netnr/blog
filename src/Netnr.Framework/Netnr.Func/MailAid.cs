@@ -1,7 +1,6 @@
 ﻿using System;
-using MailKit.Net.Smtp;
 using MimeKit;
-using Netnr.Func.ViewModel;
+using MailKit.Net.Smtp;
 
 namespace Netnr.Func
 {

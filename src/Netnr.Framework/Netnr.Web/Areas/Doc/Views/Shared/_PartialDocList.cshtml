@@ -1,4 +1,4 @@
-﻿@model Netnr.Func.ViewModel.PageSetVM
+﻿@model PageVM
 @{
     ViewData["Title"] = "Discover docs";
     var rows = Model.Rows as List<Netnr.Domain.DocSet>;
@@ -15,6 +15,12 @@
         position: absolute;
         top: 3px;
         right: 6px;
+    }
+
+    .dsshare {
+        position: absolute;
+        top: 3px;
+        right: 30px;
     }
 </style>
 <div class="container">
@@ -36,6 +42,11 @@
                         @if (item.DsOpen != 1)
                         {
                             <i class="fa fa-lock dslock" title="私有"></i>
+
+                            if (!string.IsNullOrWhiteSpace(item.Spare1))
+                            {
+                                <a href="/doc/code/@(item.DsCode+"?code="+item.Spare1)" target="_blank" class="fa fa-share-alt dsshare" title="分享码查看链接"></a>
+                            }
                         }
                         <a class="h5 card-title" href="/doc/code/@item.DsCode">@item.DsName</a>
                         <p>

@@ -9,7 +9,7 @@ namespace Netnr.Fast
     /// </summary>
     public class DownTo
     {
-        private HttpResponse Response;
+        private readonly HttpResponse Response;
 
         /// <summary>
         /// 构造
@@ -33,6 +33,11 @@ namespace Netnr.Fast
             Stream(bytes, fileName);
         }
 
+        /// <summary>
+        /// 流的方式下载
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="fileName">下载文件名</param>
         public void Stream(byte[] bytes, string fileName)
         {
             Response.ContentType = "application/octet-stream";

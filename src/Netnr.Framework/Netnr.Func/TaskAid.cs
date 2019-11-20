@@ -1,9 +1,7 @@
 using FluentScheduler;
 using Microsoft.EntityFrameworkCore;
 using Netnr.Data;
-using Netnr.Func.ViewModel;
 using Newtonsoft.Json.Linq;
-using Qcloud.Shared.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +20,14 @@ namespace Netnr.Func
         /// </summary>
         public class TaskComponent
         {
+            /// <summary>
+            /// 任务注册
+            /// </summary>
             public class Reg : Registry
             {
+                /// <summary>
+                /// 构造
+                /// </summary>
                 public Reg()
                 {
                     Schedule<BackupDataBaseJob>().ToRunEvery(2).Days().At(5, 5);
@@ -32,6 +36,9 @@ namespace Netnr.Func
                 }
             }
 
+            /// <summary>
+            /// 数据库备份任务
+            /// </summary>
             public class BackupDataBaseJob : IJob
             {
                 void IJob.Execute()
@@ -40,6 +47,9 @@ namespace Netnr.Func
                 }
             }
 
+            /// <summary>
+            /// Gist同步任务
+            /// </summary>
             public class GistSyncJob : IJob
             {
 

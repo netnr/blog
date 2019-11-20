@@ -14,7 +14,7 @@ namespace Netnr.Fast
         /// <summary>
         /// 生成图片验证码
         /// </summary>
-        /// <param name="num">随机码</param>
+        /// <param name="code">随机码</param>
         public static byte[] CreateImg(string code)
         {
             Random random = new Random();

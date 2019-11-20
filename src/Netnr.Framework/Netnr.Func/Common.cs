@@ -1,6 +1,5 @@
 using Netnr.Data;
 using Netnr.Domain;
-using Netnr.Func.ViewModel;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -8,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Netnr.Func
 {
+    /// <summary>
+    /// 公共常用
+    /// </summary>
     public class Common
     {
         /// <summary>
@@ -16,7 +18,6 @@ namespace Netnr.Func
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
         /// <param name="ivm"></param>
-        /// <param name="ru"></param>
         /// <param name="ovm"></param>
         public static void QueryJoin<T>(IQueryable<T> query, QueryDataInputVM ivm, ref QueryDataOutputVM ovm)
         {
@@ -95,7 +96,7 @@ namespace Netnr.Func
         /// <param name="page"></param>
         /// <param name="TagName"></param>
         /// <returns></returns>
-        public static PageSetVM UserWritingQuery(string KeyWords, int page, string TagName = "")
+        public static PageVM UserWritingQuery(string KeyWords, int page, string TagName = "")
         {
             KeyWords ??= "";
 
@@ -180,7 +181,7 @@ namespace Netnr.Func
                 }
             }
 
-            var vm = new PageSetVM()
+            var vm = new PageVM()
             {
                 Rows = list,
                 Pag = pag,
@@ -229,7 +230,7 @@ namespace Netnr.Func
         /// <param name="action">动作</param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public static PageSetVM UserConnWritingQuery(int OwnerId, EnumAid.ConnectionType connectionType, int action, int page)
+        public static PageVM UserConnWritingQuery(int OwnerId, EnumAid.ConnectionType connectionType, int action, int page)
         {
             var pag = new PaginationVM
             {
@@ -301,7 +302,7 @@ namespace Netnr.Func
                 }
             }
 
-            var vm = new PageSetVM()
+            var vm = new PageVM()
             {
                 Rows = list,
                 Pag = pag
@@ -386,7 +387,7 @@ namespace Netnr.Func
         /// <summary>
         /// 键值对
         /// </summary>
-        /// <param name="KeyName"></param>
+        /// <param name="ListKeyName"></param>
         /// <returns></returns>
         public static List<KeyValues> KeyValuesQuery(List<string> ListKeyName)
         {
@@ -429,11 +430,12 @@ namespace Netnr.Func
         /// <summary>
         /// 获取消息
         /// </summary>
+        /// <param name="UserId">用户ID</param>
         /// <param name="messageType">消息分类</param>
         /// <param name="action">消息动作</param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public static PageSetVM MessageQuery(int UserId, EnumAid.MessageType? messageType, int? action, int page = 1)
+        public static PageVM MessageQuery(int UserId, EnumAid.MessageType? messageType, int? action, int page = 1)
         {
             using var db = new ContextBase();
             var query = from a in db.UserMessage
@@ -481,7 +483,7 @@ namespace Netnr.Func
 
             var data = list.Select(x => x.a).ToList();
 
-            PageSetVM pageSet = new PageSetVM()
+            PageVM pageSet = new PageVM()
             {
                 Rows = data,
                 Pag = pag
@@ -510,7 +512,7 @@ namespace Netnr.Func
         /// <param name="UserId">登录用户</param>
         /// <param name="page">页码</param>
         /// <returns></returns>
-        public static PageSetVM DocQuery(string q, int OwnerId, int UserId, int page = 1)
+        public static PageVM DocQuery(string q, int OwnerId, int UserId, int page = 1)
         {
             using var db = new ContextBase();
             var query = from a in db.DocSet
@@ -525,6 +527,7 @@ namespace Netnr.Func
                             DsOpen = a.DsOpen,
                             DsRemark = a.DsRemark,
                             Uid = a.Uid,
+                            Spare1 = a.Spare1,
 
                             Spare3 = b.Nickname
                         };
@@ -565,7 +568,7 @@ namespace Netnr.Func
             pag.Total = query.Count();
             var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-            PageSetVM pageSet = new PageSetVM()
+            PageVM pageSet = new PageVM()
             {
                 Rows = list,
                 Pag = pag,
@@ -584,7 +587,7 @@ namespace Netnr.Func
         /// <param name="UserId">登录用户</param>
         /// <param name="page">页码</param>
         /// <returns></returns>
-        public static PageSetVM GistQuery(string q, string lang, int OwnerId = 0, int UserId = 0, int page = 1)
+        public static PageVM GistQuery(string q, string lang, int OwnerId = 0, int UserId = 0, int page = 1)
         {
             using var db = new ContextBase();
             var query1 = from a in db.Gist
@@ -687,7 +690,7 @@ namespace Netnr.Func
             pag.Total = query.Count();
             var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-            PageSetVM pageSet = new PageSetVM()
+            PageVM pageSet = new PageVM()
             {
                 Rows = list,
                 Pag = pag,
@@ -705,7 +708,7 @@ namespace Netnr.Func
         /// <param name="UserId">登录用户</param>
         /// <param name="page">页码</param>
         /// <returns></returns>
-        public static PageSetVM RunQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
+        public static PageVM RunQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
         {
             using var db = new ContextBase();
             var query = from a in db.Run
@@ -762,7 +765,7 @@ namespace Netnr.Func
             pag.Total = query.Count();
             var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-            PageSetVM pageSet = new PageSetVM()
+            PageVM pageSet = new PageVM()
             {
                 Rows = list,
                 Pag = pag,
@@ -780,7 +783,7 @@ namespace Netnr.Func
         /// <param name="UserId">登录用户</param>
         /// <param name="page">页码</param>
         /// <returns></returns>
-        public static PageSetVM DrawQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
+        public static PageVM DrawQuery(string q, int OwnerId = 0, int UserId = 0, int page = 1)
         {
             using var db = new ContextBase();
             var query = from a in db.Draw
@@ -839,7 +842,7 @@ namespace Netnr.Func
             pag.Total = query.Count();
             var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
 
-            PageSetVM pageSet = new PageSetVM()
+            PageVM pageSet = new PageVM()
             {
                 Rows = list,
                 Pag = pag,

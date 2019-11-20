@@ -1,4 +1,4 @@
-@model PageSetVM
+@model PageVM
 @{
     var listUm = Model.Rows as List<UserMessage>;
     int mn = listUm.Where(x => x.UmStatus == 1).Count();

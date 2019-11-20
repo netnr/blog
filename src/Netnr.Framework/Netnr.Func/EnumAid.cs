@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Func
 {
+    /// <summary>
+    /// 枚举
+    /// </summary>
     public class EnumAid
     {
         /// <summary>
@@ -7,6 +10,9 @@
         /// </summary>
         public enum ReplyType
         {
+            /// <summary>
+            /// 文章
+            /// </summary>
             UserWriting
         }
 
@@ -15,6 +21,9 @@
         /// </summary>
         public enum MessageType
         {
+            /// <summary>
+            /// 文章
+            /// </summary>
             UserWriting
         }
 
@@ -23,6 +32,9 @@
         /// </summary>
         public enum ConnectionType
         {
+            /// <summary>
+            /// 文章
+            /// </summary>
             UserWriting
         }
     }

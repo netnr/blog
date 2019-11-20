@@ -4,6 +4,20 @@
         <name>Netnr.Web</name>
     </assembly>
     <members>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Index(System.String)">
+            <summary>
+            目录页面
+            </summary>
+            <param name="code">分享码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.ItemController.SaveDocSet(Netnr.Domain.DocSet)">
+            <summary>
+            保存项目
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
         <member name="M:Netnr.Web.Controllers.AccountController.SetAuth(Microsoft.AspNetCore.Http.HttpContext,Netnr.Domain.UserInfo,System.Boolean)">
             <summary>
             写入授权

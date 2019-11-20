@@ -294,7 +294,8 @@ namespace Netnr.Web.Filters
             public static string GetLogonSign(int UserId, bool Cache = true)
             {
                 string result = string.Empty;
-                var us = Core.CacheTo.Get("UserSign") as string;
+                var usk = "UserSign_" + UserId;
+                var us = Core.CacheTo.Get(usk) as string;
                 if (Cache && !string.IsNullOrEmpty(us))
                 {
                     result = us;
@@ -306,7 +307,7 @@ namespace Netnr.Web.Filters
                     if (uiMo != null)
                     {
                         result = uiMo.UserSign;
-                        Core.CacheTo.Set("UserSign", result, 5 * 60, false);
+                        Core.CacheTo.Set(usk, result, 5 * 60, false);
                     }
                 }
                 return result;

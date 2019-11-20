@@ -4,6 +4,9 @@ using System.ComponentModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
+/// <summary>
+/// 全局
+/// </summary>
 public class GlobalTo
 {
     /// <summary>

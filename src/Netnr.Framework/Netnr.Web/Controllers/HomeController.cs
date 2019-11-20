@@ -168,7 +168,7 @@ namespace Netnr.Web.Controllers
                     PageSize = 10
                 };
 
-                var vm = new PageSetVM()
+                var vm = new PageVM()
                 {
                     Rows = Func.Common.ReplyOneQuery(Func.EnumAid.ReplyType.UserWriting, wid.ToString(), pag),
                     Pag = pag,

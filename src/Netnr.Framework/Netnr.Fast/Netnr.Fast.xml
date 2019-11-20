@@ -1,0 +1,664 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.Fast</name>
+    </assembly>
+    <members>
+        <member name="T:Netnr.Fast.ClientTo">
+            <summary>
+            客户端信息
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.ClientTo.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            构造
+            </summary>
+            <param name="content"></param>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.IPv4">
+            <summary>
+            IPv4
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.IPv6">
+            <summary>
+            IPv6
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.BrowserName">
+            <summary>
+            浏览器名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.BrowserVersion">
+            <summary>
+            浏览器版本
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.SystemName">
+            <summary>
+            系统名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.SystemType">
+            <summary>
+            系统类型
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.Language">
+            <summary>
+            语言
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.ClientTo.Referer">
+            <summary>
+            引荐
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.ClientTo.UserAgentGet(System.String)">
+            <summary>
+            提取UserAgent信息
+            </summary>
+            <param name="ua"></param>
+        </member>
+        <member name="M:Netnr.Fast.ClientTo.Response(System.String)">
+            <summary>
+            获取指定服务器的信息
+            </summary>
+            <param name="url">服务器地址</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Fast.DownTo">
+            <summary>
+            下载
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.DownTo.#ctor(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            构造
+            </summary>
+            <param name="httpResponse"></param>
+        </member>
+        <member name="M:Netnr.Fast.DownTo.Stream(System.String,System.String)">
+            <summary>
+            流的方式下载
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.DownTo.Stream(System.Byte[],System.String)">
+            <summary>
+            流的方式下载
+            </summary>
+            <param name="bytes"></param>
+            <param name="fileName">下载文件名</param>
+        </member>
+        <member name="T:Netnr.Fast.ImageTo">
+            <summary>
+            图片操作
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.ImageTo.CreateImg(System.String)">
+            <summary>
+            生成图片验证码
+            </summary>
+            <param name="code">随机码</param>
+        </member>
+        <member name="M:Netnr.Fast.ImageTo.MinImg(System.String,System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            生成缩略图
+            </summary>
+            <param name="oldImgPath">原图片地址</param>
+            <param name="newMinImgPath">缩略图地址</param>
+            <param name="newImgName">生成图片名称</param>
+            <param name="width">缩略图宽度</param>
+            <param name="height">缩略图高度</param>
+            <param name="model">生成缩略的模式: wh|width|height|cut </param>
+        </member>
+        <member name="M:Netnr.Fast.ImageTo.AddTxt(System.String,System.String,System.String)">
+            <summary>
+            在图片上添加文字水印
+            </summary>
+            <param name="path">要添加水印的图片路径</param>
+            <param name="syPath">生成的水印图片存放的位置</param>
+            <param name="syWord">水印文字</param>
+        </member>
+        <member name="M:Netnr.Fast.ImageTo.AddImg(System.String,System.String,System.String)">
+            <summary>
+            在图片上添加图片水印
+            </summary>
+            <param name="path">原服务器上的图片路径</param>
+            <param name="syPicPath">水印图片的路径</param>
+            <param name="waterPicPath">生成的水印图片存放路径</param>
+        </member>
+        <member name="T:Netnr.Fast.OSInfoTo">
+            <summary>
+            系统信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.Is64BitOperatingSystem">
+            <summary>
+            确定当前操作系统是否为64位操作系统
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.MachineName">
+            <summary>
+            获取此本地计算机的NetBIOS名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.OSVersion">
+            <summary>
+            获取当前平台标识符和版本号
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.ProcessorCount">
+            <summary>
+            获取当前计算机上的处理器数量
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.ProcessorName">
+            <summary>
+            处理器名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.SystemDirectory">
+            <summary>
+            获取系统目录的标准路径
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.SystemPageSize">
+            <summary>
+            获取操作系统的内存页面中的字节数
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.TickCount">
+            <summary>
+            获取自系统启动以来经过的毫秒数
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.UserDomainName">
+            <summary>
+            获取与当前用户关联的网络域名
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.UserName">
+            <summary>
+            获取当前登录到操作系统的用户的用户名
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.Version">
+            <summary>
+            获取公共语言运行时的主要，次要，内部和修订版本号
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.FrameworkDescription">
+            <summary>
+            获取运行应用程序的.NET安装的名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.OSDescription">
+            <summary>
+            获取描述应用程序正在运行的操作系统的字符串
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.OS">
+            <summary>
+            代表操作系统平台
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.TotalPhysicalMemory">
+            <summary>
+            总物理内存 B
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.FreePhysicalMemory">
+            <summary>
+            可用物理内存 B
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.SwapTotal">
+            <summary>
+            总交换空间（Linux）B
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.SwapFree">
+            <summary>
+            可用交换空间（Linux）B
+            </summary>
+        </member>
+        <member name="P:Netnr.Fast.OSInfoTo.LogicalDisk">
+            <summary>
+            逻辑磁盘
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="T:Netnr.Fast.OSInfoTo.PlatformForWindows">
+            <summary>
+            WINDOWS
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForWindows.TotalPhysicalMemory">
+            <summary>
+            获取物理内存 B
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForWindows.FreePhysicalMemory">
+            <summary>
+            获取可用内存 B
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForWindows.LogicalDisk">
+            <summary>
+            获取磁盘信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForWindows.ProcessorName">
+            <summary>
+            获取处理器名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Fast.OSInfoTo.PlatformForLinux">
+            <summary>
+            Linux系统
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.MemInfo(System.String)">
+            <summary>
+            获取 /proc/meminfo
+            </summary>
+            <param name="pkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.CpuInfo(System.String)">
+            <summary>
+            获取 /proc/cpuinfo
+            </summary>
+            <param name="pkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.LogicalDisk">
+            <summary>
+            获取磁盘信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.CPULoad">
+            <summary>
+            获取CPU使用率 %
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Fast.QueryableTo">
+            <summary>
+            查询支持处理
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.QueryableTo.OrderBy``1(System.Linq.IQueryable{``0},System.String,System.String)">
+            <summary>
+            排序
+            </summary>
+            <param name="query"></param>
+            <param name="sorts">排序字段，支持多个，逗号分割</param>
+            <param name="orders">排序类型，支持多个，逗号分割</param>
+        </member>
+        <member name="T:Netnr.Fast.RegexTo">
+            <summary>
+            正则
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.RegexTo.IsMail(System.String)">
+            <summary>
+            是邮件地址
+            </summary>
+            <param name="txt"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ActionResultVM">
+            <summary>
+            通用请求方法返回对象
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.code">
+            <summary>
+            错误码，200 表示成功，-1 表示异常，其它自定义建议从 1 开始累加
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.msg">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.data">
+            <summary>
+            主体数据
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.startTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.endTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:ActionResultVM.useTime">
+            <summary>
+            用时，毫秒
+            </summary>
+        </member>
+        <member name="M:ActionResultVM.Set(ARTag)">
+            <summary>
+            设置快捷标签，赋值code、msg
+            </summary>
+            <param name="tag">快捷标签枚举</param>
+        </member>
+        <member name="M:ActionResultVM.Set(System.Boolean)">
+            <summary>
+            设置快捷标签，赋值code、msg
+            </summary>
+            <param name="isyes"></param>
+        </member>
+        <member name="M:ActionResultVM.Set(System.Exception,System.Boolean)">
+            <summary>
+            设置快捷标签，赋值code、msg
+            </summary>
+            <param name="ex"></param>
+            <param name="appendCatch">追加错误消息，默认true</param>
+        </member>
+        <member name="T:ARTag">
+            <summary>
+            快捷标签枚举
+            </summary>
+        </member>
+        <member name="F:ARTag.success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:ARTag.fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:ARTag.error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="F:ARTag.unauthorized">
+            <summary>
+            未授权
+            </summary>
+        </member>
+        <member name="F:ARTag.exist">
+            <summary>
+            存在
+            </summary>
+        </member>
+        <member name="F:ARTag.invalid">
+            <summary>
+            无效
+            </summary>
+        </member>
+        <member name="F:ARTag.lack">
+            <summary>
+            缺省
+            </summary>
+        </member>
+        <member name="T:GlobalTo">
+            <summary>
+            全局
+            </summary>
+        </member>
+        <member name="F:GlobalTo.Configuration">
+            <summary>
+            全局配置
+            </summary>
+        </member>
+        <member name="F:GlobalTo.HostEnvironment">
+            <summary>
+            托管环境信息
+            </summary>
+        </member>
+        <member name="P:GlobalTo.ContentRootPath">
+            <summary>
+            内部访问（项目根路径）
+            </summary>
+        </member>
+        <member name="P:GlobalTo.WebRootPath">
+            <summary>
+            web外部访问（wwwroot）
+            </summary>
+        </member>
+        <member name="F:GlobalTo.StartPath">
+            <summary>
+            起始路径（Windows为磁盘跟目录，linux为/）
+            </summary>
+        </member>
+        <member name="M:GlobalTo.GetValue(System.String)">
+            <summary>
+            获取AppsettingsJson的值
+            </summary>
+            <param name="key">键路径，如：ConnectionStrings:SQLServerConn</param>
+            <returns></returns>
+        </member>
+        <member name="M:GlobalTo.GetValue``1(System.String)">
+            <summary>
+            获取AppsettingsJson的值
+            </summary>
+            <typeparam name="T">类型</typeparam>
+            <param name="key">键路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:GlobalTo.ConvertValue``1(System.String)">
+            <summary>
+            值类型转换
+            </summary>
+            <typeparam name="T">类型</typeparam>
+            <param name="value">值</param>
+            <returns></returns>
+        </member>
+        <member name="M:GlobalTo.ConvertValue(System.Type,System.String)">
+            <summary>
+            值类型转换
+            </summary>
+            <param name="type">类型</param>
+            <param name="value">值</param>
+            <returns></returns>
+        </member>
+        <member name="T:PageVM">
+            <summary>
+            分页视图
+            </summary>
+        </member>
+        <member name="P:PageVM.Rows">
+            <summary>
+            数据行
+            </summary>
+        </member>
+        <member name="P:PageVM.Temp">
+            <summary>
+            临时数据
+            </summary>
+        </member>
+        <member name="P:PageVM.Other">
+            <summary>
+            其它数据
+            </summary>
+        </member>
+        <member name="P:PageVM.Pag">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="F:PageVM.Route">
+            <summary>
+            路由 /home/index
+            </summary>
+        </member>
+        <member name="P:PageVM.QueryString">
+            <summary>
+            url 传参 k=1
+            </summary>
+        </member>
+        <member name="P:PageVM.PageKeyName">
+            <summary>
+            分页 参数名 默认 page
+            </summary>
+        </member>
+        <member name="M:PageVM.Page(System.Int32)">
+            <summary>
+            生成页的地址
+            </summary>
+            <param name="pageIndex">页码</param>
+            <returns></returns>
+        </member>
+        <member name="T:PaginationVM">
+            <summary>
+            分页参数
+            </summary>
+        </member>
+        <member name="P:PaginationVM.PageNumber">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:PaginationVM.PageSize">
+            <summary>
+            页量
+            </summary>
+        </member>
+        <member name="P:PaginationVM.Total">
+            <summary>
+            总数量
+            </summary>
+        </member>
+        <member name="P:PaginationVM.PageTotal">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:QueryDataInputVM">
+            <summary>
+            输入参数
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.handleType">
+            <summary>
+            处理类型，可选：query、export
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.uri">
+            <summary>
+            请求标识
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.tableName">
+            <summary>
+            表名
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.wheres">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.pagination">
+            <summary>
+            是否启用分页 1分页
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.page">
+            <summary>
+            页码 默认 1
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.rows">
+            <summary>
+            页量 默认 30
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.sort">
+            <summary>
+            排序列名
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.order">
+            <summary>
+            排序方式 默认 asc
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.sortOrderJoin">
+            <summary>
+            排序拼接
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.columnsExists">
+            <summary>
+            是否查询列信息 1不查询
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.pe1">
+            <summary>
+            拓展参数 
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.pe2">
+            <summary>
+            拓展参数 
+            </summary>
+        </member>
+        <member name="P:QueryDataInputVM.pe3">
+            <summary>
+            拓展参数 
+            </summary>
+        </member>
+        <member name="T:QueryDataOutputVM">
+            <summary>
+            输出信息
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.total">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.table">
+            <summary>
+            数据，data转换表，忽略序列化
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.columns">
+            <summary>
+            列标题
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.or1">
+            <summary>
+            拓展信息 
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.or2">
+            <summary>
+            拓展信息
+            </summary>
+        </member>
+        <member name="P:QueryDataOutputVM.or3">
+            <summary>
+            拓展信息 
+            </summary>
+        </member>
+    </members>
+</doc>

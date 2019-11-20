@@ -12,6 +12,7 @@ namespace Netnr.Func
         /// 如：1分钟前、1小时前
         /// </summary>
         /// <param name="dt">时间</param>
+        /// <param name="reply">0发表</param>
         /// <returns></returns>
         public static string Duration(DateTime dt, int? reply = null)
         {

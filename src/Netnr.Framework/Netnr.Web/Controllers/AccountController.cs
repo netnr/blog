@@ -222,7 +222,8 @@ namespace Netnr.Web.Controllers
             try
             {
                 //登录标记 缓存5分钟，绝对过期
-                Core.CacheTo.Set("UserSign", outMo.UserSign, 5 * 60, false);
+                var usk = "UserSign_" + outMo.UserId;
+                Core.CacheTo.Set(usk, outMo.UserSign, 5 * 60, false);
 
                 //写入授权
                 SetAuth(HttpContext, outMo, isremember);
