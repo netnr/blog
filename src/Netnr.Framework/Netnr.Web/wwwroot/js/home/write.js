@@ -76,19 +76,7 @@ $('#btnSave').click(function () {
         success: function (data) {
             if (data.code == 200) {
                 nmd.clear();
-
-                jz.confirm({
-                    content: "操作成功",
-                    time: 6,
-                    cancelValue: "继续写",
-                    cancel: function () {
-                        location.reload(false);
-                    },
-                    okValue: "首页",
-                    ok: function () {
-                        location.href = "/";
-                    }
-                })
+                location.href = "/home/list/" + data.data;
             } else {
                 jz.msg(data.data);
             }

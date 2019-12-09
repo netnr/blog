@@ -151,6 +151,7 @@ namespace Netnr.Func
                               join b in db.UserWritingTags on a.TagName equals b.TagName into bg
                               from b in bg.DefaultIfEmpty()
                               where listUwId.Contains(b.UwId) || a.TagName == TagName
+                              orderby b.UwtId ascending
                               select new
                               {
                                   UwId = b == null ? 0 : b.UwId,
@@ -841,6 +842,285 @@ namespace Netnr.Func
 
             pag.Total = query.Count();
             var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+
+            PageVM pageSet = new PageVM()
+            {
+                Rows = list,
+                Pag = pag,
+                QueryString = dicQs
+            };
+
+            return pageSet;
+        }
+
+        /// <summary>
+        /// Guff查询
+        /// </summary>
+        /// <param name="category">类别，可选，支持 text、image、audio、video、me（我的）、melaud（我点赞的）、mereply（我回复的）</param>
+        /// <param name="q">搜索</param>
+        /// <param name="nv">分类名/分类值</param>
+        /// <param name="tag">标签</param>
+        /// <param name="obj">对象</param>
+        /// <param name="OwnerId">所属用户</param>
+        /// <param name="UserId">登录用户</param>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
+        public static PageVM GuffQuery(string category, string q, string nv, string tag, string obj, int OwnerId, int UserId, int page = 1)
+        {
+            var ctype = EnumAid.ConnectionType.GuffRecord.ToString();
+
+            using var db = new ContextBase();
+
+            IQueryable<GuffRecord> query = null;
+
+            switch (category?.ToLower())
+            {
+                case "melaud":
+                    {
+                        query = from c in db.UserConnection
+                                join a in db.GuffRecord on c.UconnTargetId equals a.GrId
+                                join b in db.UserInfo on a.Uid equals b.UserId
+                                where c.Uid == UserId && c.UconnTargetType == ctype && c.UconnAction == 1 && a.GrStatus == 1
+                                orderby c.UconnCreateTime descending
+                                select new GuffRecord
+                                {
+                                    GrId = a.GrId,
+                                    GrTypeName = a.GrTypeName,
+                                    GrTypeValue = a.GrTypeValue,
+                                    GrObject = a.GrObject,
+                                    GrContent = a.GrContent,
+                                    GrContentMd = a.GrContentMd,
+                                    GrImage = a.GrImage,
+                                    GrAudio = a.GrAudio,
+                                    GrVideo = a.GrVideo,
+                                    GrFile = a.GrFile,
+                                    GrRemark = a.GrRemark,
+                                    GrTag = a.GrTag,
+                                    GrCreateTime = a.GrCreateTime,
+                                    GrUpdateTime = a.GrUpdateTime,
+                                    GrOpen = a.GrOpen,
+                                    GrReadNum = a.GrReadNum,
+                                    GrReplyNum = a.GrReplyNum,
+                                    GrLaud = a.GrLaud,
+                                    GrMark = a.GrMark,
+
+                                    Uid = a.Uid,
+
+                                    //已点赞
+                                    Spare1 = "laud",
+                                    //是我的
+                                    Spare2 = a.Uid == UserId ? "owner" : "",
+                                    //昵称
+                                    Spare3 = b.Nickname
+                                };
+                    }
+                    break;
+                case "mereply":
+                    {
+                        query = from c in db.UserReply
+                                join a in db.GuffRecord on c.UrTargetId equals a.GrId
+                                join b in db.UserInfo on a.Uid equals b.UserId
+                                where c.Uid == UserId && c.UrTargetType == ctype && a.GrStatus == 1
+                                orderby c.UrCreateTime descending
+                                select new GuffRecord
+                                {
+                                    GrId = a.GrId,
+                                    GrTypeName = a.GrTypeName,
+                                    GrTypeValue = a.GrTypeValue,
+                                    GrObject = a.GrObject,
+                                    GrContent = a.GrContent,
+                                    GrContentMd = a.GrContentMd,
+                                    GrImage = a.GrImage,
+                                    GrAudio = a.GrAudio,
+                                    GrVideo = a.GrVideo,
+                                    GrFile = a.GrFile,
+                                    GrRemark = a.GrRemark,
+                                    GrTag = a.GrTag,
+                                    GrCreateTime = a.GrCreateTime,
+                                    GrUpdateTime = a.GrUpdateTime,
+                                    GrOpen = a.GrOpen,
+                                    GrReadNum = a.GrReadNum,
+                                    GrReplyNum = a.GrReplyNum,
+                                    GrLaud = a.GrLaud,
+                                    GrMark = a.GrMark,
+
+                                    Uid = a.Uid,
+
+                                    Spare2 = a.Uid == UserId ? "owner" : "",
+                                    Spare3 = b.Nickname
+                                };
+                    }
+                    break;
+                case "me":
+                case "top":
+                case "text":
+                case "image":
+                case "audio":
+                case "video":
+                default:
+                    {
+                        query = from a in db.GuffRecord
+                                join b in db.UserInfo on a.Uid equals b.UserId
+                                where a.GrStatus == 1
+                                select new GuffRecord
+                                {
+                                    GrId = a.GrId,
+                                    GrTypeName = a.GrTypeName,
+                                    GrTypeValue = a.GrTypeValue,
+                                    GrObject = a.GrObject,
+                                    GrContent = a.GrContent,
+                                    GrContentMd = a.GrContentMd,
+                                    GrImage = a.GrImage,
+                                    GrAudio = a.GrAudio,
+                                    GrVideo = a.GrVideo,
+                                    GrFile = a.GrFile,
+                                    GrRemark = a.GrRemark,
+                                    GrTag = a.GrTag,
+                                    GrCreateTime = a.GrCreateTime,
+                                    GrUpdateTime = a.GrUpdateTime,
+                                    GrOpen = a.GrOpen,
+                                    GrReadNum = a.GrReadNum,
+                                    GrReplyNum = a.GrReplyNum,
+                                    GrLaud = a.GrLaud,
+                                    GrMark = a.GrMark,
+
+                                    Uid = a.Uid,
+
+                                    Spare2 = a.Uid == UserId ? "owner" : "",
+                                    Spare3 = b.Nickname
+                                };
+                    }
+                    break;
+            }
+
+            switch (category?.ToLower())
+            {
+                case "top":
+                    query = query.OrderByDescending(x => x.GrLaud);
+                    break;
+                case "text":
+                    query = query.OrderByDescending(x => x.GrCreateTime).Where(x => !string.IsNullOrEmpty(x.GrContent) && string.IsNullOrEmpty(x.GrImage) && string.IsNullOrEmpty(x.GrAudio) && string.IsNullOrEmpty(x.GrVideo));
+                    break;
+                case "image":
+                    query = query.OrderByDescending(x => x.GrCreateTime).Where(x => !string.IsNullOrEmpty(x.GrImage));
+                    break;
+                case "audio":
+                    query = query.OrderByDescending(x => x.GrCreateTime).Where(x => !string.IsNullOrEmpty(x.GrAudio));
+                    break;
+                case "video":
+                    query = query.OrderByDescending(x => x.GrCreateTime).Where(x => !string.IsNullOrEmpty(x.GrVideo));
+                    break;
+                default:
+                    query = query.OrderByDescending(x => x.GrCreateTime);
+                    break;
+            }
+
+            //所属用户
+            if (OwnerId != 0)
+            {
+                query = query.Where(x => x.Uid == OwnerId);
+            }
+
+            //未登录
+            if (UserId == 0)
+            {
+                query = query.Where(x => x.GrOpen == 1);
+            }
+            else
+            {
+                //已登录：公开&登录用户的所有
+                query = query.Where(x => x.GrOpen == 1 || x.Uid == UserId);
+            }
+
+            //分类名/分类值
+            if (!string.IsNullOrWhiteSpace(nv))
+            {
+                if (!nv.Contains("/"))
+                {
+                    nv += "/";
+                }
+
+                var nvs = nv.Split('/').ToList();
+                var n = nvs.FirstOrDefault();
+                var v = nvs.LastOrDefault();
+
+                //分类名
+                if (!string.IsNullOrWhiteSpace(n))
+                {
+                    query = query.Where(x => x.GrTypeName == n);
+                }
+
+                //分类值
+                if (!string.IsNullOrWhiteSpace(v))
+                {
+                    query = query.Where(x => x.GrTypeValue == v);
+                }
+            }
+
+            //标签
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                query = query.Where(x => x.GrTag.Contains(tag));
+            }
+
+            //标签
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                query = query.Where(x => x.GrTag.Contains(tag));
+            }
+
+            //对象
+            if (!string.IsNullOrWhiteSpace(obj))
+            {
+                query = query.Where(x => x.GrObject.Contains(obj));
+            }
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query = query.Where(x => x.GrContent.Contains(q) || x.GrTag.Contains(q));
+            }
+
+            var pag = new PaginationVM
+            {
+                PageNumber = Math.Max(page, 1),
+                PageSize = 18
+            };
+
+            var dicQs = new Dictionary<string, string>
+            {
+                { "q", q }
+            };
+
+            pag.Total = query.Count();
+            var list = query.Skip((pag.PageNumber - 1) * pag.PageSize).Take(pag.PageSize).ToList();
+
+            var listid = list.Select(x => x.GrId).ToList();
+
+            //点赞查询
+            if (category != "melaud")
+            {
+                var listtid = db.UserConnection.Where(x => listid.Contains(x.UconnTargetId) && x.Uid == UserId && x.UconnTargetType == ctype && x.UconnAction == 1).Select(x => x.UconnTargetId).ToList();
+                foreach (var item in list)
+                {
+                    if (listtid.Contains(item.GrId))
+                    {
+                        item.Spare1 = "laud";
+                    }
+                }
+            }
+
+            //查询记录
+            var ormo = new OperationRecord()
+            {
+                OrId = Core.UniqueTo.LongId().ToString(),
+                OrType = ctype,
+                OrAction = "query",
+                OrSource = string.Join(",", listid),
+                OrCreateTime = DateTime.Now,
+                OrMark = "default"
+            };
+            db.OperationRecord.Add(ormo);
+            db.SaveChanges();
 
             PageVM pageSet = new PageVM()
             {

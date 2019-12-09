@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.FileServer</name>
+    </assembly>
+    <members>
+        <member name="T:Netnr.FileServer.Base.SQLiteBase">
+            <summary>
+            数据库操作
+            </summary>
+        </member>
+        <member name="F:Netnr.FileServer.Base.SQLiteBase.SQLiteConn">
+            <summary>
+            连接字符串
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.CreateApp">
+            <summary>
+            创建App
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.GetToken(System.String,System.String)">
+            <summary>
+            获取Token
+            </summary>
+            <param name="AppId">分配的应用ID</param>
+            <param name="AppKey">分配的应用密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.GetAppList(System.Int32,System.Int32)">
+            <summary>
+            获取App列表
+            </summary>
+            <param name="pageNumber">页码，默认1</param>
+            <param name="pageSize">页量，默认20</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.ValidToken(System.String)">
+            <summary>
+            验证Token
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.InsertFile(System.Collections.Generic.List{Netnr.FileServer.Model.FileRecord})">
+            <summary>
+            新增
+            </summary>
+            <param name="list"></param>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.QueryFile(System.String,System.Boolean)">
+            <summary>
+            查询
+            </summary>
+            <param name="path">路径，传ID时需传 isid=true</param>
+            <param name="isid">是ID</param>
+        </member>
+        <member name="M:Netnr.FileServer.Base.SQLiteBase.DeleteFile(System.String,System.Boolean)">
+            <summary>
+            删除
+            </summary>
+            <param name="path">路径，传ID时需传 isid=true</param>
+            <param name="isid">是ID</param>
+        </member>
+        <member name="T:Netnr.FileServer.Controllers.APIController">
+            <summary>
+            API接口
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.CreateApp(System.String)">
+            <summary>
+            创建App，仅限开发环境调用
+            </summary>
+            <param name="password">密码，必填</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.GetAppList(System.Int32,System.Int32)">
+            <summary>
+            获取App列表，仅限开发环境调用
+            </summary>
+            <param name="pageNumber">页码，默认1</param>
+            <param name="pageSize">页量，默认20</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.ResetAll(System.String)">
+            <summary>
+            清空数据库和上传文件，仅限开发环境调用
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.GetToken(System.String,System.String)">
+            <summary>
+            获取Token
+            </summary>
+            <param name="AppId">分配的应用ID</param>
+            <param name="AppKey">分配的应用密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.Upload(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String,System.String)">
+            <summary>
+            上传文件，文件流
+            </summary>
+            <param name="file">文件流</param>
+            <param name="token">token，授权验证，必填</param>
+            <param name="owner">所属者，一个应用对应一个所属者，必填</param>
+            <param name="subdir">子目录，可选</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.Copy(System.String,System.String)">
+            <summary>
+            复制文件
+            </summary>
+            <param name="token"></param>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.Cover(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String,System.String)">
+            <summary>
+            覆盖文件，文件流
+            </summary>
+            <param name="file">文件流</param>
+            <param name="token">token，授权验证，必填</param>
+            <param name="path">原路径（任选一）</param>
+            <param name="id">文件ID（任选一）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.APIController.Delete(System.String,System.String,System.String)">
+            <summary>
+            删除文件
+            </summary>
+            <param name="token">token，授权验证，必填</param>
+            <param name="path">原路径（任选一）</param>
+            <param name="id">文件ID（任选一）</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.FileServer.Controllers.HomeController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Controllers.HomeController.Index">
+            <summary>
+            首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.FileServer.Filters.FilterConfigs">
+            <summary>
+            过滤器
+            </summary>
+        </member>
+        <member name="T:Netnr.FileServer.Filters.FilterConfigs.AllowCors">
+            <summary>
+            允许跨域
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Filters.FilterConfigs.AllowCors.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Netnr.FileServer.Filters.FilterConfigs.AllowCors.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Netnr.FileServer.Model.FileRecord">
+            <summary>
+            文件记录
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrOwnerUser">
+            <summary>
+            所属用户
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrType">
+            <summary>
+            分类
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrPath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrHash">
+            <summary>
+            文件Hash，SHA1
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrSize">
+            <summary>
+            文件大小，单位B
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrCreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.FileRecord.FrRemark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:Netnr.FileServer.Model.SysKey">
+            <summary>
+            token管理
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkAppId">
+            <summary>
+            AppId   取Guid转成long，长度19位
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkAppKey">
+            <summary>
+            SkAppKey    密钥，取Guid的MD5值
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkName">
+            <summary>
+            名称、用户
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkCreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkToken">
+            <summary>
+            生成的Token
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkTokenExpireTime">
+            <summary>
+            Token过期时间
+            </summary>
+        </member>
+        <member name="P:Netnr.FileServer.Model.SysKey.SkRemark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:Netnr.FileServer.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Netnr.FileServer.Program.CreateHostBuilder(System.String[])">
+            dotnet Netnr.FileServer.dll "http://*:42"
+        </member>
+        <member name="T:Netnr.FileServer.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.FileServer.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
+            <summary>
+            构造
+            </summary>
+            <param name="configuration">配置信息</param>
+            <param name="env">环境信息</param>
+        </member>
+        <member name="M:Netnr.FileServer.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            This method gets called by the runtime. Use this method to add services to the container.
+        </member>
+        <member name="M:Netnr.FileServer.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        </member>
+    </members>
+</doc>

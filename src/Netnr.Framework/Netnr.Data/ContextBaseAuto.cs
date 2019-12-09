@@ -12,9 +12,11 @@ namespace Netnr.Data
         public virtual DbSet<GiftRecordDetail> GiftRecordDetail { get; set; }
         public virtual DbSet<Gist> Gist { get; set; }
         public virtual DbSet<GistSync> GistSync { get; set; }
+        public virtual DbSet<GuffRecord> GuffRecord { get; set; }
         public virtual DbSet<KeyValueSynonym> KeyValueSynonym { get; set; }
         public virtual DbSet<KeyValues> KeyValues { get; set; }
         public virtual DbSet<Notepad> Notepad { get; set; }
+        public virtual DbSet<OperationRecord> OperationRecord { get; set; }
         public virtual DbSet<Run> Run { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<UserConnection> UserConnection { get; set; }
@@ -429,6 +431,95 @@ namespace Netnr.Data
                 entity.Property(e => e.Uid).HasComment("所属用户");
             });
 
+            modelBuilder.Entity<GuffRecord>(entity =>
+            {
+                entity.HasKey(e => e.GrId)
+                    .HasName("PK_GUFFRECORD");
+
+                entity.HasComment("尬服列表");
+
+                entity.Property(e => e.GrId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GrAudio)
+                    .HasMaxLength(4000)
+                    .HasComment("音频，多个逗号分割");
+
+                entity.Property(e => e.GrContent)
+                    .HasMaxLength(4000)
+                    .HasComment("内容");
+
+                entity.Property(e => e.GrContentMd).HasComment("内容Markdown");
+
+                entity.Property(e => e.GrCreateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("初始发布时间");
+
+                entity.Property(e => e.GrFile)
+                    .HasMaxLength(4000)
+                    .HasComment("文件，多个逗号分割");
+
+                entity.Property(e => e.GrRemark)
+                    .HasMaxLength(4000)
+                    .HasComment("结束语");
+
+                entity.Property(e => e.GrImage)
+                    .HasMaxLength(4000)
+                    .HasComment("图片，多个逗号分割");
+
+                entity.Property(e => e.GrLaud).HasComment("点赞数");
+
+                entity.Property(e => e.GrMark).HasComment("收藏数");
+
+                entity.Property(e => e.GrObject)
+                    .HasMaxLength(200)
+                    .HasComment("对象，多个逗号分割，如主播姓名");
+
+                entity.Property(e => e.GrOpen).HasComment("1公开，2私有");
+
+                entity.Property(e => e.GrReplyNum).HasComment("回复数");
+
+                entity.Property(e => e.GrReadNum).HasComment("阅读量");
+
+                entity.Property(e => e.GrStatus).HasComment("状态，1正常，2block，-1只读");
+
+                entity.Property(e => e.GrTag)
+                    .HasMaxLength(200)
+                    .HasComment("标签，多个逗号分割");
+
+                entity.Property(e => e.GrTypeName)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasComment("分类，直播、名人、书、音乐等");
+
+                entity.Property(e => e.GrTypeValue)
+                    .HasMaxLength(200)
+                    .HasComment("分类值，如分类为斗鱼，值可为房间号");
+
+                entity.Property(e => e.GrUpdateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("更新时间");
+
+                entity.Property(e => e.GrVideo)
+                    .HasMaxLength(4000)
+                    .HasComment("视频，多个逗号分割");
+
+                entity.Property(e => e.Spare1)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
+
+                entity.Property(e => e.Spare2)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
+
+                entity.Property(e => e.Spare3)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
+
+                entity.Property(e => e.Uid).HasComment("创建用户");
+            });
+
             modelBuilder.Entity<KeyValueSynonym>(entity =>
             {
                 entity.HasKey(e => e.KsId)
@@ -558,6 +649,56 @@ namespace Netnr.Data
                     .HasComment("备用");
 
                 entity.Property(e => e.Uid).HasComment("所属用户ID");
+            });
+
+            modelBuilder.Entity<OperationRecord>(entity =>
+            {
+                entity.HasKey(e => e.OrId)
+                    .HasName("PK_OPERATIONRECORD");
+
+                entity.HasComment("操作记录");
+
+                entity.Property(e => e.OrId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OrAction)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("动作，具体的增删改等");
+
+                entity.Property(e => e.OrCreateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("时间");
+
+                entity.Property(e => e.OrMark)
+                    .HasMaxLength(50)
+                    .HasComment("标记");
+
+                entity.Property(e => e.OrRemark)
+                    .HasMaxLength(50)
+                    .HasComment("备注");
+
+                entity.Property(e => e.OrType)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasComment("操作分类，推荐虚拟表名");
+
+                entity.Property(e => e.OrSource)
+                    .HasMaxLength(2000)
+                    .HasComment("源");
+
+                entity.Property(e => e.Spare1)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
+
+                entity.Property(e => e.Spare2)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
+
+                entity.Property(e => e.Spare3)
+                    .HasMaxLength(50)
+                    .HasComment("备用");
             });
 
             modelBuilder.Entity<Run>(entity =>
@@ -730,7 +871,8 @@ namespace Netnr.Data
 
                 entity.HasIndex(e => e.UserName)
                     .HasName("UserInfo_UserName")
-                    .IsUnique();
+                    .IsUnique()
+                    .HasFilter("([UserName] IS NOT NULL)");
 
                 entity.Property(e => e.LoginLimit).HasComment("登录限制 1限制 2补齐信息");
 

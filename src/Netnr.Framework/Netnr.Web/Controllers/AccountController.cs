@@ -14,18 +14,29 @@ using System.Collections.Generic;
 
 namespace Netnr.Web.Controllers
 {
+    /// <summary>
+    /// 账号
+    /// </summary>
     public class AccountController : Controller
     {
         #region 注册
 
-        [Description("注册")]
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        [Description("注册提交")]
+        /// <summary>
+        /// 注册提交
+        /// </summary>
+        /// <param name="mo">账号、密码</param>
+        /// <param name="RegisterCode">验证码</param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Register(Domain.UserInfo mo, string RegisterCode)
         {
@@ -44,7 +55,7 @@ namespace Netnr.Web.Controllers
                 mo.UserCreateTime = DateTime.Now;
 
                 //邮箱注册
-                if (Fast.RegexTo.IsMail(mo.UserName))
+                if (Fast.ParsingTo.IsMail(mo.UserName))
                 {
                     mo.UserMail = mo.UserName;
                 }
@@ -56,7 +67,10 @@ namespace Netnr.Web.Controllers
             return View(vm);
         }
 
-        [Description("注册验证码")]
+        /// <summary>
+        /// 注册验证码
+        /// </summary>
+        /// <returns></returns>
         public FileResult RegisterCode()
         {
             //生成验证码
@@ -66,7 +80,11 @@ namespace Netnr.Web.Controllers
             return File(bytes, "image/jpeg");
         }
 
-        [Description("公共注册")]
+        /// <summary>
+        /// 公共注册
+        /// </summary>
+        /// <param name="mo">个人用户信息</param>
+        /// <returns></returns>
         private ActionResultVM RegisterUser(Domain.UserInfo mo)
         {
             var vm = new ActionResultVM();
@@ -106,7 +124,11 @@ namespace Netnr.Web.Controllers
 
         #region 登录（本地）
 
-        [Description("登录页面")]
+        /// <summary>
+        /// 登录页面
+        /// </summary>
+        /// <param name="ReturnUrl">登录跳转链接</param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login(string ReturnUrl)
         {
@@ -116,7 +138,12 @@ namespace Netnr.Web.Controllers
             return View();
         }
 
-        [Description("登录验证")]
+        /// <summary>
+        /// 登录验证
+        /// </summary>
+        /// <param name="mo">用户信息</param>
+        /// <param name="remember">记住账号</param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Login(Domain.UserInfo mo, int? remember)
@@ -128,6 +155,11 @@ namespace Netnr.Web.Controllers
                 var rurl = Request.Cookies["ReturnUrl"];
                 rurl = string.IsNullOrWhiteSpace(rurl) ? "/" : rurl;
 
+                if (rurl.StartsWith("http"))
+                {
+                    rurl += "?cookie=ok";
+                }
+
                 return Redirect(rurl);
             }
             else
@@ -136,13 +168,21 @@ namespace Netnr.Web.Controllers
             }
         }
 
-        [Description("第三方登录类型枚举")]
+        /// <summary>
+        /// 第三方登录类型枚举
+        /// </summary>
         public enum ValidateloginType
         {
             local, qq, weibo, github, taobao, microsoft, dingtalk
         }
 
-        [Description("公共登录验证")]
+        /// <summary>
+        /// 公共登录验证
+        /// </summary>
+        /// <param name="vt">登录类型</param>
+        /// <param name="mo">用户信息</param>
+        /// <param name="isremember">记住账号</param>
+        /// <returns></returns>
         private ActionResultVM ValidateLogin(ValidateloginType vt, Domain.UserInfo mo, bool isremember = true)
         {
             var vm = new ActionResultVM();
@@ -166,7 +206,7 @@ namespace Netnr.Web.Controllers
                         mo.UserPwd = Core.CalcTo.MD5(mo.UserPwd);
 
                         //邮箱登录
-                        if (Fast.RegexTo.IsMail(mo.UserName))
+                        if (Fast.ParsingTo.IsMail(mo.UserName))
                         {
                             outMo = uiR.FirstOrDefault(x => x.UserMail == mo.UserName && x.UserPwd == mo.UserPwd);
                         }
@@ -228,6 +268,9 @@ namespace Netnr.Web.Controllers
                 //写入授权
                 SetAuth(HttpContext, outMo, isremember);
 
+                //生成Token
+                vm.data = Func.UserAuthAid.TokenMake(outMo);
+
                 vm.Set(ARTag.success);
             }
             catch (Exception ex)
@@ -242,7 +285,10 @@ namespace Netnr.Web.Controllers
 
         #region 登录（第三方）
 
-        [Description("第三方登录授权页面")]
+        /// <summary>
+        /// 第三方登录授权页面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Auth()
         {
             var authType = RouteData.Values["id"]?.ToString();
@@ -250,7 +296,11 @@ namespace Netnr.Web.Controllers
             return Redirect(url);
         }
 
-        [Description("登录授权回调")]
+        /// <summary>
+        /// 登录授权回调
+        /// </summary>
+        /// <param name="authorizeResult">获取授权码以及防伪标识</param>
+        /// <returns></returns>
         public IActionResult AuthCallback(LoginBase.AuthorizeResult authorizeResult)
         {
             var vm = new ActionResultVM();
@@ -406,7 +456,7 @@ namespace Netnr.Web.Controllers
                                 mo.OpenId5 = openId;
 
                                 mo.Nickname = userEntity.last_name + userEntity.first_name;
-                                mo.UserMail = userEntity.emails["account"].ToStringOrEmpty();
+                                mo.UserMail = userEntity.emails?["account"].ToStringOrEmpty();
                             }
                             break;
                         case ValidateloginType.dingtalk:
@@ -597,7 +647,10 @@ namespace Netnr.Web.Controllers
 
         #endregion
 
-        [Description("注销")]
+        /// <summary>
+        /// 注销
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
@@ -609,8 +662,8 @@ namespace Netnr.Web.Controllers
         /// 写入授权
         /// </summary>
         /// <param name="context">当前上下文</param>
-        /// <param name="user"></param>
-        /// <param name="isremember"></param>
+        /// <param name="user">用户信息</param>
+        /// <param name="isremember">是否记住账号</param>
         public void SetAuth(HttpContext context, Domain.UserInfo user, bool isremember = true)
         {
             var claims = new List<Claim>

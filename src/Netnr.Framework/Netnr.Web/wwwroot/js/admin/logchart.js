@@ -1,5 +1,5 @@
 ﻿function loadFlow(type) {
-    fetch('/Mix/QueryLogReportFlow?type=' + type)
+    fetch('/Admin/QueryLogReportFlow?type=' + type)
         .then(x => x.json())
         .then(function (data) {
             var categories = [], pv = [], ip = [], id = [];
@@ -39,7 +39,7 @@
 }
 
 function loadTop(type, field) {
-    fetch('/Mix/QueryLogReportTop?type=' + type + '&field=' + field)
+    fetch('/Admin/QueryLogReportTop?type=' + type + '&field=' + field)
         .then(x => x.json())
         .then(function (data) {
             var arr = [];

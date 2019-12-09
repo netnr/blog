@@ -1,0 +1,58 @@
+﻿@model string
+@{
+    var cacheKey = "GlobalKey-HtmlPath";
+
+    //是html路径
+    var ishp = CacheTo.Get(cacheKey) as string == "yes";
+    var hp = ishp ? "" : "/home";
+
+    switch (Model)
+    {
+        case null:
+            ViewData["Title"] = "";
+            break;
+        case "top":
+            ViewData["Title"] = "排行";
+            break;
+        case "image":
+            ViewData["Title"] = "图片";
+            break;
+        case "audio":
+            ViewData["Title"] = "音频";
+            break;
+        case "video":
+            ViewData["Title"] = "视频";
+            break;
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 min200">
+            <div id="boxlist"></div>
+            <div id="boxpaging"></div>
+            <div class="text-center my-3" id="boxloading">
+                <div class="spinner-border"><span class="sr-only">Loading...</span></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <a href="@(hp+"/publish")" class="btn btn-lg btn-block btn-warning fa-lg py-4">
+                    <i class="fa fa-fw fa-edit"></i>发帖
+                </a>
+            </div>
+
+            <div class="card my-4">
+                <div class="card-header">热门标签</div>
+                <div class="card-body" id="boxhottag">
+                    <div class="spinner-border"><span class="sr-only">Loading...</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    guff.queryList();
+    guff.queryHotTag();
+</script>

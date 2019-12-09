@@ -8,7 +8,11 @@ namespace Netnr.Web.Areas.Run.Controllers
     [Area("Run")]
     public class CodeController : Controller
     {
-        [Description("Run一条")]
+        /// <summary>
+        /// Run一条
+        /// </summary>
+        /// <param name="pure"></param>
+        /// <returns></returns>
         public IActionResult Index(string pure)
         {
             string id = RouteData.Values["id"]?.ToString();

@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>登录跳转</title>
+
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+            <script src="/js/global.js?v=TuZ4j6IqtsdhwXqv4M4tvpSNksw9K-NEh2wncdnu0S8"></script>
+
+</head>
+<body>
+    <script>
+        var cookie = guff.getUrlParam('cookie');
+        if (cookie) {
+            location.href = "/";
+        } else {
+            var rurl = location.origin + location.pathname;
+            location.href = guff.host + "account/login?ReturnUrl=" + encodeURIComponent(rurl);
+        }
+
+        setTimeout(function () {
+            var p = document.createElement('p');
+            p.innerHTML = "正在跳转 ...";
+            document.body.appendChild(p);
+        }, 1000 * 2);
+    </script>
+</body>
+</html>

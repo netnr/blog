@@ -1,0 +1,219 @@
+﻿            <!--
+            https://github.com/netnr
+            https://gitee.com/netnr
+            https://www.netnr.com
+            https://zme.ink
+            -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>&#x53D1;&#x5E16; 尬服●乐天地</title>
+
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+            <meta name="keywords" content="Guff,尬服,尬服乐天地" />
+            <meta name="description" content="Guff,尬服,尬服乐天地" />
+            <link href="https://code.bdstatic.com/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+            <link href="https://code.bdstatic.com/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <script src="https://code.bdstatic.com/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+            <script src="https://code.bdstatic.com/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://code.bdstatic.com/npm/jzjs@2.0.2/2.0.2/jz.min.js"></script>
+            <link href="/css/global.css?v=vTqfgx0WqkZvIZHvj_Lb-BXAXqEJT5jN29TtVz97YKE" rel="stylesheet" />
+            <script src="/js/global.js?v=TuZ4j6IqtsdhwXqv4M4tvpSNksw9K-NEh2wncdnu0S8"></script>
+
+
+</head>
+<body>
+
+        
+            <link href="https://code.bdstatic.com/npm/netnrnav@1.1.0/src/netnrnav.css" rel="stylesheet" />
+            <script src="https://code.bdstatic.com/npm/netnrnav@1.1.0/src/netnrnav.js" defer async></script>
+
+
+<button type="button" class="MenuToggle show-in-mobile btn btn-primary ml-3 mt-3">
+    <span class="fa fa-align-justify fa-2x"></span>
+</button>
+<div class="netnrnav horizontal">
+    <div class="netnrnav-wrapper">
+        <ul>
+            <li><a href="/" class="siteIcon"><img src="/favicon.svg" /> 首页</a></li>
+            <li><a href="/image"><span class="fa fa-fw fa-image"></span> 图片</a></li>
+            <li><a href="/audio"><span class="fa fa-fw fa-microphone"></span> 声音</a></li>
+            <li><a href="/video"><span class="fa fa-fw fa-video-camera"></span> 视频</a></li>
+            <li><a href="/top"><span class="fa fa-fw fa-sort-amount-desc"></span> 排行</a></li>
+        </ul>
+        <ul class="float-right" id="ulogin">
+            <li class="d-none"><a href="/login">登录 / 注册</a></li>
+            <li class="d-none">
+                <a><span class="fa fa-fw fa-user-circle-o "></span><span class="indicator fa fa-sort-desc"></span></a>
+                <ul>
+                    <li><a href="#" id="aus"><span class="fa fa-fw fa-cog text-primary"></span> 个人设置</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/publish"><span class="fa fa-fw fa-edit text-warning"></span> 发帖</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/me"><span class="fa fa-fw fa-user text-info"></span> 我发布的</a></li>
+                    <li><a href="/melaud"><span class="fa fa-fw fa-thumbs-up text-success"></span> 我点赞的</a></li>
+                    <li><a href="/mereply"><span class="fa fa-fw fa-commenting-o text-success"></span> 我回复的</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/logout"><span class="fa fa-fw fa-power-off text-danger"></span> 退出</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="spinner-grow mt-2">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="height:40px"></div>
+
+            <link href="/css/publish.css?v=c6qgYYDqsddHOzUUa1UOi9mbjYjm4JELeK7lKAa1rIw" rel="stylesheet" />
+
+    <div class="min200">
+        
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <form id="pform" onsubmit="return false">
+                    <div class="card-header"><i class="fa fa-fw fa-send"></i>发帖</div>
+                    <ul class="list-group list-group-flush" id="pbox">
+                        <li class="list-group-item">
+                            <textarea class="form-control min100" name="GrContent" placeholder="写点什么呢..."></textarea>
+                            <input type="hidden" name="GrId" />
+                        </li>
+                        <li class="list-group-item">
+                            <div id="boxImage" class="upbox"></div>
+                            <input type="hidden" name="GrImage" />
+
+                            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="上传图片">
+                                <label class="btn btn-outline-warning m-0" for="btnUpImage">
+                                    <i class="fa fa-lg fa-fw fa-image"></i>
+                                    <input type="file" id="btnUpImage" class="d-none" />
+                                </label>
+                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" data-reference="parent">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu px-2">
+                                    <div class="form-group">
+                                        <input class="form-control" id="txtOneImage" placeholder="粘贴链接">
+                                    </div>
+                                    <button type="button" class="btn btn-block btn-warning" id="btnOneImage">确定</button>
+                                </div>
+                            </div>
+
+                            <div class="spinner-border spinner-border-sm d-none" id="loadingImage"><span class="sr-only">Loading...</span></div>
+                        </li>
+                        <li class="list-group-item">
+                            <div id="boxAudio" class="upbox"></div>
+                            <input type="hidden" name="GrAudio" />
+
+                            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="上传音频">
+                                <label class="btn btn-outline-warning m-0" for="btnUpAudio">
+                                    <i class="fa fa-lg fa-fw fa-microphone"></i>
+                                    <input type="file" id="btnUpAudio" class="d-none" />
+                                </label>
+                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" data-reference="parent">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu px-2">
+                                    <div class="form-group">
+                                        <input class="form-control" id="txtOneAudio" placeholder="粘贴链接">
+                                    </div>
+                                    <button type="button" class="btn btn-block btn-warning" id="btnOneAudio">确定</button>
+                                </div>
+                            </div>
+
+                            <div class="spinner-border spinner-border-sm d-none" id="loadingAudio"><span class="sr-only">Loading...</span></div>
+                        </li>
+                        <li class="list-group-item">
+                            <div id="boxVideo" class="upbox"></div>
+                            <input type="hidden" name="GrVideo" />
+
+                            <div class="btn-group" data-toggle="tooltip" data-placement="right" title="上传视频">
+                                <label class="btn btn-outline-warning m-0" for="btnUpVideo">
+                                    <i class="fa fa-lg fa-fw fa-video-camera"></i>
+                                    <input type="file" id="btnUpVideo" class="d-none" />
+                                </label>
+                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" data-reference="parent">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu px-2">
+                                    <div class="form-group">
+                                        <input class="form-control" id="txtOneVideo" placeholder="粘贴链接">
+                                    </div>
+                                    <button type="button" class="btn btn-block btn-warning" id="btnOneVideo">确定</button>
+                                </div>
+                            </div>
+
+                            <div class="spinner-border spinner-border-sm d-none" id="loadingVideo"><span class="sr-only">Loading...</span></div>
+                        </li>
+                        <li class="list-group-item">
+                            <input class="form-control" name="GrRemark" placeholder="结束语 或 神回复" />
+                            <div class="row">
+                                <div class="col-sm-8 my-3">
+                                    <div class="input-group">
+                                        <input class="form-control" name="GrTypeName" placeholder="分类 如：douyu" maxlength="200" />
+                                        <div class="input-group-prepend"><span class="input-group-text">/</span></div>
+                                        <input class="form-control" name="GrTypeValue" placeholder="值 如：870931" maxlength="200" />
+                                    </div>
+                                    <small>如：电影/星际穿越 或 综艺节目/running man</small>
+                                </div>
+                                <div class="col-sm-4 my-3">
+                                    <input class="form-control" name="GrObject" placeholder="对象、人名 如：李永" maxlength="200" />
+                                    <small>如：刘在石,李光洙</small>
+                                </div>
+                            </div>
+                            <input class="form-control" name="GrTag" placeholder="标签 逗号分割 如：骚话,名场面" maxlength="200" />
+                            <button class="mt-3 btn btn-lg btn-block btn-warning" id="btnSave"><i class="fa fa-fw fa-send"></i>发表</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header"><i class="fa fa-fw fa-info-circle"></i>发帖须知</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">请不要发表与“尬服”无关的内容欺骗小伙伴们的感情啦！</li>
+                    <li class="list-group-item">不能涉及政治、色情、暴力、陪聊等违法违规内容，不能包含邮件地址、电话号码、地址、QQ、微博等联系信息，不要在本站发布广告。</li>
+                    <li class="list-group-item">请选择清晰有趣的图片，并且不能包含其他网站、微博号等的水印。<br />请勿上传涉嫌广告、营销的图片。</li>
+                    <li class="list-group-item">上传图片、音频 单个文件大小限制 <b>2M</b> ，视频单个文件大小限制 <b>10M</b> 。</li>
+                    <li class="list-group-item">违规超过 <b>3</b> 次会被禁封。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+        
+<div class="border-top mt-5">
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h5 class="text-muted">链接</h5>
+                <a class="mr-2 text-nowrap" href="https://www.netnr.com">NET牛人</a>
+                <a class="mr-2 text-nowrap" target="_blank" href="https://ss.netnr.com/contact" title="联系打赏">联系</a>
+                <a class="mr-2 text-nowrap" target="_blank" href="https://www.netnr.com/swagger">API</a>
+            </div>
+        </div>
+        <div class="my-3 small text-muted">
+            <span class="mr-2">&copy; Guff 2019</span>
+            <a class="mr-2 text-nowrap" href="https://www.netnr.com/mix/terms">Terms</a>
+            <a class="mr-2 text-nowrap" href="/faq">FAQ</a>
+        </div>
+    </div>
+</div>
+
+            <script src="/js/publish.js?v=ik8928OtYUyL8xpu-ILZEMFqkTlgIL4UJY8xh72Amnw"></script>
+
+
+</body>
+</html>

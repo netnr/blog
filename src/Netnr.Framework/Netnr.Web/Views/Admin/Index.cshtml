@@ -2,24 +2,21 @@
     ViewData["Title"] = "后台管理";
 }
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-12 mb-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control" type="text" id="txtSearch" placeholder=" Search , Enter" />
-                <div class="input-group-prepend">
-                    <button type="button" class="btn btn-info" id="btnSearch">搜索</button>
-                </div>
-            </div>
-        </div>
         <div class="col-md-12">
-            <div id="PGrid1">
-                <div id="Grid1" class="loadingimg"></div>
-            </div>
+            <a class="btn btn-outline-info btn-lg mr-4 my-3 py-3" href="/admin/write" target="_blank">
+                <i class="fa fa-fw fa-2x fa-pencil"></i><div>文章管理</div>
+            </a>
+            <a class="btn btn-outline-secondary btn-lg mr-4 my-3 py-3" href="/admin/reply" target="_blank">
+                <i class="fa fa-fw fa-2x fa-commenting-o"></i><div>回复管理</div>
+            </a>
+            <a class="btn btn-outline-primary btn-lg mr-4 my-3 py-3" href="/admin/log" target="_blank">
+                <i class="fa fa-fw fa-2x fa-list-alt"></i><div>日志列表</div>
+            </a>
+            <a class="btn btn-outline-success btn-lg mr-4 my-3 py-3" href="/admin/logchart" target="_blank">
+                <i class="fa fa-fw fa-2x fa-line-chart"></i><div>日志图表</div>
+            </a>
         </div>
     </div>
 </div>
-
-<partial name="_PartialQuote" model="@("easyui.css,easyui.js")" />
-
-<script src="/js/admin/index.js" asp-append-version="true"></script>

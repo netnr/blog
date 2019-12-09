@@ -1,0 +1,47 @@
+@{
+    var cacheKey = "GlobalKey-HtmlPath";
+
+    //是html路径
+    var ishp = CacheTo.Get(cacheKey) as string == "yes";
+    var hp = ishp ? "" : "/home";
+}
+
+<partial name="_PartialQuote" model="@("netnrnav.css,netnrnav.js")" />
+
+<button type="button" class="MenuToggle show-in-mobile btn btn-primary ml-3 mt-3">
+    <span class="fa fa-align-justify fa-2x"></span>
+</button>
+<div class="netnrnav horizontal">
+    <div class="netnrnav-wrapper">
+        <ul>
+            <li><a href="/" class="siteIcon"><img src="/favicon.svg" /> 首页</a></li>
+            <li><a href="@(hp+"/image")"><span class="fa fa-fw fa-image"></span> 图片</a></li>
+            <li><a href="@(hp+"/audio")"><span class="fa fa-fw fa-microphone"></span> 声音</a></li>
+            <li><a href="@(hp+"/video")"><span class="fa fa-fw fa-video-camera"></span> 视频</a></li>
+            <li><a href="@(hp+"/top")"><span class="fa fa-fw fa-sort-amount-desc"></span> 排行</a></li>
+        </ul>
+        <ul class="float-right" id="ulogin">
+            <li class="d-none"><a href="@(hp+"/login")">登录 / 注册</a></li>
+            <li class="d-none">
+                <a><span class="fa fa-fw fa-user-circle-o "></span><span class="indicator fa fa-sort-desc"></span></a>
+                <ul>
+                    <li><a href="#" id="aus"><span class="fa fa-fw fa-cog text-primary"></span> 个人设置</a></li>
+                    <li class="divider"></li>
+                    <li><a href="@(hp+"/publish")"><span class="fa fa-fw fa-edit text-warning"></span> 发帖</a></li>
+                    <li class="divider"></li>
+                    <li><a href="@(hp+"/me")"><span class="fa fa-fw fa-user text-info"></span> 我发布的</a></li>
+                    <li><a href="@(hp+"/melaud")"><span class="fa fa-fw fa-thumbs-up text-success"></span> 我点赞的</a></li>
+                    <li><a href="@(hp+"/mereply")"><span class="fa fa-fw fa-commenting-o text-success"></span> 我回复的</a></li>
+                    <li class="divider"></li>
+                    <li><a href="@(hp + "/logout")"><span class="fa fa-fw fa-power-off text-danger"></span> 退出</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="spinner-grow mt-2">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="height:40px"></div>

@@ -1,0 +1,57 @@
+﻿<partial name="_PartialQuote" model="@("the")" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>@ViewData["Title"] 尬服●乐天地</title>
+
+    <partial name="_PartialQuote" model="@("favicon,seo,bootstrap.css,fa.css,jquery.js,bootstrap.js,jz.js,global.css,global.js")" />
+
+</head>
+<body>
+    @{
+        var vrv = ViewContext.RouteData.Values;
+        var action = vrv["action"].ToString().ToLower();
+        string ca = (vrv["controller"].ToString() + "/" + action).ToLower();
+
+        var canav = "account/login,account/register,home/auth,mix/log,mix/logchart,mix/terms".Split(',');
+        var cafooter = "account/login,account/register,home/auth,home/valid,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,admin/index,mix/log,mix/logchart,mix/terms,mix/faq,note/index".Split(',');
+    }
+
+    @if (!canav.Contains(ca))
+    {
+        <partial name="_PartialNav" />
+    }
+
+    @{
+        var csspath = GlobalTo.WebRootPath + "/css/" + action + ".css";
+        if (System.IO.File.Exists(csspath))
+        {
+            <link href="/css/@(action+".css")" rel="stylesheet" asp-append-version="true" />
+        }
+    }
+
+    <div class="min200">
+        @RenderBody()
+    </div>
+
+    @if (!cafooter.Contains(ca))
+    {
+        <partial name="_PartialFooter" />
+    }
+
+    @{
+        var jspath = GlobalTo.WebRootPath + "/js/" + action + ".js";
+        if (System.IO.File.Exists(jspath))
+        {
+            <script src="/js/@(action+".js")" asp-append-version="true"></script>
+        }
+    }
+
+
+</body>
+</html>

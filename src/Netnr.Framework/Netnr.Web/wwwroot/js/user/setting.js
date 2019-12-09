@@ -50,13 +50,14 @@ $('#btnUpdatePwd').click(function () {
                 oldpwd: $('#txtOldPwd').val(),
                 newpwd: $('#txtNewPwd1').val()
             },
+            dataType: 'json',
             success: function (data) {
-                if (data == "success") {
+                if (data.code == 200) {
                     $('#txtOldPwd').val('');
                     $('#txtNewPwd1').val('');
                     $('#txtNewPwd2').val('');
                     jz.alert("操作成功")
-                } else if (data == "bad") {
+                } else if (data.code == 401) {
                     jz.alert("当前密码错误")
                 } else {
                     jz.alert("修改失败")

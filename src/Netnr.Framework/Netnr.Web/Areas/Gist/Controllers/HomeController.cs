@@ -10,17 +10,24 @@ namespace Netnr.Web.Areas.Gist.Controllers
     [Area("Gist")]
     public class HomeController : Controller
     {
-        [Description("Gist首页")]
+        /// <summary>
+        /// Gist首页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View("_PartialMonacoEditor");
         }
 
-        [Description("保存")]
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
-        public IActionResult SaveGist(Domain.Gist mo)
+        public ActionResultVM SaveGist(Domain.Gist mo)
         {
-            string result = "fail";
+            var vm = new ActionResultVM();
 
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
             using (var db = new ContextBase())
@@ -37,11 +44,9 @@ namespace Netnr.Web.Areas.Gist.Controllers
                     mo.GistCode = Core.UniqueTo.LongId().ToString();
                     db.Gist.Add(mo);
                     db.SaveChanges();
-                    result = new
-                    {
-                        code = mo.GistCode,
-                        message = "success"
-                    }.ToJson();
+
+                    vm.data = mo.GistCode;
+                    vm.Set(ARTag.success);
                 }
                 else
                 {
@@ -62,31 +67,23 @@ namespace Netnr.Web.Areas.Gist.Controllers
 
                             db.Gist.Update(oldmo);
                             db.SaveChanges();
-                            result = new
-                            {
-                                code = mo.GistCode,
-                                message = "success"
-                            }.ToJson();
+
+                            vm.data = mo.GistCode;
+                            vm.Set(ARTag.success);
                         }
                         else
                         {
-                            result = new
-                            {
-                                message = "refuse"
-                            }.ToJson();
+                            vm.Set(ARTag.refuse);
                         }
                     }
                     else
                     {
-                        result = new
-                        {
-                            message = "undefined"
-                        }.ToJson();
+                        vm.Set(ARTag.invalid);
                     }
                 }
             }
 
-            return Content(result);
+            return vm;
         }
     }
 }

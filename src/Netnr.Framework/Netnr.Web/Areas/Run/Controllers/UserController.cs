@@ -8,7 +8,12 @@ namespace Netnr.Web.Areas.Run.Controllers
     [Area("Run")]
     public class UserController : Controller
     {
-        [Description("用户")]
+        /// <summary>
+        /// 用户
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public IActionResult Index(string q, int page = 1)
         {
             string id = RouteData.Values["id"]?.ToString();

@@ -10,16 +10,26 @@ using Netnr.Func.ViewModel;
 
 namespace Netnr.Web.Controllers
 {
+    /// <summary>
+    /// 记事本
+    /// </summary>
     public class NoteController : Controller
     {
-        [Description("记事本")]
+        /// <summary>
+        /// 记事本
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Description("查询记事本列表")]
+        /// <summary>
+        /// 查询记事本列表
+        /// </summary>
+        /// <param name="ivm"></param>
+        /// <returns></returns>
         [Authorize]
         public QueryDataOutputVM QueryNoteList(QueryDataInputVM ivm)
         {
@@ -54,7 +64,11 @@ namespace Netnr.Web.Controllers
             return ovm;
         }
 
-        [Description("保存一条记事本")]
+        /// <summary>
+        /// 保存一条记事本
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM SaveNote(Domain.Notepad mo)
         {
@@ -107,7 +121,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("查询一条记事本详情")]
+        /// <summary>
+        /// 查询一条记事本详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM QueryNoteOne(int id)
         {
@@ -136,7 +154,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("删除一条记事本")]
+        /// <summary>
+        /// 删除一条记事本
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM DelNote(int id)
         {

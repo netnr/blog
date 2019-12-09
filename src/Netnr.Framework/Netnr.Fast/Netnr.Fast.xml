@@ -293,6 +293,25 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Netnr.Fast.ParsingTo">
+            <summary>
+            解析
+            </summary>
+        </member>
+        <member name="M:Netnr.Fast.ParsingTo.IsMail(System.String)">
+            <summary>
+            是邮件地址
+            </summary>
+            <param name="txt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.ParsingTo.JsSafeJoin(System.String)">
+            <summary>
+            JS安全拼接
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Fast.QueryableTo">
             <summary>
             查询支持处理
@@ -305,18 +324,6 @@
             <param name="query"></param>
             <param name="sorts">排序字段，支持多个，逗号分割</param>
             <param name="orders">排序类型，支持多个，逗号分割</param>
-        </member>
-        <member name="T:Netnr.Fast.RegexTo">
-            <summary>
-            正则
-            </summary>
-        </member>
-        <member name="M:Netnr.Fast.RegexTo.IsMail(System.String)">
-            <summary>
-            是邮件地址
-            </summary>
-            <param name="txt"></param>
-            <returns></returns>
         </member>
         <member name="T:ActionResultVM">
             <summary>
@@ -397,6 +404,11 @@
             未授权
             </summary>
         </member>
+        <member name="F:ARTag.refuse">
+            <summary>
+            拒绝
+            </summary>
+        </member>
         <member name="F:ARTag.exist">
             <summary>
             存在
@@ -410,6 +422,11 @@
         <member name="F:ARTag.lack">
             <summary>
             缺省
+            </summary>
+        </member>
+        <member name="F:ARTag.exception">
+            <summary>
+            异常
             </summary>
         </member>
         <member name="T:GlobalTo">

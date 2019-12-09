@@ -6,7 +6,12 @@ namespace Netnr.Web.Areas.Draw.Controllers
     [Area("Draw")]
     public class DiscoverController : Controller
     {
-        [Description("Draw列表")]
+        /// <summary>
+        /// Draw列表
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public IActionResult Index(string q, int page = 1)
         {
             var uinfo = new Func.UserAuthAid(HttpContext).Get();

@@ -1,6 +1,6 @@
 ﻿SELECT '{' + '"UserInfo":' +
        (
-           SELECT UserId,
+           SELECT UserId = 0,
                   UserName = 'netnr',
                   UserPwd = SUBSTRING(sys.fn_sqlvarbasetostr(HASHBYTES('MD5', '123456')), 3, 32),
                   UserCreateTime,
@@ -17,17 +17,59 @@
            FOR JSON AUTO
        ) + ',' + '"Tags":' +
        (
-           SELECT * FROM dbo.Tags WHERE TagId IN ( 58, 96 ) FOR JSON AUTO
+           SELECT TagId = 0,
+                  TagName,
+                  TagIcon,
+                  TagStatus,
+                  TagHot
+           FROM dbo.Tags
+           WHERE TagId IN ( 58, 96 )
+           FOR JSON AUTO
        ) + ',' + '"UserWriting":' +
        (
-           SELECT * FROM dbo.UserWriting WHERE UwId = 117 FOR JSON AUTO
+           SELECT UwId = 0,
+                  Uid,
+                  UwCategory,
+                  UwTitle,
+                  UwContent,
+                  UwContentMd,
+                  UwCreateTime,
+                  UwUpdateTime,
+                  UwLastUid,
+                  UwLastDate,
+                  UwReplyNum,
+                  UwReadNum,
+                  UwOpen,
+                  UwLaud,
+                  UwMark,
+                  UwStatus
+           FROM dbo.UserWriting
+           WHERE UwId = 117
+           FOR JSON AUTO
        ) + ',' + '"UserWritingTags":' +
        (
-           SELECT * FROM dbo.UserWritingTags WHERE UwId = 117 FOR JSON AUTO
+           SELECT UwtId = 0,
+                  UwId = 1,
+                  TagId = (RANK() OVER (ORDER BY UwtId DESC)),
+                  TagName
+           FROM dbo.UserWritingTags
+           WHERE UwId = 117
+           FOR JSON AUTO
        ) + ',' + '"UserReply":' +
        (
            SELECT TOP 2
-                  *
+                  UrId = 0,
+                  Uid,
+                  UrAnonymousName,
+                  UrAnonymousLink,
+                  UrAnonymousMail,
+                  UrTargetType,
+                  UrTargetId = 1,
+                  UrContent,
+                  UrContentMd,
+                  UrCreateTime,
+                  UrStatus,
+                  UrTargetPid
            FROM dbo.UserReply
            WHERE UrTargetId = 117
            ORDER BY UrCreateTime

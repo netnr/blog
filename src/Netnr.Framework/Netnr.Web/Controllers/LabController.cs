@@ -8,9 +8,15 @@ using Netnr.Func.ViewModel;
 
 namespace Netnr.Web.Controllers
 {
+    /// <summary>
+    /// 实验室
+    /// </summary>
     public class LabController : Controller
     {
-        [Description("实验室")]
+        /// <summary>
+        /// 实验室
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
@@ -22,21 +28,23 @@ namespace Netnr.Web.Controllers
         string SECRET_KEY = GlobalTo.GetValue("ApiKey:BaiduAip:SECRET_KEY");
         #endregion
 
-        [Description("语音合成页面")]
+        /// <summary>
+        /// 语音合成页面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Speech()
         {
             return View();
         }
 
         /// <summary>
-        /// 语音合成
+        /// 语音合成接口
         /// txt String 合成的文本，使用UTF-8编码，请注意文本长度必须小于1024字节
         /// spd	Int	语速，取值0-9，默认为5中语速
         /// pit Int 音调，取值0-9，默认为5中语调
         /// vol Int 音量，取值0-15，默认为5中音量
         /// per Int 发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
         /// </summary>
-        [Description("语音合成接口")]
         [ResponseCache(Duration = 60)]
         public FileResult SpeechAPI(string txt, int spd = 5, int pit = 5, int vol = 5, int per = 0)
         {
@@ -55,13 +63,21 @@ namespace Netnr.Web.Controllers
             return result.Success ? File(result.Data, "audio/mp3", Math.Abs(txt.GetHashCode()).ToString() + ".mp3") : null;
         }
 
-        [Description("文字识别页面")]
+        /// <summary>
+        /// 文字识别页面
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Ocr()
         {
             return View();
         }
 
-        [Description("文字识别接口")]
+        /// <summary>
+        /// 文字识别接口
+        /// </summary>
+        /// <param name="image_base64">图片base64编码</param>
+        /// <param name="image_url">图片链接</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 60)]
         public ActionResultVM OcrAPI(string image_base64, string image_url)
         {

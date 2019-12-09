@@ -1,0 +1,22 @@
+﻿.upbox div {
+    float: left;
+    margin-right: .5rem;
+    border: 1px solid #ddd;
+}
+
+.upbox img, .upbox i {
+    float: left;
+    height: 36px;
+    cursor: pointer;
+    max-width: 55px;
+    line-height: 36px;
+}
+
+.upbox span {
+    padding: 9px 3px 0;
+}
+
+    .upbox span:hover {
+        color: red;
+        cursor: pointer;
+    }

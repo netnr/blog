@@ -8,7 +8,10 @@ namespace Netnr.Web.Gist.Controllers
     [Area("Gist")]
     public class CodeController : Controller
     {
-        [Description("Gist一条操作")]
+        /// <summary>
+        /// Gist一条操作
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             string id = RouteData.Values["id"]?.ToString();

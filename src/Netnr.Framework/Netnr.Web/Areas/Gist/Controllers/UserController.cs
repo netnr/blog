@@ -8,7 +8,13 @@ namespace Netnr.Web.Areas.Gist.Controllers
     [Area("Gist")]
     public class UserController : Controller
     {
-        [Description("用户")]
+        /// <summary>
+        /// 用户
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="lang"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public IActionResult Index(string q, string lang, int page = 1)
         {
             string id = RouteData.Values["id"]?.ToString();

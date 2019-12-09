@@ -9,7 +9,10 @@ namespace Netnr.Web.Areas.Gist.Controllers
     [Area("Gist")]
     public class RawController : Controller
     {
-        [Description("原始数据")]
+        /// <summary>
+        /// 原始数据
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             string result = string.Empty;

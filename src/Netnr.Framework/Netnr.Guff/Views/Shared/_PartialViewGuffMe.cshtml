@@ -1,0 +1,36 @@
+﻿@model string
+@{
+    var cacheKey = "GlobalKey-HtmlPath";
+
+    //是html路径
+    var ishp = CacheTo.Get(cacheKey) as string == "yes";
+    var hp = ishp ? "" : "/home";
+
+
+    switch (Model)
+    {
+        case "me":
+            ViewData["Title"] = "我的";
+            break;
+        case "melaud":
+            ViewData["Title"] = "我点赞的";
+            break;
+        case "mereply":
+            ViewData["Title"] = "我回复的";
+            break;
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 min200">
+            <div id="boxlist"></div>
+            <div id="boxpaging"></div>
+            <div class="text-center my-3" id="boxloading">
+                <div class="spinner-border"><span class="sr-only">Loading...</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>guff.queryList();</script>

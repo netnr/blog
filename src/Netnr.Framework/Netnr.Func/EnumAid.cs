@@ -13,7 +13,11 @@
             /// <summary>
             /// 文章
             /// </summary>
-            UserWriting
+            UserWriting,
+            /// <summary>
+            /// 尬服
+            /// </summary>
+            GuffRecord
         }
 
         /// <summary>
@@ -24,7 +28,11 @@
             /// <summary>
             /// 文章
             /// </summary>
-            UserWriting
+            UserWriting,
+            /// <summary>
+            /// 尬服
+            /// </summary>
+            GuffRecord
         }
 
         /// <summary>
@@ -35,7 +43,11 @@
             /// <summary>
             /// 文章
             /// </summary>
-            UserWriting
+            UserWriting,
+            /// <summary>
+            /// 尬服
+            /// </summary>
+            GuffRecord
         }
     }
 }

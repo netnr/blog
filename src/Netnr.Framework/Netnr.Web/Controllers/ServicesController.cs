@@ -14,6 +14,7 @@ using System.Threading;
 using Qcloud.Shared.Api;
 using System.ComponentModel;
 using Netnr.Func.ViewModel;
+using Microsoft.AspNetCore.Http;
 
 namespace Netnr.Web.Controllers
 {
@@ -24,7 +25,15 @@ namespace Netnr.Web.Controllers
     {
         #region 微信公众号
 
-        [Description("开发者接管")]
+        /// <summary>
+        /// 开发者接管
+        /// </summary>
+        /// <param name="signature"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="nonce"></param>
+        /// <param name="echostr"></param>
+        /// <param name="encrypt_type"></param>
+        /// <param name="msg_signature"></param>
         public async void WeChat(string signature, string timestamp, string nonce, string echostr, string encrypt_type, string msg_signature)
         {
             string result = string.Empty;
@@ -120,7 +129,6 @@ namespace Netnr.Web.Controllers
             /// </summary>
             /// <param name="message"></param>
             /// <returns>已经打包成xml的用于回复用户的消息包</returns>
-            [Description("处理微信消息")]
             public string Execute(WeChatMessage message)
             {
                 var myDomain = "https://www.netnr.com";//请更改成你的域名
@@ -181,23 +189,35 @@ namespace Netnr.Web.Controllers
 
         #region WebHook
 
-        [Description("WebHook")]
-        public string WebHook()
+        /// <summary>
+        /// WebHook
+        /// </summary>
+        /// <returns></returns>
+        public ActionResultVM WebHook()
         {
-            string result = "Netnr.WebHook";
-            if (Request.Method.ToLower() == "post")
+            var vm = new ActionResultVM();
+
+            try
             {
-                //using (var ms = new MemoryStream())
-                //{
-                //    Request.Body.CopyTo(ms);
-                //    var myByteArray = ms.ToArray();
-                //    string postStr = System.Text.Encoding.UTF8.GetString(myByteArray);
-                //    new WebHookService(postStr);
-                //}
-                //result += " working ^_^";
-                result += " End";
+                if (Request.Method == "POST")
+                {
+                    using var ms = new MemoryStream();
+                    Request.Body.CopyTo(ms);
+                    string postStr = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+
+                    //new WebHookService(postStr);
+
+                    vm.data = postStr;
+                    vm.Set(ARTag.success);
+                }
             }
-            return result;
+            catch (Exception ex)
+            {
+                vm.Set(ex);
+                Core.ConsoleTo.Log(ex);
+            }
+
+            return vm;
         }
 
         public class WebHookService
@@ -309,7 +329,10 @@ namespace Netnr.Web.Controllers
 
         #region 百科字典
 
-        [Description("字典")]
+        /// <summary>
+        /// 字典
+        /// </summary>
+        /// <returns></returns>
         [FilterConfigs.LocalAuth]
         public IActionResult KeyValues()
         {
@@ -476,10 +499,18 @@ namespace Netnr.Web.Controllers
             /// <summary>
             /// 链接替换
             /// </summary>
-            ReplaceLink
+            ReplaceLink,
+            /// <summary>
+            /// 处理操作记录
+            /// </summary>
+            HOR
         }
 
-        [Description("需要处理的事情")]
+        /// <summary>
+        /// 需要处理的事情
+        /// </summary>
+        /// <param name="ti"></param>
+        /// <returns></returns>
         [ResponseCache(Duration = 60)]
         [FilterConfigs.LocalAuth]
         public ActionResultVM ExecTask(TaskItem? ti)
@@ -509,6 +540,10 @@ namespace Netnr.Web.Controllers
 
                     case TaskItem.ReplaceLink:
                         vm = Func.TaskAid.ReplaceLink();
+                        break;
+
+                    case TaskItem.HOR:
+                        vm = Func.TaskAid.HandleOperationRecord();
                         break;
                 }
             }

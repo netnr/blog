@@ -6,7 +6,10 @@ namespace Netnr.Web.Areas.Doc.Controllers
     [Area("Doc")]
     public class HomeController : Controller
     {
-        [Description("Doc首页")]
+        /// <summary>
+        /// Doc首页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();

@@ -132,6 +132,20 @@
             <param name="page">页码</param>
             <returns></returns>
         </member>
+        <member name="M:Netnr.Func.Common.GuffQuery(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Guff查询
+            </summary>
+            <param name="category">类别，可选，支持 text、image、audio、video、me（我的）、melaud（我点赞的）、mereply（我回复的）</param>
+            <param name="q">搜索</param>
+            <param name="nv">分类名/分类值</param>
+            <param name="tag">标签</param>
+            <param name="obj">对象</param>
+            <param name="OwnerId">所属用户</param>
+            <param name="UserId">登录用户</param>
+            <param name="page">页码</param>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Func.EnumAid">
             <summary>
             枚举
@@ -147,6 +161,11 @@
             文章
             </summary>
         </member>
+        <member name="F:Netnr.Func.EnumAid.ReplyType.GuffRecord">
+            <summary>
+            尬服
+            </summary>
+        </member>
         <member name="T:Netnr.Func.EnumAid.MessageType">
             <summary>
             消息分类
@@ -157,6 +176,11 @@
             文章
             </summary>
         </member>
+        <member name="F:Netnr.Func.EnumAid.MessageType.GuffRecord">
+            <summary>
+            尬服
+            </summary>
+        </member>
         <member name="T:Netnr.Func.EnumAid.ConnectionType">
             <summary>
             关联分类
@@ -165,6 +189,11 @@
         <member name="F:Netnr.Func.EnumAid.ConnectionType.UserWriting">
             <summary>
             文章
+            </summary>
+        </member>
+        <member name="F:Netnr.Func.EnumAid.ConnectionType.GuffRecord">
+            <summary>
+            尬服
             </summary>
         </member>
         <member name="T:Netnr.Func.LogsAid">
@@ -345,6 +374,11 @@
             Gist同步任务
             </summary>
         </member>
+        <member name="T:Netnr.Func.TaskAid.TaskComponent.HandleOperationRecordJob">
+            <summary>
+            处理操作记录
+            </summary>
+        </member>
         <member name="M:Netnr.Func.TaskAid.BackupDataBase">
             <summary>
             备份数据库
@@ -363,6 +397,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Netnr.Func.TaskAid.HandleOperationRecord">
+            <summary>
+            处理操作记录
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Func.UserAuthAid">
             <summary>
             用户授权
@@ -378,6 +418,20 @@
             <summary>
             获取授权用户
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Func.UserAuthAid.TokenMake(Netnr.Domain.UserInfo)">
+            <summary>
+            生成Token
+            </summary>
+            <param name="mo">授权用户信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Func.UserAuthAid.TokenValid(System.String)">
+            <summary>
+            验证Token
+            </summary>
+            <param name="token"></param>
             <returns></returns>
         </member>
         <member name="T:Netnr.Func.UserAuthAid.ThirdLogin">

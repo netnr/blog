@@ -1,0 +1,189 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #28a745;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
+.form-control:focus, .custom-select:focus {
+    box-shadow: none;
+}
+
+/*主色*/
+.mc {
+    color: #009a61 !important;
+}
+
+/*logo*/
+.siteIcon * {
+    height: 26px;
+    margin: -2px 2px 0 0;
+}
+
+.min100 {
+    min-height: 100px;
+}
+
+.min200 {
+    min-height: 200px;
+}
+
+/*标签*/
+a.tag {
+    color: #017E66;
+    padding: 0 3px;
+    margin: 0 3px 0;
+    font-weight: 400;
+    border-radius: 4px;
+    display: inline-block;
+    border: 1px solid rgba(1,126,102,0.08);
+    background-color: rgba(1,126,102,0.08);
+}
+
+    a.tag:hover {
+        text-decoration: none;
+        border-color: #017E66;
+        background-color: white;
+    }
+
+    a.tag img {
+        min-width: 18px;
+        max-height: 18px;
+        vertical-align: sub;
+    }
+
+/*返回顶部*/
+.totop {
+    position: fixed;
+    z-index: 2;
+    right: 15px;
+    bottom: 80px;
+    height: 35px;
+    font-size: 3em;
+    padding: 0 8px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #ddd;
+    line-height: 1.42857143;
+    color: #009a61 !important;
+    text-decoration: none !important;
+    background-color: rgba(217, 217, 217, .5);
+    opacity: .4;
+    filter: alpha(opacity=40);
+    font-family: 'Microsoft YaHei';
+}
+
+    .totop:hover {
+        color: white !important;
+        background-color: #009a61;
+    }
+
+/* Bootstrap Trim */
+div.modal-header {
+    padding: 8px 15px 5px;
+}
+
+    div.modal-header button {
+        outline: none;
+    }
+
+    div.modal-header span {
+        line-height: .6;
+        font-size: 1.5em;
+    }
+
+div.modal-footer {
+    padding: 10px 15px;
+}
+
+/* Bootstrap Ext */
+.modal-full {
+    width: auto;
+    margin: 8px 8px 0;
+    max-width: initial;
+}
+
+.modalscroll {
+    overflow-y: auto;
+}
+
+.custom-file-label::after {
+    content: "浏览"
+}
+
+.btn-min, .btn-min button {
+    padding: 0 .5rem;
+}
+
+.mwa-100 * {
+    max-width: 100%;
+}
+
+
+/*回复头像*/
+img.imgup {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    box-shadow: 0 0 1px #777;
+}
+
+/*回复一篇*/
+.uwo-box .uwo-title a {
+    color: #333;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.uwo-box .uwo-content {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.uwo-box * {
+    max-width: 100% !important;
+}
+
+.uwo-box pre {
+    overflow: initial;
+    font-size: inherit;
+    background-color: #f8f8f8;
+}
+
+.uwo-box .uwo-reply .uwo-reply-item {
+    border-bottom: 1px solid #ddd;
+}
+
+    .uwo-box .uwo-reply .uwo-reply-item:first-child {
+        border-top: 1px solid #ddd;
+    }
+
+/*显示部分*/
+.display-section {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 460px;
+    padding: 5px 15px;
+    border: 1px dashed transparent;
+    transition: max-height .5s linear 0.1s;
+}
+
+    .display-section:hover {
+        border-color: #ddd;
+    }

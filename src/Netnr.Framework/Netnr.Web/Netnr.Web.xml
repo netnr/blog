@@ -11,6 +11,98 @@
             <param name="code">分享码</param>
             <returns></returns>
         </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Edit(System.String)">
+            <summary>
+            新增、编辑一条
+            </summary>
+            <param name="dsdid">详情ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Save(Netnr.Domain.DocSetDetail)">
+            <summary>
+            保存
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Del(System.String)">
+            <summary>
+            删除
+            </summary>
+            <param name="dsdid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Catalog">
+            <summary>
+            目录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.SaveCatalog(Netnr.Domain.DocSetDetail)">
+            <summary>
+            保存目录
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.DelCatalog(System.String,System.String)">
+            <summary>
+            删除目录
+            </summary>
+            <param name="code"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.Export">
+            <summary>
+            导出
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.ListTreeEach``1(System.Collections.Generic.List{``0},System.String,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Int32},System.Int32)">
+            <summary>
+            生成Html
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="pidField"></param>
+            <param name="idField"></param>
+            <param name="startPid"></param>
+            <param name="listNo"></param>
+            <param name="deep"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.CodeController.MenuTree">
+            <summary>
+            目录树
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.DiscoverController.Index(System.String,System.Int32)">
+            <summary>
+            项目列表
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.HomeController.Index">
+            <summary>
+            Doc首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.ItemController.Add">
+            <summary>
+            新增项目
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.ItemController.Setting">
+            <summary>
+            修改项目
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Netnr.Web.Areas.Doc.Controllers.ItemController.SaveDocSet(Netnr.Domain.DocSet)">
             <summary>
             保存项目
@@ -18,13 +110,326 @@
             <param name="mo"></param>
             <returns></returns>
         </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.ItemController.Del">
+            <summary>
+            删除项目
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Doc.Controllers.UserController.Index(System.String,System.Int32)">
+            <summary>
+            用户
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Draw.Controllers.CodeController.Index(System.String,System.String,Netnr.Domain.Draw)">
+            <summary>
+            首页
+            </summary>
+            <param name="filename"></param>
+            <param name="xml"></param>
+            <param name="mof"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Draw.Controllers.DiscoverController.Index(System.String,System.Int32)">
+            <summary>
+            Draw列表
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Draw.Controllers.HomeController.Index">
+            <summary>
+            绘制首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Draw.Controllers.MindController.Index">
+            <summary>
+            脑图首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Draw.Controllers.UserController.Index(System.String,System.Int32)">
+            <summary>
+            用户
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Gist.Controllers.DiscoverController.Index(System.String,System.String,System.Int32)">
+            <summary>
+            Gist列表
+            </summary>
+            <param name="q"></param>
+            <param name="lang"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Gist.Controllers.HomeController.Index">
+            <summary>
+            Gist首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Gist.Controllers.HomeController.SaveGist(Netnr.Domain.Gist)">
+            <summary>
+            保存
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Gist.Controllers.RawController.Index">
+            <summary>
+            原始数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Gist.Controllers.UserController.Index(System.String,System.String,System.Int32)">
+            <summary>
+            用户
+            </summary>
+            <param name="q"></param>
+            <param name="lang"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.CodeController.Index(System.String)">
+            <summary>
+            Run一条
+            </summary>
+            <param name="pure"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.DiscoverController.Index(System.String,System.Int32)">
+            <summary>
+            Run列表
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.HomeController.Index">
+            <summary>
+            Run首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.HomeController.Preview">
+            <summary>
+            Run预览
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.HomeController.SaveRun(Netnr.Domain.Run)">
+            <summary>
+            保存
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Areas.Run.Controllers.UserController.Index(System.String,System.Int32)">
+            <summary>
+            用户
+            </summary>
+            <param name="q"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Gist.Controllers.CodeController.Index">
+            <summary>
+            Gist一条操作
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.AccountController">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Register">
+            <summary>
+            注册
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Register(Netnr.Domain.UserInfo,System.String)">
+            <summary>
+            注册提交
+            </summary>
+            <param name="mo">账号、密码</param>
+            <param name="RegisterCode">验证码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.RegisterCode">
+            <summary>
+            注册验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.RegisterUser(Netnr.Domain.UserInfo)">
+            <summary>
+            公共注册
+            </summary>
+            <param name="mo">个人用户信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Login(System.String)">
+            <summary>
+            登录页面
+            </summary>
+            <param name="ReturnUrl">登录跳转链接</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Login(Netnr.Domain.UserInfo,System.Nullable{System.Int32})">
+            <summary>
+            登录验证
+            </summary>
+            <param name="mo">用户信息</param>
+            <param name="remember">记住账号</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.AccountController.ValidateloginType">
+            <summary>
+            第三方登录类型枚举
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.ValidateLogin(Netnr.Web.Controllers.AccountController.ValidateloginType,Netnr.Domain.UserInfo,System.Boolean)">
+            <summary>
+            公共登录验证
+            </summary>
+            <param name="vt">登录类型</param>
+            <param name="mo">用户信息</param>
+            <param name="isremember">记住账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Auth">
+            <summary>
+            第三方登录授权页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.AuthCallback(Netnr.Login.LoginBase.AuthorizeResult)">
+            <summary>
+            登录授权回调
+            </summary>
+            <param name="authorizeResult">获取授权码以及防伪标识</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AccountController.Logout">
+            <summary>
+            注销
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Netnr.Web.Controllers.AccountController.SetAuth(Microsoft.AspNetCore.Http.HttpContext,Netnr.Domain.UserInfo,System.Boolean)">
             <summary>
             写入授权
             </summary>
             <param name="context">当前上下文</param>
-            <param name="user"></param>
-            <param name="isremember"></param>
+            <param name="user">用户信息</param>
+            <param name="isremember">是否记住账号</param>
+        </member>
+        <member name="T:Netnr.Web.Controllers.AdminController">
+            <summary>
+            后台管理
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.Index">
+            <summary>
+            后台管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.Write">
+            <summary>
+            文章管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.QueryWriteList(QueryDataInputVM)">
+            <summary>
+            查询文章列表
+            </summary>
+            <param name="ivm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.WriteAdminSave(Netnr.Domain.UserWriting)">
+            <summary>
+            保存一篇文章（管理）
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.Reply">
+            <summary>
+            回复管理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.QueryReplyList(QueryDataInputVM)">
+            <summary>
+            查询回复列表
+            </summary>
+            <param name="ivm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.ReplyAdminSave(Netnr.Domain.UserReply)">
+            <summary>
+            保存一条回复（管理）
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.Log">
+            <summary>
+            日志页面
+            </summary>
+            <returns></returns>l
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.QueryLog(System.Int32,System.Int32)">
+            <summary>
+            查询日志
+            </summary>
+            <param name="page">页码</param>
+            <param name="rows">行数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.LogChart">
+            <summary>
+            日志图表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.QueryLogReportFlow(System.Nullable{System.Int32})">
+            <summary>
+            查询日志流量
+            </summary>
+            <param name="type">类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.AdminController.QueryLogReportTop(System.Nullable{System.Int32},System.String)">
+            <summary>
+            查询日志Top
+            </summary>
+            <param name="type">类型</param>
+            <param name="field">属性字段</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.APIController">
+            <summary>
+            公共接口
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.APIController.UserInfo">
+            <summary>
+            登录用户个人信息
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Netnr.Web.Controllers.APIController.API81(System.Nullable{System.Int32})">
             <summary>
@@ -40,11 +445,11 @@
             <param name="count">条数，默认10</param>
             <returns></returns>
         </member>
-        <member name="M:Netnr.Web.Controllers.APIController.API98(Microsoft.AspNetCore.Http.IFormCollection,System.String)">
+        <member name="M:Netnr.Web.Controllers.APIController.API98(Microsoft.AspNetCore.Http.IFormFile,System.String)">
             <summary>
             公共上传
             </summary>
-            <param name="form">表单</param>
+            <param name="file">文件</param>
             <param name="cp">可选，自定义路径，如：static/draw</param>
             <returns></returns>
         </member>
@@ -54,14 +459,199 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Netnr.Web.Controllers.GuffController">
+            <summary>
+            尬服 guff.ltd 提供所有接口支持
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.List(System.String,System.String,System.Int32,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            列表
+            </summary>
+            <param name="category">类别，可选，支持 text、image、audio、video、me（我的）、melaud（我点赞的）、mereply（我回复的）</param>
+            <param name="q">搜索</param>
+            <param name="uid">用户ID</param>
+            <param name="nv">分类名/分类值</param>
+            <param name="tag">标签</param>
+            <param name="obj">对象</param>
+            <param name="page">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.Detail(System.String)">
+            <summary>
+            查询一条
+            </summary>
+            <param name="id">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.Add(Netnr.Domain.GuffRecord)">
+            <summary>
+            新增
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.Update(Netnr.Domain.GuffRecord)">
+            <summary>
+            修改
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.Connection(System.String,System.Int32,System.String)">
+            <summary>
+            连接：点赞、收藏 
+            </summary>
+            <param name="type">add添加，cancel取消</param>
+            <param name="ac">1点赞，2收藏</param>
+            <param name="id">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.ReplyAdd(Netnr.Domain.UserReply,System.String)">
+            <summary>
+            添加回复
+            </summary>
+            <param name="mo">内容，仅限内容字段必填，支持匿名回复</param>
+            <param name="id">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.ReplyList(System.String,System.Int32)">
+            <summary>
+            回复列表
+            </summary>
+            <param name="id"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.Delete(System.String)">
+            <summary>
+            删除一条
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.GuffController.HotTag">
+            <summary>
+            热门标签
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.HomeController">
             <summary>
             主体
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Index(System.String,System.Int32)">
+            <summary>
+            首页
+            </summary>
+            <param name="k">搜索</param>
+            <param name="page">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Type(System.String,System.Int32)">
+            <summary>
+            标签分类
+            </summary>
+            <param name="k">搜索</param>
+            <param name="page">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Tags">
+            <summary>
+            标签
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Write">
+            <summary>
+            写
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.TagSelectSearch(System.String)">
+            <summary>
+            搜索标签
+            </summary>
+            <param name="keys">搜索内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.WriteSave(Netnr.Domain.UserWriting,System.String)">
+            <summary>
+            保存文章
+            </summary>
+            <param name="mo">文章信息</param>
+            <param name="TagIds">标签，多个逗号分割</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.List(System.Int32)">
+            <summary>
+            一篇
+            </summary>
+            <param name="page">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.LsitReplySave(Netnr.Domain.UserReply,Netnr.Domain.UserMessage)">
+            <summary>
+            回复
+            </summary>
+            <param name="mo">回复信息</param>
+            <param name="um">消息通知</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.ListUserConn(System.Int32)">
+            <summary>
+            点赞收藏
+            </summary>
+            <param name="a">动作</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.ListReadPlus">
+            <summary>
+            阅读追加
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Auth(System.String,System.String)">
+            <summary>
+            授权访问
+            </summary>
+            <param name="returnUrl">跳转链接</param>
+            <param name="sk">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Valid">
+            <summary>
+            请先验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.HomeController.Error(System.String)">
+            <summary>
+            全局错误页面
+            </summary>
+            <param name="msg">错误消息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.LabController">
+            <summary>
+            实验室
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.LabController.Index">
+            <summary>
+            实验室
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.LabController.Speech">
+            <summary>
+            语音合成页面
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Netnr.Web.Controllers.LabController.SpeechAPI(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            语音合成
+            语音合成接口
             txt String 合成的文本，使用UTF-8编码，请注意文本长度必须小于1024字节
             spd	Int	语速，取值0-9，默认为5中语速
             pit Int 音调，取值0-9，默认为5中语调
@@ -69,15 +659,103 @@
             per Int 发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.LabController.Ocr">
+            <summary>
+            文字识别页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.LabController.OcrAPI(System.String,System.String)">
+            <summary>
+            文字识别接口
+            </summary>
+            <param name="image_base64">图片base64编码</param>
+            <param name="image_url">图片链接</param>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.MixController">
             <summary>
             混合、综合、其它
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.MixController.About">
+            <summary>
+            关于页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.MixController.AboutServerStatus">
+            <summary>
+            服务器状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.MixController.Terms">
+            <summary>
+            条款
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.MixController.FAQ">
+            <summary>
+            FAQ
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.NoteController">
+            <summary>
+            记事本
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.NoteController.Index">
+            <summary>
+            记事本
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.NoteController.QueryNoteList(QueryDataInputVM)">
+            <summary>
+            查询记事本列表
+            </summary>
+            <param name="ivm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.NoteController.SaveNote(Netnr.Domain.Notepad)">
+            <summary>
+            保存一条记事本
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.NoteController.QueryNoteOne(System.Int32)">
+            <summary>
+            查询一条记事本详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.NoteController.DelNote(System.Int32)">
+            <summary>
+            删除一条记事本
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.ServicesController">
             <summary>
             服务、对接
             </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.WeChat(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            开发者接管
+            </summary>
+            <param name="signature"></param>
+            <param name="timestamp"></param>
+            <param name="nonce"></param>
+            <param name="echostr"></param>
+            <param name="encrypt_type"></param>
+            <param name="msg_signature"></param>
         </member>
         <member name="M:Netnr.Web.Controllers.ServicesController.WeChatExecutor.Execute(Netnr.WeChat.WeChatMessage)">
             <summary>
@@ -85,6 +763,12 @@
             </summary>
             <param name="message"></param>
             <returns>已经打包成xml的用于回复用户的消息包</returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.WebHook">
+            <summary>
+            WebHook
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Netnr.Web.Controllers.ServicesController.WebHookService.JoPush">
             <summary>
@@ -132,6 +816,12 @@
             命令
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.KeyValues">
+            <summary>
+            字典
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.ServicesController.TaskItem">
             <summary>
             任务项
@@ -152,15 +842,62 @@
             链接替换
             </summary>
         </member>
+        <member name="F:Netnr.Web.Controllers.ServicesController.TaskItem.HOR">
+            <summary>
+            处理操作记录
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.ServicesController.ExecTask(System.Nullable{Netnr.Web.Controllers.ServicesController.TaskItem})">
+            <summary>
+            需要处理的事情
+            </summary>
+            <param name="ti"></param>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.StoreController">
             <summary>
             存储
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.Index">
+            <summary>
+            存储首页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QQCos">
+            <summary>
+            QQ对象存储
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.StoreController.AccessCOS">
             <summary>
             秘钥
             </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QQSign(System.String,System.String)">
+            <summary>
+            签名
+            </summary>
+            <param name="bucket">桶名</param>
+            <param name="path">路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QQSignature(System.String)">
+            <summary>
+            多次有效签名
+            </summary>
+            <param name="bucket">桶名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QQSignatureOnce(System.String,System.String)">
+            <summary>
+            单次有效签名
+            </summary>
+            <param name="bucket">桶名</param>
+            <param name="path">路径</param>
+            <returns></returns>
         </member>
         <member name="M:Netnr.Web.Controllers.StoreController.QQAPI(System.String,System.String)">
             <summary>
@@ -175,10 +912,183 @@
             秘钥
             </summary>
         </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.NENos">
+            <summary>
+            NOS 对象存储
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.NEAPI">
+            <summary>
+            NEAPI
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QNKodo">
+            <summary>
+            Qiniu对象存储
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QNToken(System.String)">
+            <summary>
+            获取Token
+            </summary>
+            <param name="type">命令类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.QNAPI">
+            <summary>
+            Qiniu API
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.StoreController.UPUss">
+            <summary>
+            Upyun云存储
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.TestController">
+            <summary>
+            测试
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.TestController.Index">
+            <summary>
+            起始页
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Web.Controllers.UController">
             <summary>
             用户主页
             </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UController.Index">
+            <summary>
+            我的主页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Web.Controllers.UserController">
+            <summary>
+            个人用户
+            </summary>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.Message(System.Int32)">
+            <summary>
+            消息
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.DelMessage">
+            <summary>
+            删除消息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.Id">
+            <summary>
+            我的主页
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.UpdateUserSay(Netnr.Domain.UserInfo)">
+            <summary>
+            更新说说
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.UpdateUserPhoto(System.String,System.String)">
+            <summary>
+            更新头像
+            </summary>
+            <param name="type"></param>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.Setting">
+            <summary>
+            个人设置页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.SaveUserInfo(Netnr.Domain.UserInfo)">
+            <summary>
+            保存个人信息
+            </summary>
+            <param name="mo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.OAuth">
+            <summary>
+            绑定账号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.RidOAuth">
+            <summary>
+            解绑账号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.UpdatePassword(System.String,System.String)">
+            <summary>
+            更新密码
+            </summary>
+            <param name="oldpwd"></param>
+            <param name="newpwd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.Write(System.Nullable{System.Int32})">
+            <summary>
+            文章管理
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.WriteList(System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            文章列表
+            </summary>
+            <param name="sort"></param>
+            <param name="order"></param>
+            <param name="page"></param>
+            <param name="rows"></param>
+            <param name="pe1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.WriteOne(System.Int32)">
+            <summary>
+            获取一篇文章
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.WriteEditSave(Netnr.Domain.UserWriting,System.Int32,System.String)">
+            <summary>
+            保存一篇文章（编辑）
+            </summary>
+            <param name="mo"></param>
+            <param name="UwId"></param>
+            <param name="TagIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.WriteDel(System.Int32)">
+            <summary>
+            删除 一篇文章
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Web.Controllers.UserController.Verify">
+            <summary>
+            验证
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Netnr.Web.Filters.FilterConfigs">
             <summary>
@@ -188,6 +1098,11 @@
         <member name="T:Netnr.Web.Filters.FilterConfigs.ErrorActionFilter">
             <summary>
             全局错误处理
+            </summary>
+        </member>
+        <member name="P:Netnr.Web.Filters.FilterConfigs.DicDescription">
+            <summary>
+            根据生成的注释文件XML获取Action的注释
             </summary>
         </member>
         <member name="T:Netnr.Web.Filters.FilterConfigs.GlobalFilter">
@@ -200,14 +1115,24 @@
             需要授权访问
             </summary>
         </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.AllowCors">
+            <summary>
+            允许跨域
+            </summary>
+        </member>
         <member name="T:Netnr.Web.Filters.FilterConfigs.IsAdmin">
             <summary>
             是管理员
             </summary>
         </member>
-        <member name="T:Netnr.Web.Filters.FilterConfigs.IsValid">
+        <member name="T:Netnr.Web.Filters.FilterConfigs.IsValidMail">
             <summary>
             有效验证（邮箱）
+            </summary>
+        </member>
+        <member name="T:Netnr.Web.Filters.FilterConfigs.IsValidAuth">
+            <summary>
+            有效授权（Cookie、Token）
             </summary>
         </member>
         <member name="T:Netnr.Web.Filters.FilterConfigs.LocalAuth">

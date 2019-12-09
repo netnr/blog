@@ -9,6 +9,13 @@ namespace Netnr.Web.Areas.Draw.Controllers
     [Area("Draw")]
     public class CodeController : Controller
     {
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="xml"></param>
+        /// <param name="mof"></param>
+        /// <returns></returns>
         public IActionResult Index(string filename, string xml, Domain.Draw mof)
         {
             var id = RouteData.Values["id"]?.ToString();
@@ -175,7 +182,8 @@ namespace Netnr.Web.Areas.Draw.Controllers
             //删除
             else if (id == "del")
             {
-                var result = "fail";
+                var vm = new ActionResultVM();
+
                 if (User.Identity.IsAuthenticated)
                 {
                     using var db = new Data.ContextBase();
@@ -184,25 +192,26 @@ namespace Netnr.Web.Areas.Draw.Controllers
                     {
                         db.Remove(mo);
                         int num = db.SaveChanges();
-                        result = num > 0 ? "success" : "fail";
+
+                        vm.Set(num > 0);
                     }
                     else
                     {
-                        result = "unauthorized";
+                        vm.Set(ARTag.unauthorized);
                     }
                 }
                 else
                 {
-                    result = "unauthorized";
+                    vm.Set(ARTag.unauthorized);
                 }
 
-                if (result == "success")
+                if (vm.code == 200)
                 {
                     return Redirect("/draw/discover");
                 }
                 else
                 {
-                    return Content(result);
+                    return Content(vm.ToJson());
                 }
             }
             //插入图片
@@ -212,7 +221,7 @@ namespace Netnr.Web.Areas.Draw.Controllers
                 var msg = "fail";
                 var url = "";
 
-                var vm = new Web.Controllers.APIController().API98(Request.Form, GlobalTo.GetValue("StaticResource:DrawPath"));
+                var vm = new Web.Controllers.APIController().API98(Request.Form.Files[0], GlobalTo.GetValue("StaticResource:DrawPath"));
 
                 if (vm.code == 200)
                 {

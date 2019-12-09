@@ -121,7 +121,11 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return View(vm);
         }
 
-        [Description("新增、编辑一条")]
+        /// <summary>
+        /// 新增、编辑一条
+        /// </summary>
+        /// <param name="dsdid">详情ID</param>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Edit(string dsdid)
         {
@@ -152,7 +156,11 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return View(mo);
         }
 
-        [Description("保存")]
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM Save(DocSetDetail mo)
         {
@@ -207,7 +215,11 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return vm;
         }
 
-        [Description("删除")]
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="dsdid"></param>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Del(string dsdid)
         {
@@ -233,7 +245,10 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return Redirect("/doc/code/" + code);
         }
 
-        [Description("目录")]
+        /// <summary>
+        /// 目录
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Catalog()
         {
@@ -253,17 +268,24 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return View();
         }
 
-        [Description("保存目录")]
+        /// <summary>
+        /// 保存目录
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
-        public string SaveCatalog(DocSetDetail mo)
+        public ActionResultVM SaveCatalog(DocSetDetail mo)
         {
+            var vm = new ActionResultVM();
+
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
             using var db = new ContextBase();
             var ds = db.DocSet.Find(mo.DsCode);
             if (ds?.Uid != uinfo.UserId)
             {
-                return "unauthorized";
+                vm.Set(ARTag.unauthorized);
+                return vm;
             }
 
             mo.DsdOrder ??= 99;
@@ -292,21 +314,30 @@ namespace Netnr.Web.Areas.Doc.Controllers
                 db.DocSetDetail.Update(currmo);
             }
             int num = db.SaveChanges();
+            vm.Set(num > 0);
 
-            return num > 0 ? "success" : "fail";
+            return vm;
         }
 
-        [Description("删除目录")]
+        /// <summary>
+        /// 删除目录
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
-        public string DelCatalog(string code, string id)
+        public ActionResultVM DelCatalog(string code, string id)
         {
+            var vm = new ActionResultVM();
+
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
             using var db = new ContextBase();
             var ds = db.DocSet.Find(code);
             if (ds?.Uid != uinfo.UserId)
             {
-                return "unauthorized";
+                vm.Set(ARTag.unauthorized);
+                return vm;
             }
 
             var listdsd = db.DocSetDetail.Where(x => x.DsCode == code && string.IsNullOrEmpty(x.DsdContentMd)).ToList();
@@ -314,12 +345,15 @@ namespace Netnr.Web.Areas.Doc.Controllers
             removelist.Add(listdsd.Where(x => x.DsdId == id).FirstOrDefault());
             db.DocSetDetail.RemoveRange(removelist);
 
-            db.SaveChanges();
+            int num = db.SaveChanges();
+            vm.Set(num > 0);
 
-            return "success";
+            return vm;
         }
 
-        [Description("导出")]
+        /// <summary>
+        /// 导出
+        /// </summary>
         public void Export()
         {
             var code = RouteData.Values["id"]?.ToString();
@@ -346,6 +380,17 @@ namespace Netnr.Web.Areas.Doc.Controllers
             new Fast.DownTo(Response).Stream(Encoding.Default.GetBytes(tm), filename + ".doc");
         }
 
+        /// <summary>
+        /// 生成Html
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="pidField"></param>
+        /// <param name="idField"></param>
+        /// <param name="startPid"></param>
+        /// <param name="listNo"></param>
+        /// <param name="deep"></param>
+        /// <returns></returns>
         private string ListTreeEach<T>(List<T> list, string pidField, string idField, List<string> startPid, List<int> listNo = null, int deep = 1)
         {
             StringBuilder sbTree = new StringBuilder();
@@ -412,29 +457,47 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return sbTree.ToString();
         }
 
-        [Description("目录树")]
+        /// <summary>
+        /// 目录树
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        public string MenuTree()
+        public ActionResultVM MenuTree()
         {
-            var code = RouteData.Values["id"]?.ToString();
+            var vm = new ActionResultVM();
 
-            using var db = new ContextBase();
-            var list = db.DocSetDetail.Where(x => x.DsCode == code).OrderBy(x => x.DsdOrder).Select(x => new
+            try
             {
-                x.DsdId,
-                x.DsdPid,
-                x.DsdTitle,
-                x.DsdOrder,
-                IsCatalog = string.IsNullOrEmpty(x.DsdContentMd)
-            }).ToList();
+                var code = RouteData.Values["id"]?.ToString();
 
-            var listtree = Core.TreeTo.ListToTree(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
-            if (string.IsNullOrWhiteSpace(listtree))
-            {
-                listtree = "[]";
+                using var db = new ContextBase();
+                var list = db.DocSetDetail.Where(x => x.DsCode == code).OrderBy(x => x.DsdOrder).Select(x => new
+                {
+                    x.DsdId,
+                    x.DsdPid,
+                    x.DsdTitle,
+                    x.DsdOrder,
+                    IsCatalog = string.IsNullOrEmpty(x.DsdContentMd)
+                }).ToList();
+
+                var listtree = Core.TreeTo.ListToTree(list, "DsdPid", "DsdId", new List<string> { Guid.Empty.ToString() });
+                if (string.IsNullOrWhiteSpace(listtree))
+                {
+                    vm.Set(ARTag.lack);
+                }
+                else
+                {
+                    vm.data = listtree.ToJArray();
+                    vm.Set(ARTag.success);
+                }
             }
-            return listtree;
-        }
+            catch (Exception ex)
+            {
+                vm.Set(ex);
+                Core.ConsoleTo.Log(ex);
+            }
 
+            return vm;
+        }
     }
 }

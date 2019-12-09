@@ -17,14 +17,21 @@ namespace Netnr.Web.Controllers
     /// </summary>
     public class StoreController : Controller
     {
-        [Description("存储首页")]
+        /// <summary>
+        /// 存储首页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return Redirect("/store/qnkodo");
         }
 
         #region QQ对象存储
-        [Description("QQ对象存储")]
+
+        /// <summary>
+        /// QQ对象存储
+        /// </summary>
+        /// <returns></returns>
         [FilterConfigs.LocalAuth]
         public IActionResult QQCos()
         {
@@ -42,7 +49,13 @@ namespace Netnr.Web.Controllers
         }
 
         #region 签名
-        [Description("签名")]
+
+        /// <summary>
+        /// 签名
+        /// </summary>
+        /// <param name="bucket">桶名</param>
+        /// <param name="path">路径</param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         [ResponseCache(Duration = 10)]
         public string QQSign(string bucket, string path = "")
@@ -55,7 +68,11 @@ namespace Netnr.Web.Controllers
             return dic.ToJson();
         }
 
-        [Description("多次有效签名")]
+        /// <summary>
+        /// 多次有效签名
+        /// </summary>
+        /// <param name="bucket">桶名</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 60)]
         public string QQSignature(string bucket)
         {
@@ -64,7 +81,12 @@ namespace Netnr.Web.Controllers
             return result;
         }
 
-        [Description("单次有效签名")]
+        /// <summary>
+        /// 单次有效签名
+        /// </summary>
+        /// <param name="bucket">桶名</param>
+        /// <param name="path">路径</param>
+        /// <returns></returns>
         public string QQSignatureOnce(string bucket, string path)
         {
             string result = Sign.SignatureOnce(AccessCOS.APPID, AccessCOS.SecretId, AccessCOS.SecretKey, path, bucket);
@@ -78,7 +100,6 @@ namespace Netnr.Web.Controllers
         /// <param name="bucket">桶</param>
         /// <param name="path">文件（夹）路径</param>
         /// <returns></returns>
-        [Description("QCloud COS API")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string QQAPI(string bucket, string path)
@@ -256,9 +277,11 @@ namespace Netnr.Web.Controllers
 
             return result;
         }
+
         #endregion
 
         #region 163yun.com NOS 对象存储
+
         /// <summary>
         /// 秘钥
         /// </summary>
@@ -269,14 +292,20 @@ namespace Netnr.Web.Controllers
             public static string EndPoint => GlobalTo.GetValue("ApiKey:AccessNOS:endpoint");
         }
 
-        [Description("NOS 对象存储")]
+        /// <summary>
+        /// NOS 对象存储
+        /// </summary>
+        /// <returns></returns>
         [FilterConfigs.LocalAuth]
         public IActionResult NENos()
         {
             return View();
         }
 
-        [Description("NEAPI")]
+        /// <summary>
+        /// NEAPI
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string NEAPI()
@@ -354,10 +383,15 @@ namespace Netnr.Web.Controllers
 
             return result;
         }
+
         #endregion
 
         #region Qiniu对象存储
-        [Description("Qiniu对象存储")]
+
+        /// <summary>
+        /// Qiniu对象存储
+        /// </summary>
+        /// <returns></returns>
         [FilterConfigs.LocalAuth]
         public IActionResult QNKodo()
         {
@@ -377,7 +411,11 @@ namespace Netnr.Web.Controllers
             public static string SK => GlobalTo.GetValue("ApiKey:AccessQN:SK");
         }
 
-        [Description("获取Token")]
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="type">命令类型</param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         public IActionResult QNToken(string type)
         {
@@ -401,7 +439,10 @@ namespace Netnr.Web.Controllers
             return Content(result);
         }
 
-        [Description("Qiniu API")]
+        /// <summary>
+        /// Qiniu API
+        /// </summary>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         public IActionResult QNAPI()
         {
@@ -476,14 +517,20 @@ namespace Netnr.Web.Controllers
 
             return Content(result);
         }
+
         #endregion
 
         #region Upyun云存储
-        [Description("Upyun云存储")]
+
+        /// <summary>
+        /// Upyun云存储
+        /// </summary>
+        /// <returns></returns>
         public IActionResult UPUss()
         {
             return View();
         }
+
         #endregion
 
     }

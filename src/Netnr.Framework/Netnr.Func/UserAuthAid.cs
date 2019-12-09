@@ -29,16 +29,80 @@ namespace Netnr.Func
         {
             var user = context.User;
 
-            var usermo = new Domain.UserInfo
+            if (user.Identity.IsAuthenticated)
             {
-                UserId = Convert.ToInt32(user.FindFirst(ClaimTypes.PrimarySid)?.Value),
-                UserName = user.FindFirst(ClaimTypes.Name)?.Value,
-                Nickname = user.FindFirst(ClaimTypes.GivenName)?.Value,
-                UserSign = user.FindFirst(ClaimTypes.Sid)?.Value,
-                UserPhoto = user.FindFirst(ClaimTypes.UserData)?.Value
-            };
+                return new Domain.UserInfo
+                {
+                    UserId = Convert.ToInt32(user.FindFirst(ClaimTypes.PrimarySid)?.Value),
+                    UserName = user.FindFirst(ClaimTypes.Name)?.Value,
+                    Nickname = user.FindFirst(ClaimTypes.GivenName)?.Value,
+                    UserSign = user.FindFirst(ClaimTypes.Sid)?.Value,
+                    UserPhoto = user.FindFirst(ClaimTypes.UserData)?.Value
+                };
+            }
+            else
+            {
+                var token = context.Request.Query["token"].ToString();
+                var mo = TokenValid(token);
+                if (mo == null)
+                {
+                    mo = new Domain.UserInfo();
+                }
+                return mo;
+            }
+        }
 
-            return usermo;
+        /// <summary>
+        /// 生成Token
+        /// </summary>
+        /// <param name="mo">授权用户信息</param>
+        /// <returns></returns>
+        public static string TokenMake(Domain.UserInfo mo)
+        {
+            var key = GlobalTo.GetValue("VerifyCode:Key");
+
+            var token = Core.CalcTo.EnDES(new
+            {
+                mo = new
+                {
+                    mo.UserId,
+                    mo.UserName,
+                    mo.Nickname,
+                    mo.UserSign,
+                    mo.UserPhoto
+                },
+                expired = DateTime.Now.AddDays(10).ToTimestamp()
+            }.ToJson(), key);
+
+            return token;
+        }
+
+        /// <summary>
+        /// 验证Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public static Domain.UserInfo TokenValid(string token)
+        {
+            Domain.UserInfo mo = null;
+
+            try
+            {
+                var key = GlobalTo.GetValue("VerifyCode:Key");
+
+                var jo = Core.CalcTo.DeDES(token, key).ToJObject();
+
+                if (DateTime.Now.ToTimestamp() < long.Parse(jo["expired"].ToString()))
+                {
+                    mo = jo["mo"].ToString().ToEntity<Domain.UserInfo>();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return mo;
         }
 
         /// <summary>

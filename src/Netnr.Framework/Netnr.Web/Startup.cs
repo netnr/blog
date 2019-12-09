@@ -89,17 +89,6 @@ namespace Netnr.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //跨域，用法：[EnableCors("any")]
-            services.AddCors(options =>
-            {
-                options.AddPolicy("any", builder =>
-                {
-                    builder.AllowAnyOrigin() //允许任何来源的主机访问
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
-            });
-
             services.AddControllersWithViews(options =>
             {
                 //注册全局错误过滤器
@@ -131,7 +120,7 @@ namespace Netnr.Web
 
                 "Web,Func,Fast".Split(',').ToList().ForEach(x =>
                 {
-                    c.IncludeXmlComments(System.AppContext.BaseDirectory + "Netnr." + x + ".xml");
+                    c.IncludeXmlComments(System.AppContext.BaseDirectory + "Netnr." + x + ".xml", true);
                 });
             });
 
@@ -141,6 +130,8 @@ namespace Netnr.Web
             //授权访问信息
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
+                //允许其他站点携带授权Cookie访问，会出现伪造
+                options.Cookie.SameSite = SameSiteMode.None;
                 options.LoginPath = "/account/login";
             });
 
@@ -153,8 +144,7 @@ namespace Netnr.Web
             //配置上传文件大小限制（详细信息：FormOptions）
             services.Configure<FormOptions>(options =>
             {
-                options.ValueLengthLimit = GlobalTo.GetValue<int>("StaticResource:MaxSize") * 1024 * 1024;
-                options.MultipartBodyLengthLimit = options.ValueLengthLimit;
+                options.MultipartBodyLengthLimit = GlobalTo.GetValue<int>("StaticResource:MaxSize") * 1024 * 1024;
             });
         }
 
@@ -200,9 +190,6 @@ namespace Netnr.Web
             //授权访问
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //跨域
-            app.UseCors("any");
 
             //session
             app.UseSession();

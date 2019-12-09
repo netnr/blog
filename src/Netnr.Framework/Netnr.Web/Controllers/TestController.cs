@@ -8,21 +8,31 @@ using System.Diagnostics;
 
 namespace Netnr.Web.Controllers
 {
+    /// <summary>
+    /// 测试
+    /// </summary>
     public class TestController : Controller
     {
-        public IActionResult Index()
+        /// <summary>
+        /// 起始页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResultVM Index()
         {
-            var result = string.Empty;
+            var vm = new ActionResultVM();
 
             try
             {
+                //TO DO
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                vm.Set(ex);
+                Core.ConsoleTo.Log(ex, true);
             }
 
-            return Content(result);
+            return vm;
         }
     }
 }

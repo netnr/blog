@@ -6,7 +6,12 @@ namespace Netnr.Web.Areas.Doc.Controllers
     [Area("Doc")]
     public class DiscoverController : Controller
     {
-        [Description("项目列表")]
+        /// <summary>
+        /// 项目列表
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [ResponseCache(Duration = 10)]
         public IActionResult Index(string q, int page = 1)
         {

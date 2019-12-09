@@ -17,10 +17,18 @@ using System.Threading.Tasks;
 
 namespace Netnr.Web.Controllers
 {
+    /// <summary>
+    /// 个人用户
+    /// </summary>
     public class UserController : Controller
     {
         #region 消息
-        [Description("消息")]
+
+        /// <summary>
+        /// 消息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [Authorize]
         [ResponseCache(Duration = 5)]
         public IActionResult Message(int page = 1)
@@ -45,7 +53,10 @@ namespace Netnr.Web.Controllers
             return View(vm);
         }
 
-        [Description("删除消息")]
+        /// <summary>
+        /// 删除消息
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult DelMessage()
         {
@@ -84,10 +95,15 @@ namespace Netnr.Web.Controllers
                 return Content(vm.ToJson());
             }
         }
+
         #endregion
 
         #region 主页
-        [Description("我的主页")]
+
+        /// <summary>
+        /// 我的主页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Id()
         {
             if (int.TryParse(RouteData.Values["id"]?.ToString(), out int uid))
@@ -103,7 +119,11 @@ namespace Netnr.Web.Controllers
             return Content("Invalid");
         }
 
-        [Description("更新说说")]
+        /// <summary>
+        /// 更新说说
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM UpdateUserSay(Domain.UserInfo mo)
         {
@@ -124,7 +144,12 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("更新头像")]
+        /// <summary>
+        /// 更新头像
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="source"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM UpdateUserPhoto(string type, string source)
         {
@@ -214,7 +239,11 @@ namespace Netnr.Web.Controllers
         #endregion
 
         #region 个人设置
-        [Description("个人设置页面")]
+
+        /// <summary>
+        /// 个人设置页面
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Setting()
         {
@@ -227,7 +256,11 @@ namespace Netnr.Web.Controllers
             };
         }
 
-        [Description("保存个人信息")]
+        /// <summary>
+        /// 保存个人信息
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM SaveUserInfo(Domain.UserInfo mo)
         {
@@ -264,7 +297,7 @@ namespace Netnr.Web.Controllers
                     //邮箱正则验证
                     if (!string.IsNullOrWhiteSpace(mo.UserMail))
                     {
-                        if (!Fast.RegexTo.IsMail(mo.UserMail))
+                        if (!Fast.ParsingTo.IsMail(mo.UserMail))
                         {
                             vm.Set(ARTag.invalid);
                             vm.msg = "邮箱格式有误";
@@ -304,7 +337,10 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("绑定账号")]
+        /// <summary>
+        /// 绑定账号
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult OAuth()
         {
@@ -313,7 +349,10 @@ namespace Netnr.Web.Controllers
             return Redirect(url);
         }
 
-        [Description("解绑账号")]
+        /// <summary>
+        /// 解绑账号
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult RidOAuth()
         {
@@ -351,10 +390,17 @@ namespace Netnr.Web.Controllers
             return Redirect("/user/setting");
         }
 
-        [Description("更新密码")]
+        /// <summary>
+        /// 更新密码
+        /// </summary>
+        /// <param name="oldpwd"></param>
+        /// <param name="newpwd"></param>
+        /// <returns></returns>
         [Authorize]
-        public string UpdatePassword(string oldpwd, string newpwd)
+        public ActionResultVM UpdatePassword(string oldpwd, string newpwd)
         {
+            var vm = new ActionResultVM();
+
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {
@@ -364,18 +410,27 @@ namespace Netnr.Web.Controllers
                     userinfo.UserPwd = Core.CalcTo.MD5(newpwd);
                     db.UserInfo.Update(userinfo);
                     var num = db.SaveChanges();
-                    return num > 0 ? "success" : "fail";
+
+                    vm.Set(num > 0);
                 }
                 else
                 {
-                    return "bad";
+                    vm.Set(ARTag.unauthorized);
                 }
             };
+
+            return vm;
         }
+
         #endregion
 
         #region 文章管理
-        [Description("文章管理")]
+
+        /// <summary>
+        /// 文章管理
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Write(int? page)
         {
@@ -399,7 +454,15 @@ namespace Netnr.Web.Controllers
             return View();
         }
 
-        [Description("文章列表")]
+        /// <summary>
+        /// 文章列表
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="order"></param>
+        /// <param name="page"></param>
+        /// <param name="rows"></param>
+        /// <param name="pe1"></param>
+        /// <returns></returns>
         [Authorize]
         public string WriteList(string sort, string order, int page = 1, int rows = 30, string pe1 = null)
         {
@@ -450,26 +513,40 @@ namespace Netnr.Web.Controllers
             return result;
         }
 
-        [Description("获取一篇文章")]
+        /// <summary>
+        /// 获取一篇文章
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
-        public string WriteOne(int id)
+        public ActionResultVM WriteOne(int id)
         {
-            string result = string.Empty;
+            var vm = new ActionResultVM();
+
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {
                 var mo = db.UserWriting.Where(x => x.Uid == uid && x.UwId == id).FirstOrDefault();
                 var listTags = db.UserWritingTags.Where(x => x.UwId == id).ToList();
-                result = new
+
+                vm.data = new
                 {
                     item = mo,
                     tags = listTags
-                }.ToJson();
+                };
+                vm.Set(ARTag.success);
             }
-            return result;
+
+            return vm;
         }
 
-        [Description("保存一篇文章（编辑）")]
+        /// <summary>
+        /// 保存一篇文章（编辑）
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <param name="UwId"></param>
+        /// <param name="TagIds"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM WriteEditSave(Domain.UserWriting mo, int UwId, string TagIds)
         {
@@ -525,7 +602,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("删除 一篇文章")]
+        /// <summary>
+        /// 删除 一篇文章
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM WriteDel(int id)
         {
@@ -553,10 +634,15 @@ namespace Netnr.Web.Controllers
 
             return vm;
         }
+
         #endregion
 
         #region 验证
-        [Description("验证")]
+
+        /// <summary>
+        /// 验证
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Verify()
         {
             var vm = new ActionResultVM();
@@ -594,28 +680,36 @@ namespace Netnr.Web.Controllers
                                     }
                                     else
                                     {
-                                        //发送验证
-
-                                        var ToMail = usermo.UserMail;
-
-                                        var vjson = new
+                                        var tml = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/lib/mailchecker/", "list.txt");
+                                        if (tml.Contains(usermo.UserMail.Split('@').LastOrDefault()))
                                         {
-                                            mail = ToMail,
-                                            ts = DateTime.Now.ToTimestamp()
-                                        }.ToJson();
-                                        var vcode = Core.CalcTo.EnDES(vjson, GlobalTo.GetValue("VerifyCode:Key")).ToLower();
-
-                                        var VerifyLink = string.Format(GlobalTo.GetValue("VerifyCode:Url"), vcode);
-
-                                        var txt = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/template/", "sendmailverify.html");
-                                        txt = txt.Replace("@ToMail@", ToMail).Replace("@VerifyLink@", VerifyLink);
-
-                                        vm = Func.MailAid.Send(ToMail, "[Netnr] 验证你的邮箱", txt);
-
-                                        if (vm.code == 200)
+                                            vm.msg = "该邮箱已被屏蔽";
+                                        }
+                                        else
                                         {
-                                            vm.msg = "已发送成功";
-                                            Core.CacheTo.Set(cacheKey, true, 60, false);
+                                            //发送验证
+
+                                            var ToMail = usermo.UserMail;
+
+                                            var vjson = new
+                                            {
+                                                mail = ToMail,
+                                                ts = DateTime.Now.ToTimestamp()
+                                            }.ToJson();
+                                            var vcode = Core.CalcTo.EnDES(vjson, GlobalTo.GetValue("VerifyCode:Key")).ToLower();
+
+                                            var VerifyLink = string.Format(GlobalTo.GetValue("VerifyCode:Url"), vcode);
+
+                                            var txt = Core.FileTo.ReadText(GlobalTo.WebRootPath + "/template/", "sendmailverify.html");
+                                            txt = txt.Replace("@ToMail@", ToMail).Replace("@VerifyLink@", VerifyLink);
+
+                                            vm = Func.MailAid.Send(ToMail, "[Netnr] 验证你的邮箱", txt);
+
+                                            if (vm.code == 200)
+                                            {
+                                                vm.msg = "已发送成功";
+                                                Core.CacheTo.Set(cacheKey, true, 60, false);
+                                            }
                                         }
                                     }
                                 }
@@ -689,6 +783,7 @@ namespace Netnr.Web.Controllers
 
             return View(vm);
         }
+
         #endregion
     }
 }

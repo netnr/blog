@@ -95,7 +95,12 @@ div.modal-header {
     padding: 8px 15px 5px;
 }
 
+    div.modal-header button {
+        outline: none;
+    }
+
     div.modal-header span {
+        line-height: .6;
         font-size: 1.5em;
     }
 

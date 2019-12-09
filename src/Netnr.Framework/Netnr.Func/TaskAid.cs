@@ -33,6 +33,8 @@ namespace Netnr.Func
                     Schedule<BackupDataBaseJob>().ToRunEvery(2).Days().At(5, 5);
 
                     Schedule<GistSyncJob>().ToRunEvery(2).Hours();
+
+                    Schedule<HandleOperationRecordJob>().ToRunEvery(30).Minutes();
                 }
             }
 
@@ -59,6 +61,17 @@ namespace Netnr.Func
                 }
             }
 
+            /// <summary>
+            /// 处理操作记录
+            /// </summary>
+            public class HandleOperationRecordJob : IJob
+            {
+
+                void IJob.Execute()
+                {
+                    Core.ConsoleTo.Log(HandleOperationRecord().ToJson());
+                }
+            }
         }
 
         /// <summary>
@@ -381,6 +394,54 @@ namespace Netnr.Func
 
                 vm.Set(ARTag.success);
                 vm.data = "受影响行数：" + num;
+            }
+            catch (Exception ex)
+            {
+                vm.Set(ex);
+            }
+
+            return vm;
+        }
+
+        /// <summary>
+        /// 处理操作记录
+        /// </summary>
+        /// <returns></returns>
+        public static ActionResultVM HandleOperationRecord()
+        {
+            var vm = new ActionResultVM();
+
+            try
+            {
+
+                using var db = new ContextBase();
+
+                //处理Guff查询记录数
+                var ctype = EnumAid.ConnectionType.GuffRecord.ToString();
+                var listOr = db.OperationRecord.Where(x => x.OrType == ctype && x.OrMark == "default").ToList();
+                if (listOr.Count > 0)
+                {
+                    var listAllId = string.Join(",", listOr.Select(x => x.OrSource).ToList()).Split(',').ToList();
+                    var listid = listAllId.Distinct();
+
+                    var listmo = db.GuffRecord.Where(x => listid.Contains(x.GrId)).ToList();
+                    foreach (var item in listmo)
+                    {
+                        item.GrReadNum += listAllId.GroupBy(x => x).FirstOrDefault(x => x.Key == item.GrId).Count();
+                    }
+                    db.GuffRecord.UpdateRange(listmo);
+
+                    db.OperationRecord.RemoveRange(listOr);
+
+                    int num = db.SaveChanges();
+
+                    vm.Set(num > 0);
+                    vm.data = "受影响行数：" + num;
+                }
+                else
+                {
+                    vm.Set(ARTag.lack);
+                }
             }
             catch (Exception ex)
             {

@@ -13,7 +13,10 @@ namespace Netnr.Web.Controllers
     /// </summary>
     public class UController : Controller
     {
-        [Description("我的主页")]
+        /// <summary>
+        /// 我的主页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var un = RouteData.Values["id"]?.ToString();

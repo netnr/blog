@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
+using System.Xml;
 
 namespace Netnr.Web.Filters
 {
@@ -29,6 +30,9 @@ namespace Netnr.Web.Filters
 
         private static Dictionary<string, string> _dicDescription;
 
+        /// <summary>
+        /// 根据生成的注释文件XML获取Action的注释
+        /// </summary>
         public static Dictionary<string, string> DicDescription
         {
             get
@@ -37,6 +41,17 @@ namespace Netnr.Web.Filters
                 {
                     var ass = System.Reflection.Assembly.GetExecutingAssembly();
                     var listController = ass.ExportedTypes.Where(x => x.BaseType.FullName == "Microsoft.AspNetCore.Mvc.Controller").ToList();
+
+                    //载入xml注释
+                    var cp = AppContext.BaseDirectory + ass.FullName.Split(',').FirstOrDefault() + ".xml";
+                    XmlDocument xmldoc = new XmlDocument();
+                    xmldoc.Load(cp);
+                    var xns = xmldoc.DocumentElement.SelectSingleNode("members").SelectNodes("member");
+                    var listMember = new List<XmlNode>();
+                    for (int i = 0; i < xns.Count; i++)
+                    {
+                        listMember.Add(xns[i]);
+                    }
 
                     var dic = new Dictionary<string, string>();
                     foreach (var conll in listController)
@@ -48,11 +63,26 @@ namespace Netnr.Web.Filters
                             {
                                 string remark = "未备注说明";
 
-                                var desc = item.CustomAttributes.Where(x => x.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault();
-                                if (desc != null)
+                                //方法完整命名空间及名称
+                                var cname = "M:" + conll.FullName + "." + item.Name;
+                                //方法参数
+                                var cparam = item.GetParameters();
+                                if (cparam.Length > 0)
                                 {
-                                    remark = desc.ConstructorArguments.FirstOrDefault().Value.ToString();
+                                    var listParam = new List<string>();
+                                    foreach (var par in cparam)
+                                    {
+                                        listParam.Add(par.ParameterType.FullName);
+                                    }
+                                    cname += "(" + string.Join(",", listParam) + ")";
                                 }
+
+                                var xnm = listMember.FirstOrDefault(x => x.Attributes["name"].Value.ToString() == cname);
+                                if (xnm != null)
+                                {
+                                    remark = xnm.SelectSingleNode("summary").InnerText.ToString().Trim();
+                                }
+
                                 var action = (conll.Name.Replace("Controller", "/") + item.Name).ToLower();
                                 if (!dic.ContainsKey(action))
                                 {
@@ -147,6 +177,51 @@ namespace Netnr.Web.Filters
         }
 
         /// <summary>
+        /// 允许跨域
+        /// </summary>
+        public class AllowCors : Attribute, IActionFilter
+        {
+            public void OnActionExecuted(ActionExecutedContext context)
+            {
+
+            }
+
+            public void OnActionExecuting(ActionExecutingContext context)
+            {
+                var res = context.HttpContext.Response;
+
+                var origin = context.HttpContext.Request.Headers["Origin"].ToString();
+
+                var dicAk = new Dictionary<string, string>
+                {
+                    { "Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS" },
+                    { "Access-Control-Allow-Headers", "Accept, Authorization, Cache-Control, Content-Type, DNT, If-Modified-Since, Keep-Alive, Origin, User-Agent, X-Requested-With, Token, x-access-token" }
+                };
+
+                if (string.IsNullOrWhiteSpace(origin))
+                {
+                    dicAk.Add("Access-Control-Allow-Origin", "*");
+                }
+                else
+                {
+                    dicAk.Add("Access-Control-Allow-Origin", origin);
+                    dicAk.Add("Access-Control-Allow-Credentials", "true");
+                }
+
+                foreach (var ak in dicAk.Keys)
+                {
+                    res.Headers.Remove(ak);
+                    res.Headers.Add(ak, dicAk[ak]);
+                }
+
+                if (context.HttpContext.Request.Method == "OPTIONS")
+                {
+                    context.Result = new OkResult();
+                }
+            }
+        }
+
+        /// <summary>
         /// 是管理员
         /// </summary>
         public class IsAdmin : Attribute, IActionFilter
@@ -180,7 +255,7 @@ namespace Netnr.Web.Filters
         /// <summary>
         /// 有效验证（邮箱）
         /// </summary>
-        public class IsValid : Attribute, IActionFilter
+        public class IsValidMail : Attribute, IActionFilter
         {
             public void OnActionExecuted(ActionExecutedContext context)
             {
@@ -208,6 +283,31 @@ namespace Netnr.Web.Filters
                 {
                     var url = "/home/valid";
                     context.Result = new RedirectResult(url);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 有效授权（Cookie、Token）
+        /// </summary>
+        public class IsValidAuth : Attribute, IActionFilter
+        {
+            public void OnActionExecuted(ActionExecutedContext context)
+            {
+
+            }
+
+            public void OnActionExecuting(ActionExecutingContext context)
+            {
+                var mo = new Func.UserAuthAid(context.HttpContext).Get();
+
+                if (mo.UserId == 0)
+                {
+                    context.Result = new ContentResult()
+                    {
+                        Content = "unauthorized",
+                        StatusCode = 401
+                    };
                 }
             }
         }

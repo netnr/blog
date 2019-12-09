@@ -1,0 +1,25 @@
+@{
+    var cacheKey = "GlobalKey-HtmlPath";
+
+    //是html路径
+    var ishp = CacheTo.Get(cacheKey) as string == "yes";
+    var hp = ishp ? "" : "/home";
+}
+
+<div class="border-top mt-5">
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h5 class="text-muted">链接</h5>
+                <a class="mr-2 text-nowrap" href="https://www.netnr.com">NET牛人</a>
+                <a class="mr-2 text-nowrap" target="_blank" href="https://ss.netnr.com/contact" title="联系打赏">联系</a>
+                <a class="mr-2 text-nowrap" target="_blank" href="https://www.netnr.com/swagger">API</a>
+            </div>
+        </div>
+        <div class="my-3 small text-muted">
+            <span class="mr-2">&copy; Guff @DateTime.Now.Year</span>
+            <a class="mr-2 text-nowrap" href="https://www.netnr.com/mix/terms">Terms</a>
+            <a class="mr-2 text-nowrap" href="@(hp+"/faq")">FAQ</a>
+        </div>
+    </div>
+</div>

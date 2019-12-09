@@ -67,20 +67,24 @@ $('#btnEdit').click(function () {
             url: "/user/writeone?id=" + rowData.UwId,
             dataType: 'json',
             success: function (data) {
-                var tags = data.tags, data = data.item;
-                $('#btnSaveEdit').attr('data-id', data.UwId);
-                $('#wtitle').val(data.UwTitle);
-                $('#wcategory').val(data.UwCategory);
-                $('#tags').val(data.tags);
-                nmd.setmd(data.UwContentMd);
-                nmd.render();
+                if (data.code == 200) {
+                    var tags = data.data.tags, data = data.data.item;
+                    $('#btnSaveEdit').attr('data-id', data.UwId);
+                    $('#wtitle').val(data.UwTitle);
+                    $('#wcategory').val(data.UwCategory);
+                    $('#tags').val(data.tags);
+                    nmd.setmd(data.UwContentMd);
+                    nmd.render();
 
-                TagsClear();
-                $(tags).each(function () {
-                    TagsAdd(this.TagId, this.TagName)
-                });
+                    TagsClear();
+                    $(tags).each(function () {
+                        TagsAdd(this.TagId, this.TagName)
+                    });
 
-                $('#ModalWrite').modal();
+                    $('#ModalWrite').modal();
+                } else {
+                    jz.msg("获取文章出错");
+                }
             },
             error: function () {
                 jz.msg("网络错误");

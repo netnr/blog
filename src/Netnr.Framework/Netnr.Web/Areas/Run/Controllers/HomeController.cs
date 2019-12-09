@@ -10,23 +10,33 @@ namespace Netnr.Web.Areas.Run.Controllers
     [Area("Run")]
     public class HomeController : Controller
     {
-        [Description("Run首页")]
+        /// <summary>
+        /// Run首页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View("_PartialMonacoEditor");
         }
 
-        [Description("Run预览")]
+        /// <summary>
+        /// Run预览
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Preview()
         {
             return View();
         }
 
-        [Description("保存")]
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="mo"></param>
+        /// <returns></returns>
         [Authorize]
-        public IActionResult SaveRun(Domain.Run mo)
+        public ActionResultVM SaveRun(Domain.Run mo)
         {
-            string result = "fail";
+            var vm = new ActionResultVM();
 
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
@@ -43,13 +53,10 @@ namespace Netnr.Web.Areas.Run.Controllers
 
                     mo.RunCode = Core.UniqueTo.LongId().ToString();
                     db.Run.Add(mo);
-                    db.SaveChanges();
+                    int num = db.SaveChanges();
 
-                    result = new
-                    {
-                        code = mo.RunCode,
-                        message = "success"
-                    }.ToJson();
+                    vm.data = mo.RunCode;
+                    vm.Set(num > 0);
                 }
                 else
                 {
@@ -66,33 +73,24 @@ namespace Netnr.Web.Areas.Run.Controllers
                             oldmo.RunTheme = mo.RunTheme;
 
                             db.Run.Update(oldmo);
-                            db.SaveChanges();
+                            int num = db.SaveChanges();
 
-                            result = new
-                            {
-                                code = mo.RunCode,
-                                message = "success"
-                            }.ToJson();
+                            vm.data = mo.RunCode;
+                            vm.Set(num > 0);
                         }
                         else
                         {
-                            result = new
-                            {
-                                message = "refuse"
-                            }.ToJson();
+                            vm.Set(ARTag.refuse);
                         }
                     }
                     else
                     {
-                        result = new
-                        {
-                            message = "undefined"
-                        }.ToJson();
+                        vm.Set(ARTag.invalid);
                     }
                 }
             }
 
-            return Content(result);
+            return vm;
         }
     }
 }

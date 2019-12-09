@@ -110,6 +110,10 @@ public enum ARTag
     /// </summary>
     unauthorized = 401,
     /// <summary>
+    /// 拒绝
+    /// </summary>
+    refuse = 403,
+    /// <summary>
     /// 存在
     /// </summary>
     exist = 97,
@@ -120,5 +124,9 @@ public enum ARTag
     /// <summary>
     /// 缺省
     /// </summary>
-    lack = 94
+    lack = 94,
+    /// <summary>
+    /// 异常
+    /// </summary>
+    exception = -1
 }

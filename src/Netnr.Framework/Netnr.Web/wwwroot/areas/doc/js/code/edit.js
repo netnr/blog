@@ -18,6 +18,15 @@ function loadMenuTree() {
         url: "/doc/code/menutree/" + $('#DsCode').val(),
         dataType: 'json',
         success: function (data) {
+            if (data.code == 200) {
+                data = data.data;
+            } else if (data.code == 94) {
+                data = [];
+            } else {
+                jz.msg('fail');
+                return false;
+            }
+
             var tree = (function (json, deep, ptitle) {
                 var arr = [], deep = deep || 0, ptitle = ptitle || [];
                 for (var i = 0; i < json.length; i++) {

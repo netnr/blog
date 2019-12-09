@@ -10,15 +10,21 @@ namespace Netnr.Web.Areas.Doc.Controllers
     [Area("Doc")]
     public class ItemController : Controller
     {
-        [Description("新增项目")]
+        /// <summary>
+        /// 新增项目
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        [Filters.FilterConfigs.IsValid]
+        [Filters.FilterConfigs.IsValidMail]
         public IActionResult Add()
         {
             return View("_PartialItemForm");
         }
 
-        [Description("修改项目")]
+        /// <summary>
+        /// 修改项目
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Setting()
         {
@@ -84,7 +90,10 @@ namespace Netnr.Web.Areas.Doc.Controllers
             return vm;
         }
 
-        [Description("删除项目")]
+        /// <summary>
+        /// 删除项目
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Del()
         {

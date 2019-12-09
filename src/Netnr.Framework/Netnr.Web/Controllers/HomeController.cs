@@ -19,7 +19,12 @@ namespace Netnr.Web.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        [Description("首页")]
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <param name="k">搜索</param>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 5)]
         public IActionResult Index(string k, int page = 1)
         {
@@ -29,7 +34,12 @@ namespace Netnr.Web.Controllers
             return View("_PartialViewWriting", vm);
         }
 
-        [Description("标签分类")]
+        /// <summary>
+        /// 标签分类
+        /// </summary>
+        /// <param name="k">搜索</param>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 5)]
         public IActionResult Type(string k, int page = 1)
         {
@@ -47,7 +57,10 @@ namespace Netnr.Web.Controllers
             }
         }
 
-        [Description("标签")]
+        /// <summary>
+        /// 标签
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Tags()
         {
             var tags = Func.Common.TagsQuery().Select(x => new
@@ -61,15 +74,22 @@ namespace Netnr.Web.Controllers
             return View();
         }
 
-        [Description("写")]
+        /// <summary>
+        /// 写
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        [FilterConfigs.IsValid]
+        [FilterConfigs.IsValidMail]
         public IActionResult Write()
         {
             return View();
         }
 
-        [Description("搜索标签")]
+        /// <summary>
+        /// 搜索标签
+        /// </summary>
+        /// <param name="keys">搜索内容</param>
+        /// <returns></returns>
         public string TagSelectSearch(string keys)
         {
             var list = new List<Tags>();
@@ -81,7 +101,12 @@ namespace Netnr.Web.Controllers
             return list.ToJson();
         }
 
-        [Description("保存文章")]
+        /// <summary>
+        /// 保存文章
+        /// </summary>
+        /// <param name="mo">文章信息</param>
+        /// <param name="TagIds">标签，多个逗号分割</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM WriteSave(UserWriting mo, string TagIds)
         {
@@ -144,13 +169,18 @@ namespace Netnr.Web.Controllers
 
                 int num = db.SaveChanges();
 
+                vm.data = mo.UwId;
                 vm.Set(num > 0);
             }
 
             return vm;
         }
 
-        [Description("一篇")]
+        /// <summary>
+        /// 一篇
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 5)]
         public IActionResult List(int page = 1)
         {
@@ -195,7 +225,12 @@ namespace Netnr.Web.Controllers
             }
         }
 
-        [Description("回复")]
+        /// <summary>
+        /// 回复
+        /// </summary>
+        /// <param name="mo">回复信息</param>
+        /// <param name="um">消息通知</param>
+        /// <returns></returns>
         public ActionResultVM LsitReplySave(UserReply mo, UserMessage um)
         {
             var vm = new ActionResultVM();
@@ -230,6 +265,8 @@ namespace Netnr.Web.Controllers
                 mo.UrTargetPid = 0;
                 mo.UrTargetType = Func.EnumAid.ReplyType.UserWriting.ToString();
 
+                mo.UrAnonymousLink = Fast.ParsingTo.JsSafeJoin(mo.UrAnonymousLink);
+
                 db.UserReply.Add(mo);
 
                 //回填文章最新回复记录
@@ -258,7 +295,11 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("点赞收藏")]
+        /// <summary>
+        /// 点赞收藏
+        /// </summary>
+        /// <param name="a">动作</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResultVM ListUserConn(int a)
         {
@@ -321,7 +362,9 @@ namespace Netnr.Web.Controllers
             return vm;
         }
 
-        [Description("阅读追加")]
+        /// <summary>
+        /// 阅读追加
+        /// </summary>
         public void ListReadPlus()
         {
             int wid = Convert.ToInt32(RouteData.Values["id"]?.ToString());
@@ -335,7 +378,12 @@ namespace Netnr.Web.Controllers
             }
         }
 
-        [Description("授权访问")]
+        /// <summary>
+        /// 授权访问
+        /// </summary>
+        /// <param name="returnUrl">跳转链接</param>
+        /// <param name="sk">密钥</param>
+        /// <returns></returns>
         public IActionResult Auth(string returnUrl, string sk)
         {
             if (!string.IsNullOrWhiteSpace(sk))
@@ -357,13 +405,20 @@ namespace Netnr.Web.Controllers
             return View();
         }
 
-        [Description("请先验证")]
+        /// <summary>
+        /// 请先验证
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Valid()
         {
             return View();
         }
 
-        [Description("全局错误页面")]
+        /// <summary>
+        /// 全局错误页面
+        /// </summary>
+        /// <param name="msg">错误消息</param>
+        /// <returns></returns>
         public IActionResult Error(string msg)
         {
             TempData["msg"] = msg;

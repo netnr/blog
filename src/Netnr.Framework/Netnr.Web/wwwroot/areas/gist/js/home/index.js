@@ -82,9 +82,9 @@ function SaveGist(type, that) {
         type: "post",
         dataType: 'json',
         success: function (data) {
-            if (data.message == "success") {
+            if (data.code == 200) {
                 location.href = "/gist/code/" + data.code;
-            } else if (data.message == "refuse") {
+            } else if (data.code == 403) {
                 alert("It's not belongs to you");
             } else {
                 alert('fail');

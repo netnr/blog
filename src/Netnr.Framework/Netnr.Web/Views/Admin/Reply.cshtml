@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "回复管理";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="input-group input-group-sm">
+                <input class="form-control" type="text" id="txtSearch" placeholder=" Search , Enter" />
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-info" id="btnSearch">搜索</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div id="PGrid1">
+                <div id="Grid1" class="loadingimg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_PartialQuote" model="@("easyui.css,easyui.js")" />
+
+<script src="/js/admin/reply.js" asp-append-version="true"></script>

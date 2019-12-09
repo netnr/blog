@@ -4,6 +4,15 @@ function loadCatalog() {
         url: "/doc/code/menutree/" + $('#DsCode').val(),
         dataType: 'json',
         success: function (data) {
+            if (data.code == 200) {
+                data = data.data;
+            } else if (data.code == 94) {
+                data = [];
+            } else {
+                jz.msg('fail');
+                return false;
+            }
+
             var tree = (function (json, deep, ptitle, ptree) {
                 var arr = [], deep = deep || 0, ptitle = ptitle || [], ptree = ptree || [];
                 for (var i = 0; i < json.length; i++) {
@@ -61,6 +70,16 @@ function loadMenuTree() {
         url: "/doc/code/menutree/" + $('#DsCode').val(),
         dataType: 'json',
         success: function (data) {
+            console.log(data);
+            if (data.code == 200) {
+                data = data.data;
+            } else if (data.code == 94) {
+                data = [];
+            } else {
+                jz.msg('fail');
+                return false;
+            }
+
             MenuTree = (function (json, deep, ptitle, ptree) {
                 var arr = [], deep = deep || 0, ptitle = ptitle || [], ptree = ptree || [];
                 for (var i = 0; i < json.length; i++) {
@@ -197,8 +216,9 @@ $('#tlist').click(function (e) {
                             data: {
                                 code: $('#DsCode').val()
                             },
+                            dataType: 'json',
                             success: function (data) {
-                                if (data == "success") {
+                                if (data.code == 200) {
                                     jz.msg("操作成功");
                                     loadCatalog();
                                     loadMenuTree();
@@ -220,13 +240,14 @@ $('#btnSave_1').click(function () {
         $.ajax({
             url: "/doc/code/SaveCatalog",
             data: $('#mbform').serialize(),
+            dataType: 'json',
             success: function (data) {
-                if (data == "success") {
+                if (data.code == 200) {
                     $('#myModal_1').modal('hide');
                     loadCatalog();
                     loadMenuTree();
                 } else {
-                    jz.alert(data)
+                    jz.alert(data.msg)
                 }
             }
         })

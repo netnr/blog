@@ -1,13 +1,13 @@
 ﻿{
   "UserInfo": [
     {
-      "UserId": 1,
+      "UserId": 0,
       "UserName": "netnr",
       "UserPwd": "e10adc3949ba59abbe56e057f20f883e",
       "UserCreateTime": "2015-05-18T17:25:49",
-      "UserLoginTime": "2019-10-30T19:22:15.137",
+      "UserLoginTime": "2019-11-23T05:24:28.267",
       "LoginLimit": 0,
-      "UserSign": "1572434535",
+      "UserSign": "1574457868",
       "Nickname": "netnr",
       "UserPhoto": "5431600270384321483.jpg?1565354419",
       "UserSex": 1,
@@ -17,14 +17,14 @@
   ],
   "Tags": [
     {
-      "TagId": 96,
+      "TagId": 0,
       "TagName": "browser",
       "TagIcon": "browser.svg",
       "TagStatus": 1,
       "TagHot": 0
     },
     {
-      "TagId": 58,
+      "TagId": 0,
       "TagName": "https",
       "TagIcon": "https.svg",
       "TagStatus": 1,
@@ -33,7 +33,7 @@
   ],
   "UserWriting": [
     {
-      "UwId": 117,
+      "UwId": 0,
       "Uid": 1,
       "UwCategory": 0,
       "UwTitle": "删除Chrome和Firefox的HSTS，不再强制跳转HTTPS",
@@ -44,7 +44,7 @@
       "UwLastUid": 1,
       "UwLastDate": "2019-05-05T17:26:09.867",
       "UwReplyNum": 1,
-      "UwReadNum": 191,
+      "UwReadNum": 229,
       "UwOpen": 1,
       "UwLaud": 0,
       "UwMark": 0,
@@ -53,27 +53,27 @@
   ],
   "UserWritingTags": [
     {
-      "UwtId": 535,
-      "UwId": 117,
-      "TagId": 58,
-      "TagName": "https"
+      "UwtId": 0,
+      "UwId": 1,
+      "TagId": 1,
+      "TagName": "browser"
     },
     {
-      "UwtId": 536,
-      "UwId": 117,
-      "TagId": 96,
-      "TagName": "browser"
+      "UwtId": 0,
+      "UwId": 1,
+      "TagId": 2,
+      "TagName": "https"
     }
   ],
   "UserReply": [
     {
-      "UrId": 59,
+      "UrId": 0,
       "Uid": 0,
       "UrAnonymousName": "netnr",
       "UrAnonymousLink": "https:\/\/zme.ink",
       "UrAnonymousMail": "netnr@netnr.com",
       "UrTargetType": "UserWriting",
-      "UrTargetId": "117",
+      "UrTargetId": 1,
       "UrContent": "<p>不用登录，支持匿名留言啦<\/p>\n",
       "UrContentMd": "不用登录，支持匿名留言啦",
       "UrCreateTime": "2019-06-27T17:19:04.130",
@@ -172,16 +172,16 @@
   ],
   "DocSetDetail": [
     {
-      "DsdId": "5107490705099038924",
+      "DsdId": "5759987597722086789",
       "DsdPid": "00000000-0000-0000-0000-000000000000",
       "Uid": 1,
       "DsCode": "4840050256984581805",
-      "DsdTitle": "item",
-      "DsdContentMd": "-  项目表，储存项目信息\n\n|字段|类型|空|默认|注释|\n|:----|:-------|:---|----|------|\n|item_id\t  |int(10)     |否\t|\t |\t 项目id、自增id          |\n|item_name |varchar(50) |否\t|    |\t 项目名\t|\n|item_description |varchar(225) |否   |    |\t 项目描述\t\t |\n|uid     |int(10) |是   |    |    创建人uid     |\n|username |varchar(50)     |否   |   |   创建人用户名  |\n|password |varchar(50)     |否   |   |   项目密码。可为空。空表示可以公开访问的项目  |\n|addtime |int(11)     |否   |   |   项目添加的时间，时间戳  |\n|last_update_time |int(11)     |否   |   |   项目最后更新时间，时间戳  |\n- 备注：无",
-      "DsdContentHtml": "<ul>\n<li>项目表，储存项目信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">item_id<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目id、自增id<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_name<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目名<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_description<\/td><td style=\"text-align:left\">varchar(225)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目描述<\/td><\/tr>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>创建人uid<\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>创建人用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目密码。可为空。空表示可以公开访问的项目<\/td><\/tr>\n<tr><td style=\"text-align:left\">addtime<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目添加的时间，时间戳<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_update_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目最后更新时间，时间戳<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
-      "DsdCreateTime": "2019-01-16T16:08:34",
-      "DsdUpdateTime": "2019-01-16T16:08:34",
-      "DsdOrder": 2
+      "DsdTitle": "user",
+      "DsdContentMd": "-  用户表，储存用户信息\n\n|字段|类型|空|默认|注释|\n|:----    |:-------    |:--- |----|------      |\n|uid\t  |int(10)     |否\t|\t |\t           |\n|username |varchar(20) |否\t|    |\t 用户名\t|\n|groupid  |tinyint(2)   |否\t|  2  |\t 1为管理员，2为普通用户。此字段保留方便以后扩展\t|\n|password |varchar(50) |否   |    |\t 密码\t\t |\n|cookie_token |varchar(50) |否   |    |\t  |\n|cookie_token_expire |int(11) |否   |    |\t 过期时间\t\t |\n|avatar |varchar(200) |是   |    |\t 头像\t\t |\n|avatar_small |varchar(200) |是   |    |\t 小头像\t |\n|email |varchar(50) |否   |    |\t 邮箱\t\t |\n|name     |varchar(15) |是   |    |    昵称     |\n|reg_time |int(11)     |否   | 0  |   注册时间  |\n|last_login_time |int(11)     |否   | 0  |   最后一次登录时间  |\n\n- 备注：无",
+      "DsdContentHtml": "<ul>\n<li>用户表，储存用户信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(20)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">groupid<\/td><td style=\"text-align:left\">tinyint(2)<\/td><td style=\"text-align:left\">否<\/td><td>2<\/td><td>1为管理员，2为普通用户。此字段保留方便以后扩展<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token_expire<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>过期时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar_small<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>小头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">email<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>邮箱<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:left\">varchar(15)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>昵称<\/td><\/tr>\n<tr><td style=\"text-align:left\">reg_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>注册时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_login_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>最后一次登录时间<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T16:09:12",
+      "DsdUpdateTime": "2019-01-16T16:09:12",
+      "DsdOrder": 3
     },
     {
       "DsdId": "5749984065357804376",
@@ -196,51 +196,37 @@
       "DsdOrder": 1
     },
     {
-      "DsdId": "5759987597722086789",
+      "DsdId": "5107490705099038924",
       "DsdPid": "00000000-0000-0000-0000-000000000000",
       "Uid": 1,
       "DsCode": "4840050256984581805",
-      "DsdTitle": "user",
-      "DsdContentMd": "-  用户表，储存用户信息\n\n|字段|类型|空|默认|注释|\n|:----    |:-------    |:--- |----|------      |\n|uid\t  |int(10)     |否\t|\t |\t           |\n|username |varchar(20) |否\t|    |\t 用户名\t|\n|groupid  |tinyint(2)   |否\t|  2  |\t 1为管理员，2为普通用户。此字段保留方便以后扩展\t|\n|password |varchar(50) |否   |    |\t 密码\t\t |\n|cookie_token |varchar(50) |否   |    |\t  |\n|cookie_token_expire |int(11) |否   |    |\t 过期时间\t\t |\n|avatar |varchar(200) |是   |    |\t 头像\t\t |\n|avatar_small |varchar(200) |是   |    |\t 小头像\t |\n|email |varchar(50) |否   |    |\t 邮箱\t\t |\n|name     |varchar(15) |是   |    |    昵称     |\n|reg_time |int(11)     |否   | 0  |   注册时间  |\n|last_login_time |int(11)     |否   | 0  |   最后一次登录时间  |\n\n- 备注：无",
-      "DsdContentHtml": "<ul>\n<li>用户表，储存用户信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(20)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">groupid<\/td><td style=\"text-align:left\">tinyint(2)<\/td><td style=\"text-align:left\">否<\/td><td>2<\/td><td>1为管理员，2为普通用户。此字段保留方便以后扩展<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td><\/td><\/tr>\n<tr><td style=\"text-align:left\">cookie_token_expire<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>过期时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">avatar_small<\/td><td style=\"text-align:left\">varchar(200)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>小头像<\/td><\/tr>\n<tr><td style=\"text-align:left\">email<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>邮箱<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:left\">varchar(15)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>昵称<\/td><\/tr>\n<tr><td style=\"text-align:left\">reg_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>注册时间<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_login_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td>0<\/td><td>最后一次登录时间<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
-      "DsdCreateTime": "2019-01-16T16:09:12",
-      "DsdUpdateTime": "2019-01-16T16:09:12",
-      "DsdOrder": 3
-    },
-    {
-      "DsdId": "4984161198208022738",
-      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
-      "Uid": 1,
-      "DsCode": "5036967707833574483",
-      "DsdTitle": "城市数据",
-      "DsdContentMd": "**简要描述：** \n\n- 获取某个省份的城市数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/citys `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n|参数名|必选|类型|说明|\n|:----    |:---|:----- |-----   |\n|code |是  |string |省份代码   |\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"28241\",\n            \"code\": \"4401\",\n            \"parentid\": \"44\",\n            \"name\": \"广州市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28421\",\n            \"code\": \"4402\",\n            \"parentid\": \"44\",\n            \"name\": \"韶关市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28558\",\n            \"code\": \"4403\",\n            \"parentid\": \"44\",\n            \"name\": \"深圳市\",\n            \"level\": \"2\"\n        },\n       ....\n    ]\n}\n```\n **返回参数说明** \n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
-      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取某个省份的城市数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/citys<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">必选<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">code<\/td><td style=\"text-align:left\">是<\/td><td style=\"text-align:left\">string<\/td><td>省份代码<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28241\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4401\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"广州市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28421\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4402\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"韶关市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28558\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4403\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"深圳市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n       ....\n    ]\n}\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong>\n无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
-      "DsdCreateTime": "2019-01-16T15:59:56",
-      "DsdUpdateTime": "2019-01-16T15:59:56",
+      "DsdTitle": "item",
+      "DsdContentMd": "-  项目表，储存项目信息\n\n|字段|类型|空|默认|注释|\n|:----|:-------|:---|----|------|\n|item_id\t  |int(10)     |否\t|\t |\t 项目id、自增id          |\n|item_name |varchar(50) |否\t|    |\t 项目名\t|\n|item_description |varchar(225) |否   |    |\t 项目描述\t\t |\n|uid     |int(10) |是   |    |    创建人uid     |\n|username |varchar(50)     |否   |   |   创建人用户名  |\n|password |varchar(50)     |否   |   |   项目密码。可为空。空表示可以公开访问的项目  |\n|addtime |int(11)     |否   |   |   项目添加的时间，时间戳  |\n|last_update_time |int(11)     |否   |   |   项目最后更新时间，时间戳  |\n- 备注：无",
+      "DsdContentHtml": "<ul>\n<li>项目表，储存项目信息<\/li>\n<\/ul>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">字段<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">空<\/th><th>默认<\/th><th>注释<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">item_id<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目id、自增id<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_name<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目名<\/td><\/tr>\n<tr><td style=\"text-align:left\">item_description<\/td><td style=\"text-align:left\">varchar(225)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目描述<\/td><\/tr>\n<tr><td style=\"text-align:left\">uid<\/td><td style=\"text-align:left\">int(10)<\/td><td style=\"text-align:left\">是<\/td><td><\/td><td>创建人uid<\/td><\/tr>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>创建人用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:left\">varchar(50)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目密码。可为空。空表示可以公开访问的项目<\/td><\/tr>\n<tr><td style=\"text-align:left\">addtime<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目添加的时间，时间戳<\/td><\/tr>\n<tr><td style=\"text-align:left\">last_update_time<\/td><td style=\"text-align:left\">int(11)<\/td><td style=\"text-align:left\">否<\/td><td><\/td><td>项目最后更新时间，时间戳<\/td><\/tr>\n<\/tbody>\n<\/table>\n<ul>\n<li>备注：无<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T16:08:34",
+      "DsdUpdateTime": "2019-01-16T16:08:34",
       "DsdOrder": 2
     },
     {
-      "DsdId": "5024548689808552515",
+      "DsdId": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
       "DsdPid": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
       "Uid": 1,
       "DsCode": "5036967707833574483",
-      "DsdTitle": "API接口模版",
-      "DsdContentMd": "**简要描述：**\n\n- 用户注册接口\n\n**请求URL：** \n- `http:\/\/xx.com\/api\/user\/register`\n  \n**请求方式：**\n\n- POST\n\n**参数：**\n\n|参数名|必选|类型|说明|\n|:----|:----:|:-----|:-----|\n|username |是 |string |用户名 |\n|password |是 |string |密码 |\n|name |否 |string | 昵称 |\n\n **返回示例**\n\n``` \n  {\n    \"error_code\": 0,\n    \"data\": {\n      \"uid\": \"1\",\n      \"username\": \"12345\",\n      \"name\": \"汤姆\",\n      \"sex\": 2 ,\n      \"reg_time\": \"1436865212\"\n    }\n  }\n```\n\n **返回参数说明** \n\n|参数名|类型|说明|\n|:-----|:-----|-----|\n|sex |int |性别编码，1：男；2：女 |\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
-      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>用户注册接口<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/user\/register<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>POST<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:center\">必选<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:center\">否<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">昵称<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>  {\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: {\n      <span class=\"hljs-attr\">\"uid\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n      <span class=\"hljs-attr\">\"username\"<\/span>: <span class=\"hljs-string\">\"12345\"<\/span>,\n      <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"汤姆\"<\/span>,\n      <span class=\"hljs-attr\">\"sex\"<\/span>: <span class=\"hljs-number\">2<\/span> ,\n      <span class=\"hljs-attr\">\"reg_time\"<\/span>: <span class=\"hljs-string\">\"1436865212\"<\/span>\n    }\n  }\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">sex<\/td><td style=\"text-align:left\">int<\/td><td>性别编码，1：男；2：女<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
-      "DsdCreateTime": "2019-01-16T15:57:40",
-      "DsdUpdateTime": "2019-01-16T15:57:40",
-      "DsdOrder": 1
+      "DsdTitle": "一级目录 AA",
+      "DsdCreateTime": "2019-01-16T15:55:21",
+      "DsdUpdateTime": "2019-01-16T15:55:21",
+      "DsdOrder": 2
     },
     {
-      "DsdId": "5194555992964224291",
-      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
+      "DsdId": "5763077273797768752",
+      "DsdPid": "00000000-0000-0000-0000-000000000000",
       "Uid": 1,
       "DsCode": "5036967707833574483",
-      "DsdTitle": "国内数据",
-      "DsdContentMd": "**简要描述：** \n\n- 获取全国省份数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/province `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n无\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"1\",\n            \"code\": \"11\",\n            \"parentid\": \"0\",\n            \"name\": \"北京市\",\n            \"level\": \"1\"\n        },\n        {\n            \"id\": \"636\",\n            \"code\": \"13\",\n            \"parentid\": \"0\",\n            \"name\": \"河北省\",\n            \"level\": \"1\"\n        },\n     .....     \n    ]\n}\n\n```\n **返回参数说明** \n\n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
-      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取全国省份数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/province<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<p>无<\/p>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"11\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"北京市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"636\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"13\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"河北省\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n     .....     \n    ]\n}\n\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<p>无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
-      "DsdCreateTime": "2019-01-16T15:59:24",
-      "DsdUpdateTime": "2019-01-16T15:59:24",
+      "DsdTitle": "说明",
+      "DsdContentMd": "这是由系统生成的APi文档示例项目。",
+      "DsdContentHtml": "<p>这是由系统生成的APi文档示例项目。<\/p>\n",
+      "DsdCreateTime": "2019-08-19T10:57:46.840",
+      "DsdUpdateTime": "2019-08-19T10:57:46.840",
       "DsdOrder": 1
     },
     {
@@ -256,16 +242,40 @@
       "DsdOrder": 99
     },
     {
-      "DsdId": "5763077273797768752",
-      "DsdPid": "00000000-0000-0000-0000-000000000000",
+      "DsdId": "5194555992964224291",
+      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
       "Uid": 1,
       "DsCode": "5036967707833574483",
-      "DsdTitle": "说明",
-      "DsdContentMd": "这是由系统生成的APi文档示例项目。",
-      "DsdContentHtml": "<p>这是由系统生成的APi文档示例项目。<\/p>\n",
-      "DsdCreateTime": "2019-08-19T10:57:46.840",
-      "DsdUpdateTime": "2019-08-19T10:57:46.840",
+      "DsdTitle": "国内数据",
+      "DsdContentMd": "**简要描述：** \n\n- 获取全国省份数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/province `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n无\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"1\",\n            \"code\": \"11\",\n            \"parentid\": \"0\",\n            \"name\": \"北京市\",\n            \"level\": \"1\"\n        },\n        {\n            \"id\": \"636\",\n            \"code\": \"13\",\n            \"parentid\": \"0\",\n            \"name\": \"河北省\",\n            \"level\": \"1\"\n        },\n     .....     \n    ]\n}\n\n```\n **返回参数说明** \n\n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取全国省份数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/province<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<p>无<\/p>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"11\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"北京市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"636\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"13\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"0\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"河北省\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>\n        },\n     .....     \n    ]\n}\n\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<p>无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T15:59:24",
+      "DsdUpdateTime": "2019-01-16T15:59:24",
       "DsdOrder": 1
+    },
+    {
+      "DsdId": "5024548689808552515",
+      "DsdPid": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "API接口模版",
+      "DsdContentMd": "**简要描述：**\n\n- 用户注册接口\n\n**请求URL：** \n- `http:\/\/xx.com\/api\/user\/register`\n  \n**请求方式：**\n\n- POST\n\n**参数：**\n\n|参数名|必选|类型|说明|\n|:----|:----:|:-----|:-----|\n|username |是 |string |用户名 |\n|password |是 |string |密码 |\n|name |否 |string | 昵称 |\n\n **返回示例**\n\n``` \n  {\n    \"error_code\": 0,\n    \"data\": {\n      \"uid\": \"1\",\n      \"username\": \"12345\",\n      \"name\": \"汤姆\",\n      \"sex\": 2 ,\n      \"reg_time\": \"1436865212\"\n    }\n  }\n```\n\n **返回参数说明** \n\n|参数名|类型|说明|\n|:-----|:-----|-----|\n|sex |int |性别编码，1：男；2：女 |\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>用户注册接口<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/user\/register<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>POST<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:center\">必选<\/th><th style=\"text-align:left\">类型<\/th><th style=\"text-align:left\">说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">username<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">用户名<\/td><\/tr>\n<tr><td style=\"text-align:left\">password<\/td><td style=\"text-align:center\">是<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">密码<\/td><\/tr>\n<tr><td style=\"text-align:left\">name<\/td><td style=\"text-align:center\">否<\/td><td style=\"text-align:left\">string<\/td><td style=\"text-align:left\">昵称<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>  {\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: {\n      <span class=\"hljs-attr\">\"uid\"<\/span>: <span class=\"hljs-string\">\"1\"<\/span>,\n      <span class=\"hljs-attr\">\"username\"<\/span>: <span class=\"hljs-string\">\"12345\"<\/span>,\n      <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"汤姆\"<\/span>,\n      <span class=\"hljs-attr\">\"sex\"<\/span>: <span class=\"hljs-number\">2<\/span> ,\n      <span class=\"hljs-attr\">\"reg_time\"<\/span>: <span class=\"hljs-string\">\"1436865212\"<\/span>\n    }\n  }\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">sex<\/td><td style=\"text-align:left\">int<\/td><td>性别编码，1：男；2：女<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T15:57:40",
+      "DsdUpdateTime": "2019-01-16T15:57:40",
+      "DsdOrder": 1
+    },
+    {
+      "DsdId": "4984161198208022738",
+      "DsdPid": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
+      "Uid": 1,
+      "DsCode": "5036967707833574483",
+      "DsdTitle": "城市数据",
+      "DsdContentMd": "**简要描述：** \n\n- 获取某个省份的城市数据\n\n**请求URL：** \n- ` http:\/\/xx.com\/api\/geograph\/citys `\n  \n**请求方式：**\n- GET \n\n**参数：** \n\n|参数名|必选|类型|说明|\n|:----    |:---|:----- |-----   |\n|code |是  |string |省份代码   |\n\n **返回示例**\n``` \n{\n    \"error_code\": 0,\n    \"data\": [\n        {\n            \"id\": \"28241\",\n            \"code\": \"4401\",\n            \"parentid\": \"44\",\n            \"name\": \"广州市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28421\",\n            \"code\": \"4402\",\n            \"parentid\": \"44\",\n            \"name\": \"韶关市\",\n            \"level\": \"2\"\n        },\n        {\n            \"id\": \"28558\",\n            \"code\": \"4403\",\n            \"parentid\": \"44\",\n            \"name\": \"深圳市\",\n            \"level\": \"2\"\n        },\n       ....\n    ]\n}\n```\n **返回参数说明** \n无\n\n **备注** \n\n- 更多返回错误代码请看首页的错误代码描述",
+      "DsdContentHtml": "<p><strong>简要描述：<\/strong><\/p>\n<ul>\n<li>获取某个省份的城市数据<\/li>\n<\/ul>\n<p><strong>请求URL：<\/strong><\/p>\n<ul>\n<li><code>http:\/\/xx.com\/api\/geograph\/citys<\/code><\/li>\n<\/ul>\n<p><strong>请求方式：<\/strong><\/p>\n<ul>\n<li>GET<\/li>\n<\/ul>\n<p><strong>参数：<\/strong><\/p>\n<table>\n<thead>\n<tr><th style=\"text-align:left\">参数名<\/th><th style=\"text-align:left\">必选<\/th><th style=\"text-align:left\">类型<\/th><th>说明<\/th><\/tr>\n<\/thead>\n<tbody>\n<tr><td style=\"text-align:left\">code<\/td><td style=\"text-align:left\">是<\/td><td style=\"text-align:left\">string<\/td><td>省份代码<\/td><\/tr>\n<\/tbody>\n<\/table>\n<p><strong>返回示例<\/strong><\/p>\n<pre><code>{\n    <span class=\"hljs-attr\">\"error_code\"<\/span>: <span class=\"hljs-number\">0<\/span>,\n    <span class=\"hljs-attr\">\"data\"<\/span>: [\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28241\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4401\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"广州市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28421\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4402\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"韶关市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n        {\n            <span class=\"hljs-attr\">\"id\"<\/span>: <span class=\"hljs-string\">\"28558\"<\/span>,\n            <span class=\"hljs-attr\">\"code\"<\/span>: <span class=\"hljs-string\">\"4403\"<\/span>,\n            <span class=\"hljs-attr\">\"parentid\"<\/span>: <span class=\"hljs-string\">\"44\"<\/span>,\n            <span class=\"hljs-attr\">\"name\"<\/span>: <span class=\"hljs-string\">\"深圳市\"<\/span>,\n            <span class=\"hljs-attr\">\"level\"<\/span>: <span class=\"hljs-string\">\"2\"<\/span>\n        },\n       ....\n    ]\n}\n<\/code><\/pre>\n<p><strong>返回参数说明<\/strong>\n无<\/p>\n<p><strong>备注<\/strong><\/p>\n<ul>\n<li>更多返回错误代码请看首页的错误代码描述<\/li>\n<\/ul>",
+      "DsdCreateTime": "2019-01-16T15:59:56",
+      "DsdUpdateTime": "2019-01-16T15:59:56",
+      "DsdOrder": 2
     },
     {
       "DsdId": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
@@ -275,16 +285,6 @@
       "DsdTitle": "一级目录A",
       "DsdCreateTime": "2019-01-16T15:50:24",
       "DsdUpdateTime": "2019-01-16T15:50:24",
-      "DsdOrder": 2
-    },
-    {
-      "DsdId": "eef025fe-7172-4787-a0df-fb2b57b4ec8d",
-      "DsdPid": "ea582cb8-6df4-4830-ab78-2c0ec432d998",
-      "Uid": 1,
-      "DsCode": "5036967707833574483",
-      "DsdTitle": "一级目录 AA",
-      "DsdCreateTime": "2019-01-16T15:55:21",
-      "DsdUpdateTime": "2019-01-16T15:55:21",
       "DsdOrder": 2
     }
   ]

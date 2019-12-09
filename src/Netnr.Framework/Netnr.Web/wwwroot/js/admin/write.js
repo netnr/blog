@@ -70,7 +70,9 @@ gd1.columns = [[
 ]];
 //编辑
 gd1.onClickCell = function (index, field, value) {
-    z.GridEditor(gd1, index, field);
+    setTimeout(function () {
+        z.GridEditor(gd1, index, field);
+    }, 20)
 }
 gd1.onBeforeLoad = function (row, param) {
     param.pe1 = $('#txtSearch').val().trim();

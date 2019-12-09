@@ -1,5 +1,5 @@
 ﻿var gd1 = z.Grid();
-gd1.url = "/Mix/QueryLog";
+gd1.url = "/Admin/QueryLog";
 gd1.pageSize = 100;
 gd1.sortName = "LogCreateTime";
 gd1.sortOrder = "desc";

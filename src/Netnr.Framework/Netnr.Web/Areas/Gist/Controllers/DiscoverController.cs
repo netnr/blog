@@ -6,7 +6,13 @@ namespace Netnr.Web.Areas.Gist.Controllers
     [Area("Gist")]
     public class DiscoverController : Controller
     {
-        [Description("Gist列表")]
+        /// <summary>
+        /// Gist列表
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="lang"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public IActionResult Index(string q, string lang, int page = 1)
         {
             var uinfo = new Func.UserAuthAid(HttpContext).Get();
