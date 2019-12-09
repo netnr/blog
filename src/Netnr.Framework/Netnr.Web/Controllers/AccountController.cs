@@ -636,6 +636,11 @@ namespace Netnr.Web.Controllers
                 var rurl = Request.Cookies["ReturnUrl"];
                 rurl = string.IsNullOrWhiteSpace(rurl) ? "/" : rurl;
 
+                if (rurl.StartsWith("http"))
+                {
+                    rurl += "?cookie=ok";
+                }
+
                 return Redirect(rurl);
             }
             else
