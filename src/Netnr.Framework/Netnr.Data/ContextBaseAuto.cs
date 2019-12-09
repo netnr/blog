@@ -434,9 +434,13 @@ namespace Netnr.Data
             modelBuilder.Entity<GuffRecord>(entity =>
             {
                 entity.HasKey(e => e.GrId)
-                    .HasName("PK_GUFFRECORD");
+                    .IsClustered(false);
 
                 entity.HasComment("尬服列表");
+
+                entity.HasIndex(e => e.GrCreateTime)
+                    .HasName("GuffRecord_GrCreateTime")
+                    .IsClustered();
 
                 entity.Property(e => e.GrId)
                     .HasMaxLength(50)
@@ -460,10 +464,6 @@ namespace Netnr.Data
                     .HasMaxLength(4000)
                     .HasComment("文件，多个逗号分割");
 
-                entity.Property(e => e.GrRemark)
-                    .HasMaxLength(4000)
-                    .HasComment("结束语");
-
                 entity.Property(e => e.GrImage)
                     .HasMaxLength(4000)
                     .HasComment("图片，多个逗号分割");
@@ -476,11 +476,15 @@ namespace Netnr.Data
                     .HasMaxLength(200)
                     .HasComment("对象，多个逗号分割，如主播姓名");
 
-                entity.Property(e => e.GrOpen).HasComment("1公开，2私有");
-
-                entity.Property(e => e.GrReplyNum).HasComment("回复数");
+                entity.Property(e => e.GrOpen).HasComment("回复数");
 
                 entity.Property(e => e.GrReadNum).HasComment("阅读量");
+
+                entity.Property(e => e.GrRemark)
+                    .HasMaxLength(4000)
+                    .HasComment("结束语");
+
+                entity.Property(e => e.GrReplyNum).HasComment("1公开，2私有");
 
                 entity.Property(e => e.GrStatus).HasComment("状态，1正常，2block，-1只读");
 
@@ -490,7 +494,6 @@ namespace Netnr.Data
 
                 entity.Property(e => e.GrTypeName)
                     .HasMaxLength(200)
-                    .IsUnicode(false)
                     .HasComment("分类，直播、名人、书、音乐等");
 
                 entity.Property(e => e.GrTypeValue)
@@ -679,14 +682,14 @@ namespace Netnr.Data
                     .HasMaxLength(50)
                     .HasComment("备注");
 
+                entity.Property(e => e.OrSource)
+                    .HasMaxLength(2000)
+                    .HasComment("源");
+
                 entity.Property(e => e.OrType)
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasComment("操作分类，推荐虚拟表名");
-
-                entity.Property(e => e.OrSource)
-                    .HasMaxLength(2000)
-                    .HasComment("源");
 
                 entity.Property(e => e.Spare1)
                     .HasMaxLength(50)
@@ -871,8 +874,7 @@ namespace Netnr.Data
 
                 entity.HasIndex(e => e.UserName)
                     .HasName("UserInfo_UserName")
-                    .IsUnique()
-                    .HasFilter("([UserName] IS NOT NULL)");
+                    .IsUnique();
 
                 entity.Property(e => e.LoginLimit).HasComment("登录限制 1限制 2补齐信息");
 
@@ -1084,7 +1086,7 @@ namespace Netnr.Data
                     .HasColumnType("datetime")
                     .HasComment("回复时间");
 
-                entity.Property(e => e.UrStatus).HasComment("状态，1正常，2block");
+                entity.Property(e => e.UrStatus).HasComment("状态，1正常，2仅自己可见，-1删除");
 
                 entity.Property(e => e.UrTargetId)
                     .HasMaxLength(50)
@@ -1149,7 +1151,7 @@ namespace Netnr.Data
 
                 entity.Property(e => e.UwReplyNum).HasComment("回复数量");
 
-                entity.Property(e => e.UwStatus).HasComment("状态，1正常，2block，-1只读");
+                entity.Property(e => e.UwStatus).HasComment("收藏，标记 数量");
 
                 entity.Property(e => e.UwTitle)
                     .HasMaxLength(100)

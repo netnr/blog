@@ -19,8 +19,8 @@ namespace Netnr.Domain
         public string GrTag { get; set; }
         public DateTime? GrCreateTime { get; set; }
         public DateTime? GrUpdateTime { get; set; }
-        public int? GrOpen { get; set; }
         public int? GrReplyNum { get; set; }
+        public int? GrOpen { get; set; }
         public int? GrReadNum { get; set; }
         public int? GrLaud { get; set; }
         public int? GrMark { get; set; }
