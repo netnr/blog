@@ -127,9 +127,15 @@ namespace Netnr.Web.Controllers
                     {
                         if (qm.a.GrOpen == 1 || uinfo.UserId == qm.a.Uid)
                         {
+                            // 阅读 +1
+                            qm.a.GrReadNum += 1;
+                            db.Update(qm.a);
+                            db.SaveChanges();
+
                             qm.a.Spare1 = string.IsNullOrEmpty(qm.UconnTargetId) ? "" : "laud";
                             qm.a.Spare2 = (uinfo.UserId == qm.a.Uid) ? "owner" : "";
                             qm.a.Spare3 = qm.Nickname;
+
                             vm.data = qm.a;
 
                             vm.Set(ARTag.success);

@@ -126,6 +126,14 @@ namespace Netnr.Web.Controllers
                     return vm;
                 }
 
+                //有昵称
+                if (string.IsNullOrWhiteSpace(uinfo.Nickname))
+                {
+                    vm.Set(ARTag.refuse);
+                    vm.msg = "请填写昵称后再操作";
+
+                    return vm;
+                }
 
                 var lisTagId = new List<int>();
                 TagIds.Split(',').ToList().ForEach(x => lisTagId.Add(Convert.ToInt32(x)));

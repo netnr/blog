@@ -23,9 +23,9 @@ gd1.autoRowHeight = false;
 gd1.columns = [[
     { title: "UID", field: "UserId", width: 60, sortable: true, align: "center" },
     { title: "昵称", field: "Nickname", width: 120, sortable: true, align: "center" },
-    { title: "匿名昵称", field: "UrAnonymousName", width: 120, sortable: true, align: "center" },
-    { title: "匿名邮箱", field: "UrAnonymousMail", width: 180, sortable: true, align: "center" },
-    { title: "匿名链接", field: "UrAnonymousLink", width: 160, sortable: true, align: "center" },
+    { title: "<b class='orange'>匿名昵称</b>", field: "UrAnonymousName", width: 120, sortable: true, align: "center", FormType: "text" },
+    { title: "<b class='orange'>匿名邮箱</b>", field: "UrAnonymousMail", width: 180, sortable: true, align: "center", FormType: "text" },
+    { title: "<b class='orange'>匿名链接</b>", field: "UrAnonymousLink", width: 160, sortable: true, align: "center", FormType: "text" },
     { title: "ID", field: "UrId", width: 60, sortable: true, align: "center" },
     { title: "目标分类", field: "UrTargetType", width: 120, sortable: true, align: "center" },
     { title: "目标ID", field: "UrTargetId", width: 80, sortable: true, align: "center" },
