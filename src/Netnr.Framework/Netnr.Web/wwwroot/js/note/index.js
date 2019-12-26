@@ -64,6 +64,15 @@ require(['vs/editor/editor.main'], function () {
     })
 
     mdautoheight();
+
+    //保存编辑器视图
+    var vm = parseInt(localStorage.getItem('note_md_viewmodel'));
+    if ([1, 2, 3].indexOf(vm) >= 0) {
+        nmd.toggleView(vm);
+    }
+    window.onbeforeunload = function () {
+        localStorage.setItem('note_md_viewmodel', nmd.obj.viewmodel);
+    }
 });
 
 var noteid;
@@ -131,6 +140,7 @@ $('#btnSave').click(function () {
             NoteContent: md,
             NoteId: noteid
         },
+        dataType: 'json',
         success: function (data) {
             if (data.code == 200) {
                 if (noteid == 0) {
@@ -162,6 +172,7 @@ $('#btnDel').click(function () {
             ok: function () {
                 $.ajax({
                     url: "/Note/DelNote?id=" + rowData.NoteId,
+                    dataType: 'json',
                     success: function (data) {
                         if (data.code == 200) {
                             gd1.load();

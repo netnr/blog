@@ -266,6 +266,14 @@ namespace Netnr.Web.Controllers
         {
             var vm = new ActionResultVM();
 
+            if (string.IsNullOrWhiteSpace(mo.Nickname))
+            {
+                vm.Set(ARTag.refuse);
+                vm.msg = "昵称不能为空";
+
+                return vm;
+            }
+
             int uid = new Func.UserAuthAid(HttpContext).Get().UserId;
             using (var db = new ContextBase())
             {

@@ -13,6 +13,7 @@ $('#btnSaveUserInfo').click(function () {
         $.ajax({
             url: "/user/SaveUserInfo",
             data: $('#FormUserInfo').serialize(),
+            dataType: 'json',
             success: function (data) {
                 if (data.code == 200) {
                     $('#ModalUserInfo').modal('hide');

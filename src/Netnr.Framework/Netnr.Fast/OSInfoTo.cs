@@ -43,7 +43,7 @@ namespace Netnr.Fast
         /// <summary>
         /// 获取自系统启动以来经过的毫秒数
         /// </summary>
-        public int TickCount { get; set; } = Environment.TickCount;
+        public long TickCount { get; set; }
         /// <summary>
         /// 获取与当前用户关联的网络域名
         /// </summary>
@@ -94,6 +94,17 @@ namespace Netnr.Fast
         /// </summary>
         public OSInfoTo()
         {
+            // 因为 TickCount 属性值的值是32位有符号整数，所以如果系统连续运行，TickCount 将从零递增到 Int32.MaxValue 约24.9 天，
+            // 然后跳转到 Int32.MinValue （这是一个负数，然后再递增为零）在接下来的24.9 天内。
+            if (Environment.TickCount > 0)
+            {
+                TickCount = Environment.TickCount;
+            }
+            else
+            {
+                TickCount = long.Parse(int.MaxValue.ToString()) + Math.Abs(Environment.TickCount - int.MinValue);
+            }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 OS = OSPlatform.Windows.ToString();

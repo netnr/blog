@@ -92,6 +92,7 @@ $('#btnReply').click(function () {
             UrAnonymousLink: rlink,
             UrAnonymousMail: rmail
         },
+        dataType: 'json',
         success: function (data) {
             if (data.code == 200) {
                 localStorage.setItem('AnonymousReply', JSON.stringify({
@@ -109,7 +110,7 @@ $('#btnReply').click(function () {
                     }
                 })
             } else {
-                jz.msg("操作失败");
+                jz.msg(data.msg);
             }
         },
         error: function () {

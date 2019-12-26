@@ -21,8 +21,8 @@
         var vrv = ViewContext.RouteData.Values;
         string ca = (vrv["controller"].ToString() + "/" + vrv["action"].ToString()).ToLower();
 
-        var canav = "account/login,account/register,home/auth,admin/log,admin/logchart,mix/terms".Split(',');
-        var cafooter = "account/login,account/register,home/auth,home/valid,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,admin/write,admin/reply,admin/log,admin/logchart,mix/terms,mix/faq,note/index".Split(',');
+        var canav = "account/login,account/register,home/auth,admin/write,admin/reply,admin/log,admin/logchart,mix/terms".Split(',');
+        var cafooter = "account/login,account/register,home/auth,home/valid,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,admin/index,admin/write,admin/reply,admin/log,admin/logchart,mix/terms,mix/faq,note/index".Split(',');
     }
 
     @if (!canav.Contains(ca))

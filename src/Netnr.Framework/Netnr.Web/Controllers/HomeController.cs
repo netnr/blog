@@ -243,16 +243,19 @@ namespace Netnr.Web.Controllers
         {
             var vm = new ActionResultVM();
 
-            var now = DateTime.Now;
+            var uinfo = new Func.UserAuthAid(HttpContext).Get();
 
-            if (HttpContext.User.Identity.IsAuthenticated)
+            if ((uinfo.UserId != 0 && string.IsNullOrWhiteSpace(uinfo.Nickname)) || (uinfo.UserId == 0 && string.IsNullOrWhiteSpace(mo.UrAnonymousName)))
             {
-                mo.Uid = new Func.UserAuthAid(HttpContext).Get().UserId;
+                vm.Set(ARTag.refuse);
+                vm.msg = "昵称不能为空";
+
+                return vm;
             }
-            else
-            {
-                mo.Uid = 0;
-            }
+
+            mo.Uid = uinfo.UserId;
+
+            var now = DateTime.Now;
 
             //回复消息
             um.UmId = Core.UniqueTo.LongId().ToString();
@@ -263,7 +266,6 @@ namespace Netnr.Web.Controllers
             um.UmStatus = 1;
             um.UmContent = mo.UrContent;
             um.UmCreateTime = now;
-
 
             using (var db = new ContextBase())
             {

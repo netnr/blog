@@ -32,7 +32,6 @@ namespace Netnr.Web.Controllers
             {
                 data = new Fast.OSInfoTo()
             };
-
             return vm;
         }
 

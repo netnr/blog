@@ -119,8 +119,12 @@
                                 }
                                 else
                                 {
-                                    var avatarpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:AvatarPath");
-                                    avatarpath += "/" + item.Spare2;
+                                    var avatarpath = "/favicon.svg";
+                                    if (!string.IsNullOrWhiteSpace(item.Spare2))
+                                    {
+                                        avatarpath = GlobalTo.GetValue("StaticResource:Server") + GlobalTo.GetValue("StaticResource:AvatarPath");
+                                        avatarpath += "/" + item.Spare2;
+                                    }
 
                                     <img class="imgup" src="@avatarpath" alt="头像" onerror="this.src = '/favicon.svg'; this.onerror = null;">
                                 }

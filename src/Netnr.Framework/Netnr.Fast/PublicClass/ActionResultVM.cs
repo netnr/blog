@@ -26,12 +26,7 @@ public class ActionResultVM
     public DateTime startTime { get; set; } = DateTime.Now;
 
     /// <summary>
-    /// 结束时间
-    /// </summary>
-    public DateTime? endTime { get; set; }
-
-    /// <summary>
-    /// 用时，毫秒
+    /// 用时，毫秒（在endTime上面，否则非序列化返回endTime值为null）
     /// </summary>
     public double useTime
     {
@@ -41,6 +36,11 @@ public class ActionResultVM
             return (endTime.Value - startTime).TotalMilliseconds;
         }
     }
+
+    /// <summary>
+    /// 结束时间
+    /// </summary>
+    public DateTime? endTime { get; set; }
 
     /// <summary>
     /// 设置快捷标签，赋值code、msg

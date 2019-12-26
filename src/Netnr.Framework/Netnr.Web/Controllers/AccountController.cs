@@ -628,6 +628,8 @@ namespace Netnr.Web.Controllers
             catch (Exception ex)
             {
                 vm.Set(ex);
+
+                Core.ConsoleTo.Log(ex);
             }
 
             //成功
