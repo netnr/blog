@@ -70,7 +70,6 @@ function loadMenuTree() {
         url: "/doc/code/menutree/" + $('#DsCode').val(),
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             if (data.code == 200) {
                 data = data.data;
             } else if (data.code == 94) {

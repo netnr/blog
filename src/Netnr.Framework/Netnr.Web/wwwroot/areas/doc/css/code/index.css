@@ -34,11 +34,11 @@
 /*右侧菜单*/
 .ndtv .ndvmenu {
     position: fixed;
-    top: 10px;
+    top: 5px;
     z-index: 9;
-    right: 30px;
+    right: 15px;
     width: 30px;
-    line-height: 3rem;
+    line-height: 2.2rem;
 }
 
     .ndtv .ndvmenu a i {

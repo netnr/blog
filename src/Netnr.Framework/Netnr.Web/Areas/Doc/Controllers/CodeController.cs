@@ -375,7 +375,7 @@ namespace Netnr.Web.Areas.Doc.Controllers
             tm = tm.Replace("@netnrmd@", htmlbody);
 
             //文件名
-            var filename = db.DocSet.Where(x => x.DsCode == code).FirstOrDefault()?.DsName ?? "netnrdoc";
+            var filename = db.DocSet.Where(x => x.DsCode == code).FirstOrDefault()?.DsName.Replace(" ", "") ?? "netnrdoc";
 
             new Fast.DownTo(Response).Stream(Encoding.Default.GetBytes(tm), filename + ".doc");
         }

@@ -10,6 +10,11 @@ require(['vs/editor/editor.main'], function () {
         var vh = $(window).height() - nmd.obj.container.offset().top - 15;
         nmd.height(Math.max(100, vh));
     })
+
+    //快捷键
+    nmd.obj.me.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function () {
+        $('#btnSave')[0].click();
+    })
 });
 
 loadMenuTree();
