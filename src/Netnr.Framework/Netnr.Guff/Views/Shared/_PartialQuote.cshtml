@@ -46,26 +46,6 @@
             <script src="https://code.bdstatic.com/npm/blueimp-md5@2.11.0/js/md5.min.js"></script>
             break;
 
-        case "monaco-editor":
-            <script src="https://code.bdstatic.com/npm/monaco-editor@0.18.1/min/vs/loader.js"></script>
-            <script>
-                require.config({
-                    paths: { vs: "https://code.bdstatic.com/npm/monaco-editor@0.18.1/min/vs" },
-                    'vs/nls': { availableLanguages: { '*': 'zh-cn' } }
-                });
-            </script>
-            break;
-
-        case "easyui.css":
-            <link href="/lib/jquery-easyui/themes/metro/easyui.css" rel="stylesheet" asp-append-version="true" />
-            <link href="/lib/jquery-easyui/z.css" rel="stylesheet" asp-append-version="true" />
-            break;
-
-        case "easyui.js":
-            <script src="/lib/jquery-easyui/jquery.easyui.min.js" asp-append-version="true"></script>
-            <script src="/lib/jquery-easyui/z.js" asp-append-version="true"></script>
-            break;
-
         case "global.css":
             <link href="/css/global.css" rel="stylesheet" asp-append-version="true" />
             break;

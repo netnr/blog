@@ -421,13 +421,12 @@ namespace Netnr.Web.Areas.Doc.Controllers
 
                 //标题
                 var title = drgt.GetProperty("DsdTitle").GetValue(dr, null).ToString();
+                sbTree.AppendLine($"<h{hn}>{string.Join(".", listNo)}、{title}</h{hn}>");
 
                 //是目录
                 var iscatalog = Convert.ToBoolean(drgt.GetProperty("IsCatalog").GetValue(dr, null));
                 if (!iscatalog)
                 {
-                    sbTree.AppendLine($"<h{hn}>{string.Join(".", listNo)}、{title}</h{hn}>");
-
                     sbTree.AppendLine(drgt.GetProperty("DsdContentHtml").GetValue(dr, null).ToString());
                 }
 

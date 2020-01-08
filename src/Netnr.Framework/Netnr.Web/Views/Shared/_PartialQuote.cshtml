@@ -27,13 +27,13 @@
             break;
 
         case "easyui.css":
-            <link href="/lib/jquery-easyui/themes/metro/easyui.css" rel="stylesheet" asp-append-version="true" />
-            <link href="/lib/jquery-easyui/z.css" rel="stylesheet" asp-append-version="true" />
+            <link href="https://cdn.jsdelivr.net/gh/netnr/cdn/libs/jquery-easyui/1.9.0/themes/metro/easyui.css" rel="stylesheet" />
+            <link href="/lib/jquery-easyui-z/z.css" rel="stylesheet" asp-append-version="true" />
             break;
 
         case "easyui.js":
-            <script src="/lib/jquery-easyui/jquery.easyui.min.js" asp-append-version="true"></script>
-            <script src="/lib/jquery-easyui/z.js" asp-append-version="true"></script>
+            <script src="https://cdn.jsdelivr.net/gh/netnr/cdn/libs/jquery-easyui/1.9.0/jquery.easyui.min.js"></script>
+            <script src="/lib/jquery-easyui-z/z.js" asp-append-version="true"></script>
             break;
 
         case "netnrmd.css":
@@ -57,10 +57,10 @@
             break;
 
         case "monaco-editor":
-            <script src="https://code.bdstatic.com/npm/monaco-editor@0.19.0/min/vs/loader.js"></script>
+            <script src="https://code.bdstatic.com/npm/monaco-editor@0.19.2/min/vs/loader.js"></script>
             <script>
                 require.config({
-                    paths: { vs: "https://code.bdstatic.com/npm/monaco-editor@0.19.0/min/vs" },
+                    paths: { vs: "https://code.bdstatic.com/npm/monaco-editor@0.19.2/min/vs" },
                     'vs/nls': { availableLanguages: { '*': 'zh-cn' } }
                 });
             </script>
