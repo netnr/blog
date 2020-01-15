@@ -106,8 +106,8 @@ gp.types.forEach(t => {
     $('#btnUp' + t).change(function () {
         var file = this.files[0];
         if (file) {
-            if (t == "Video") {
-                jz.alert('抱歉，暂不支持视频上传<br/>请用链接的方式吧');
+            if (true) {
+                jz.alert('抱歉，暂不支持上传<br/>请用链接的方式吧');
                 return false;
             }
 

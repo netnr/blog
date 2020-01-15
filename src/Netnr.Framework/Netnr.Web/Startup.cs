@@ -168,7 +168,7 @@ namespace Netnr.Web
             app.UseSwagger().UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "Netnr API";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Netnr API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", c.DocumentTitle);
             });
 
             //默认起始页index.html

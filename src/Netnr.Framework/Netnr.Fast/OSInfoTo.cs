@@ -94,16 +94,7 @@ namespace Netnr.Fast
         /// </summary>
         public OSInfoTo()
         {
-            // 因为 TickCount 属性值的值是32位有符号整数，所以如果系统连续运行，TickCount 将从零递增到 Int32.MaxValue 约24.9 天，
-            // 然后跳转到 Int32.MinValue （这是一个负数，然后再递增为零）在接下来的24.9 天内。
-            if (Environment.TickCount > 0)
-            {
-                TickCount = Environment.TickCount;
-            }
-            else
-            {
-                TickCount = long.Parse(int.MaxValue.ToString()) + Math.Abs(Environment.TickCount - int.MinValue);
-            }
+
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -115,6 +106,8 @@ namespace Netnr.Fast
                 LogicalDisk = PlatformForWindows.LogicalDisk();
 
                 ProcessorName = PlatformForWindows.ProcessorName();
+
+                TickCount = PlatformForWindows.RunTime();
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -130,6 +123,8 @@ namespace Netnr.Fast
                 LogicalDisk = PlatformForLinux.LogicalDisk();
 
                 ProcessorName = PlatformForLinux.CpuInfo("model name");
+
+                TickCount = PlatformForLinux.RunTime();
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -142,6 +137,8 @@ namespace Netnr.Fast
                 LogicalDisk = PlatformForLinux.LogicalDisk();
 
                 ProcessorName = PlatformForLinux.CpuInfo("model name");
+
+                TickCount = PlatformForLinux.RunTime();
             }
 
         }
@@ -230,7 +227,21 @@ namespace Netnr.Fast
             {
                 var cmd = "wmic cpu get name";
                 var cr = Core.CmdTo.Run(cmd).TrimEnd(Environment.NewLine.ToCharArray());
-                var pvalue = cr.Split(Environment.NewLine).LastOrDefault();
+                var pvalue = cr.Split(Environment.NewLine.ToCharArray()).LastOrDefault();
+                return pvalue;
+            }
+
+            /// <summary>
+            /// 运行时长
+            /// </summary>
+            /// <returns></returns>
+            public static long RunTime()
+            {
+                var cmd = "net statistics WORKSTATION";
+                var cr = Core.CmdTo.Run(cmd).Split(Environment.NewLine.ToCharArray());
+                DateTime.TryParse(cr[14].Split(' ').LastOrDefault(), out DateTime startTime);
+                var pvalue = Convert.ToInt64((DateTime.Now - startTime).TotalMilliseconds);
+
                 return pvalue;
             }
         }
@@ -248,7 +259,7 @@ namespace Netnr.Fast
             public static long MemInfo(string pkey)
             {
                 var meminfo = Core.FileTo.ReadText("/proc/", "meminfo");
-                var pitem = meminfo.Split(Environment.NewLine).FirstOrDefault(x => x.StartsWith(pkey));
+                var pitem = meminfo.Split(Environment.NewLine.ToCharArray()).FirstOrDefault(x => x.StartsWith(pkey));
 
                 var pvalue = 1024 * long.Parse(pitem.Replace(pkey, "").ToLower().Replace("kb", "").Trim());
 
@@ -263,9 +274,9 @@ namespace Netnr.Fast
             public static string CpuInfo(string pkey)
             {
                 var meminfo = Core.FileTo.ReadText("/proc/", "cpuinfo");
-                var pitem = meminfo.Split(Environment.NewLine).FirstOrDefault(x => x.StartsWith(pkey));
+                var pitem = meminfo.Split(Environment.NewLine.ToCharArray()).FirstOrDefault(x => x.StartsWith(pkey));
 
-                var pvalue = pitem.Split(":")[1].Trim();
+                var pvalue = pitem.Split(':')[1].Trim();
 
                 return pvalue;
             }
@@ -279,7 +290,7 @@ namespace Netnr.Fast
                 var listld = new List<object>();
 
                 var dfresult = Core.CmdTo.Shell("df");
-                var listdev = dfresult.Output.Split(Environment.NewLine).Where(x => x.StartsWith("/dev/"));
+                var listdev = dfresult.Output.Split(Environment.NewLine.ToCharArray()).Where(x => x.StartsWith("/dev/"));
                 foreach (var devitem in listdev)
                 {
                     var dis = devitem.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
@@ -302,10 +313,24 @@ namespace Netnr.Fast
             public static float CPULoad()
             {
                 var br = Core.CmdTo.Shell("vmstat 1 2");
-                var cpuitems = br.Output.Split(Environment.NewLine).LastOrDefault().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                var cpuitems = br.Output.Split(Environment.NewLine.ToCharArray()).LastOrDefault().Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
                 var us = cpuitems[cpuitems.Count - 5];
 
                 return float.Parse(us);
+            }
+
+            /// <summary>
+            /// 运行时长
+            /// </summary>
+            /// <returns></returns>
+            public static long RunTime()
+            {
+                var uptime = Core.FileTo.ReadText("/proc/", "uptime");
+                var pitem = Convert.ToDouble(uptime.Split(' ')[0]);
+
+                var pvalue = Convert.ToInt64(pitem * 1000); ;
+
+                return pvalue;
             }
         }
     }

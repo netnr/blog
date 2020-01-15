@@ -262,6 +262,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForWindows.RunTime">
+            <summary>
+            运行时长
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Netnr.Fast.OSInfoTo.PlatformForLinux">
             <summary>
             Linux系统
@@ -290,6 +296,12 @@
         <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.CPULoad">
             <summary>
             获取CPU使用率 %
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Fast.OSInfoTo.PlatformForLinux.RunTime">
+            <summary>
+            运行时长
             </summary>
             <returns></returns>
         </member>

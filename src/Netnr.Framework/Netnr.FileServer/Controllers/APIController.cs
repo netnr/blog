@@ -20,7 +20,7 @@ namespace Netnr.FileServer.Controllers
         /// <summary>
         /// 创建App，仅限开发环境调用
         /// </summary>
-        /// <param name="password">密码，必填</param>
+        /// <param name="password">密码，必填，默认密码：nr</param>
         /// <returns></returns>
         [HttpGet]
         public ActionResultVM CreateApp(string password)
