@@ -94,8 +94,6 @@ namespace Netnr.Fast
         /// </summary>
         public OSInfoTo()
         {
-
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 OS = OSPlatform.Windows.ToString();
@@ -238,8 +236,12 @@ namespace Netnr.Fast
             public static long RunTime()
             {
                 var cmd = "net statistics WORKSTATION";
-                var cr = Core.CmdTo.Run(cmd).Split(Environment.NewLine.ToCharArray());
-                DateTime.TryParse(cr[14].Split(' ').LastOrDefault(), out DateTime startTime);
+                var cr = Core.CmdTo.Run(cmd).Split(Environment.NewLine.ToCharArray())[14].Split(' ').ToList();
+                while (!"1234567890".Contains(cr.First()[0]))
+                {
+                    cr.RemoveAt(0);
+                }
+                DateTime.TryParse(string.Join(" ", cr), out DateTime startTime);
                 var pvalue = Convert.ToInt64((DateTime.Now - startTime).TotalMilliseconds);
 
                 return pvalue;
