@@ -1110,7 +1110,7 @@
             全局过滤器
             </summary>
         </member>
-        <member name="T:Netnr.Web.Filters.FilterConfigs.LogonSignValid">
+        <member name="T:Netnr.Web.Filters.FilterConfigs.LoginSignValid">
             <summary>
             需要授权访问
             </summary>

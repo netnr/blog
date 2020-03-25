@@ -34,7 +34,8 @@
     },
     keys: {
         VAFT: $('input[name="__RequestVerificationToken"]').val(),
-        domain: function () { return 'https://' + pObject.bucket + '.nos-eastchina1.126.net/' },
+        domain: function () { return 'http://nos.netnr.top/' },
+        domainOrigin: function () { return 'https://' + pObject.bucket + '.nos-eastchina1.126.net/' },
         AccessKey: '982d0be641b64a49b3b9e5cd20a6c6e4',
         SecretKey: '66a1c251f8de4ce1a082ce42aa00e148'
     },
@@ -78,13 +79,13 @@
                             + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
                             + '<td class="item-tool"><i class="fa fa-file text-muted"></i> &nbsp;<a href="javascript:void(0);" class="it-name">' + name + '</a>'
                             + '<div class="it-control"><a href="' + (pObject.keys.domain() + name) + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
-                            + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
-                            + '<td class="text-right text-muted">' + size + '</td>'
+                            + '<td class="text-muted">' + size + '</td>'
+                            + '<td class="d-none d-sm-block text-muted text-right">' + date + '</td>'
                             + '</tr>');
                     }
                     htm.push('</table>');
                 } else {
-                    htm.push('<div style="text-align:center;font-size:2em;line-height:3em;">没有信息</div>');
+                    htm.push('<div class="h3 text-center">咣 ~</div>');
                 }
                 $('#divBucket').html(htm.join(''));
 
@@ -190,10 +191,12 @@ $('#btnDel').click(function () {
 //点击列表
 $('#divBucket').click(function (e) {
     e = e || window.event;
-    var target = e.target || e.srcElement, trs = $(this).find('tr');
+    var target = e.target || e.srcElement;
     if (target.nodeName == "TD") {
-        trs.removeClass('in').find('input').removeAttr('checked');
-        $(target).parent().addClass('in').find('input').get(0).checked = true;
+        var tr = $(target).parent();
+        var chk = tr.find('input').get(0);
+        chk.checked = !chk.checked;
+        chk.checked ? tr.addClass('in') : tr.removeClass('in');
     } else if (target.nodeName == "INPUT") {
         if (target.checked) {
             $(target).parent().parent().addClass('in');
@@ -202,8 +205,8 @@ $('#divBucket').click(function (e) {
         }
     } else if (target.nodeName == "A") {
         if (target.className.indexOf('it-name') >= 0) {
-            var durl = pObject.keys.domain() + $(target).text();
-            ViewFileInfo($(target).text(), durl);
+            var path = $(target).text();
+            ViewFileInfo($(target).text(), pObject.keys.domain() + path, pObject.keys.domainOrigin() + path);
         } else if (target.className.indexOf('ic-del') >= 0) {
             var name = $(target).parent().prev().text();
             jz.confirm({

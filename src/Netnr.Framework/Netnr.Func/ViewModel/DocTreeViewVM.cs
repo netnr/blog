@@ -36,6 +36,10 @@ namespace Netnr.Func.ViewModel
         /// 更新时间
         /// </summary>
         public DateTime? DsdUpdateTime { get; set; }
+        /// <summary>
+        /// 显示编号
+        /// </summary>
+        public string DsdNumber { get; set; }
     }
 
     /// <summary>

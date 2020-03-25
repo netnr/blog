@@ -13,9 +13,10 @@
     pathView: function () {
         if (this.paths.length) {
             var htm = [], i = 0, len = this.paths.length;
-            htm.push('<a href="javascript:void(0);" data-cmd="upper">↰ 上一级</a>');
+            //htm.push('<a href="javascript:void(0);" data-cmd="upper">↰ 上一级</a>');
+            htm.push('<a href="javascript:void(0);" data-cmd="root">/</a>');
             for (; i < len - 1;) {
-                htm.push('<a href="javascript:void(0);">' + this.paths[i++] + '</a>/ ');
+                htm.push('<a href="javascript:void(0);">' + this.paths[i++] + '</a>/');
             }
             htm.push('<span>' + this.paths[len - 1] + '</span>');
             $('#divNavPath').html(htm.join('')).show();
@@ -57,33 +58,34 @@
                             //文件
                             if ("filesize" in item) {
                                 size = ConvertSize(item.filesize);
-                                var url = item.source_url.replace("http://", "https://");
+                                var originurl = item.source_url.replace("http://", "https://");
+                                var url = "http://cos.netnr.top" + originurl.substring(originurl.indexOf('/', 10));
                                 htm_file.push('<tr>'
                                     + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
-                                    + '<td class="item-tool"><i class="fa fa-file text-muted"></i> &nbsp;<a href="javascript:void(0);" class="it-name" data-mime="file" data-url="' + url + '" >' + name + '</a>'
+                                    + '<td class="item-tool"><i class="fa fa-file text-muted"></i> &nbsp;<a href="javascript:void(0);" class="it-name" data-mime="file" data-url="' + url + '" data-originurl="' + originurl + '" >' + name + '</a>'
                                     + '<div class="it-control"><a href="' + url + '" class="ic-down" target="_blank">下载</a><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
-                                    + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
-                                    + '<td class="text-right text-muted">' + size + '</td>'
+                                    + '<td class="text-muted">' + size + '</td>'
+                                    + '<td class="d-none d-sm-block text-muted text-right">' + date + '</td>'
                                     + '</tr>');
                             } else {
                                 htm_folder.push('<tr>'
                                     + '<td style="width:25px"><input type="checkbox" name="ChkList" /></td>'
                                     + '<td class="item-tool"><i class="fa fa-folder text-primary"></i> &nbsp;<a href="javascript:void(0);" class="it-name text-primary" data-mime="folder">' + name.substring(0, name.length - 1) + '</a>'
                                     + '<div class="it-control"><a href="javascript:void(0)" class="ic-del fa fa-remove"></a></div></td>'
-                                    + '<td class="d-none d-sm-block text-muted">' + date + '</td>'
-                                    + '<td class="text-right text-muted">' + size + '</td>'
+                                    + '<td class="text-muted">' + size + '</td>'
+                                    + '<td class="d-none d-sm-block text-muted text-right">' + date + '</td>'
                                     + '</tr>');
                             }
                         }
                         htm.push(htm_folder.join('') + htm_file.join(''));
                         htm.push('</table>');
                     } else {
-                        htm.push('<div style="text-align:center;font-size:2em;line-height:3em;">没有信息</div>');
+                        htm.push('<div class="h3 text-center">咣 ~</div>');
                     }
 
                     pObject.pathView();
                 } else {
-                    htm.push('<div style="text-align:center;font-size:2em;line-height:3em;">没有信息</div>');
+                    htm.push('<div class="h3 text-center">咣 ~</div>');
                 }
                 $('#divBucket').html(htm.join(''));
 
@@ -319,8 +321,10 @@ $('#divBucket').click(function (e) {
     e = e || window.event;
     var target = e.target || e.srcElement, trs = $(this).find('tr');
     if (target.nodeName == "TD") {
-        trs.removeClass('in').find('input').removeAttr('checked');
-        $(target).parent().addClass('in').find('input').get(0).checked = true;
+        var tr = $(target).parent();
+        var chk = tr.find('input').get(0);
+        chk.checked = !chk.checked;
+        chk.checked ? tr.addClass('in') : tr.removeClass('in');
     } else if (target.nodeName == "INPUT") {
         if (target.checked) {
             $(target).parent().parent().addClass('in');
@@ -331,7 +335,7 @@ $('#divBucket').click(function (e) {
         if (target.className.indexOf('it-name') >= 0) {
             var mime = target.getAttribute('data-mime');
             if (mime == "file") {
-                ViewFileInfo($(target).text(), target.getAttribute('data-url'));
+                ViewFileInfo($(target).text(), target.getAttribute('data-url'), target.getAttribute('data-originurl'));
             } else if (mime == "folder" && window.loading == false) {
                 pObject.paths.push($(target).text());
                 FileCommand.list();

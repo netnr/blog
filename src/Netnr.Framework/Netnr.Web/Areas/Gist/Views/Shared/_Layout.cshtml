@@ -1,6 +1,6 @@
 ﻿<partial name="_PartialQuote" model="@("the")" />
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -34,7 +34,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <form class="form-inline" action="@fa" method="get" id="gsearch">
-                        <input class="form-control mr-sm-3 txtsearch" name="q" placeholder="Search..." value="@ViewData["q"]">
+                        <input class="form-control mr-sm-3 txtsearch" name="q" aria-label="Search" placeholder="Search..." value="@ViewData["q"]">
                     </form>
                 </li>
                 <li class="nav-item">

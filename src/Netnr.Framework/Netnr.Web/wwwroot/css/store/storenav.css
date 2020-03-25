@@ -25,7 +25,7 @@
 
 #divBucket {
     overflow-y: auto;
-    font-size: 1rem;
+    font-size: 1.05rem;
     border-bottom: 1px solid #ddd;
 }
 
@@ -35,7 +35,7 @@
 
 /*公共*/
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-    padding: 2px;
+    padding: 4px 2px;
 }
 
 .tbList {
@@ -44,8 +44,8 @@
 }
 
     .tbList tr td input {
-        width: 1em;
-        height: 1em;
+        width: 1.05em;
+        height: 1.05em;
         display: inline-block;
         vertical-align: middle;
     }
@@ -105,11 +105,11 @@
 
     #divNavPath a {
         color: #2277da;
-        padding: 0 5px 0 0;
+        padding: 0 10px 0;
         white-space: nowrap;
-        font-family: 'Microsoft YaHei';
     }
 
-        #divNavPath a:first-child {
-            margin-right: 10px;
-        }
+    #divNavPath span {
+        padding: 0 10px 0;
+        white-space: nowrap;
+    }

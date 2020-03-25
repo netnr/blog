@@ -158,12 +158,12 @@ namespace Netnr.Web.Filters
         /// <summary>
         /// 需要授权访问
         /// </summary>
-        public class LogonSignValid : IAuthorizationFilter
+        public class LoginSignValid : IAuthorizationFilter
         {
             public void OnAuthorization(AuthorizationFilterContext context)
             {
                 //验证登录标记是最新，不是则注销登录（即同一用户不允许同时在线，按缓存时间生效）
-                if (context.HttpContext.User.Identity.IsAuthenticated)
+                if (context.HttpContext.User.Identity.IsAuthenticated && GlobalTo.GetValue<bool>("SingleSignOn"))
                 {
                     var uinfo = new Func.UserAuthAid(context.HttpContext).Get();
 

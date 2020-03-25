@@ -98,7 +98,7 @@ namespace Netnr.Web
                 options.Filters.Add(new Filters.FilterConfigs.GlobalFilter());
 
                 //注册全局授权访问时登录标记是否有效
-                options.Filters.Add(new Filters.FilterConfigs.LogonSignValid());
+                options.Filters.Add(new Filters.FilterConfigs.LoginSignValid());
             });
 
             services.AddControllers().AddNewtonsoftJson(options =>

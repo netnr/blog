@@ -12,8 +12,8 @@ gd1.columns = [[
             return '<a href="/home/list/' + row.UwId + '" target="_blank">' + value + '</a>';
         }
     },
-    { title: "创建时间", field: "UwCreateTime", width: 150, sortable: true, align: "center" },
-    { title: "更新时间", field: "UwUpdateTime", width: 150, sortable: true, align: "center" },
+    { title: "创建时间", field: "UwCreateTime", width: 160, sortable: true, align: "center" },
+    { title: "更新时间", field: "UwUpdateTime", width: 160, sortable: true, align: "center" },
     { title: "回复", field: "UwReplyNum", width: 60, sortable: true, align: "center" },
     { title: "浏览", field: "UwReadNum", width: 60, sortable: true, align: "center" },
     { title: "点赞", field: "UwLaud", width: 60, sortable: true, align: "center" },

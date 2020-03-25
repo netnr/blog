@@ -487,6 +487,11 @@
             更新时间
             </summary>
         </member>
+        <member name="P:Netnr.Func.ViewModel.DocTreeViewVM.DsdNumber">
+            <summary>
+            显示编号
+            </summary>
+        </member>
         <member name="T:Netnr.Func.ViewModel.DocTreeVM">
             <summary>
             文档树形结构视图

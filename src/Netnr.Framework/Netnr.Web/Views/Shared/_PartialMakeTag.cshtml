@@ -10,7 +10,7 @@
     <a class="tag" href="/home/type/@System.Web.HttpUtility.UrlEncode(TagName)">
         @if (!string.IsNullOrWhiteSpace(TagIcon))
         {
-            <img src="@tagpath/@System.Web.HttpUtility.UrlEncode(TagIcon)" onerror="this.remove()" />
+            <img src="@tagpath/@System.Web.HttpUtility.UrlEncode(TagIcon)" alt="@TagName" onerror="this.remove()" />
         }
         @TagName
     </a>

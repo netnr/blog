@@ -40,9 +40,9 @@
                 <form method="get">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-warning" type="submit"><i class="fa fa-search fa-fw"></i></button>
+                            <button class="btn btn-warning" type="submit" aria-label="搜索"><i class="fa fa-search fa-fw"></i></button>
                         </div>
-                        <input type="text" class="form-control" placeholder="Search，Enter" id="txtSearch" name="k" value='@Model.QueryString["k"]'>
+                        <input type="text" class="form-control" aria-label="输入关键字" placeholder="Search，Enter" id="txtSearch" name="k" value='@Model.QueryString["k"]'>
                     </div>
                 </form>
 

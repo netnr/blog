@@ -88,11 +88,15 @@ function stopDefault(e) {
 };
 
 //显示详情
-function ViewFileInfo(filename, url) {
+function ViewFileInfo(filename, url, originurl) {
+    var tt = '<textarea class="form-control mb-3" onfocus="this.select()" rows="5">' + url + '</textarea>'
+        + '<a href="' + url + '" target="_blank" class="btn btn-warning btn-block">直接下载</a>';
+    if (originurl) {
+        tt += '<a href="' + originurl + '" target="_blank" class="btn btn-dark btn-block mt-3">原始下载</a>'
+    }
     jz.confirm({
         title: '文件：<span class="text-success">' + filename + '</span>',
-        content: '<textarea class="form-control mb-3" onfocus="this.select()" rows="5">' + url + '</textarea>'
-            + '<a href="' + url + '" target="_blank" class="btn btn-warning btn-block">直接下载</a>',
+        content: tt,
         cancel: false,
         single: true,
         okValue: '关闭'

@@ -16,5 +16,5 @@ if (sk != "") {
 
 //Emoji表情
 $('span.uw-emoji').each(function (i) {
-    this.innerHTML = '<img src="https://cdn.jsdelivr.net/gh/netnr/emoji/emoji/wangwang/' + Math.floor(Math.random() * 98) + '.gif" />';
+    this.innerHTML = '<img src="https://cdn.jsdelivr.net/gh/netnr/emoji/emoji/wangwang/' + Math.floor(Math.random() * 98) + '.gif" alt="emoji" />';
 });
