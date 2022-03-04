@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>Netnr.Blog.Web.xml</DocumentationFile>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<DefineConstants>TRACE;ImportBase;ImportWeb;Ready;Drawing;DataKit;DKController;App;UserAgent;Logging</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>TRACE;ImportBase;ImportWeb;Ready;Drawing;DataKit;DKController;App;UserAgent;Logging</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Baidu-AI" Version="4.15.6" />
+		<PackageReference Include="Markdig" Version="0.27.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.2" />
+		<PackageReference Include="Netease.Cloud.Nos" Version="1.0.0.11" />
+		<PackageReference Include="Qiniu.Shared" Version="7.2.15" />
+		<PackageReference Include="Qcloud.Shared.NetCore" Version="1.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />
+		<PackageReference Include="SkiaSharp" Version="2.88.0-preview.209">
+		  <TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.0-preview.209">
+		  <TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
+		<PackageReference Include="SkiaSharp.QrCode" Version="0.4.1" />
+		<PackageReference Include="IP2Region" Version="1.2.0" />
+		<PackageReference Include="FluentScheduler" Version="5.5.1" />
+		<PackageReference Include="DeviceDetector.NET" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Netnr.Blog.Application\Netnr.Blog.Application.csproj" />
+		<ProjectReference Include="..\Netnr.WeChat\Netnr.WeChat.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="db\backup_demo.zip">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="db\jieba\idf.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="db\README.md">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="logs\README.md">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Netnr.Blog.Web.xml">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<Import Project="..\Netnr.Shared\Netnr.Shared.projitems" Label="Shared" />
+
+</Project>

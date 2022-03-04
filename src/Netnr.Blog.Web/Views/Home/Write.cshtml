@@ -1,0 +1,31 @@
+@{
+    ViewBag.Title = "写文章";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-warning" id="btnSave" title="Ctrl + S 快捷保存">保存</button>
+                </div>
+                <input class="form-control" type="text" id="wtitle" placeholder=" 标题：简单的一句话 " maxlength="200" />
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
+            <select class="form-control" id="wcategory" style="height:34px">
+                <option value="0" selected>默认分类</option>
+            </select>
+        </div>
+        <div class="col-lg-10 col-md-9 col-sm-8 mb-3">
+            <input type="text" name="tags" id="tags" style="height:34px" class="form-control" placeholder=" 标签，如：html " />
+        </div>
+        <div class="col-md-12">
+            <div id="mdeditor">Loading ...</div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("netnrmd.css,netnrmd.js,monaco-editor,selectpage"))
+
+<script src="/js/home/write.js" asp-append-version="true"></script>

@@ -1,0 +1,45 @@
+@model Netnr.Blog.Domain.Run
+@{
+    var mo = Model ?? new Netnr.Blog.Domain.Run();
+    mo.RunTheme = string.IsNullOrWhiteSpace(mo.RunTheme) ? "vs" : mo.RunTheme;
+}
+
+@if (Model != null)
+{
+    ViewData["Title"] = "Editing " + mo.RunRemark;
+}
+else
+{
+    ViewData["Title"] = GlobalTo.GetValue("Common:EnglishName") + " Run";
+    mo.RunContent1 = @"<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
+    <meta charset=""utf-8"" />
+    <title>Online Run</title>
+</head>
+
+<body>
+
+</body>
+
+</html>";
+}
+
+<div class="nrRunBox bg-@mo.RunTheme">
+    <partial name="_PartialNavAndBtn" model="mo" />
+
+    <div class="rune" id="rune">
+        <pre class="re1" data-lang="html">@(string.IsNullOrWhiteSpace(mo.RunContent1) ? "" : mo.RunContent1)</pre>
+        <pre class="re2" data-lang="javascript">@(string.IsNullOrWhiteSpace(mo.RunContent2) ? "" : mo.RunContent2)</pre>
+        <pre class="re3" data-lang="css">@(string.IsNullOrWhiteSpace(mo.RunContent3) ? "" : mo.RunContent3)</pre>
+        <pre class="re4" data-lang="preview"></pre>
+    </div>
+    <input type="hidden" id="hidCode" value="@mo.RunCode" />
+</div>
+
+
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("js-beautify,monaco-editor"))
+
+<script src="/areas/run/js/rune.js" asp-append-version="true"></script>

@@ -1,0 +1,3121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.WeChat</name>
+    </assembly>
+    <members>
+        <member name="T:Netnr.WeChat.Card">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Delete(System.String,System.String)">
+             <summary>
+             删除卡券
+             删除卡券接口允许商户删除任意一类卡券。删除卡券后，该卡券对应已生成的领取用二维码、添加到卡包JSAPI均会失效。
+             注意：如用户在商家删除卡券前已领取一张或多张该卡券依旧有效。即删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。
+             </summary>
+             <param name="access_token"></param>
+             <param name="card_id">卡券ID</param>
+             <returns>{
+            "errcode":0,
+            "errmsg":"ok"
+            }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Get(System.String,System.String,System.String)">
+             <summary>
+             查询code
+             
+             调用查询code接口可获取code的有效性（非自定义code），该code对应的用户openid、卡券有效期等信息。
+             自定义code（use_custom_code为true）的卡券调用接口时，post数据中需包含card_id，非自定义code不需上报。
+             </summary>
+             <param name="access_token"></param>
+             <param name="code">要查询的序列号</param>
+             <param name="card_id">要消耗序列号所述的card_id，生成券时use_custom_code填写true时必填。非自定义code不必填写。</param>
+             <returns>{
+            "errcode":0,
+            "errmsg":"ok",
+            "openid":"oFS7Fjl0WsZ9AMZqrI80nbIq8xrA",
+            "card":{
+            "card_id":"pFS7Fjg8kV1IdDz01r4SQwMkuCKc",
+            "begin_time":1404205036,
+            "end_time":1404205036,
+            }
+            }
+            
+            注：固定时长有效期会根据用户实际领取时间转换，如用户2013年10月1日领取，固定时长有效期为90天，即有效时间为2013年10月1日-12月29日有效。
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.BatchGet(System.String,System.Int32,System.Int32)">
+            <summary>
+            批量查询卡列表
+            </summary>
+            <param name="access_token"></param>
+            <param name="offset">查询卡列表的起始偏移量，从0开始，即offset:5是指从从列表里的第六个开始读取。</param>
+            <param name="count">需要查询的卡片的数量（数量最大50）</param>
+            <returns>{
+            "errcode":0,
+            "errmsg":"ok",
+            "card_id_list":["ph_gmt7cUVrlRk8swPwx7aDyF-pg"],
+            "total_num":1
+            }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Get(System.String,System.String)">
+             <summary>
+             查询卡券详情
+             </summary>
+             <param name="access_token"></param>
+             <param name="card_id">卡券ID</param>
+             <returns>
+             返回结果示意
+            ｛"errcode":0,
+            "errmsg":"ok",
+            "card":{
+            "card_type": "GROUPON",
+            "groupon":{
+            "base_info":{
+            "status":1,
+            "id":"p1Pj9jr90_SQRaVqYI239Ka1erkI",
+            "logo_url":
+            "http://www.supadmin.cn/uploads/allimg/120216/1_120216214725_1.jpg",
+            "appid":"wx588def6b0089dd48",
+            "code_type":"CODE_TYPE_TEXT",
+            "brand_name":"海底捞",
+            "title":"132元双人火锅套餐",
+            "sub_title":"",
+            "date_info":{
+            "type":1,
+            "begin_timestamp":1397577600,
+            "end_timestamp":1399910400
+            },
+            "color":"#3373bb",
+            "notice":"使用时向服务员出示此券",
+            "service_phone":"020-88888888",
+            "description":"不可与其他优惠同享\n如需团购券发票，请在消费时向商户提出\n店内均可使用，仅限堂食\n餐前不可打包，餐后未吃完，可打包\n本团购券不限人数，建议2人使用，超过建议人数须另收酱料费5元/位\n本单谢绝自带酒水饮料",
+                 "use_limit":1,
+            "get_limit":3,
+            "can_share":true,
+            "location_id_list": [123,12321,345345]
+            "url_name_type":"URL_NAME_TYPE_RESERVATION",
+            "custom_url":"http://www.qq.com",
+            "source":"大众点评"
+            "sku":{
+            "quantity":0
+            }
+            },
+            "deal_detail":"以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补凉锅、酸菜鱼锅可选）：\n大锅1份12元\n小锅2份16元\n以下菜品2选1\n特级肥牛1份30元\n洞庭鮰鱼卷1份20元\n其他\n鲜菇猪肉滑1份18元\n金针菇1份16元\n黑木耳1份9元\n娃娃菜1份8元\n冬瓜1份6元\n火锅面2个6元\n欢乐畅饮2位12元\n自助酱料2位10元",
+            }
+            }
+            }
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Update(System.String,System.Object)">
+             <summary>
+             查询卡券详情
+             </summary>
+             <param name="access_token"></param>
+             <param name="new_card">
+             {
+            "card_id": "xxxxxxxxxxxxx",
+            "member_card":{
+            "base_info":{
+            "logo_url":
+            "http:\/\/www.supadmin.cn\/uploads\/allimg\/120216\/1_120216214725_1.jpg",
+            "color":"Color010",
+            "notice":"使用时向服务员出示此券",
+            "service_phone":"020-88888888",
+            "description":"不可与其他优惠同享\n如需团购券发票，请在消费时向商户提出\n店内均可使用，仅限堂食\n餐前不可打包，餐后未吃完，可打包\n本团购券不限人数，建议2人使用，超过建议人数须另收酱料费5元/位\n本单谢绝自带酒水饮料"
+            "location_id_list": [123,12321,345345]
+            },
+            "bonus_cleared":"aaaaaaaaaaaaaa",
+            "bonus_rules":"aaaaaaaaaaaaaa",
+            "prerogative":""
+            }
+            }
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.ModIfyStock(System.String,System.String,System.Int32,System.Int32)">
+             <summary>
+             库存修改接口
+             增减某张卡券的库存。
+             </summary>
+             <param name="access_token"></param>
+             <param name="card_id">卡券ID</param>
+             <param name="increase_stock_value">增加多少库存，可以不填或填0</param>
+             <param name="reduce_stock_value">减少多少库存，可以不填或填0</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.GetColors(System.String)">
+             <summary>
+             获取颜色列表接口
+             获得卡券的最新颜色列表，用于卡券创建。
+             </summary>
+             <param name="access_token"></param>
+             <returns>
+             返回数据结果示意：
+             {
+            "errcode":0,
+            "errmsg":"ok",
+            "colors":[
+            {"name":"Color010","value":"#55bd47"},
+            {"name":"Color020","value":"#10ad61"},
+            {"name":"Color030","value":"#35a4de"},
+            {"name":"Color040","value":"#3d78da"},
+            {"name":"Color050","value":"#9058cb"},
+            {"name":"Color060","value":"#de9c33"},
+            {"name":"Color070","value":"#ebac16"},
+            {"name":"Color080","value":"#f9861f"},
+            {"name":"Color081","value":"#f08500"},
+            {"name":"Color090","value":"#e75735"},
+            {"name":"Color100","value":"#d54036"},
+            {"name":"Color101","value":"#cf3e36"}
+            ]
+            }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Create(System.String,System.Object)">
+             <summary>
+             创建卡券
+             </summary>
+             <param name="access_token"></param>
+             <param name="card">
+             数据示意：
+             {"card":{
+             "card_type":"GROUPON",
+             "groupon":{
+             "base_info":{
+             "logo_url":
+             "http:\/\/www.supadmin.cn\/uploads\/allimg\/120216\/1_120216214725_1.jpg",
+             "brand_name":"海底捞",
+             "code_type":"CODE_TYPE_TEXT",
+             "title":"132元双人火锅套餐",
+             "sub_title":"",
+             "color":"Color010",
+             "notice":"使用时向服务员出示此券",
+             "service_phone":"020-88888888",
+             "description":"不可与其他优惠同享\n如需团购券发票，请在消费时向商户提出\n店内均可
+                            使用，仅限堂食\n餐前不可打包，餐后未吃完，可打包\n本团购券不限人数，建议2人使用，超过建议人
+                            数须另收酱料费5元/位\n本单谢绝自带酒水饮料",
+             "date_info":{
+             "type":1,
+             "begin_timestamp":1397577600,
+             "end_timestamp":1422724261
+             },
+             "sku":{
+             "quantity":50000000
+             },
+              "get_limit":3,
+             "use_custom_code":false,
+             "bind_openid":false,
+             "can_share":true,
+             "can_give_friend":true,
+             "location_id_list": [123,12321,345345],
+             "url_name_type":"URL_NAME_TYPE_RESERVATION",
+             "custom_url":"http://www.qq.com",
+             "source":"大众点评"
+               },
+             "deal_detail":"以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补凉锅、酸菜鱼锅可
+             选）：\n大锅1份12元\n小锅2份16元\n以下菜品2选1\n特级肥牛1份30元\n洞庭鮰鱼卷1份
+             20元\n其他\n鲜菇猪肉滑1份18元\n金针菇1份16元\n黑木耳1份9元\n娃娃菜1份8元\n冬
+             瓜1份6元\n火锅面2个6元\n欢乐畅饮2位12元\n自助酱料2位10元"}
+             }
+             }
+             具体参数意义，请参见官方文档。
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok",
+            "card_id":"p1Pj9jr90_SQRaVqYI239Ka1erkI"
+             }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.SignCustomUrl(System.String,System.String,System.String)">
+            <summary>
+            为检测跳转外链请求来自微信，会在URL参数里加上签名。
+            </summary>
+            <param name="appscret">appscret</param>
+            <param name="encrypt_code">指定的卡券code码，只能被领一次。</param>
+            <param name="card_id">创建卡券时获得的卡券ID</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Card.BoardingPass">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Card.BoardingPass.CheckIn(System.String,System.Object)">
+             <summary>
+             更新电影票
+             领取电影票后通过调用“更新电影票”接口update电影信息及用户选座信息。
+             </summary>
+             <param name="access_token"></param>
+             <param name="tickect">
+             {
+            "code":"198374613512",
+            "card_id":"p1Pj9jr90_SQRaVqYI239Ka1erkI",
+            "passenger_name":"乘客姓名",//乘客姓名，上限为15个汉字。
+            "class":"舱等",//舱等，如头等舱等，上限为5个汉字。
+            "seat":"座位号",//乘客座位号。
+            "etkt_bnr":"电子客票号",//电子客票号，上限为14个数字
+            "qrcode_data":"二维码数据",//乘客用于值机的二维码字符串，微信会通过此数据为用户生成值机用的二维码。
+            "is_cancel ":false//填写true或false。true代表取消，如填写true上述字段（如calss等）均不做判断，机票返回未值机状态，乘客可重新值机。默认填写false
+               }
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Card.Code">
+            <summary>
+            卡券
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.Consume(System.String,System.String,System.String)">
+             <summary>
+             消耗code
+             消耗code接口是核销卡券的唯一接口，仅支持核销有效期内的卡券，否则会返回错误码invalidtime。
+             自定义code（use_custom_code为true）的优惠券，在code被核销时，必须调用此接口。用于将用户客户端的code状态变更。
+             自定义code的卡券调用接口时，post数据中需包含card_id，非自定义code不需上报。
+             </summary>
+             <param name="access_token"></param>
+             <param name="code">要消耗序列号，创建卡券时use_custom_code填写true时必填。非自定义code不必填写。</param>
+             <param name="card_id">卡券ID</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok",
+            "card":{"card_id":"pFS7Fjg8kV1IdDz01r4SQwMkuCKc"},
+            "openid":"oFS7Fjl0WsZ9AMZqrI80nbIq8xrA"
+            }
+            
+             错误码，0：正常，40099：该code已被核销
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.GetSignature(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            签名算法
+            </summary>
+            <param name="api_ticket">api_ticket</param>
+            <param name="app_id">公众号appID</param>
+            <param name="location_id">门店信息</param>
+            <param name="time_stamp">时间戳</param>
+            <param name="nonce_str">随机字符串</param>
+             <param name="card_id">生成卡券时获得的card_id</param>
+             <param name="card_type">卡券类型</param>
+            <returns>
+            {
+            "err_msg":"choose_card:ok",//choose_card:ok选取卡券成功
+            "choose_card_info":[
+            {
+            "card_id":"p3G6It08WKRgR0hyV3hHVb6pxrPQ",
+            "encrypt_code":"XXIzTtMqCxwOaawoE91+VJdsFmv7b8g0VZIZkqf4GWA60Fzpc8ksZ/5ZZ0DVkXdE"
+            ]
+            }
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.GetSignature(System.String,System.String,System.Int64,System.String,System.String,System.String)">
+            <summary>
+            签名算法
+            </summary>
+            <param name="api_ticket">api_ticket</param>
+            <param name="card_id">生成卡券时获得的card_id</param>
+            <param name="timestamp">时间戳，
+            signature中的timestamp和card_ext中的timestamp必须保持一致。
+            商户生成从1970年1月1日00:00:00至今的秒数,即当前的时间,且最终需要转换为字符串形式;由商户生成后传入。</param>
+            <param name="code">指定的卡券code码，只能被领一次。use_custom_code字段为true的卡券必须填写，非自定义code不必填写。</param>
+            <param name="openid">指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，非自定义code不必填写。</param>
+             <param name="balance">红包余额，以分为单位。红包类型（LUCKY_MONEY）必填、其他卡券类型不必填写。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.Decrypt(System.String,System.String)">
+             <summary>
+             code解码接口
+             code解码接口支持两种场景：
+            1.商家获取choos_card_info后，将card_id和encrypt_code字段通过解码接口，获取真实code。
+            2.卡券内跳转外链的签名中会对code进行加密处理，通过调用解码接口获取真实code。
+             </summary>
+             <param name="access_token"></param>
+             <param name="encrypt_code">通过choose_card_info获取的加密字符串</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok",
+            "code":"751234212312"
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.Update(System.String,System.String,System.String,System.String)">
+             <summary>
+             更改code
+             为确保转赠后的安全性，微信允许自定义code的商户对已下发的code进行更改。
+             注：为避免用户疑惑，建议仅在发生转赠行为后（发生转赠后，微信会通过事件推送的方式告知商户被转赠的卡券code）对用户的code进行更改。
+             </summary>
+             <param name="access_token"></param>
+             <param name="card_id">卡券ID</param>
+             <param name="code">卡券的code编码</param>
+             <param name="new_code">新的卡券code编码</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Card.Code.Unavailable(System.String,System.String,System.String)">
+             <summary>
+             设置卡券失效接口
+             为满足改票、退款等异常情况，可调用卡券失效接口将用户的卡券设置为失效状态。
+             注：设置卡券失效的操作不可逆，即无法将设置为失效的卡券调回有效状态，商家须慎重调用该接口。
+             </summary>
+             <param name="access_token"></param>
+             <param name="code">需要设置为失效的code</param>
+             <param name="card_id">自定义code的卡券必填。非自定义code的卡券不填。</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Location">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Location.BatchAdd(System.String,System.Object)">
+             <summary>
+             批量导入门店信息
+             接口说明
+            支持商户调用该接口批量导入/新建门店信息，获取门店ID。
+            注：通过该接口导入的门店信息将进入门店审核流程，审核期间可正常使用。若导入的
+            门店信息未通过审核，则会被剔除出门店列表。
+             </summary>
+             <param name="access_token"></param>
+             <param name="location_list">门店列表
+             数据示意：
+             {"location_list":[
+            {
+            "business_name":"麦当劳",
+            "branch_name":"赤岗店",
+            "province":"广东省",
+            "city":"广州市",
+            "district":"海珠区",
+            "address":"中国广东省广州市海珠区艺苑路11号",
+            "telephone":"020-89772059",
+            "category":"房产小区",
+            "longitude":"115.32375",
+            "latitude":"25.097486"
+            },
+            {
+            "business_name":"麦当劳",
+            "branch_name":"珠江店",
+            "province":"广东省",
+            "city":"广州市",
+            "district":"海珠区",
+            "address":"中国广东省广州市海珠区艺苑路12号",
+            "telephone":"020-89772059",
+            "category":"房产小区",
+            "longitude":"113.32375",
+            "latitude":"23.097486"
+            }]}</param>
+             <returns>
+             {
+             "errcode":0,
+             "errmsg":"ok",
+             "location_id_list":[271262077,-1]
+            }
+            其中location_id_list中的 -1 表示失败
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Location.BatchGet(System.String,System.Int32,System.Int32)">
+             <summary>
+             拉取门店列表
+             获取在公众平台上申请创建及API导入的门店列表，用于创建卡券
+             </summary>
+             <param name="access_token"></param>
+             <param name="offset">偏移量，0开始</param>
+             <param name="count">拉取数量,为0时默认拉取全部门店。</param>
+             <returns>
+             返回数据示意：
+             { "errcode":0,
+            "errmsg":"ok",
+            "location_list":[
+            {
+            "location_id":“493”,
+            "business_name":"steventaohome",
+            "phone":"020-12345678",
+            "address":"广东省广州市番禺区广东省广州市番禺区南浦大道",
+            "longitude":113.280212402,
+            "latitude":23.0350666046
+            },
+            {
+            "location_id":“468”,
+            "business_name":"TIT创意园B4",
+            "phone":"020-12345678",
+            "address":"广东省广州市海珠区",
+            "longitude":113.325248718,
+            "latitude":23.1008300781
+            }
+            ],
+            "count":2
+            }
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.LuckyMoney">
+            <summary>
+            特殊卡票接口=> 红包
+            商户调用接口创建会员卡获取card_id，并将会员卡下发给用户，用户领取后需激活/绑定update会员卡编号及积分信息。会员卡暂不支持转赠。
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.LuckyMoney.UpdateUserBalance(System.String,System.String,System.String,System.Int32)">
+             <summary>
+             更新红包金额
+             支持领取红包后通过调用“更新红包”接口update红包余额。
+             </summary>
+             <param name="access_token"></param>
+             <param name="code">红包的序列号</param>
+             <param name="card_id">自定义code的卡券必填。非自定义code可不填。</param>
+             <param name="balance">红包余额</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.MeetingTicket">
+            <summary>
+            特殊卡票接口=> 会议门票
+            商户调用接口创建会员卡获取card_id，并将会员卡下发给用户，用户领取后需激活/绑定update会员卡编号及积分信息。会员卡暂不支持转赠。
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.MeetingTicket.UpdateUser(System.String,System.Object)">
+             <summary>
+             更新会议门票接口
+             支持调用“更新会议门票”接口update入场时间、区域、座位等信息。
+             </summary>
+             <param name="access_token"></param>
+             <param name="tickect">
+             {
+             "code":"717523732898",
+             "card_id":"pXch-jvdwkJjY7evUFV-sGsoMl7A",
+             "zone":"C区",
+             "entrance": "东北门",
+             "seat_number": "2排15号"
+             }
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.MemberCard">
+            <summary>
+            特殊卡票接口=> 会员卡
+            商户调用接口创建会员卡获取card_id，并将会员卡下发给用户，用户领取后需激活/绑定update会员卡编号及积分信息。会员卡暂不支持转赠。
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.MemberCard.Activate(System.String,System.Object)">
+             <summary>
+             激活/绑定会员卡支持以下两种方式：
+            1.用户点击卡券内“bind_old_card_url”、“activate_url”跳转商户自定义的H5页面，填写相关身份认证信息后，商户调用接口，完成激活/绑定。
+            2.商户已知用户身份或无需进行绑定等操作，用户领取会员卡后，商户后台即时调用“激活/绑定会员卡”接口update会员卡编号及积分信息。
+             </summary>
+             <param name="access_token"></param>
+             <param name="memeber_card">
+             {
+            "init_bonus": 100,
+            "init_balance": 200,
+            "membership_number": "AAA00000001",
+            "code":"12312313",
+            "card_id":"xxxx_card_id"
+            }
+            或
+            {
+            "bonus": “www.xxxx.com”,
+            "balance":“www.xxxx.com”,
+            "membership_number": "AAA00000001",
+            "code":"12312313",
+            "card_id":"xxxx_card_id"
+            }
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.MemberCard.UpdateUser(System.String,System.String,System.Int32,System.String,System.Int32,System.String,System.String)">
+             <summary>
+             会员卡交易
+             会员卡交易后每次积分及余额变更需通过接口通知微信，便于后续消息通知及其他扩展功能。
+             </summary>
+             <param name="access_token"></param>
+             <param name="code">要消耗的序列号</param>
+             <param name="add_bonus">需要变更的积分，扣除积分用“-“表示。</param>
+             <param name="record_bonus">商家自定义积分消耗记录，不超过14个汉字。</param>
+             <param name="add_balance">需要变更的余额，扣除金额用“-”表示。单位为分</param>
+             <param name="record_balance">商家自定义金额消耗记录，不超过14个汉字。</param>
+             <param name="card_id">要消耗序列号所述的card_id。自定义code的会员卡必填。</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok",
+            "result_bonus":100,
+            "result_balance":200
+            "openid":"oFS7Fjl0WsZ9AMZqrI80nbIq8xrA"
+            }
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.MovieTicket">
+            <summary>
+            特殊卡票接口=> 电影票
+            电影票券主要分为以下两种：
+            1、电影票兑换券，归属于团购券。
+            2、选座电影票，在购买时需要选定电影、场次、座位，具备较强的时效性和特殊性，此类电影票券即文档中的电影票。
+            使用场景：用户点击商户H5页面提供的JSAPI（添加到卡包JSAPI）后，商户根据用户
+            电影票信息，调用接口创建卡券，获取card_id后，将带有唯一code的电影票下发给用户，
+            用户领取后通过接口（更新电影票）update用户选座信息。
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.MovieTicket.UpdateUser(System.String,System.Object)">
+             <summary>
+             更新电影票
+             领取电影票后通过调用“更新电影票”接口update电影信息及用户选座信息。
+             </summary>
+             <param name="access_token"></param>
+             <param name="tickect">
+             {
+            "code": "277217129962",
+            "card_id":"p1Pj9jr90_SQRaVqYI239Ka1erkI",
+            "ticket_class":"4D",
+            "show_time":1408493192,
+            "duration"：120,
+            "screening_room":"5号影厅",
+            "seat_number":["5排14号", "5排15号"]
+               }
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"ok"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.ParameterQrcodeType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.ParameterQrcodeType.QR_LIMIT_SCENE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.ParameterQrcodeType.QR_SCENE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.QrCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.QrCode.Create(System.String,System.Object)">
+             <summary>
+             创建二维码
+             创建卡券后，商户可通过接口生成一张卡券二维码供用户扫码后添加卡券到卡包。
+            自定义code的卡券调用接口时，post数据中需指定code，非自定义code不需指定，
+            指定openid同理。指定后的二维码只能被扫描领取一次。
+            
+             获取二维码ticket后，开发者可用ticket换取二维码图片详情
+             </summary>
+             <param name="access_token"></param>
+             <param name="action">
+             数据示意：
+             {
+             "action_name":"QR_CARD",
+             "action_info":{
+             "card":{
+             "card_id":"pFS7Fjg8kV1IdDz01r4SQwMkuCKc",
+             "code":"198374613512",
+             "openid":"oFS7Fjl0WsZ9AMZqrI80nbIq8xrA",
+             "expire_seconds":"1800"，
+             "is_unique_code":false,
+             "outer_id": 1
+             }
+             }
+             }</param>
+             <returns>二维码图片地址</returns>
+        </member>
+        <member name="M:Netnr.WeChat.QrCode.Create(System.String,Netnr.WeChat.ParameterQrcodeType,System.Int32,System.Int32)">
+            <summary>
+            生成带参数的二维码
+            </summary>
+            <param name="token"></param>
+            <param name="type">二维码类型，QR_SCENE为临时,QR_LIMIT_SCENE为永久</param>
+            <param name="scene_id">场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）</param>
+            <param name="days"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.TestWhiteList">
+            <summary>
+            设置测试用户白名单
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.TestWhiteList.Set(System.String,System.Object)">
+             <summary>
+             设置测试用户白名单
+             由于卡券有审核要求，为方便公众号调试，可以设置一些测试帐号，这些帐号可领取未通过审核的卡券，体验整个流程。
+             注：同时支持“openid”、“username”两种字段设置白名单，总数上限为10个。
+             </summary>
+             <param name="access_token"></param>
+             <param name="testwhitelist">
+             {
+            "openid":[ //测试的openid列表
+            "o1Pj9jmZvwSyyyyyyBa4aULW2mA",
+            "o1Pj9jmZvxxxxxxxxxULW2mA"
+            ],
+            "username":[ //测试的微信号列表
+            "afdvvf",
+            "abcd"
+            ]
+            }
+             </param>
+             <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Token(System.String,System.String)">
+            <summary>
+            获取AccessToken
+            http://mp.weixin.qq.com/wiki/index.php?title=%E8%8E%B7%E5%8F%96access_token
+            </summary>
+            <param name="appid"></param>
+            <param name="secrect"></param>
+            <returns>access_toke</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.GetCallbackIP(System.String)">
+             <summary>
+             获取微信服务器IP地址
+            http://mp.weixin.qq.com/wiki/0/2ad4b6bfd29f30f71d39616c2a0fcedc.html
+             </summary>
+             <param name="access_token"></param>
+             <returns>{"ip_list":["127.0.0.1","127.0.0.1"]}</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.UploadImg(System.String,System.String,System.IO.Stream)">
+             <summary>
+            上传LOGO接口
+            开发者需调用该接口上传商户图标至微信服务器，获取相应logo_url，用于卡券创建。
+            注意事项
+            1.上传的图片限制文件大小限制1MB，像素为300*300，支持JPG格式。
+            2.调用接口获取的logo_url进支持在微信相关业务下使用，否则会做相应处理。
+             </summary>
+             <param name="access_token"></param>
+             <param name="fileName"></param>
+             <param name="inputStream">流</param>
+             <returns>返回上传后路径</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.ShortUrl(System.String,System.String,System.String)">
+            <summary>
+            将一条长链接转成短链接。
+            主要使用场景： 开发者用于生成二维码的原链接（商品、支付二维码等）太长导致扫码速度和成功率下降，
+            将原长链接通过此接口转成短链接再生成二维码将大大提升扫码速度和成功率。
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="long_url">需要转换的长链接，支持http://、https://、weixin://wxpay 格式的url</param>
+            <param name="action">默认long2short，代表长链接转短链接</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.ShowQrCode(System.String)">
+            <summary>
+            得到二维码的微信服务器地址
+            </summary>
+            <param name="ticket">票</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Media">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Media.UploadArtcles(System.String,System.Collections.Generic.List{Netnr.WeChat.Entities.WeChatArtcle})">
+            <summary>
+            上传图文消息素材【订阅号与服务号认证后均可用】
+            thumb_media_id:图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
+            </summary>
+            <param name="access_token"></param>
+            <param name="articles">图文消息，一个图文消息支持1到10条图文</param>
+            <returns>success: { "type":"news","media_id":"CsEf3ldqkAYJAU6EJeIkStVDSvffUJ54vqbThMgplD-VJXXof6ctX5fI6-aYyUiQ", "created_at":1391857799}</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Media.UploadVideo(System.String,System.String,System.String,System.String)">
+            <summary>
+            回复复视频消息里面的media_id不是基础支持接口返回的media_id，这里需要给基础支持的media添加title和description
+            </summary>
+            <param name="access_token"></param>
+            <param name="media_id"></param>
+            <param name="title"></param>
+            <param name="description"></param>
+            <returns>success:{"type":"video","media_id":"IhdaAQXuvJtGzwwc0abfXnzeezfO0NgPK6AQYShD8RQYMTtfzbLdBIQkQziv2XJc","created_at":1398848981}
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Media.Upload(System.String,System.String,System.String,System.IO.Stream)">
+             <summary>
+             新增临时素材/上传多媒体文件
+             http://mp.weixin.qq.com/wiki/5/963fc70b80dc75483a271298a76a8d59.html
+             1.上传的媒体文件限制：
+            图片（image) : 1MB，支持JPG格式
+            语音（voice）：1MB，播放长度不超过60s，支持MP4格式
+            视频（video）：10MB，支持MP4格式
+            缩略图（thumb)：64KB，支持JPG格式
+            2.媒体文件在后台保存时间为3天，即3天后media_id失效
+             </summary>
+             <param name="access_token"></param>
+             <param name="type">媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）</param>
+             <param name="fileName">文件名</param>
+             <param name="inputStream">文件输入流</param>
+             <returns>media_id</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Media.Get(System.String,System.String,System.String)">
+            <summary>
+            获取临时素材/下载多媒体文件
+            http://mp.weixin.qq.com/wiki/11/07b6b76a6b6e8848e855a435d5e34a5f.html
+            公众号可以使用本接口获取临时素材（即下载临时的多媒体文件）。请注意，视频文件不支持https下载，调用该接口需http协议。
+            本接口即为原“下载多媒体文件”接口。
+            </summary>
+            <param name="savePath"></param>
+            <param name="access_token"></param>
+            <param name="media_id"></param>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Media.UploadNews(System.String,System.String,System.String,System.String)">
+            <summary>
+            添加客服账号
+            开发者通过本接口可以为公众号添加客服账号，每个公众号最多添加10个客服账号。
+            </summary>
+            <param name="access_token"></param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号，账号前缀最多10个字符，必须是英文或者数字字符。如果没有公众号微信号，请前往微信公众平台设置。</param>
+            <param name="nickname">客服昵称，最长6个汉字或12个英文字符</param>
+            <param name="pswmd5">客服账号登录密码，格式为密码明文的32位加密MD5值</param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Menu">
+            <summary>
+            "自定义菜单”
+            http://mp.weixin.qq.com/wiki/index.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95%E5%88%9B%E5%BB%BA%E6%8E%A5%E5%8F%A3
+            注意：自定义菜单事件推送接口见：AcceptMessageAPI
+            创建自定义菜单后，由于微信客户端缓存，需要24小时微信客户端才会展现出来，测试时可以尝试取消关注公众账号后再次关注，则可以看到创建后的效果。
+            自定义菜单种类如下：
+            1、click：点击推事件
+            2、view：跳转URL
+            3、scancode_push：扫码推事件
+            4、scancode_waitmsg：扫码推事件且弹出“消息接收中”提示框
+            5、pic_sysphoto：弹出系统拍照发图
+            6、pic_photo_or_album：弹出拍照或者相册发图
+            7、pic_weixin：弹出微信相册发图器
+            8、location_select：弹出地理位置选择器
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Menu.Create(System.String,System.String)">
+            <summary>
+            自定义菜单创建接口
+            </summary>
+            <param name="token"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Menu.Get(System.String)">
+            <summary>
+            自定义菜单查询接口
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Menu.Delete(System.String)">
+            <summary>
+            自定义菜单删除接口
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Template">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Template.Api_Set_Industry(System.String,System.String,System.String)">
+            <summary>
+            设置所属行业
+            设置行业可在MP中完成，每月可修改行业1次
+            行业代码查询,请登录微信公众号后台查看
+            </summary>
+            <param name="access_token"></param>
+            <param name="industry_id1">行业代码</param>
+            <param name="industry_id2">行业代码</param>
+            <returns>官方api未给出返回内容,应该是errcode=0就表示成功</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Template.Api_Add_Template(System.String,System.String)">
+            <summary>
+            获得模板ID
+            </summary>
+            <param name="access_token"></param>
+            <param name="template_id_short">模板库中模板的编号</param>
+            <returns> {"errcode":0,"errmsg":"ok","template_id":"Doclyl5uP7Aciu-qZ7mJNPtWkbkYnWBWVja26EGbNyk"}
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Ticket">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Ticket.GetTicket(System.String,System.String)">
+            <summary>
+            获取api_ticket
+            正常情况下，jsapi_ticket的有效期为7200秒，通过access_token来获取。
+            </summary>
+            <param name="access_token">BasicAPI获取的access_token,也可以通过TokenHelper获取</param>
+            <param name="type">类型：wx_card、jsapi</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Ticket.GetSignature(System.String,System.String,System.Int64,System.String,System.String@)">
+            <summary>
+            签名算法
+            </summary>
+            <param name="jsapi_ticket">jsapi_ticket</param>
+            <param name="noncestr">随机字符串(必须与wx.config中的nonceStr相同)</param>
+            <param name="timestamp">时间戳(必须与wx.config中的timestamp相同)</param>
+            <param name="url">当前网页的URL，不包含#及其后面部分(必须是调用JS接口页面的完整URL)</param>
+            <param name="string1"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Groups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Groups.Create(System.String,System.String)">
+            <summary>
+            创建分组
+            注意：一个公众账号，最多支持创建500个分组
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="name">分组名字（30个字符以内）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Groups.Get(System.String)">
+            <summary>
+            查询所有分组
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Groups.GetId(System.String,System.String)">
+            <summary>
+            查询用户所在分组
+            </summary>
+            <param name="access_token"></param>
+            <param name="openid"></param>
+            <returns>不为空时，表示查询成功，否则查询失败</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Groups.Update(System.String,System.String,System.String)">
+            <summary>
+            修改分组名
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="id">分组id，由微信分配</param>
+            <param name="name">分组名字（30个字符以内）</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Groups.Members">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Groups.Members.Update(System.String,System.String,System.String)">
+            <summary>
+            移动用户分组
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="openid">用户唯一标识符</param>
+            <param name="to_groupid">分组id</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Message.Custom">
+            <summary>
+            发送(主动)客服消息
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendText(System.String,System.String,System.String,System.String)">
+            <summary>
+            发送文本消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="content">文本消息内容</param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendImage(System.String,System.String,System.String,System.String)">
+            <summary>
+            发送图片消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="media_id">发送的图片的媒体ID</param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendVoice(System.String,System.String,System.String,System.String)">
+            <summary>
+            发送语音消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="media_id">发送的语音的媒体ID</param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendVedio(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            发送视频消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="media_id">发送的视频的媒体ID</param>
+            <param name="thumb_media_id">缩略图的媒体ID</param>
+            <param name="title">视频消息的标题</param>
+            <param name="description">视频消息的描述</param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendMusic(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            发送音乐消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="musicurl">音乐链接</param>
+            <param name="hqmusicurl">高品质音乐链接，wifi环境优先使用该链接播放音乐</param>
+            <param name="thumb_media_id">缩略图的媒体ID</param>
+            <param name="title">音乐标题</param>
+            <param name="description">音乐描述</param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendNews(System.String,System.String,Netnr.WeChat.Entities.WeChatNews,System.String)">
+            <summary>
+            回复单图文消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="news"></param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Custom.SendNews(System.String,System.String,System.Collections.Generic.List{Netnr.WeChat.Entities.WeChatNews},System.String)">
+            <summary>
+            回复多图文消息
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="touser">普通用户openid</param>
+            <param name="news"></param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Message.Mass">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Mass.SendAll(System.String,System.String,Netnr.WeChat.Entities.WeChatArtcleType,System.String,System.Boolean)">
+            <summary>
+            根据分组进行群发【订阅号与服务号认证后均可用】
+            请注意：在返回成功时，意味着群发任务提交成功，并不意味着此时群发已经结束，
+            所以，仍有可能在后续的发送过程中出现异常情况导致用户未收到消息，如消息有时会进行审核、服务器不稳定等。
+            此外，群发任务一般需要较长的时间才能全部发送完毕，请耐心等待。
+            </summary>
+            <param name="access_token"></param>
+            <param name="content">图文消息,语音,图片,视频:media_id; 文本:文本消息</param>
+            <param name="type"></param>
+            <param name="group_id">群发到的分组的group_id，参加用户管理中用户分组接口，若is_to_all值为true，可不填写group_id</param>
+            <param name="is_to_all">用于设定是否向全部用户发送，值为true或false，选择true该消息群发给所有用户，选择false可根据group_id发送给指定群组的用户</param>
+            <returns>success:{"errcode":0,"errmsg":"send job submission success","msg_id":34182 }</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Mass.Send(System.String,System.String,Netnr.WeChat.Entities.WeChatArtcleType,System.Collections.Generic.IEnumerable{System.String},System.String,System.String)">
+            <summary>
+            根据OpenID列表群发【订阅号不可用，服务号认证后可用】
+            </summary>
+            <param name="access_token"></param>
+            <param name="content">图文消息,语音,图片,视频:media_id; 文本:文本消息</param>
+            <param name="type"></param>
+            <param name="touser"></param>
+            <param name="videoTitle"></param>
+            <param name="videoDesc"></param>
+            <returns>success:{"errcode":0,"errmsg":"send job submission success","msg_id":34182}</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Mass.Delete(System.String,System.String)">
+            <summary>
+            请注意，只有已经发送成功的消息才能删除删除消息只是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。 
+            另外，删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。
+            </summary>
+            <param name="access_token"></param>
+            <param name="msg_id">发送出去的消息ID</param>
+            <returns>success: {"errcode":0,"errmsg":"ok"}</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Mass.Preview(System.String,System.String,System.String,Netnr.WeChat.Entities.WeChatArtcleType)">
+            <summary>
+            预览接口【订阅号与服务号认证后均可用】
+            开发者可通过该接口发送消息给指定用户，在手机端查看消息的样式和排版。
+            </summary>
+            <param name="access_token"></param>
+            <param name="openid">接收消息用户对应该公众号的openid</param>
+            <param name="content">图文消息,语音,图片,视频:media_id(与根据分组群发中的media_id相同); 文本:文本消息</param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Mass.Get(System.String,System.String)">
+             <summary>
+             查询群发消息发送状态【订阅号与服务号认证后均可用】
+             由于群发任务提交后，群发任务可能在一定时间后才完成，因此，群发接口调用时，仅会给出群发任务是否提交成功的提示，
+             
+             若群发任务提交成功，则在群发任务结束时，会向开发者在公众平台填写的开发者URL（callback URL）推送事件。
+             参见 WeChatExecutor.cs: MASSSENDJOBFINISH Event
+             </summary>
+             <param name="access_token"></param>
+             <param name="msg_id"></param>
+             <returns>success: { "msg_id":201053012,"msg_status":"SEND_SUCCESS"}
+             “send success”或“send fail”或“err(num)” 
+            send success时，也有可能因用户拒收公众号的消息、系统错误等原因造成少量用户接收失败。
+            err(num)是审核失败的具体原因，可能的情况如下：err(10001)涉嫌广告, err(20001)涉嫌政治, err(20004)涉嫌社会,
+            err(20002)涉嫌色情, err(20006)涉嫌违法犯罪,err(20008)涉嫌欺诈, err(20013)涉嫌版权, err(22000)涉嫌互推(互相宣传), err(21000)涉嫌其他
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.Message.Template">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.Message.Template.Send(System.String,System.Object)">
+            <summary>
+            发送模板消息
+            在模版消息发送任务完成后，微信服务器会将是否送达成功作为通知，发送到开发者中心中填写的服务器配置地址中。
+            参见WeChatExecutor.cs TEMPLATESENDJOBFINISH Event
+            </summary>
+            <param name="access_token"></param>
+            <param name="content">模板消息体,由于模板众多,且结构不一，请开发者自行按照模板自行构建模板消息体,模板消息体为json字符串,请登录微信公众号后台查看</param>
+            <returns>  { "errcode":0,"errmsg":"ok", "msgid":200228332}
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.User.info(System.String,System.String)">
+            <summary>
+            获取用户基本信息（包括UnionID机制）
+            注意：如果开发者有在多个公众号，或在公众号、移动应用之间统一用户帐号的需求，
+            需要前往微信开放平台（open.weixin.qq.com）绑定公众号后，才可利用UnionID机制来满足上述需求。
+            </summary>
+            <param name="access_token"></param>
+            <param name="openId"></param>
+            <returns>UnionID机制的返回值中将包含“unionid”</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.User.Get(System.String,System.String)">
+            <summary>
+            获取关注者列表
+            </summary>
+            <param name="access_token"></param>
+            <param name="nextOpenId">第一个拉取的OPENID，不填默认从头开始拉取</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.User.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.User.Info.UpdateRemark(System.String,System.String,System.String)">
+            <summary>
+            设置备注名
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="openid">用户唯一标识符</param>
+            <param name="remark">新的备注名，长度必须小于30字符</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.CustomService">
+            <summary>
+            多客服功能
+            http://mp.weixin.qq.com/wiki/5/ae230189c9bd07a6b221f48619aeef35.html
+            开发者可根据用户发给公众号的消息内容，选择是转发给客服还是直接回复,
+            如果是转发给客服，调用本ＡＰＩ创建客服消息后回传给微信服务器即可
+            PC客户端自定义插件接口无ＡＰＩ包装!!!
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.GetKFList(System.String)">
+            <summary>
+            获取客服基本信息
+            </summary>
+            <param name="access_token"></param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.GetOnlineKFList(System.String)">
+            <summary>
+            获取在线客服接待信息
+            kf_account	完整客服账号，格式为：账号前缀@公众号微信号
+            status	客服在线状态 1：pc在线，2：手机在线。若pc和手机同时在线则为 1+2=3
+            kf_id	客服工号
+            auto_accept	客服设置的最大自动接入数
+            accepted_case	客服当前正在接待的会话数
+            </summary>
+            <param name="access_token"></param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.BuildTransferCustomerServiceMessage(System.String,System.String)">
+            <summary>
+            构建多客服消息，用于回复微信服务器提交过来的用户消息
+            </summary>
+            <param name="toUserName">发送方帐号（一个OpenID）</param>
+            <param name="fromUserName">开发者微信号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.BuildTransferCustomerServiceMessage(System.String,System.String,System.String)">
+            <summary>
+            构建消息转发到指定客服的多客服消息，用于回复微信服务器提交过来的用户消息
+            </summary>
+            <param name="toUserName">发送方帐号（一个OpenID）</param>
+            <param name="fromUserName">开发者微信号</param>
+            <param name="kfAccount">指定会话接入的客服账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.GetRecord(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取客服聊天记录接口
+            </summary>
+            <param name="access_token"></param>
+            <param name="openid"></param>
+            <param name="starttime"></param>
+            <param name="endtime"></param>
+            <param name="pagesize"></param>
+            <param name="pageindex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.ExplainOpercode(System.Int32)">
+            <summary>
+            解释聊天记录的opercode的含义
+            </summary>
+            <param name="opercode"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Cgi_Bin.CustomService.KFAccount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.KFAccount.Update(System.String,System.String,System.String,System.String)">
+            <summary>
+            设置客服信息
+            </summary>
+            <param name="access_token"></param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号，账号前缀最多10个字符，必须是英文或者数字字符。如果没有公众号微信号，请前往微信公众平台设置。</param>
+            <param name="nickname">客服昵称，最长6个汉字或12个英文字符</param>
+            <param name="pswmd5">客服账号登录密码，格式为密码明文的32位加密MD5值</param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.KFAccount.UploadHeadImg(System.String,System.String,System.String)">
+            <summary>
+            上传客服头像
+            </summary>
+            <param name="access_token"></param>
+            <param name="kf_account">完整客服账号，格式为：账号前缀@公众号微信号</param>
+            <param name="icon"></param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.KFAccount.Del(System.String,System.String)">
+            <summary>
+            删除客服账号
+            </summary>
+            <param name="access_token"></param>
+            <param name="kf_account"></param>
+            <returns>success: {"errcode" : 0,"errmsg" : "ok",}； 其他代码请使用ExplainCode解析返回代码含义 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Cgi_Bin.CustomService.KFAccount.ExplainCode(System.Int32)">
+            <summary>
+            解释客服管理接口返回码说明
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.DataCube">
+            <summary>
+            数据统计接口=>接口分析数据接口
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetInterfaceSummary(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取接口分析数据
+            最大时间跨度：30
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetInterfaceSummaryHour(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取接口分析分时数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsg(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送概况数据
+            最大时间跨度：7
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgHour(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息分送分时数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgWeek(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送周数据
+            最大时间跨度：30
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgMonth(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送月数据
+            最大时间跨度：30
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgDist(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送分布数据
+            最大时间跨度：15
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgDistWeek(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送分布周数据
+            最大时间跨度：30
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUpStreamMsgDistMonth(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取消息发送分布月数据
+            最大时间跨度：30
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.ExplainMsgType(System.Int32)">
+            <summary>
+            解释消息类型msg_type
+            </summary>
+            <param name="msg_type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.ExplainCountInterval(System.Int32)">
+            <summary>
+            解释消息类型msg_type
+            </summary>
+            <param name="count_interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetArticleSummary(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文群发每日数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetArticleTotal(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文群发总数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUserRead(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文统计数据
+            最大时间跨度：3
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUserReadHour(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文统计分时数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUserShare(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文分享转发数据
+            最大时间跨度：7
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUserShareHour(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取图文分享转发分时数据
+            最大时间跨度：1
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.ExplainShareScene(System.Int32)">
+            <summary>
+            解释用户分享的场景share_scene
+            </summary>
+            <param name="share_scene"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.GetUserSummary(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            获取用户增减数据
+            最大时间跨度：7
+            begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错
+            </summary>
+            <param name="access_token"></param>
+            <param name="begin_date">获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”（比如最大时间跨度为1时，begin_date和end_date的差值只能为0，才能小于1），否则会报错</param>
+            <param name="end_date">获取数据的结束日期，end_date允许设置的最大值为昨日</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.DataCube.ExplainUserSource(System.Int32)">
+            <summary>
+            解释用户的渠道user_source
+            </summary>
+            <param name="user_source"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Entities.WeChatArtcleType">
+            <summary>
+            回复用户的消息类型
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.News">
+            <summary>
+            图文消息
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.Voice">
+            <summary>
+            语音
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.Image">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.Video">
+            <summary>
+            视频
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.Entities.WeChatArtcleType.Music">
+            <summary>
+            音乐
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.Entities.WeChatArtcle">
+            <summary>
+            图文消息
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.thumb_media_id">
+            <summary>
+            图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.author">
+            <summary>
+            图文消息的作者
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.title">
+            <summary>
+            图文消息的标题
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.content_source_url">
+            <summary>
+            在图文消息页面点击“阅读原文”后的页面
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.content">
+            <summary>
+            图文消息页面的内容，支持HTML标签
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.digest">
+            <summary>
+            图文消息的描述
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatArtcle.show_cover_pic">
+            <summary>
+            是否显示封面，1为显示，0为不显示
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.Entities.WeChatNews">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatNews.title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatNews.description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatNews.picurl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.Entities.WeChatNews.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.WeChatMessageType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Location">
+            <summary>
+            地理位置
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Image">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Voice">
+            <summary>
+            语音
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Video">
+            <summary>
+            视频
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Link">
+            <summary>
+            链接
+            </summary>
+        </member>
+        <member name="F:Netnr.WeChat.WeChatMessageType.Event">
+            <summary>
+            事件推送
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.WeChatMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.WeChatMessage.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.WeChat.WeChatMessage.Body">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.WeChatMessage.Parse(System.String)">
+            <summary>
+            解析微信服务器推送的消息
+            http://mp.weixin.qq.com/wiki/index.php?title=%E6%8E%A5%E6%94%B6%E6%99%AE%E9%80%9A%E6%B6%88%E6%81%AF
+            http://mp.weixin.qq.com/wiki/index.php?title=%E6%8E%A5%E6%94%B6%E4%BA%8B%E4%BB%B6%E6%8E%A8%E9%80%81
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.Crypto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.Crypto.Cryptography">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.Cryptography.HostToNetworkOrder(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="inval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.Cryptography.HostToNetworkOrder(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="inval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.Cryptography.AES_decrypt(System.String,System.String,System.String@)">
+            <summary>
+            解密方法
+            </summary>
+            <param name="Input">密文</param>
+            <param name="EncodingAESKey"></param>
+            <param name="appid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.Cryptography.AES_encrypt(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <param name="EncodingAESKey"></param>
+            <param name="appid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.Cryptography.chr(System.Int32)">
+            将数字转化成ASCII码对应的字符，用于对明文进行补码
+            
+            @param a 需要转化的数字
+            @return 转化得到的字符
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt">
+            <summary>
+            -40001 ： 签名验证错误
+            -40002 :  xml解析失败
+            -40003 :  sha加密生成签名失败
+            -40004 :  AESKey 非法
+            -40005 :  appid 校验错误
+            -40006 :  AES 加密失败
+            -40007 ： AES 解密失败
+            -40008 ： 解密后得到的buffer非法
+            -40009 :  base64加密异常
+            -40010 :  base64解密异常
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.#ctor(System.String,System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="sToken">公众平台上，开发者设置的Token</param>
+            <param name="sEncodingAESKey">公众平台上，开发者设置的EncodingAESKey</param>
+            <param name="sAppID">公众帐号的appid</param>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.DecryptMsg(System.String,System.String,System.String,System.String,System.String@)">
+            <summary>
+            检验消息的真实性，并且获取解密后的明文
+            </summary>
+            <param name="sMsgSignature">签名串，对应URL参数的msg_signature</param>
+            <param name="sTimeStamp">时间戳，对应URL参数的timestamp</param>
+            <param name="sNonce">随机串，对应URL参数的nonce</param>
+            <param name="sPostData">密文，对应POST请求的数据</param>
+            <param name="sMsg">解密后的原文，当return返回0时有效</param>
+            <returns>成功0，失败返回对应的错误码</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.EncryptMsg(System.String,System.String,System.String,System.String@)">
+            <summary>
+            将企业号回复用户的消息加密打包
+            </summary>
+            <param name="sReplyMsg">企业号待回复用户的消息，xml格式的字符串</param>
+            <param name="sTimeStamp">时间戳，可以自己生成，也可以用URL参数的timestamp</param>
+            <param name="sNonce">随机串，可以自己生成，也可以用URL参数的nonce</param>
+            <param name="sEncryptMsg">加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串,当return返回0时有效</param>
+            <returns>成功0，失败返回对应的错误码</returns>
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.DictionarySort">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.DictionarySort.Compare(System.Object,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="oLeft"></param>
+            <param name="oRight"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Crypto.WXBizMsgCrypt.GenarateSinature(System.String,System.String,System.String,System.String,System.String@)">
+            <summary>
+            
+            </summary>
+            <param name="sToken"></param>
+            <param name="sTimeStamp"></param>
+            <param name="sNonce"></param>
+            <param name="sMsgEncrypt"></param>
+            <param name="sMsgSignature"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.PayUtil">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.PayUtil.Sign(System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            生成签名
+            签名在线验证工具：
+            http://mch.weixin.qq.com/wiki/tools/signverify/
+            </summary>
+            <param name="stringADict">参与签名生成的参数列表</param>
+            <param name="partnerKey">商家私钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.PayUtil.SignPay(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="appid"></param>
+            <param name="timeStamp"></param>
+            <param name="nonceStr"></param>
+            <param name="prepayId"></param>
+            <param name="partnerKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.PayUtil.GeneralPostdata(System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            生成POST的xml数据字符串
+            </summary>
+            <param name="postdataDict">>参与生成的参数列表</param>
+            <param name="sign">签名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.PayUtil.ExplainErrorcode(System.String)">
+            <summary>
+            将ErrorCode翻译成文字
+            </summary>
+            <param name="err_code">err_code</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Helpers.Util">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.CheckSignature(System.String,System.String,System.String,System.String)">
+            <summary>
+            检查签名是否正确:
+            http://mp.weixin.qq.com/wiki/index.php?title=%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97
+            </summary>
+            <param name="signature"></param>
+            <param name="timestamp"></param>
+            <param name="nonce"></param>
+            <param name="token">AccessToken</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.Sha1(System.String,System.String)">
+            <summary>
+            Sha1
+            </summary>
+            <param name="orgStr"></param>
+            <param name="encode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.MD5(System.String,System.String)">
+            <summary>
+            MD5加密
+            </summary>
+            <param name="encypStr"></param>
+            <param name="charset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.Timestamp">
+            <summary>
+            时间戳
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.HtmlEncode(System.String)">
+            <summary>
+            html转义
+            </summary>
+            <param name="instr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.HtmlDecode(System.String)">
+            <summary>
+            html转义字符串还原
+            </summary>
+            <param name="instr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.HttpRequestPost(System.String,System.String,System.String,System.IO.Stream,System.String)">
+            <summary>
+            FORM表单POST方式上传一个多媒体文件
+            </summary>
+            <param name="url">API URL</param>
+            <param name="typeName"></param>
+            <param name="fileName"></param>
+            <param name="fs"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Helpers.Util.Download(System.String,System.IO.Stream)">
+            <summary>
+            下载
+            </summary>
+            <param name="url"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="T:Netnr.WeChat.Extend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Extend.GetText(System.Xml.XmlDocument,System.String)">
+            <summary>
+            获取XmlDocument的内容
+            </summary>
+            <param name="xmlDocument"></param>
+            <param name="nodeName">节点名称</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.IWeChatExecutor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.IWeChatExecutor.Execute(Netnr.WeChat.WeChatMessage)">
+            <summary>
+            接受消息后返回XML
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Merchant">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Create(System.String,System.Object)">
+             <summary>
+             
+             </summary>
+             <param name="access_token"></param>
+             <param name="content">
+             参见官方文档
+             </param>
+             <returns>
+             {
+            "errcode": 0,
+            "errmsg": "success",
+            "product_id": "pDF3iYwktviE3BzU3BKiSWWi9Nkw"
+             }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Del(System.String,System.String)">
+             <summary>
+             删除商品
+             </summary>
+             <param name="access_token"></param>
+             <param name="product_id">商品ID</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Update(System.String,System.Object)">
+             <summary>
+             修改商品
+             
+             备注：
+             1.product_id表示要更新的商品的ID，其他字段说明请参考增加商品接口。
+            2.从未上架的商品所有信息均可修改，否则商品的名称(name)、商品分类(category)、商品属性(property)这三个字段不可修改。
+             </summary>
+             <param name="access_token"></param>
+             <param name="content"></param>
+             <returns>
+             {
+             "errcode":0,
+             "errmsg":"success"
+             }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Get(System.String,System.String)">
+            <summary>
+            查询
+            </summary>
+            <param name="access_token"></param>
+            <param name="product_id"></param>
+            <returns>
+            商品详细信息,
+            具体请参见官方文档</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.GetByStatus(System.String,System.Int32)">
+            <summary>
+            获取指定状态的所有商品
+            </summary>
+            <param name="access_token"></param>
+            <param name="status">
+            商品状态(0-全部, 1-上架, 2-下架)
+            </param>
+            <returns>
+            商品列表信息,
+            具体请参见官方文档</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.ModProductStatus(System.String,System.String,System.Int32)">
+             <summary>
+             商品上下架
+             </summary>
+             <param name="access_token"></param>
+             <param name="product_id">商品id</param>
+             <param name="status">
+             商品上下架标识(0-下架, 1-上架)
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"success"
+            }
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Merchant.Category">
+            <summary>
+            商品管理 分类
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Category.GetSub(System.String,System.String)">
+            <summary>
+            获取指定分类的所有子分类
+            </summary>
+            <param name="access_token"></param>
+            <param name="cate_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Category.GetSKU(System.String,System.String)">
+            <summary>
+            获取指定子分类的所有SKU
+            </summary>
+            <param name="access_token"></param>
+            <param name="cate_id">分类id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Merchant.Category.GetProperty(System.String,System.String)">
+            <summary>
+            获取指定分类的所有属性
+            </summary>
+            <param name="access_token"></param>
+            <param name="cate_id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Common">
+             <summary>
+            功能接口
+             </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Common.Upload_Img(System.String,System.String,System.IO.Stream)">
+             <summary>
+             上传图片
+             </summary>
+             <param name="access_token"></param>
+             <param name="fileName">图片名称,如1.jpg</param>
+             <param name="inputStream">图片名称,如1.jpg</param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"success", 
+            "image_url": "http://mmbiz.qpic.cn/mmbiz/4whpV1VZl2ibl4JWwwnW3icSJGqecVtRiaPxwWEIr99eYYL6AAAp1YBo12CpQTXFH6InyQWXITLvU4CU7kic4PcoXA/0"
+            }
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Express">
+            <summary>
+            邮费模板管理接口
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Express.Add(System.String,System.Object)">
+            <summary>
+            增加邮费模板
+            </summary>
+            <param name="access_token"></param>
+            <param name="content">
+            邮费模版，具体请参见官方文档
+            </param>
+            <returns>
+            {
+             "errcode": 0,
+            "errmsg": "success"， 
+            "template_id": 123456
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Express.Del(System.String,System.String)">
+             <summary>
+             删除邮费模板
+             </summary>
+             <param name="access_token"></param>
+             <param name="template_id">邮费模版id</param>
+             <returns>
+             {
+             "errcode": 0,
+            "errmsg": "success"
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Express.Del(System.String,System.Int32,System.Object)">
+             <summary>
+             修改邮费模板
+             </summary>
+             <param name="access_token"></param>
+             <param name="template_id">邮费模板ID</param>
+             <param name="delivery_template">邮费模板信息(字段说明详见增加邮费模板)</param>
+             <returns>
+             {
+             "errcode": 0,
+            "errmsg": "success"
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Express.Del(System.String,System.Int32)">
+             <summary>
+            获取指定ID的邮费模板
+             </summary>
+             <param name="access_token"></param>
+             <param name="template_id">邮费模板ID</param>
+             <returns>邮费模版详细信息，详细请参见官方文档</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Express.GetAll(System.String)">
+            <summary>
+            获取所有邮费模板
+            </summary>
+            <param name="access_token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Group">
+            <summary>
+            分组管理接口
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Group.Add(System.String,System.Object)">
+             <summary>
+             增加分组
+             </summary>
+             <param name="access_token"></param>
+             <param name="content">
+             {
+              "group_detail" : {
+               "group_name": "测试分组", 
+               "product_list" : [
+                   "pDF3iY9cEWyMimNlKbik_NYJTzYU", 
+                  "pDF3iY4kpZagQfwJ_LVQBaOC-LsM"
+              ]
+              }
+             }
+             
+             group_name	分组名称
+             product_list	商品ID集合
+             </param>
+             <returns>
+             {
+             "errcode":0,
+             "errmsg":"success",
+             "group_id": 19
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Group.Del(System.String,System.Int32)">
+            <summary>
+            删除分组
+            </summary>
+            <param name="access_token"></param>
+            <param name="group_id">分组ID</param>
+            <returns>
+            {
+            "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Group.PropertyMod(System.String,System.Int32,System.String)">
+            <summary>
+            修改分组属性
+            </summary>
+            <param name="access_token"></param>
+            <param name="group_id"></param>
+            <param name="group_name"></param>
+            <returns>
+            {
+             "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Group.ProductMod(System.String,System.Int32,System.Object)">
+            <summary>
+            修改分组商品
+            </summary>
+            <param name="access_token"></param>
+            <param name="group_id"></param>
+            <param name="product">分组商品信息, 数据示例：
+            [
+            {
+            	"product_id": "pDF3iY-CgqlAL3k8Ilz-6sj0UYpk",
+            	"mod_action": 1
+            }, 
+            {
+            	"product_id": "pDF3iY-RewlAL3k8Ilz-6sjsepp9",
+            	"mod_action": 0
+            }, 
+            ]
+            </param>
+            <returns>
+            {
+             "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Group.GetAll(System.String)">
+            <summary>
+            获取所有分组
+            </summary>
+            <param name="access_token"></param>
+            <returns>
+            {
+            "errcode": 0,
+            "errmsg": "success",
+            "groups_detail": [
+            	{
+            	  "group_id": 200077549,
+            	  "group_name": "最新上架"
+            	},
+            	{
+              "group_id": 200079772,
+              "group_name": "全球热卖"
+            }
+            ]
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Group.GetById(System.String,System.Int32)">
+             <summary>
+             根据分组ID获取分组信息
+             </summary>
+             <param name="access_token"></param>
+             <param name="group_id">分组ID</param>
+             <returns>
+             {
+            "errcode": 0,
+            "errmsg": "success",
+            "group_detail": {
+            	"group_id": 200077549,
+            	"group_name": "最新上架",
+            "product_list": 
+            [
+              "pDF3iYzZoY-Budrzt8O6IxrwIJAA",
+              "pDF3iY3pnWSGJcO2MpS2Nxy3HWx8",
+              "pDF3iY33jNt0Dj3M3UqiGlUxGrio"
+            ]
+            }
+            }
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Order">
+            <summary>
+            订单管理
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Order.GetById(System.String,System.String)">
+            <summary>
+            根据订单ID获取订单详情
+            </summary>
+            <param name="access_token"></param>
+            <param name="order_id">订单ID</param>
+            <returns>订单详情，具体请参见官方文档</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Order.GetByFilter(System.String,System.Int32,System.Int64,System.Int64)">
+             <summary>
+            据订单状态/创建时间获取订单详情
+             </summary>
+             <param name="access_token"></param>
+             <param name="status">订单状态(不带该字段-全部状态, 2-待发货, 3-已发货, 5-已完成, 8-维权中, )</param>
+             <param name="begintime">订单创建时间起始时间(不带该字段则不按照时间做筛选)</param>
+             <param name="endtime">订单创建时间终止时间(不带该字段则不按照时间做筛选)</param>
+             <returns>订单详情,参见官方文档</returns>
+        </member>
+        <member name="M:Netnr.WeChat.Order.SetDelivery(System.String,System.String,System.Int32,System.Int32,System.String,System.String)">
+             <summary>
+             
+             </summary>
+             <param name="access_token"></param>
+             <param name="order_id">订单ID</param>
+             <param name="need_delivery">商品是否需要物流(0-不需要，1-需要，无该字段默认为需要物流)</param>
+             <param name="is_others">是否为6.4.5表之外的其它物流公司(0-否，1-是，无该字段默认为不是其它物流公司)
+             6.4.5附：物流公司ID
+             物流公司	ID
+             =============================
+             邮政EMS	Fsearch_code
+             申通快递	002shentong
+             中通速递	066zhongtong
+             圆通速递	056yuantong
+             天天快递	042tiantian
+             顺丰速运	003shunfeng
+             韵达快运	059Yunda
+             宅急送	064zhaijisong
+             汇通快运	020huitong
+             易迅快递	zj001yixun
+             ============================
+             </param>
+             <param name="delivery_company">
+             物流公司ID(参考《物流公司ID》；
+             当need_delivery为0时，可不填本字段；
+             当need_delivery为1时，该字段不能为空；
+             当need_delivery为1且is_others为1时，本字段填写其它物流公司名称)</param>
+             <param name="delivery_track_no">
+             运单ID(
+             当need_delivery为0时，可不填本字段；
+             当need_delivery为1时，该字段不能为空；
+             )
+             </param>
+             <returns>
+             {
+            "errcode": 0,
+            "errmsg": "success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Order.Close(System.String,System.String)">
+             <summary>
+             关闭订单
+             </summary>
+             <param name="access_token"></param>
+             <param name="order_id">订单ID</param>
+             <returns>
+             {
+            "errcode": 0,
+            "errmsg": "success"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Shelf">
+            <summary>
+            货架管理接口
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Shelf.Add(System.String,System.Object)">
+             <summary>
+             增加货架
+             </summary>
+             <param name="access_token"></param>
+             <param name="content">货架详情，参见官方文档
+             注意：货架有五个控件，每个控件post的数据都不一样。
+             </param>
+             <returns>
+             {
+            "errcode":0,
+            "errmsg":"success",
+            "shelf_id": 12
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Shelf.Del(System.String,System.Int32)">
+             <summary>
+             删除货架
+             </summary>
+             <param name="access_token"></param>
+             <param name="shelf_id">货架ID</param>
+             <returns>
+             {
+             "errcode":0,
+            "errmsg":"success"
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Shelf.Mod(System.String,System.Int32,System.Object,System.String,System.String)">
+             <summary>
+             修改货架
+             </summary>
+             <param name="access_token"></param>
+             <param name="shelf_id">货架ID</param>
+             <param name="shelf_data">货架详情(字段说明详见增加货架)</param>
+             <param name="shelf_banner">货架banner(图片需调用图片上传接口获得图片Url填写至此，否则修改货架失败)</param>
+             <param name="shelf_name">货架名称</param>
+             <returns>
+             {
+             "errcode":0,
+            "errmsg":"success"
+            }
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Shelf.GetAll(System.String)">
+            <summary>
+            获取所有货架
+            </summary>
+            <param name="access_token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Shelf.GetById(System.String,System.Int32)">
+            <summary>
+            根据货架ID获取货架信息
+            </summary>
+            <param name="access_token"></param>
+            <param name="shelf_id">货架ID</param>
+            <returns>
+            {
+            "errcode": 0,
+            "errmsg": "success",
+            "shelf_info": {
+            	"module_infos": [...]
+            },
+            "shelf_banner": "http://mmbiz.qpic.cn/mmbiz/4whpV1VZl2ibp2DgDXiaic6WdflMpNdInS8qUia2BztlPu1gPlCDLZXEjia2qBdjoLiaCGUno9zbs1UyoqnaTJJGeEew/0",
+            "shelf_name": "新建货架",
+            "shelf_id": 97
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Stock">
+            <summary>
+            库存管理接口
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Stock.Add(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            增加库存
+            </summary>
+            <param name="access_token"></param>
+            <param name="product_id">商品ID</param>
+            <param name="sku_info">sku信息,格式"id1:vid1;id2:vid2",如商品为统一规格，则此处赋值为空字符串即可</param>
+            <param name="quantity">增加的库存数量</param>
+            <returns>
+            {
+            "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Stock.Reduce(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            减少库存
+            </summary>
+            <param name="access_token"></param>
+            <param name="product_id">商品ID</param>
+            <param name="sku_info">sku信息,格式"id1:vid1;id2:vid2"</param>
+            <param name="quantity">减少的库存数量</param>
+            <returns>
+            {
+            "errcode":0,
+            "errmsg":"success"
+            }
+            </returns>
+        </member>
+        <member name="T:Netnr.WeChat.MMPayMktTransfers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.MMPayMktTransfers.Sendredpack(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            发放普通红包 https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_1
+            </summary>
+            <param name="appid"></param>
+            <param name="mch_id"></param>
+            <param name="nonce_str"></param>
+            <param name="partner_trade_no"></param>
+            <param name="openid"></param>
+            <param name="send_name"></param>
+            <param name="amount"></param>
+            <param name="total_num"></param>
+            <param name="wishing"></param>
+            <param name="client_ip"></param>
+            <param name="act_name"></param>
+            <param name="remark"></param>
+            <param name="partnerKey"></param>
+            <param name="cert"></param>
+            <param name="certPassword"></param>
+            <param name="scene_id"></param>
+            <param name="risk_info"></param>
+            <param name="consume_mch_id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.MMPayMktTransfers.Promotion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.MMPayMktTransfers.Promotion.Transfers(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            企业付款业务
+            企业付款业务是基于微信支付商户平台的资金管理能力，为了协助商户方便地实现企业向个人付款，针对部分有开发能力的商户，提供通过API完成企业付款的功能。 
+            比如目前的保险行业向客户退保、给付、理赔。https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
+            </summary>
+            <param name="appid"></param>
+            <param name="mch_id"></param>
+            <param name="nonce_str"></param>
+            <param name="partner_trade_no"></param>
+            <param name="openid"></param>
+            <param name="check_name"></param>
+            <param name="amount"></param>
+            <param name="desc"></param>
+            <param name="spbill_create_ip"></param>
+            <param name="partnerKey"></param>
+            <param name="cert"></param>
+            <param name="certPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.NetnrCore">
+            <summary>
+            扩展方法
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToJson(System.Object,System.String)">
+            <summary>
+            object 转 JSON 字符串
+            </summary>
+            <param name="obj"></param>
+            <param name="DateTimeFormat">时间格式化</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToType(System.String,System.Type)">
+            <summary>
+            JSON字符串 转 类型
+            </summary>
+            <param name="json">JSON字符串</param>
+            <param name="type">类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToEntity``1(System.String)">
+            <summary>
+            JSON字符串 转 实体
+            </summary>
+            <typeparam name="T">实体泛型</typeparam>
+            <param name="json">JSON字符串</param>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToEntitys``1(System.String)">
+            <summary>
+            JSON字符串 转 实体
+            </summary>
+            <typeparam name="T">实体泛型</typeparam>
+            <param name="json">JSON字符串</param>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToEncode(System.String,System.String)">
+            <summary>
+            编码
+            </summary>
+            <param name="uri">内容</param>
+            <param name="charset">编码格式</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToDecode(System.String)">
+            <summary>
+            解码
+            </summary>
+            <param name="uriToDecode">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.ToTimestamp(System.DateTime,System.Boolean)">
+            <summary>
+            将Datetime转换成时间戳，10位：秒 或 13位：毫秒
+            </summary>
+            <param name="datetime"></param>
+            <param name="isms">毫秒，默认false为秒，设为true，返回13位，毫秒</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.NetnrCore.HttpTo">
+            <summary>
+            HTTP请求
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.HttpTo.HWRequest(System.String,System.String,System.String,System.String)">
+            <summary>
+            HttpWebRequest对象
+            </summary>
+            <param name="url">地址</param>
+            <param name="type">请求类型，默认GET</param>
+            <param name="data">发送数据，非GET、DELETE请求</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.HttpTo.Url(System.Net.HttpWebRequest,System.String)">
+            <summary>
+            HTTP请求
+            </summary>
+            <param name="request">HttpWebRequest对象</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.HttpTo.Get(System.String,System.String)">
+            <summary>
+            GET请求
+            </summary>
+            <param name="url">地址</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.HttpTo.Post(System.String,System.String,System.String)">
+            <summary>
+            POST请求
+            </summary>
+            <param name="url">地址</param>
+            <param name="data">发送数据</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.NetnrCore.CalcTo">
+            <summary>
+            算法、加密、解密
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.MD5(System.String,System.Int32)">
+            <summary>
+            MD5加密 小写
+            </summary>
+            <param name="s">需加密的字符串</param>
+            <param name="len">长度 默认32 可选16</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.EnDES(System.String,System.String)">
+            <summary> 
+            DES 加密 
+            </summary> 
+            <param name="Text">内容</param> 
+            <param name="sKey">密钥</param> 
+            <returns></returns> 
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.DeDES(System.String,System.String)">
+            <summary> 
+            DES 解密 
+            </summary> 
+            <param name="Text">内容</param> 
+            <param name="sKey">密钥</param> 
+            <returns></returns> 
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.SHA128(System.String)">
+            <summary>
+            20字节,160位
+            </summary>
+            <param name="str">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.SHA256(System.String)">
+            <summary>
+            32字节,256位
+            </summary>
+            <param name="str">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.SHA384(System.String)">
+            <summary>
+            48字节,384位
+            </summary>
+            <param name="str">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.SHA512(System.String)">
+            <summary>
+            64字节,512位
+            </summary>
+            <param name="str">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.HMAC_SHA1(System.String,System.String)">
+            <summary>
+            HMAC_SHA1 加密
+            </summary>
+            <param name="str">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.HMAC_SHA256(System.String,System.String)">
+            <summary>
+            HMAC_SHA256 加密
+            </summary>
+            <param name="str">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.HMACSHA384(System.String,System.String)">
+            <summary>
+            HMACSHA384 加密
+            </summary>
+            <param name="str">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.NetnrCore.CalcTo.HMACSHA512(System.String,System.String)">
+            <summary>
+            HMACSHA512 加密
+            </summary>
+            <param name="str">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Pay">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.UnifiedOrder(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String@,System.String@)">
+            <summary>
+            公共API => 统一下单
+            不需要证书 http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_1
+            应用场景 
+            除被扫支付场景以外，商户系统先调用该接口在微信支付服务后台生成预支付交易单，返回正确的预支付交易回话标识后再按扫码、JSAPI、APP等不同场景生成交易串调起支付。 
+            </summary>
+            <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+            <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+            <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+            <param name="nonce_str">(必填) String(32) 随机字符串,不长于32位</param>
+            <param name="body">(必填) String(32) 商品描述 商品或支付单简要描</param>
+            <param name="detail"> String(8192) 商品详情  商品名称明细列表</param>
+            <param name="attach"> String(127) 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据</param>
+            <param name="out_trade_no">(必填) String(32) 商家订单ID,32个字符内、可包含字母, 其他说明见第4.2节商户订单号:http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+            <param name="fee_type">符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见第4.2节货币类型: http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+            <param name="total_fee">(必填) Int 订单总金额，只能为整数，详见第4.2节支付金额:http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+            <param name="spbill_create_ip">(必填) String(32)终端IP APP和网页支付提交用户端IP，Native支付填调用微信支付API的机器IP。</param>
+            <param name="time_start">String(14) 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。</param>
+            <param name="time_expire">String(14) 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。</param>
+            <param name="goods_tag">String(32) 商品标记，代金券或立减优惠功能的参数，说明详见第10节代金券或立减优惠：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=10_1 </param>
+            <param name="notify_url">(必填) String(256)  接收微信支付异步通知回调地址 </param>
+            <param name="trade_type">(必填) String(16) 交易类型，取值如下：JSAPI，NATIVE，APP，详细说明见第4.2节参数规定：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+            <param name="product_id">(trade_type=NATIVE，此参数必传)String(32) 商品ID，trade_type=NATIVE，此参数必传。此id为二维码中包含的商品ID，商户自行定义。 </param>
+            <param name="openid">(trade_type=JSAPI，此参数必传)String(128)用户标识，trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识。下单前需要调用【网页授权获取用户信息】接口获取到用户的Openid。 </param>
+            <param name="partnerKey">API密钥</param>
+            <param name="returnMsg"></param>
+            <param name="xml"></param>
+            <returns>返回json字符串，格式参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_1 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.OrderQuery(System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 查询订单
+             不需要证书 
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_2
+             该接口提供所有微信支付订单的查询，商户可以通过该接口主动查询订单状态，完成下一步的业务逻辑。 
+             需要调用查询接口的情况： 
+            ◆　当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知； 
+            ◆　调用支付接口后，返回系统错误或未知交易状态情况； 
+            ◆　调用被扫支付API，返回USERPAYING的状态； 
+            ◆　调用关单或撤销接口API之前，需确认支付状态； 
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="transaction_id">String(32) 微信订单号 微信的订单号，优先使用 </param>
+             <param name="out_trade_no">(transaction_id为空时必填) String(32) 商户订单号 商户系统内部的订单号，当没提供transaction_id时需要传这个。 </param>
+             <param name="nonce_str">随机字符串 随机字符串，不长于32位。</param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_2 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.CloseOrder(System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 关闭订单
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_3
+             应用场景 
+             不需要证书 
+            以下情况需要调用关单接口：商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="transaction_id"></param>
+             <param name="out_trade_no">(transaction_id为空时必填) String(32) 商户订单号 商户系统内部的订单号，当没提供transaction_id时需要传这个。 </param>
+             <param name="nonce_str">随机字符串 随机字符串，不长于32位。</param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_3 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.RefundQuery(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 查询退款
+             不需要证书
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_5
+            应用场景 
+            提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。 
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+             <param name="nonce_str">(必填) 随机字符串 随机字符串，不长于32位。</param>
+             <param name="transaction_id">String(32) 微信订单号 微信的订单号，优先使用 </param>
+             <param name="out_trade_no">String(32) 商户订单号 transaction_id、out_trade_no二选一，如果同时存在优先级：transaction_id> out_trade_no </param>
+             <param name="out_refund_no">String(32) 商户退款单号 商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔 </param>
+             <param name="refund_id"> String(28) 微信退款单号  refund_id、out_refund_no、out_trade_no、transaction_id四个参数必填一个，如果同时存在优先级为： refund_id>out_refund_no>transaction_id>out_trade_no  </param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_5 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.RefundQuery(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 下载对账单
+             不需要证书
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_6
+            应用场景 
+            商户可以通过该接口下载历史交易清单。比如掉单、系统错误等导致商户侧和微信侧数据不一致，通过对账单核对后可校正支付状态。 
+            注意： 
+            1.微信侧未成功下单的交易不会出现在对账单中。支付成功后撤销的交易会出现在对账单中，跟原支付单订单号一致，bill_type为REVOKED； 
+            2.微信在次日9点启动生成前一天的对账单，建议商户10点后再获取； 
+            3.对账单中涉及金额的字段单位为“元”。 
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+             <param name="nonce_str">(必填) 随机字符串 随机字符串，不长于32位。</param>
+             <param name="bill_date">String(8) 对账单日起 下载对账单的日期，格式：20140603 </param>
+             <param name="bill_type">String(8) 账单类型  ALL，返回当日所有订单信息，默认值 SUCCESS，返回当日成功支付的订单； REFUND，返回当日退款订单； REVOKED，已撤销的订单 </param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 
+             成功时，数据以文本表格的方式返回，第一行为表头，后面各行为对应的字段内容，字段内容跟查询订单或退款结果一致，具体字段说明可查阅相应接口。 
+             参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_6 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.RefundQuery(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 测速上报
+             不需要证书
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_8
+            应用场景 
+            商户在调用微信支付提供的相关接口时，会得到微信支付返回的相关信息以及获得整个接口的响应时间。为提高整体的服务水平，
+            协助商户一起提高服务质量，微信支付提供了相关接口调用耗时和返回信息的主动上报接口，微信支付可以根据商户侧上报的数据进一步优化网络部署，完善服务监控，和商户更好的协作为用户提供更好的业务体验。 
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+             <param name="nonce_str">(必填) 随机字符串 随机字符串，不长于32位。</param>
+             <param name="interface_url">String(127) 接口URL  上报对应的接口的完整URL，类似： 
+            https://api.mch.weixin.qq.com/pay/unifiedorder
+            对于被扫支付，为更好的和商户共同分析一次业务行为的整体耗时情况，对于两种接入模式，请都在门店侧对一次被扫行为进行一次单独的整体上报，上报URL指定为： 
+            https://api.mch.weixin.qq.com/pay/micropay/total
+            关于两种接入模式具体可参考本文档章节：被扫支付商户接入模式
+            其它接口调用仍然按照调用一次，上报一次来进行。 
+             </param>
+             <param name="execute_time_">Int  接口耗时   接口耗时情况，单位为毫秒 </param>
+             <param name="return_code">String(16)  返回状态码   接口耗时情况，单位为毫秒 </param>
+             <param name="return_msg">String(128)  返回信息    返回信息，如非空，为错误原因 :签名失败; 参数格式校验错误 </param>
+             <param name="result_code">String(16)  业务结果    SUCCESS/FAIL </param>
+             <param name="err_code">String(32)  错误代码   </param>
+             <param name="err_code_des">String(128)  错误代码描述</param>
+             <param name="out_trade_no">String(32)  商户订单号 商户系统内部的订单号,商户可以在上报时提供相关商户订单号方便微信支付更好的提高服务质量。 </param>
+             <param name="user_ip">String(16)  访问接口IP   发起接口调用时的机器IP  </param>
+             <param name="time">String(14)  商户上报时间 系统时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。 其他详见第4.2节时间规则：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2  </param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_8 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Pay.MicroPay(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             提交被扫支付API
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=5_5
+             1.应用场景:收银员使用扫码设备读取微信用户刷卡授权码以后，二维码或条码信息传送至商户收银台，由商户收银台或者商户后台调用该接口发起支付。
+            是否需要证书:不需要。
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+             <param name="nonce_str">(必填) String(32) 随机字符串,不长于32位</param>
+             <param name="body">(必填) String(32) 商品描述 商品或支付单简要描</param>
+             <param name="detail"> String(8192) 商品详情  商品名称明细列表</param>
+             <param name="attach"> String(127) 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据</param>
+             <param name="out_trade_no">(必填) String(32) 商家订单ID,32个字符内、可包含字母, 其他说明见第4.2节商户订单号:http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+             <param name="fee_type">符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见第4.2节货币类型: http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+             <param name="total_fee">(必填) Int 订单总金额，只能为整数，详见第4.2节支付金额:http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=4_2 </param>
+             <param name="spbill_create_ip">(必填) String(32)终端IP APP和网页支付提交用户端IP，Native支付填调用微信支付API的机器IP。</param>
+             <param name="time_start">String(14) 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。</param>
+             <param name="time_expire">String(14) 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。</param>
+             <param name="goods_tag">String(32) 商品标记，代金券或立减优惠功能的参数，说明详见第10节代金券或立减优惠：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=10_1 </param>
+             <param name="auth_code">String(128) 授权码 扫码支付授权码，设备读取用户微信中的条码或者二维码信息 </param>
+             <param name="partnerKey">API密钥</param>
+             </summary>
+             <returns>返回json字符串，格式参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=5_5 </returns>
+        </member>
+        <member name="T:Netnr.WeChat.ReplayPassiveMessage">
+            <summary>
+            发送被动响应消息
+            注意：
+            1.回复图片等多媒体消息时需要预先上传多媒体文件到微信服务器，只支持认证服务号。
+            2.微信服务器在五秒内收不到响应会断掉连接，并且重新发起请求，总共重试三次，如果在调试中，发现用户无法收到响应的消息，可以检查是否消息处理超时。
+            3.假如服务器无法保证在五秒内处理并回复，必须直接回复空串，微信服务器不会对此作任何处理，并且不会发起重试。。这种情况下，可以使用客服消息接口进行异步回复。
+            http://mp.weixin.qq.com/wiki/index.php?title=%E5%8F%91%E9%80%81%E8%A2%AB%E5%8A%A8%E5%93%8D%E5%BA%94%E6%B6%88%E6%81%AF
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.RepayText(System.String,System.String,System.String)">
+            <summary>
+            回复文本消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.RepayNews(System.String,System.String,Netnr.WeChat.Entities.WeChatNews)">
+            <summary>
+            回复单图文消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="news"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.RepayNews(System.String,System.String,System.Collections.Generic.List{Netnr.WeChat.Entities.WeChatNews})">
+            <summary>
+            回复多图文消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="news"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.ReplayImage(System.String,System.String,System.String)">
+            <summary>
+            回复图片消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="media_id">已经上传到微信服务器的图片media_id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.ReplayVoice(System.String,System.String,System.String)">
+            <summary>
+            回复语音消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="media_id">已经上传到微信服务器的语音media_id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.ReplayVedio(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            回复视频消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="media_id">已经上传到微信服务器的视频media_id</param>
+            <param name="title">视频标题</param>
+            <param name="description">视频文字说明</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.ReplayPassiveMessage.ReplayMusic(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            回复音乐消息
+            </summary>
+            <param name="toUserName"></param>
+            <param name="fromUserName"></param>
+            <param name="title">音乐标题</param>
+            <param name="description">音乐描述</param>
+            <param name="musicUrl">音乐链接</param>
+            <param name="hqMusicUrl">高质量音乐链接，WIFI环境优先使用该链接播放音乐</param>
+            <param name="thumb_media_id">缩略图的媒体id，通过上传多媒体文件，得到的id</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.SecApi">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.SecApi.Pay">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.SecApi.Pay.Reverse(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            撤销支付API
+            http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=5_6
+            应用场景:支付交易返回失败或支付系统超时，调用该接口撤销交易。如果此订单用户支付失败，微信支付系统会将此订单关闭；如果用户支付成功，微信支付系统会将此订单资金退还给用户。
+            注意：7天以内的交易单可调用撤销，其他正常支付的单如需实现相同功能请调用申请退款API。提交支付交易后调用【查询订单API】，没有明确的支付结果再调用【撤销订单API】。
+            请求需要双向证书
+            </summary>
+            <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+            <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+            <param name="transaction_id"> String(32) 微信订单号 优先使用</param>
+            <param name="out_trade_no">String(32) 商户订单号 </param>
+            <param name="nonce_str">(必填) String(32) 随机字符串,不长于32位</param>
+            <param name="partnerKey">API密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.SecApi.Pay.Refund(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.String,System.String)">
+             <summary>
+             公共API => 申请退款
+             需要双向证书
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_4
+            应用场景 
+            当交易发生之后一段时间内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付款退还给买家，微信支付将在收到退款请求并且验证成功之后，按照退款规则将支付款按原路退到买家帐号上。 
+            注意： 
+            1.交易时间超过半年的订单无法提交退款； 
+            2.微信支付退款支持单笔交易分多次退款，多次退款需要提交原支付订单的商户订单号和设置不同的退款单号。一笔退款失败后重新提交，要采用原来的退款单号。总退款金额不能超过用户实际支付金额。 
+            3.接口提交成功后，还需要在微信商户后台由商户管理员审核退款
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="device_info"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+             <param name="nonce_str">(必填) 随机字符串 随机字符串，不长于32位。</param>
+             <param name="transaction_id">String(32) 微信订单号 微信的订单号，优先使用 </param>
+             <param name="out_trade_no">(transaction_id为空时必填) String(32) 商户订单号 transaction_id、out_trade_no二选一，如果同时存在优先级：transaction_id> out_trade_no </param>
+             <param name="out_refund_no">(必填) String(32) 商户退款单号 商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔 </param>
+             <param name="total_fee">(必填) int 总金额 订单总金额，单位为分，只能为整数。 </param>
+             <param name="refund_fee">(必填) int  退款金额 退款总金额，订单总金额，单位为分，只能为整数</param>
+             <param name="refund_fee_type">String(8) 货币种类 符合ISO 4217标准的三位字母代码，默认人民币：CNY</param>
+             <param name="op_user_id">(必填) String(32) 操作员 操作员帐号, 默认为商户号mch_id </param>
+             <param name="partnerKey">API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_4 </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Semantic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.WeChat.Semantic.Semproxy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Semantic.Semproxy.Semantic(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            语义理解
+            </summary>
+            <param name="access_token">根据appid和appsecret获取到的token</param>
+            <param name="query">输入文本串</param>
+            <param name="category">需要使用的服务类型，多个用“，”隔开，不能为空</param>
+            <param name="latitude">纬度坐标，与经度同时传入；与城市二选一传入</param>
+            <param name="longitude">经度坐标，与纬度同时传入；与城市二选一传入</param>
+            <param name="city">城市名称，与经纬度二选一传入</param>
+            <param name="region">区域名称，在城市存在的情况下可省；与经纬度二选一传入</param>
+            <param name="appid">公众号唯一标识，用于区分公众号开发者</param>
+            <param name="uid">用户唯一id（非开发者id），用户区分公众号下的不同用户（建议填入用户openid），如果为空，则无法使用上下文理解功能。appid和uid同时存在的情况下，才可以使用上下文理解功能。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Sns">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Sns.UserInfo(System.String,System.String,System.String)">
+             <summary>
+             第四步：拉取用户信息(需scope为 snsapi_userinfo)
+             </summary>
+             <param name="accessToekn">网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同</param>
+             <param name="openId">用户的唯一标识</param>
+             <param name="lang">返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语</param>
+             <returns>
+             正确时返回的JSON数据包如下：
+             {
+             "openid":" OPENID",
+             "nickname": NICKNAME,
+             "sex":"1",
+              "province":"PROVINCE"
+             "city":"CITY",
+             "country":"COUNTRY",
+             "headimgurl":    "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46", 
+            "privilege":[
+            "PRIVILEGE1"
+            "PRIVILEGE2"
+              ]
+            }
+            
+            错误时微信会返回JSON数据包如下（示例为openid无效）:
+            {"errcode":40003,"errmsg":" invalid openid "}
+             </returns>
+        </member>
+        <member name="T:Netnr.WeChat.Sns.OAuth2">
+            <summary>
+            对应微信API的  "用户管理"=> "网页授权获取用户基本信息”
+            http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Sns.OAuth2.Access_Token(System.String,System.String,System.String)">
+             <summary>
+             第二步：通过code换取网页授权access_token
+             </summary>
+             <param name="code">第一步获取的code参数</param>
+             <param name="appId">公众号的唯一标识</param>
+             <param name="appSecret">公众号的appsecret</param>
+             正确时返回的JSON数据包如下：
+            {
+            "access_token":"ACCESS_TOKEN",
+            "expires_in":7200,
+            "refresh_token":"REFRESH_TOKEN",
+            "openid":"OPENID",
+            "scope":"SCOPE"
+            }
+            错误时微信会返回JSON数据包如下（示例为Code无效错误）:
+            {"errcode":40029,"errmsg":"invalid code"}
+             <returns></returns>
+        </member>
+        <member name="M:Netnr.WeChat.Sns.OAuth2.Refresh_Token(System.String,System.String)">
+             <summary>
+             第三步：刷新access_token（如果需要）
+             由于access_token拥有较短的有效期，当access_token超时后，可以使用refresh_token进行刷新，refresh_token拥有较长的有效期（7天、30天、60天、90天），当refresh_token失效的后，需要用户重新授权。
+             </summary>
+             <param name="refreshToken">填写通过access_token获取到的refresh_token参数</param>
+             <param name="appId">公众号的唯一标识</param>
+             <returns>
+             正确时返回的JSON数据包如下：
+             {
+               "access_token":"ACCESS_TOKEN",
+               "expires_in":7200,
+               "refresh_token":"REFRESH_TOKEN",
+              "openid":"OPENID",
+               "scope":"SCOPE"
+             }
+             
+             错误时微信会返回JSON数据包如下（示例为Code无效错误）:
+            {"errcode":40029,"errmsg":"invalid code"}
+             </returns>
+        </member>
+        <member name="M:Netnr.WeChat.Sns.OAuth2.UserInfo(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="accessToekn"></param>
+            <param name="openId"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.WeChat.Tools">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.Tools.ShortUrl(System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             公共API => 转换短链接
+             不需要证书
+             http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_9
+            应用场景 
+            该接口主要用于扫码原生支付模式一中的二维码链接转成短链接(weixin://wxpay/s/XXXXXX)，减小二维码数据量，提升扫描速度和精确度。
+             </summary>
+             <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+             <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+             <param name="long_url">(必填) String(512) URL链接 需要转换的URL，签名用原串，传输需URL encode  </param>
+             <param name="nonce_str">(必填) 随机字符串 随机字符串，不长于32位。</param>
+             <param name="partnerKey">(必填)API密钥</param>
+             <returns> 参见：http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=9_9 </returns>
+        </member>
+        <member name="T:Netnr.WeChat.WXPay">
+            <summary>
+            微信支付 => 扫码原生支付 
+            http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=6_1
+            开发前，商户必须在公众平台后台设置支付回调URL。URL实现的功能：接收用户扫码后微信支付系统回调的productid和openid
+            </summary>
+        </member>
+        <member name="M:Netnr.WeChat.WXPay.Mode1(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            提交被扫支付API
+            http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=6_4
+            应用场景:　用户扫描商户展示在各种场景的二维码进行支付。
+            <param name="appid">(必填) String(32) 微信分配的公众账号ID</param>
+            <param name="mch_id">(必填) String(32) 微信支付分配的商户号</param>
+            <param name="time_stamp"> String(32) 微信支付分配的终端设备号，商户自定义</param>
+            <param name="nonce_str">(必填) String(32) 随机字符串,不长于32位</param>
+            <param name="product_id">(必填) String(32) 商品描述 商品或支付单简要描</param>
+            <param name="partnerKey">API密钥</param>
+            </summary>
+            <returns>返回支付链接，开发者需要自己生成相应的二维码展示给用户 </returns>
+        </member>
+        <member name="M:Netnr.WeChat.WXPay.Mode2(System.String)">
+            <summary>
+            提交被扫支付API
+            http://pay.weixin.qq.com/wiki/doc/api/index.php?chapter=6_4
+            模式二与模式一相比，流程更为简单，不依赖设置的回调支付URL。
+            商户后台系统先调用微信支付的统一下单接口，微信后台系统返回链接参数code_url，商户后台系统将code_url值生成二维码图片，用户使用微信客户端扫码后发起支付。
+            注意：code_url有效期为2小时，过期后扫码不能再发起支付。
+            <param name="code_url">(必填) 商户后台系统先调用微信支付的统一下单接口，微信后台系统返回链接参数code_url</param>
+            </summary>
+            <returns>返回支付链接，开发者需要自己生成相应的二维码展示给用户 </returns>
+        </member>
+    </members>
+</doc>

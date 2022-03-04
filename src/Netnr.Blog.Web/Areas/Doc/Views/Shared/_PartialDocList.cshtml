@@ -1,0 +1,60 @@
+@model SharedPageVM
+@{
+    ViewData["Title"] = "Discover docs";
+    var rows = Model.Rows as List<Netnr.Blog.Domain.DocSet>;
+    var uinfo = Netnr.Blog.Web.Apps.LoginService.Get(ViewContext.HttpContext);
+
+    if (ViewData["Nickname"] != null)
+    {
+        ViewData["Title"] = ViewData["Nickname"] + " docs";
+    }
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-3">
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <form action="@ViewContext.HttpContext.Request.Path" method="get">
+                <input class="form-control form-control-sm" name="q" value='@ViewData["q"]' aria-label="Search" placeholder="Search..." />
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in rows)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3 my-4">
+                @if (uinfo.UserId == item.Uid)
+                {
+                    @if (item.DsOpen != 1)
+                    {
+                        <i class="fa fa-lock text-success mr-1" title="私有"></i>
+                    }
+                    @if (item.DsOpen != 1 && !string.IsNullOrWhiteSpace(item.Spare1))
+                    {
+                        <a href="/doc/code/@(item.DsCode+"/?code="+item.Spare1)" target="_blank" class="fa fa-share-alt text-success mr-1" title="分享码查看链接"></a>
+                    }
+                }
+                <a href="/doc/code/@item.DsCode/">@item.DsName</a>
+                @if (uinfo.UserId == item.Uid)
+                {
+                    <a href="/doc/item/setting/@item.DsCode" class="fa fa-edit text-info ml-1" title="编辑"></a>
+                    <a href="/doc/item/del/@item.DsCode" class="fa fa-trash-o text-danger ml-1" title="删除" onclick="return confirm('确定删除?')"></a>
+                }
+                <p class="text-muted small">@(string.IsNullOrWhiteSpace(item.DsRemark) ? "暂无备注" : item.DsRemark)</p>
+                <div>
+                    <i class="fa fa-user text-muted"></i>
+                    <a href="/doc/user/@item.Uid">@item.Spare3</a>
+                    <small class="text-muted">@item.DsCreateTime?.ToString("yyyy-MM-dd HH:mm")</small>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <partial name="_PartialPaging4" />
+        </div>
+    </div>
+
+</div>

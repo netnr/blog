@@ -1,0 +1,44 @@
+﻿@Html.Raw(Netnr.SharedApp.QuoteTo.Html("the"))
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>@ViewData["Title"] @Html.Raw(GlobalTo.GetValue("Common:ChineseName"))</title>
+
+    @Html.Raw(Netnr.SharedApp.QuoteTo.Html("favicon,blog-seo,bootstrap.css,fa.css,jquery.js,bootstrap.js,jz.js"))
+
+    <link href="/css/global.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+<body>
+    @{
+        var vrv = ViewContext.RouteData.Values;
+        string ca = (vrv["controller"].ToString() + "/" + vrv["action"].ToString()).ToLower();
+
+        var canav = "account/login,account/register,home/auth,admin/write,admin/reply,admin/log,admin/logchart,mix/terms".Split(',');
+        var cafooter = "account/login,account/register,home/auth,home/completeinfo,home/write,store/nenos,store/qqcos,store/qnkodo,services/keyvalues,user/write,user/message,user/verify,user/setting,admin/index,admin/write,admin/reply,admin/log,admin/logchart,mix/terms,mix/faq,note/index".Split(',');
+    }
+    
+    <partial name="_PartialQuote" model="@("MirrorReadOnly")" />
+
+    @if (!canav.Contains(ca))
+    {
+        <partial name="_PartialNav" />
+    }
+
+    <div class="min200">
+        @RenderBody()
+    </div>
+
+    @if (!cafooter.Contains(ca))
+    {
+        <partial name="_PartialFooter" />
+    }
+
+    <partial name="_PartialQuote" model="@("fun.js")" />
+</body>
+</html>

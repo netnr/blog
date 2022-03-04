@@ -1,0 +1,94 @@
+@model SharedPageVM
+
+<link href="/css/home/view.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="container-fluid">
+    <div class="row">
+
+        @if (Model.Other != null)
+        {
+            switch (Model.Other?.ToString().ToLower())
+            {
+                case "laud":
+                    ViewData["title"] = "我的点赞";
+                    break;
+                case "mark":
+                    ViewData["title"] = "我的收藏";
+                    break;
+            }
+
+            <div class="col-sm-12">
+                <h4 class="mb-3">@ViewData["title"]（@Model.Pag.Total）</h4>
+
+                <!--列表-->
+                <partial name="_PartialViewWritingItem" model="Model.Rows" />
+
+                <!--分页-->
+                <partial name="_PartialPaging4" />
+            </div>
+        }
+        else
+        {
+            <div class="col-md-3 tagcount d-none d-sm-block">
+                <div class="list-group">
+                    <a href="javascript:void(0);" class="list-group-item"><i class="fa fa-tags fa-fw"></i> Tags</a>
+                    @{
+                        var dicTagBy = CommonService.UserWritingByTagCountQuery();
+                        var tags = CommonService.TagsQuery();
+                    }
+                    @foreach (var mo in dicTagBy.Keys)
+                    {
+                        var iconpath = PathTo.Combine(GlobalTo.GetValue("StaticResource:Server"), GlobalTo.GetValue("StaticResource:TagPath"), tags.FirstOrDefault(x => x.TagName == mo).TagIcon);
+
+                        <a href="/home/type/@mo" class="list-group-item">
+                            <img src="@iconpath" onerror="this.remove()" />@mo
+                            <span class="badge badge-light float-right">@dicTagBy[mo]</span>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <!--标签-->
+                <partial name="_PartialViewTag" />
+
+                <!--搜索-->
+                <form method="get">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-warning" type="submit" aria-label="搜索"><i class="fa fa-search fa-fw"></i></button>
+                        </div>
+                        <input type="text" class="form-control" aria-label="输入关键字" placeholder="Search，Enter" id="txtSearch" name="k" value='@Model.QueryString["k"]'>
+                    </div>
+                </form>
+
+                <!--标签类型-->
+                @if (Model.Temp != null)
+                {
+                    var joabs = Model.Temp.ToString().ToJObject();
+
+                    <div class="card border-secondary mb-3">
+                        <div class="card-body text-secondary">
+                            <span class="my-2 mr-3 float-left" href="#">
+                                <partial name="_PartialMakeTag" model="@joabs["tags"].ToJson()" />
+                            </span>
+                            <span>@joabs["abs"][0].ToString()</span>
+                            <a class="text-nowrap" href="@joabs["abs"][1].ToString()" target="_blank">[百科]</a>
+                        </div>
+                    </div>
+                }
+
+                <!--列表-->
+                <partial name="_PartialViewWritingItem" model="Model.Rows" />
+
+                <!--分页-->
+                <partial name="_PartialPaging4" />
+
+            </div>
+
+        }
+    </div>
+</div>
+
+<script src="/js/home/view.js" asp-append-version="true"></script>

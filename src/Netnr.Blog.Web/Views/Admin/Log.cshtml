@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "日志";
+}
+
+<style>
+    .datagrid-filter-icon {
+        position: absolute;
+        top: 0;
+        right: 4px;
+        color: #777;
+        cursor: pointer;
+        font-size: 1.3em !important;
+        border: 1px solid transparent;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <div id="Grid1" class="loadingimg"></div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("easyui"))
+<partial name="_PartialQuote" model="@("z.css,z.js")" />
+
+<script src="/js/admin/log.js" asp-append-version="true"></script>

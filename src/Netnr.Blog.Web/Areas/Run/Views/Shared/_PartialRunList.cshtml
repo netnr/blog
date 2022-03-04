@@ -1,0 +1,37 @@
+@model SharedPageVM
+
+@{
+    ViewData["Title"] = "Discover run";
+    if (ViewData["Nickname"] != null)
+    {
+        ViewData["Title"] = ViewData["Nickname"] + " run";
+    }
+
+    var rows = Model.Rows as List<Netnr.Blog.Domain.Run>;
+}
+
+<partial name="_PartialNav" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col my-4">
+            <p>We’ve found <b>@Model.Pag.Total.ToString("N0")</b> results</p>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in rows)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3 my-4">
+                <a href="/run/code/@item.RunCode" target="_blank">@item.RunRemark</a>
+                <a class="ml-2 text-info" href="/run/code/@item.RunCode/edit" title="edit"><i class="fa fa-edit"></i></a>
+                <div class="mt-1">
+                    <i class="fa fa-user text-muted"></i>
+                    <a href="/run/user/@item.Uid">@item.Spare3</a>
+                    <small class="text-muted mx-2">@item.RunCreateTime.Value.ToString("yyyy-MM-dd HH:mm")</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<partial name="_PartialPaging4" model="Model" />

@@ -1,0 +1,85 @@
+@model Netnr.Blog.Domain.Draw
+
+@{
+    ViewData["Title"] = "Form draw";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form id="fromid" class="my-5" action="/draw/code/saveform">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">类型</span>
+                    </div>
+                    <select class="custom-select" name="DrType" @(Model == null ? "" : "disabled")>
+                        @if (Model?.DrType == "mind")
+                        {
+                            <option value="draw">绘制（Draw）</option>
+                            <option value="mind" selected>思维导图（Mind Mapping）</option>
+                        }
+                        else
+                        {
+                            <option value="draw">绘制（Draw）</option>
+                            <option value="mind">思维导图（Mind Mapping）</option>
+                        }
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">标题</span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg" required name="DrName" value="@Model?.DrName" placeholder="标题名称" maxlength="50" autofocus />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">标题</span>
+                    </div>
+                    <textarea class="form-control" name="DrRemark" placeholder="描述" maxlength="200" rows="5">@Model?.DrRemark</textarea>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">分享</span>
+                    </div>
+                    <select class="custom-select" name="DrOpen">
+                        @if (Model?.DrOpen == 2)
+                        {
+                            <option value="1">公开（只读）</option>
+                            <option value="2" selected>私有</option>
+                        }
+                        else
+                        {
+                            <option value="1">公开（只读）</option>
+                            <option value="2">私有</option>
+                        }
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text">密码</span>
+                    </div>
+                    <input type="number" class="form-control" name="Spare1" value="@Model?.Spare1" placeholder="分享码，不需要分享可不填写" maxlength="20" />
+                </div>
+                <div class="input-group mb-3">
+                    <small class="form-text text-muted">私有时，可根据分享码 <b>查看</b>，4 - 20 位</small>
+                </div>
+                <input type="hidden" name="DrId" value="@Model?.DrId" />
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i>&nbsp;保存
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var open = $('select[name="DrOpen"]'), sc = $('input[name="Spare1"]');
+    //分享码
+    sc[0].readOnly = open.val() == 1;
+    open.change(function () {
+        sc[0].readOnly = open.val() == 1;
+    });
+    sc.on('input', function () {
+        if (this.value.length > 20) {
+            this.value = String(this.value).substring(0, 20);
+        }
+    });
+</script>

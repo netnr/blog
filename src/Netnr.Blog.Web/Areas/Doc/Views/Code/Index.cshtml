@@ -1,0 +1,335 @@
+@{
+    Layout = null;
+
+    var dscode = ViewContext.RouteData.Values["id"]?.ToString();
+    var uinfo = Netnr.Blog.Web.Apps.LoginService.Get(ViewContext.HttpContext);
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] @GlobalTo.GetValue("Common:EnglishName") Doc</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    @Html.Raw(Netnr.SharedApp.QuoteTo.Html("favicon,blog-seo"))
+
+    <style>
+        .sidebar ul li p.active > a {
+            border-right: 2px solid;
+            font-weight: 600;
+            color: #42b983;
+        }
+
+        .sidebar ul li.active > a {
+            font-weight: 400 !important;
+        }
+
+
+        /*目录*/
+        @@media (min-width: 800px) {
+            .nr-toc {
+                border: 1px solid #ddd;
+                display: block !important;
+            }
+        }
+
+        .toc {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            top: 15vh;
+            right: 2vw;
+            max-width: 200px;
+            max-height: 70vh;
+            overflow-y: auto;
+            border-left: none;
+            padding: 0 15px 0 0;
+            background-color: white;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .toc-list {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            padding-left: 15px;
+        }
+
+            .toc-list li {
+                list-style: none;
+                line-height: 2rem;
+            }
+
+        .toc-link {
+            display: block;
+            color: currentColor;
+            overflow: hidden;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 100%;
+        }
+
+        .is-collapsible {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 300ms ease-in-out;
+        }
+
+        .is-collapsed {
+            max-height: 0;
+        }
+
+        .is-active-link {
+            font-weight: 700;
+        }
+
+        .toc-link::before {
+            background-color: #eee;
+            content: " ";
+            display: inline-block;
+            height: inherit;
+            left: 0;
+            margin-top: -1px;
+            position: absolute;
+            width: 3px;
+        }
+
+        .is-active-link::before {
+            background-color: orange;
+        }
+
+        .toc::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .toc::-webkit-scrollbar-corner {
+            background-color: inherit;
+        }
+
+        .toc::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.12);
+            border-radius: 5px;
+            border: 1px solid transparent;
+            height: 140px;
+            background-clip: content-box;
+        }
+    </style>
+</head>
+<body>
+    <nav class="app-nav no-badge" style="display:none">
+        <ul>
+            <li>
+                @if (uinfo.UserId == 0)
+                {
+                    <a data-href="/doc/discover" title="Doc">
+                        <i class="fa fa-fw fa-lg fa-book text-success"></i>
+                    </a>
+                }
+                else
+                {
+                    <a data-href="/doc/user/@uinfo.UserId" title="Your doc">
+                        <i class="fa fa-fw fa-lg fa-book text-success"></i>
+                    </a>
+                }
+            </li>
+            <li>
+                <i class="fa fa-fw fa-th-list"></i> 菜单
+                <ul>
+                    <li>
+                        <a data-href="/doc/code/edit/@dscode" title="Add">
+                            <i class="fa fa-fw fa-plus"></i> 添加
+                        </a>
+                    </li>
+                    <li>
+                        <a data-href="/doc/code/catalog/@dscode" title="Menu">
+                            <i class="fa fa-fw fa-folder-open"></i> 目录
+                        </a>
+                    </li>
+                    <li></li>
+                    <li>
+                        <a data-href="/doc/code/edit/@dscode?dsdid=" title="Edit">
+                            <i class="fa fa-fw fa-lg fa-edit"></i> 编辑
+                        </a>
+                    </li>
+                    <li>
+                        <a data-href="/doc/code/del/@dscode?dsdid=" title="Delete">
+                            <i class="fa fa-fw fa-lg fa-trash"></i> 删除
+                        </a>
+                    </li>
+                    <li></li>
+                    <li>
+                        <a target="_blank" href="/doc/code/export/@dscode" title="Word">
+                            <i class="fa fa-fw fa-lg fa-file-word-o"></i> 导出
+                        </a>
+                    </li>
+                    <li>
+                        <a data-href="javascript:window.print()" title="Print">
+                            <i class="fa fa-fw fa-lg fa-print"></i> 打印
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="app">Loading ...</div>
+
+    <!--TOC-->
+    <div class="toc"></div>
+
+    <!--SEO-->
+    <div style="display:none">
+        @Html.Raw(ViewData["DocSeo"])
+    </div>
+
+    @Html.Raw(Netnr.SharedApp.QuoteTo.Html("fa.css,tocbot.js"))
+
+    <script>
+        window.$docsify = {
+            noEmoji: true,
+            auto2top: true,
+            loadSidebar: true,
+            routerMode: 'history',
+            markdown: {
+                renderer: {
+                    code: function (str, lang) {
+                        var ch = [];
+                        ch.push("<pre><code>");
+                        try {
+                            str = hljs.getLanguage(lang)
+                                ? hljs.highlight(str, { language: lang }).value
+                                : hljs.highlightAuto(str).value;
+                            ch.push(str);
+                        } catch (__) {
+                            ch.push(str);
+                        }
+                        ch.push("</code></pre>");
+                        return ch.join('');
+                    }
+                }
+            },
+            plugins: [
+                function (hook) {
+                    var tocnode = document.querySelector('.toc');
+                    hook.doneEach(function () {
+
+                        tocbot.init({
+                            tocSelector: '.toc',
+                            contentSelector: '#main',
+                            headingSelector: 'h2, h3, h4, h5, h6'
+                        });
+
+                        if (tocnode.children.length) {
+                            tocnode.classList.add("nr-toc");
+                            tocnode.querySelectorAll('a').forEach(item => {
+                                item.title = item.innerText;
+                                item.onclick = function (e) {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    document.querySelector(`[data-id="${decodeURIComponent(this.hash).substring(1)}"]`).click();
+                                }
+                            });
+                        }
+
+                        if(tocnode.querySelectorAll('a').length == 0 || document.body.clientHeight == document.body.scrollHeight){
+                            tocnode.style.transform = "translateY(-100vh)";
+                        }else{
+                            tocnode.style.transform = "";
+                        }
+                    });
+                }
+            ]
+        };
+
+        const nd = {
+            sourceList: [
+                "https://npm.elemecdn.com/docsify@4.12.2/lib/themes/vue.css",
+                "https://npm.elemecdn.com/docsify@4.12.2/lib/docsify.min.js",
+                "https://npm.elemecdn.com/@@highlightjs/cdn-assets@11.4.0/styles/vs.min.css",
+                "https://npm.elemecdn.com/@@highlightjs/cdn-assets@11.4.0/highlight.min.js"
+            ],
+            createNode: function (nn, html) {
+                let em = document.createElement(nn);
+                em.innerHTML = html;
+                return em;
+            },
+            init: function () {
+                let pas = [];
+                nd.sourceList.forEach(u => {
+                    pas.push(fetch(u).then(x => x.text()));
+                });
+
+                Promise.all(pas).then(res => {
+
+                    var head = document.getElementsByTagName("HEAD")[0];
+
+                    for (let i = 0; i < res.length; i++) {
+                        let suri = nd.sourceList[i];
+                        let text = res[i];
+                        if (text.includes("fonts.googleapis.com")) {
+                            text = "*" + text.split(';*')[1];
+                        }
+                        head.appendChild(nd.createNode(suri.endsWith('.js') ? "SCRIPT" : "STYLE", text));
+                    }
+
+                    document.querySelector(".app-nav").style.display = "";
+                })
+            }
+        }
+
+        nd.init();
+
+        //菜单点击处理
+        document.querySelector(".app-nav").onclick = function (e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement;
+
+            var alla = this.getElementsByTagName('a');
+            for (var i = 0; i < alla.length; i++) {
+                var ai = alla[i];
+                if (ai.contains(target)) {
+                    var ahref = ai.getAttribute('data-href');
+                    if (ahref) {
+                        var pns = location.pathname.split('/'), cid = pns[3], did = pns[4];
+                        switch (ai.title) {
+                            case "Edit":
+                                if (did.length == 19) {
+                                    location.href = ahref + did;
+                                } else {
+                                    location.href = "/doc/item/setting/" + cid;
+                                }
+                                break;
+                            case "Delete":
+                                if (did.length == 19) {
+                                    if (confirm("确定删除？")) {
+                                        location.href = ahref + did;
+                                    }
+                                } else {
+                                    alert("请选择子页面操作")
+                                }
+                                break;
+                            case "Print":
+                                {
+                                    if (document.body.className.indexOf("close") == -1) {
+                                        document.body.className += " close";
+                                    }
+                                    location.href = ahref;
+                                }
+                                break;
+                            default:
+                                location.href = ahref;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

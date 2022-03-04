@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31410.414
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Core", "Netnr.Core\Netnr.Core.csproj", "{7E8538A4-3518-4E49-AE28-2C77E59E60B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Login", "Netnr.Login\Netnr.Login.csproj", "{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.WeChat", "Netnr.WeChat\Netnr.WeChat.csproj", "{7810F844-36FD-4DE5-B3B7-C9B03CD33D86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Library", "01 Library", "{CF271090-3211-4C57-A076-C8D5D696E479}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50 Blog", "50 Blog", "{0668834E-BA3C-4AFA-B222-820234F53CD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Blog.Domain", "Netnr.Blog.Domain\Netnr.Blog.Domain.csproj", "{AB17B140-0696-4E64-AA2D-57B1C33618B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Blog.Data", "Netnr.Blog.Data\Netnr.Blog.Data.csproj", "{6294172A-81F8-4286-BE0B-495BDB872438}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Blog.Application", "Netnr.Blog.Application\Netnr.Blog.Application.csproj", "{E6561193-B387-404E-AC3A-0CE9D267BF26}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Netnr.Shared", "Netnr.Shared\Netnr.Shared.shproj", "{37A82AE4-A2F0-40C8-A084-237E256E543F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netnr.Blog.Web", "Netnr.Blog.Web\Netnr.Blog.Web.csproj", "{9A7BE0E5-E753-42EC-8B26-2835B9407BBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Shared", "00 Shared", "{7721F8EB-3645-4BE6-AE02-2E7F3A034D80}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Netnr.Shared\Netnr.Shared.projitems*{37a82ae4-a2f0-40c8-a084-237e256e543f}*SharedItemsImports = 13
+		Netnr.Shared\Netnr.Shared.projitems*{6294172a-81f8-4286-be0b-495bdb872438}*SharedItemsImports = 5
+		Netnr.Shared\Netnr.Shared.projitems*{9a7be0e5-e753-42ec-8b26-2835b9407bbb}*SharedItemsImports = 5
+		Netnr.Shared\Netnr.Shared.projitems*{ab17b140-0696-4e64-aa2d-57b1c33618b5}*SharedItemsImports = 5
+		Netnr.Shared\Netnr.Shared.projitems*{e6561193-b387-404e-ac3a-0ce9d267bf26}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E8538A4-3518-4E49-AE28-2C77E59E60B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E8538A4-3518-4E49-AE28-2C77E59E60B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E8538A4-3518-4E49-AE28-2C77E59E60B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E8538A4-3518-4E49-AE28-2C77E59E60B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7810F844-36FD-4DE5-B3B7-C9B03CD33D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7810F844-36FD-4DE5-B3B7-C9B03CD33D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7810F844-36FD-4DE5-B3B7-C9B03CD33D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7810F844-36FD-4DE5-B3B7-C9B03CD33D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB17B140-0696-4E64-AA2D-57B1C33618B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB17B140-0696-4E64-AA2D-57B1C33618B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB17B140-0696-4E64-AA2D-57B1C33618B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB17B140-0696-4E64-AA2D-57B1C33618B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6294172A-81F8-4286-BE0B-495BDB872438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6294172A-81F8-4286-BE0B-495BDB872438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6294172A-81F8-4286-BE0B-495BDB872438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6294172A-81F8-4286-BE0B-495BDB872438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6561193-B387-404E-AC3A-0CE9D267BF26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6561193-B387-404E-AC3A-0CE9D267BF26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6561193-B387-404E-AC3A-0CE9D267BF26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6561193-B387-404E-AC3A-0CE9D267BF26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A7BE0E5-E753-42EC-8B26-2835B9407BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A7BE0E5-E753-42EC-8B26-2835B9407BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A7BE0E5-E753-42EC-8B26-2835B9407BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A7BE0E5-E753-42EC-8B26-2835B9407BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E8538A4-3518-4E49-AE28-2C77E59E60B0} = {CF271090-3211-4C57-A076-C8D5D696E479}
+		{8AC2A4DB-976F-456A-85D2-A9F1EA914ED8} = {CF271090-3211-4C57-A076-C8D5D696E479}
+		{7810F844-36FD-4DE5-B3B7-C9B03CD33D86} = {CF271090-3211-4C57-A076-C8D5D696E479}
+		{AB17B140-0696-4E64-AA2D-57B1C33618B5} = {0668834E-BA3C-4AFA-B222-820234F53CD2}
+		{6294172A-81F8-4286-BE0B-495BDB872438} = {0668834E-BA3C-4AFA-B222-820234F53CD2}
+		{E6561193-B387-404E-AC3A-0CE9D267BF26} = {0668834E-BA3C-4AFA-B222-820234F53CD2}
+		{37A82AE4-A2F0-40C8-A084-237E256E543F} = {7721F8EB-3645-4BE6-AE02-2E7F3A034D80}
+		{9A7BE0E5-E753-42EC-8B26-2835B9407BBB} = {0668834E-BA3C-4AFA-B222-820234F53CD2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B748ADB4-97F0-4295-BA4D-ACC3AB5DA0B2}
+	EndGlobalSection
+EndGlobal

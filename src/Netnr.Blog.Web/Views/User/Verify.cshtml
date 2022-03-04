@@ -1,0 +1,19 @@
+@model SharedResultVM
+@{
+    ViewData["Title"] = "验证";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 py-5 text-center">
+            @if (Model.Code == 200)
+            {
+                <span class="badge badge-success py-3 px-3 fa-lg">@Model.Msg</span>
+            }
+            else
+            {
+                <span class="badge badge-danger py-3 px-3 fa-lg">@Model.Msg</span>
+            }
+        </div>
+    </div>
+</div>

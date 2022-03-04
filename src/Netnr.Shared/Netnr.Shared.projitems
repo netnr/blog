@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>37a82ae4-a2f0-40c8-a084-237e256e543f</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Netnr</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\DataKitController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\DataKitScript.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\DataKitBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\Models\TransferVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedImport\SharedImportVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Public\SharedTimingVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\DbHelperExtend.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\DbHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\SQLiteHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\OracleHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedApp\BuildTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedApp\QuoteTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\MySQLHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\PostgreSQLHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedAdo\SQLServerHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedApp\ClientTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedApp\DownTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedCompile\CompileTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\DataKitExtend.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\Models\DatabaseVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedFast\GlobalTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDrawing\ImageTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\Models\ColumnVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDataKit\Models\TableVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Public\SharedPageVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Public\SharedPaginationVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Public\SharedResultVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Public\SharedEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedDbContext\FactoryTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedIpArea\IpAreaTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedLogging\LoggingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedLogging\LoggingResultVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedLogging\LoggingTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedNpoi\NpoiTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedPinyin\PinyinTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedReady\ReadyTo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedUserAgent\UserAgentTo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)SharedImport\" />
+  </ItemGroup>
+</Project>

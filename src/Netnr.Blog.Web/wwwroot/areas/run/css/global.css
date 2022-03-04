@@ -1,0 +1,111 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #28a745;
+}
+
+.bg-vs pre {
+    background-color: white;
+}
+
+.bg-vs-dark, .bg-vs-dark pre {
+    background-color: #1e1e1e;
+}
+
+.navbar-dark input, .navbar-dark input:focus, .navbar-dark select, .navbar-dark select option {
+    background-color: #343a40;
+    color: rgb(255 255 255 / 50%);
+}
+
+.rune {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 57px;
+}
+
+.rune-full {
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.rune-full-pre {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-color: transparent !important;
+}
+
+.rune > pre {
+    position: absolute;
+    margin: 0;
+    z-index: 1;
+    width: 50%;
+    font-size: 18px;
+    overflow: hidden;
+    line-height: 24px;
+    padding: 0 0 0 75px;
+    border: 1px solid transparent;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+    .rune > pre.re1 {
+        height: 38%;
+    }
+
+    .rune > pre.re2 {
+        top: 38%;
+        height: 62%;
+        border-top-color: #ddd;
+    }
+
+    .rune > pre.re3 {
+        left: 50%;
+        height: 38%;
+        border-left-color: #ddd;
+    }
+
+    .rune > pre.re4 {
+        top: 38%;
+        left: 50%;
+        height: 62%;
+        background-color: white;
+        border-top-color: #ddd;
+        border-left-color: #ddd;
+    }
+
+        .rune > pre.re4 iframe {
+            position: absolute;
+            border: none;
+            height: 100%;
+            width: 100%;
+        }
+
+.rune .fre {
+    position: absolute;
+    right: 20px;
+    z-index: 2;
+    top: 10px;
+}
+
+    .rune .fre i {
+        vertical-align: middle;
+    }

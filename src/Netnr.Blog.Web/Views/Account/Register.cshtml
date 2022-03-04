@@ -1,0 +1,66 @@
+@model SharedResultVM
+@{
+    ViewData["Title"] = "注册";
+}
+
+<style>
+    .vbox {
+        margin: auto;
+        max-width: 320px;
+    }
+</style>
+
+<div class="vbox">
+    <div class="mt-4 text-center d-none d-md-block">
+        <a href="/"><img src="/favicon.svg" alt="@GlobalTo.GetValue("Common:EnglishName")" /></a>
+    </div>
+    <div class="my-4 text-center">
+        <h4>Join @GlobalTo.GetValue("Common:EnglishName")</h4>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model?.Msg))
+    {
+        <div class="alert @(Model.Code == 200?" alert-success":"alert-danger") alert-dismissible fade show">
+            <span>@Model?.Msg</span>
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        if (Model.Code == 200)
+        {
+            <script>$(function () { $('input').val(''); setTimeout(function () { location.href = "/account/login" }, 1000 * 3) });</script>
+        }
+    }
+    <div class="card">
+        <div class="card-body">
+            <form action="/account/register" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label>Email <span class="text-danger">*</span></label>
+                    <input type="email" required class="form-control" name="UserName" maxlength="50" placeholder="netnr@@netnr.com" autocomplete="off" value='@ViewData["UserName"]' autofocus>
+                </div>
+                <div class="form-group">
+                    <label>Password <span class="text-danger">*</span></label>
+                    <input type="password" required class="form-control" name="UserPwd" maxlength="20" placeholder="******" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Verify <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" required class="form-control" name="RegisterCode" maxlength="4" autocomplete="off">
+                        <div class="input-group-prepend">
+                            <img src="/account/registercode" onclick="this.src = '/account/registercode?' + new Date().valueOf()" />
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-block btn-success">Create an account</button>
+            </form>
+        </div>
+    </div>
+    <div class="mt-5 text-center pt-4">
+        <a class="mx-2" href="/mix/terms">条款</a>
+        <a class="mx-2" href="https://netnr.eu.org">联系</a>
+        |
+        <a class="mx-2" href="/">首页</a>
+        <a class="mx-2" href="/account/login">登录</a>
+    </div>
+</div>

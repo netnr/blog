@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "关于";
+    var rtd = Math.Ceiling((DateTime.Now - new DateTime(2015, 5, 1)).TotalDays);
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <input type="hidden" id="hid_rt" value="@rtd" />
+            <pre class="nr-ss">   <img src="/images/loading.svg" /></pre>
+        </div>
+    </div>
+</div>
+
+<script src="/js/mix/about.js" asp-append-version="true"></script>

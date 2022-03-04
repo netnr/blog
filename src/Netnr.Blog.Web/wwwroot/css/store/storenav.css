@@ -1,0 +1,115 @@
+﻿/*进度条*/
+.divProgress {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 0;
+    bottom: 0;
+    z-index: 9;
+    height: 3px;
+    background-color: #D44B47;
+}
+
+/*菜单*/
+#storeMenu a img {
+    height: 40px;
+    padding: 3px;
+    border-radius: 32px;
+    margin: 0 10px 10px 0;
+    border: 2px dashed transparent;
+}
+
+    #storeMenu a img:hover {
+        border-color: #FF03F7;
+    }
+
+#divBucket {
+    overflow-y: auto;
+    font-size: 1.05rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#seBucket {
+    width: auto;
+}
+
+/*公共*/
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 4px 2px;
+}
+
+.tbList {
+    width: 99.8%;
+    margin-bottom: 0;
+}
+
+    .tbList tr td input {
+        width: 1.05em;
+        height: 1.05em;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .tbList tr td a {
+        color: #424e67;
+        text-decoration: none;
+    }
+
+        .tbList tr td a:hover {
+            color: #3B8CFF;
+        }
+
+    .tbList tr:hover {
+        border-color: #F2F6FD;
+        background-color: #F6FAFF;
+    }
+
+    .tbList tr.in {
+        border-color: #F2F6FD;
+        background-color: #F6FAFF;
+    }
+
+.item-tool {
+    position: relative;
+}
+
+.it-control {
+    top: 2px;
+    right: 5px;
+    display: none;
+    position: absolute;
+}
+
+.item-tool:hover .it-control {
+    display: block;
+}
+
+.it-control a {
+    margin-right: 15px;
+    white-space: nowrap;
+}
+
+    .it-control a.ic-down {
+        color: #3B8CFF;
+    }
+
+    .it-control a.ic-del, .it-control a.ic-del:hover {
+        color: red;
+    }
+
+
+/*路径*/
+#divNavPath {
+    font-size: 1rem;
+}
+
+    #divNavPath a {
+        color: #2277da;
+        padding: 0 10px 0;
+        white-space: nowrap;
+    }
+
+    #divNavPath span {
+        padding: 0 10px 0;
+        white-space: nowrap;
+    }

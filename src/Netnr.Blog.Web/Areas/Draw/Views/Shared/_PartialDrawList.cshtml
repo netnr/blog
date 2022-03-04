@@ -1,0 +1,70 @@
+@model SharedPageVM
+
+@{
+    ViewData["Title"] = "Discover draw";
+    if (ViewData["Nickname"] != null)
+    {
+        ViewData["Title"] = ViewData["Nickname"] + " draw";
+    }
+
+    var uinfo = Netnr.Blog.Web.Apps.LoginService.Get(ViewContext.HttpContext);
+    var rows = Model.Rows as List<Netnr.Blog.Domain.Draw>;
+
+    string ca = ViewContext.RouteData.Values["controller"].ToString().ToLower() + "/" + ViewContext.RouteData.Values["action"].ToString().ToLower();
+    string rid = ViewContext.RouteData.Values["id"]?.ToString().ToLower();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-5 mb-2">
+            @if (ca == "user/index" && uinfo.UserId.ToString() == rid)
+            {
+                <a class="float-right" href="/draw/code/form">Add</a>
+            }
+            We’ve found <b>@Model.Pag.Total.ToString("N0")</b> results
+        </div>
+        @if (rows.Count > 0)
+        {
+            foreach (var item in rows)
+            {
+                <div class="col-md-6 col-lg-4 col-xl-3 my-4">
+                    @if (uinfo.UserId == item.Uid)
+                    {
+                        @if (item.DrOpen != 1)
+                        {
+                            <i class="fa fa-lock text-success mr-1" title="私有"></i>
+                        }
+                        @if (item.DrOpen != 1 && !string.IsNullOrWhiteSpace(item.Spare1))
+                        {
+                            <a href="/draw/code/@(item.DrId+"/?code="+item.Spare1)" target="_blank" class="fa fa-share-alt text-success mr-1" title="分享码查看链接"></a>
+                        }
+                    }
+                    <a class="card-title" href="/draw/code/@item.DrId/">@item.DrName</a>
+                    @if (uinfo.UserId == item.Uid)
+                    {
+                        <a href="/draw/code/form/@item.DrId" class="fa fa-edit text-info" title="编辑"></a>
+                        <a href="/draw/code/del/@item.DrId" class="fa fa-trash-o text-danger" title="删除" onclick="return confirm('确定删除?')"></a>
+                    }
+                    <p class="text-muted small">@(string.IsNullOrWhiteSpace(item.DrRemark) ? "暂无备注" : item.DrRemark)</p>
+                    <div>
+                        @if (item.DrType == "draw")
+                        {
+                            <span title="绘图" class="mr-2 badge badge-success text-white">Draw</span>
+                        }
+                        else
+                        {
+                            <span title="思维导图" class="mr-2 badge badge-info text-white">Mind</span>
+                        }
+                        <i class="fa fa-user text-muted"></i>
+                        <a href="/draw/user/@item.Uid">@item.Spare3</a>
+                        <small class="text-muted">@item.DrCreateTime?.ToString("yyyy-MM-dd HH:mm")</small>
+                    </div>
+                </div>
+            }
+
+            <div class="col-12">
+                <partial name="_PartialPaging4" model="Model" />
+            </div>
+        }
+    </div>
+</div>

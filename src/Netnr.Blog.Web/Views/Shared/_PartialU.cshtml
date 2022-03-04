@@ -1,0 +1,117 @@
+@model Netnr.Blog.Domain.UserInfo
+@{
+    ViewData["Title"] = Model.Nickname;
+
+    var uinfo = Netnr.Blog.Web.Apps.LoginService.Get(ViewContext.HttpContext);
+
+    var isme = uinfo.UserId == Model.UserId;
+}
+
+<input type="hidden" id="hid_isme" value='@(isme?1:0)' />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row duib">
+                <div class="col-md-3">
+                    @{
+                        var lgphoto = "/favicon.svg";
+                        if (!string.IsNullOrWhiteSpace(Model.UserPhoto))
+                        {
+                            lgphoto = PathTo.Combine(GlobalTo.GetValue("StaticResource:Server"), GlobalTo.GetValue("StaticResource:AvatarPath"), Model.UserPhoto);
+                        }
+
+                        Model.UserSay = string.IsNullOrEmpty(Model.UserSay) ? "这个人很懒，什么也没有留下。^_^ " : Model.UserSay;
+                    }
+                    <img class="rounded-circle mw-100" id="userp" src="@lgphoto" onerror="this.src = '/favicon.svg'; this.onerror = null;" />
+                </div>
+                <div class="col-md-4">
+                    <h2>@Model.Nickname</h2>
+                    @if (Model.UserName == Model.OpenId1 || Model.UserName == Model.OpenId2 || Model.UserName == Model.OpenId3 || Model.UserName == Model.OpenId4 || Model.UserName == Model.OpenId5 || Model.UserName == Model.OpenId5 || Model.UserName == Model.OpenId6)
+                    {
+                        <h5>第三方登录</h5>
+                    }
+                    else
+                    {
+                        <a class="h5" href="/u/@Model.UserName">@Model.UserName</a>
+                    }
+                    <hr />
+                    <p>@Model.UserCreateTime.Value.ToString("yyyy-MM-dd") 加入</p>
+                    <p><a href="mailto:@Model.UserMail">@Model.UserMail</a></p>
+                    <p>
+                        @if (!string.IsNullOrWhiteSpace(Model.UserUrl))
+                        {
+                            <a href='@(Model.UserUrl.Contains("//")?Model.UserUrl:"http://"+Model.UserUrl)'>@Model.UserUrl</a>
+                        }
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <div class="card border-info">
+                        <div class="card-header">
+                            <button class='btn btn-light btn-min float-right @(isme?"":"d-none")' id="btnsayedit">
+                                <i class="fa fa-pencil"></i> 编辑
+                            </button>
+                            <i class="fa fa-circle fa-lg text-danger"></i>
+                            <i class="fa fa-circle fa-lg text-warning"></i>
+                            <i class="fa fa-circle fa-lg text-success"></i>
+                        </div>
+                        <div class="card-body min200" id="saybody">
+                            <div>@Model.UserSay</div>
+                            <div class="d-none">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="UserSay" rows="3">@Model.UserSay</textarea>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-light" id="btnsaycancel">取消</button>
+                                    <button type="button" class="btn btn-warning" id="btnsaysave">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="ModalUserPhoto">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">修改头像</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>根据邮箱从 <a href="https://cn.gravatar.com" target="_blank" title="全球公认的头像">gravatar</a> 获得头像</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="txtUserMail" value="@Model.UserMail" maxlength="50" placeholder="netnr@@netnr.com">
+                        <div class="input-group-prepend">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" id="btnGetGp">获取头像</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>或者说，本地上传头像（400 x 400，2M）</label>
+                    <input type="file" class="form-control" id="fileUploadPhoto">
+                </div>
+                <div class="form-group">
+                    <label>头像预览</label>
+                    <div class="text-center">
+                        <img id="imgPreviewPhoto" class="rounded-circle mw-100" src="@lgphoto" onerror="this.src = '/favicon.svg';" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="btnSaveUserPhoto">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/u/index.js" asp-append-version="true"></script>
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("md5.js"))

@@ -1,0 +1,47 @@
+@model Netnr.Blog.Domain.Run
+@{
+    Layout = null;
+}
+@if (Model == null)
+{
+    @Html.Raw("Bad")
+}
+else
+{
+    var html = Model.RunContent1;
+    var pure = string.Empty;
+    if (string.IsNullOrWhiteSpace(ViewData["pure"]?.ToString()))
+    {
+        pure = $@"<div style='position:fixed;bottom:20px;right:30px;z-index:999;opacity:.5;filter:alpha(opacity=50)' title='The addition parameter pure=1 is removed'>
+<a href='javascript:void(0);' class='nr-console-switch' style='color:#777'>Switch</a>
+<a href='/run/code/{Model.RunCode}/edit' style='color:#777;margin:0 5px'>Source</a>
+<a href='/run/code/{Model.RunCode}?pure=1' style='color:#777'>Close</a>
+</div>";
+    }
+
+    if (Model.RunContent1.Contains("</head>") && Model.RunContent1.Contains("</body>"))
+    {
+        //CSS
+        if (!string.IsNullOrWhiteSpace(Model.RunContent3))
+        {
+            html = html.Replace("</head>", $"\n<style>\n{Model.RunContent3}\n</style>\n</head>");
+        }
+
+        //JS
+        if (!string.IsNullOrWhiteSpace(Model.RunContent2))
+        {
+            pure += $"\n<script src='/areas/run/js/oconsole.js?1'></script>\n<script>\n{Model.RunContent2}\n</script>\n</body>";
+        }
+        html = html.Replace("</body>", pure);
+
+        @Html.Raw(html)
+    }
+    else
+    {
+        @Html.Raw(html + pure)
+
+        <style>@Html.Raw(Model.RunContent3)</style>
+        <script src='/areas/run/js/oconsole.js?1'></script>
+        <script>@Html.Raw(Model.RunContent2)</script>
+    }
+}

@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "日志图表";
+}
+
+<style>
+    .h300 {
+        height: 300px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 my-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <select class="custom-select" id="setime">
+                        <option value="0">今天</option>
+                        <option value="-1">昨天</option>
+                        <option value="-7" selected>最近7天</option>
+                        <option value="-30">最近30天</option>
+                    </select>
+                </div>
+                <div class="input-group-prepend">
+                    <select class="custom-select" id="segroup">
+                        <option value="">全部</option>
+                        <option value="1" selected>用户</option>
+                        <option value="2">爬虫</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mb-3">
+            <div id="chart1" class="h300"></div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div id="fieldLogSystemName"></div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div id="fieldLogBrowserName"></div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div id="fieldLogAction"></div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div id="fieldLogReferer"></div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("highcharts.js"))
+
+<script src="/js/admin/logchart.js" asp-append-version="true"></script>

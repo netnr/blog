@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+		<DefineConstants>$(DefineConstants)TRACE;ImportBase;</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DefineConstants>$(DefineConstants)TRACE;ImportBase;</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="6.1.2" />
+		<PackageReference Include="MailKit" Version="3.1.1" />
+		<PackageReference Include="jieba.NET" Version="0.42.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Netnr.Blog.Data\Netnr.Blog.Data.csproj" />
+		<ProjectReference Include="..\Netnr.Login\Netnr.Login.csproj" />
+	</ItemGroup>
+	
+	<Import Project="..\Netnr.Shared\Netnr.Shared.projitems" Label="Shared" />
+
+</Project>

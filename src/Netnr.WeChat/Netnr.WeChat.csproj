@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2;netstandard2.1</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>微信SDK，一个轻量级的，极致简约的微信公众平台SDK</Description>
+    <Authors>netnr</Authors>
+    <Company>netnr</Company>
+    <PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageTags>netnr wechat weixin 微信 公众号</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <DocumentationFile>Netnr.WeChat.xml</DocumentationFile>
+    <Version>1.1.1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>favicon.png</PackageIcon>
+    <Copyright>netnr</Copyright>
+    <RepositoryUrl>https://github.com/netnr</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+    <NoWarn>1701;1702;1591;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="favicon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

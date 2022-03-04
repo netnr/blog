@@ -1,0 +1,62 @@
+@model SharedResultVM
+@{
+    ViewData["Title"] = "登录";
+
+    var listQuickLogin = Netnr.Blog.Application.ThirdLoginService.GetQuickLogin();
+}
+
+<link href="/css/account/login.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="vbox">
+    <div class="mt-4 text-center d-none d-md-block">
+        <a href="/"><img src="/favicon.svg" alt="@GlobalTo.GetValue("Common:EnglishName")" /></a>
+    </div>
+    <div class="my-4 text-center">
+        <h4>Sign in to @GlobalTo.GetValue("Common:EnglishName")</h4>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model?.Msg))
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <span>@Model?.Msg</span>
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <form action="/account/login" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="remember" value="1" />
+
+                <div class="form-group">
+                    <label>Username or email address</label>
+                    <input type="text" required class="form-control" name="UserName" maxlength="50" placeholder="netnr@@netnr.com" autocomplete="off" autofocus>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required class="form-control" name="UserPwd" maxlength="20" placeholder="******" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-block btn-success">Sign in</button>
+            </form>
+            @if (GlobalTo.GetValue<bool>("OAuthLogin:enable"))
+            {
+                <div class="otherlogin">
+                    @foreach (var login in listQuickLogin)
+                    {
+                        <a href="/account/auth/@login.Key">
+                            <img src="@login.Icon" title="@login.Name" />
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mt-5 text-center pt-5">
+        <a class="mx-2" href="/mix/terms">条款</a>
+        <a class="mx-2" href="https://netnr.eu.org">联系</a>
+        |
+        <a class="mx-2" href="/">首页</a>
+        <a class="mx-2" href="/account/register">注册</a>
+    </div>
+</div>

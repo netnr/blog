@@ -1,0 +1,92 @@
+@model Netnr.Blog.Domain.Gist
+@{
+    var mo = Model ?? new Netnr.Blog.Domain.Gist();
+}
+
+@if (Model != null)
+{
+    ViewData["Title"] = "Editing " + mo.GistFilename;
+
+    <div class="container-fluid mb-4 cp-header">
+        <div class="row mt-4 mb-3">
+            <div class="col-12 text-right">
+                <div class="float-left">
+                    <i class="fa fa-file-code-o fa-fw fa-2x text-muted mr-sm-2"></i>
+                </div>
+                <div class="float-left text-left">
+                    <h5>Editing <a href="/gist/code/@mo.GistCode">@mo.GistFilename</a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    ViewData["Title"] = "Create a new Gist";
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 gn-hint">
+                <h1>Instantly share code, notes, and snippets.</h1>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row gn-header">
+        <div class="col-12 mb-3">
+            <input type="text" class="form-control" placeholder="Gist description…" id="txtRemark" value="@mo.GistRemark" maxlength="200" />
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <select class="custom-select" id="selanguage" data-value="@(string.IsNullOrWhiteSpace(mo.GistLanguage)?"javascript":mo.GistLanguage)">
+                                <optgroup label="Language"></optgroup>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Filename including extension…" id="txtFilename" value="@mo.GistFilename" maxlength="50" />
+                        <div class="input-group-prepend d-none">
+                            <select class="custom-select" id="setheme" data-value="@(string.IsNullOrWhiteSpace(mo.GistTheme)?"vs":mo.GistTheme)">
+                                <optgroup label="Theme">
+                                    <option value="vs">vs</option>
+                                    <option value="vs-dark">vs-dark</option>
+                                    <option value="hc-black">hc-black</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body ged" id="editor">
+                    <i class="fa fa-arrows-alt fa-fw efull-btn" title="Switch the full screen" id="sfs"></i>
+                </div>
+                <div class="editor-bottom-line"></div>
+                <input type="hidden" id="hidContent" value="@(string.IsNullOrWhiteSpace(mo.GistContent)?"console.log(\"Hello world!\");":mo.GistContent)" />
+                <input type="hidden" id="hidCode" value="@mo.GistCode" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3 text-right">
+            @if (Model == null)
+            {
+                <button class="btn btn-warning nrSaveGist ml-sm-2">Create public gist</button>
+            }
+            else
+            {
+                <a href="/gist/code/@mo.GistCode" class="btn btn-outline-danger mr-sm-2">Cancel</a>
+                <button class="btn btn-warning nrSaveGist">Update public gist</button>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.Raw(Netnr.SharedApp.QuoteTo.Html("monaco-editor"))
+
+<script src="/areas/gist/js/home/index.js" asp-append-version="true"></script>

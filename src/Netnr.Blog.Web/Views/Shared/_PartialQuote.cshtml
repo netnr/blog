@@ -1,0 +1,46 @@
+@model string
+@{
+    var listQuote = Model.Split(',').ToList();
+}
+@foreach (var item in listQuote)
+{
+    switch (item)
+    {
+        case "MirrorReadOnly":
+            if (GlobalTo.GetValue<bool>("ReadOnly"))
+            {
+                <div class="alert alert-warning text-center p-1 m-0 invisible nrMsiro">Mirror site is read only &nbsp; <a href="https://www.netnr.com">www.netnr.com</a> &nbsp; 镜像站点只读</div>
+                <script>
+                    setTimeout(function () {
+                        var msiroNode = document.querySelector(".nrMsiro"),
+                            pn = location.pathname.toLowerCase(),
+                            ep = ["/draw/mind", "/draw/code/m", "/draw/code/d", "/run"],
+                            isep = false;
+                        for (var i = 0; i < ep.length; i++) {
+                            if (pn.indexOf(ep[i]) == 0) {
+                                isep = true;
+                                break;
+                            }
+                        }
+                        if (isep) {
+                            document.body.removeChild(msiroNode)
+                        } else {
+                            msiroNode.className = msiroNode.className.replace(" invisible", "");
+                        }
+                    }, 0);
+                </script>
+            }
+            break;
+        case "z.css":
+            <link href="/lib/jquery-easyui-z/z.css" rel="stylesheet" asp-append-version="true" />
+            break;
+
+        case "z.js":
+            <script src="/lib/jquery-easyui-z/z.js" asp-append-version="true"></script>
+            break;
+
+        case "fun.js":
+            <script src="/js/fun.js" asp-append-version="true" async defer></script>
+            break;
+    }
+}

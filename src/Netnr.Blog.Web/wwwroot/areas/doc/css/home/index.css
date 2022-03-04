@@ -1,0 +1,32 @@
+﻿.ndnav a {
+    color: white;
+}
+
+    .ndnav a.dropdown-item {
+        color: #333;
+    }
+
+    .ndnav a:hover {
+        color: #ffc107;
+    }
+
+.ndcar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+    .ndcar .carousel-inner, .ndcar .carousel-item {
+        height: 100%;
+    }
+
+    .ndcar .carousel-item {
+        text-align: center;
+        padding-top: 280px;
+        transition: padding-top .4s;
+    }

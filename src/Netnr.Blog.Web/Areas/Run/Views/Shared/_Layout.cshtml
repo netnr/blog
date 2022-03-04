@@ -1,0 +1,29 @@
+﻿@Html.Raw(Netnr.SharedApp.QuoteTo.Html("the"))
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    @Html.Raw(Netnr.SharedApp.QuoteTo.Html("favicon"))
+
+    <meta name="keywords" content=@GlobalTo.GetValue("Common:EnglishName") Run,在线javascript代码编辑器,js代码在线测试调试,js在线运行工具,html,css,jquery,runjs类似,jsrun类似,jsfiddle国内类似" />
+    <meta name="description" content="@GlobalTo.GetValue("Common:EnglishName") Run，在线编写、展示html、js、css代码，拥有实时预览、分享、代码高亮、自动完成等多项特性" />
+
+    <title>@ViewData["Title"]</title>
+
+    @Html.Raw(Netnr.SharedApp.QuoteTo.Html("bootstrap.css,fa.css,jquery.js,bootstrap.js"))
+
+    <link rel="stylesheet" href="/areas/run/css/global.css" asp-append-version="true" />
+
+</head>
+<body>
+    <partial name="_PartialQuote" model="@("MirrorReadOnly")" />
+
+    @RenderBody()
+
+    <partial name="_PartialQuote" model="@("fun.js")" />
+</body>
+</html>

@@ -1,0 +1,1285 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Netnr.Core.CacheTo">
+            <summary>
+            缓存
+            </summary>
+        </member>
+        <member name="F:Netnr.Core.CacheTo.memoryCache">
+            <summary>
+            缓存
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.CacheTo.Get(System.String)">
+            <summary>
+            获取数据缓存
+            </summary>
+            <param name="key">键</param>
+        </member>
+        <member name="M:Netnr.Core.CacheTo.Set(System.String,System.Object,System.Int32,System.Boolean)">
+            <summary>
+            设置数据缓存
+            变化时间过期（平滑过期）。表示缓存连续2个小时没有访问就过期（TimeSpan.FromSeconds(7200)）。
+            </summary>
+            <param name="key">键</param>
+            <param name="value">值</param>
+            <param name="second">过期时间，默认7200秒 </param>
+            <param name="sliding">是否相对过期，默认是；否，则固定时间过期</param>
+        </member>
+        <member name="M:Netnr.Core.CacheTo.SetOption(System.String,System.Object,System.Int32,System.Boolean,System.Action{System.Runtime.Caching.CacheItemPolicy})">
+            <summary>
+            设置数据缓存
+            变化时间过期（平滑过期）。表示缓存连续2个小时没有访问就过期（TimeSpan.FromSeconds(7200)）。
+            </summary>
+            <param name="key">键</param>
+            <param name="value">值</param>
+            <param name="second">过期时间，默认7200秒 </param>
+            <param name="sliding">是否相对过期，默认是；否，则固定时间过期</param>
+            <param name="action">更多策略配置</param>
+        </member>
+        <member name="M:Netnr.Core.CacheTo.Remove(System.String)">
+            <summary>
+            移除指定数据缓存
+            </summary>
+            <param name="key">键</param>
+        </member>
+        <member name="M:Netnr.Core.CacheTo.RemoveAll">
+            <summary>
+            移除全部缓存
+            </summary>
+        </member>
+        <member name="T:Netnr.Core.CalcTo">
+            <summary>
+            算法、加密、解密
+            </summary>
+        </member>
+        <member name="F:Netnr.Core.CalcTo.encoding">
+            <summary>
+            编码
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.AESBuild(System.String,System.String)">
+            <summary>
+            AES 构建
+            </summary>
+            <param name="key">密钥，默认空</param>
+            <param name="iv">固定16位，默认空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.AESEncrypt(System.String,System.Security.Cryptography.Aes)">
+            <summary>
+            AES 加密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="aesAlg">AES构建对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.AESEncrypt(System.String,System.String,System.String)">
+            <summary>
+            AES 加密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="key">密钥</param>
+            <param name="iv">iv 16位 默认空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.AESDecrypt(System.String,System.Security.Cryptography.Aes)">
+            <summary>
+            AES 解密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="aesAlg">AES构建对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.AESDecrypt(System.String,System.String,System.String)">
+            <summary>
+            AES 解密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="key">密钥</param>
+            <param name="iv">iv 16位 默认空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.DESBuild(System.String,System.String)">
+            <summary>
+            AES 构建
+            </summary>
+            <param name="key">密钥，默认空</param>
+            <param name="iv">固定8位，默认空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.DESEncrypt(System.String,System.Security.Cryptography.DES)">
+            <summary>
+            DES 加密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="DESalg">DES 对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.DESEncrypt(System.String,System.String,System.String)">
+            <summary>
+            DES 加密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="key">密钥</param>
+            <param name="iv">固定8位，默认空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.DESDecrypt(System.String,System.Security.Cryptography.DES)">
+            <summary>
+            DES 解密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="DESalg">DES 对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.DESDecrypt(System.String,System.String,System.String)">
+            <summary>
+            DES 解密
+            </summary>
+            <param name="txt">字符串</param>
+            <param name="key">密钥</param>
+            <param name="iv">默认为空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.GetHashString(System.Security.Cryptography.HashAlgorithm,System.String)">
+            <summary>
+            SHA 加密
+            </summary>
+            <param name="ha"></param>
+            <param name="txt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.MD5(System.String,System.Int32)">
+            <summary>
+            MD5加密 小写
+            </summary>
+            <param name="txt">需加密的字符串</param>
+            <param name="len">长度 默认32 可选16</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.SHA_1(System.String)">
+            <summary>
+            20字节,160位
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.SHA_256(System.String)">
+            <summary>
+            32字节,256位
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.SHA_384(System.String)">
+            <summary>
+            48字节,384位
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.SHA_512(System.String)">
+            <summary>
+            64字节,512位
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.HMAC_SHA1(System.String,System.String)">
+            <summary>
+            HMAC_SHA1 加密
+            </summary>
+            <param name="txt">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.HMAC_SHA256(System.String,System.String)">
+            <summary>
+            HMAC_SHA256 加密
+            </summary>
+            <param name="txt">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.HMAC_SHA384(System.String,System.String)">
+            <summary>
+            HMACSHA384 加密
+            </summary>
+            <param name="txt">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.HMAC_SHA512(System.String,System.String)">
+            <summary>
+            HMACSHA512 加密
+            </summary>
+            <param name="txt">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CalcTo.HMAC_MD5(System.String,System.String)">
+            <summary>
+            HMACMD5 加密
+            </summary>
+            <param name="txt">内容</param>
+            <param name="key">密钥</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.CmdTo">
+            <summary>
+            调用cmd
+            </summary>
+        </member>
+        <member name="F:Netnr.Core.CmdTo.IsWindows">
+            <summary>
+            是Windows系统
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.CmdTo.PSInfo(System.String,System.String)">
+            <summary>
+            ProcessStartInfo
+            </summary>
+            <param name="Arguments">参数命令</param>
+            <param name="FileName">执行程序，Windows默认cmd，Linux默认bash</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CmdTo.Execute(System.String,System.String)">
+            <summary>
+            执行（简单）
+            </summary>
+            <param name="Arguments">参数命令</param>
+            <param name="FileName">执行程序，Windows默认cmd，Linux默认bash</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CmdTo.Execute(System.String,System.String,System.Action{System.Diagnostics.Process,Netnr.Core.CmdTo.CliResult})">
+            <summary>
+            执行（自定义）
+            </summary>
+            <param name="Arguments">参数命令</param>
+            <param name="FileName">执行程序，Windows默认cmd，Linux默认bash</param>
+            <param name="apc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.CmdTo.Execute(System.Diagnostics.ProcessStartInfo,System.Action{System.Diagnostics.Process,Netnr.Core.CmdTo.CliResult})">
+            <summary>
+            执行
+            </summary>
+            <param name="psi"></param>
+            <param name="apc"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.CmdTo.CliResult">
+            <summary>
+            输出
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.CmdTo.CliResult.CrProcess">
+            <summary>
+            进程
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.CmdTo.CliResult.CrOutput">
+            <summary>
+            标准输出
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.CmdTo.CliResult.CrError">
+            <summary>
+            错误输出
+            </summary>
+        </member>
+        <member name="T:Netnr.Core.ConsoleTo">
+            <summary>
+            输出
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.ConsoleTo.CurrentCacheLog">
+            <summary>
+            缓存
+            </summary>
+        </member>
+        <member name="F:Netnr.Core.ConsoleTo.WriteN">
+            <summary>
+            写入标记
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.ConsoleTo.Log(System.Exception)">
+            <summary>
+            写入错误信息
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Netnr.Core.ConsoleTo.Log(System.Object)">
+            <summary>
+            写入消息
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Netnr.Core.ConsoleTo.SaveLog">
+            <summary>
+            保存日志
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.ConsoleTo.InvokeMenu(System.Type)">
+            <summary>
+            调用菜单
+            </summary>
+            <param name="ctype"></param>
+        </member>
+        <member name="T:Netnr.Core.FileTo">
+            <summary>
+            文件
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.FileTo.WriteText(System.String,System.String,System.Text.Encoding,System.Boolean)">
+            <summary>
+            流写入
+            </summary>
+            <param name="content">内容</param>
+            <param name="fileFullPath">文件完整物理路径</param>
+            <param name="e">编码</param>
+            <param name="isAppend">默认追加，false覆盖</param>
+        </member>
+        <member name="M:Netnr.Core.FileTo.WriteText(System.String,System.String,System.Boolean)">
+            <summary>
+            写入
+            </summary>
+            <param name="content"></param>
+            <param name="fileFullPath">文件完整物理路径</param>
+            <param name="isAppend"></param>
+        </member>
+        <member name="M:Netnr.Core.FileTo.ReadText(System.String,System.Text.Encoding)">
+            <summary>
+            读取
+            </summary>
+            <param name="fileFullPath">文件完整物理路径</param>
+            <param name="e">编码 默认UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.FileTo.CopyDirectory(System.IO.DirectoryInfo,System.IO.DirectoryInfo,System.Collections.Generic.List{System.String})">
+            <summary>
+            拷贝目录
+            </summary>
+            <param name="source">源目录</param>
+            <param name="target">新目录</param>
+            <param name="ignoreFolder">忽略文件夹</param>
+        </member>
+        <member name="M:Netnr.Core.FileTo.CopyDirectory(System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            拷贝目录
+            </summary>
+            <param name="sourceDirectory">源目录</param>
+            <param name="targetDirectory">新目录</param>
+            <param name="ignoreFolder">忽略文件夹</param>
+        </member>
+        <member name="T:Netnr.Core.HttpTo">
+            <summary>
+            HTTP请求
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.HWRequest(System.String,System.String,System.Byte[])">
+            <summary>
+            HttpWebRequest对象
+            </summary>
+            <param name="url">地址</param>
+            <param name="type">请求类型，默认GET</param>
+            <param name="data">发送数据，非GET、DELETE请求</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.Stream(System.Net.HttpWebRequest,System.Net.HttpWebResponse@,System.String)">
+            <summary>
+            HTTP请求
+            </summary>
+            <param name="request">HttpWebRequest对象</param>
+            <param name="charset">编码，默认utf-8</param>
+            <param name="response">输出</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.DownloadSave(System.Net.HttpWebRequest,System.String,System.String)">
+            <summary>
+            HTTP请求
+            </summary>
+            <param name="request">HttpWebRequest对象</param>
+            <param name="fullFilePath">存储完整路径</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.Url(System.Net.HttpWebRequest,System.String)">
+            <summary>
+            HTTP请求
+            </summary>
+            <param name="request">HttpWebRequest对象</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.Get(System.String,System.String)">
+            <summary>
+            GET请求
+            </summary>
+            <param name="url">地址</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.Post(System.String,System.String,System.String)">
+            <summary>
+            POST请求
+            </summary>
+            <param name="url">地址</param>
+            <param name="data">发送数据</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.HttpTo.Post(System.String,System.Byte[],System.String)">
+            <summary>
+            POST请求
+            </summary>
+            <param name="url">地址</param>
+            <param name="bytes">发送数据</param>
+            <param name="charset">编码，默认utf-8</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.LamdaTo">
+            <summary>
+            动态生成lamda表达式
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.True``1">
+            <summary>
+            创建lambda表达式：p=>true
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.False``1">
+            <summary>
+            创建lambda表达式：p=>false
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.OrderExpression``2(System.String)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="TKey">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.Equal``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName == propertyValue
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.NotEqual``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName != propertyValue
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.GreaterThan``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName > propertyValue
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.LessThan``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>  propertyValue > p.propertyName 
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.GreaterThanOrEqual``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName >= propertyValue
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.LessThanOrEqual``2(System.String,``1)">
+            <summary>
+            创建lambda表达式：p=>propertyValue >= p.propertyName 
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <typeparam name="S">参数类型</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.Contains``1(System.String,System.String)">
+            <summary>
+            创建lambda表达式：p=>p.propertyName.Contains(propertyValue)
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.LamdaTo.NotContains``1(System.String,System.String)">
+            <summary>
+            创建lambda表达式：!(p=>p.propertyName.Contains(propertyValue))
+            </summary>
+            <typeparam name="T">对象名称（类名）</typeparam>
+            <param name="propertyName">字段名称（数据库中字段名称）</param>
+            <param name="propertyValue">数据值</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.ParsingTo">
+            <summary>
+            解析
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.RemoveComment(System.String)">
+            <summary>
+            移除注释
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.IsMail(System.String)">
+            <summary>
+            是邮件地址
+            </summary>
+            <param name="txt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.IsLinkPath(System.String)">
+            <summary>
+            是合法链接路径（数字、字母、下划线）；可为多级路径，如：abc/xyz ；为空时返回不合法
+            </summary>
+            <param name="txt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.JsSafeJoin(System.String)">
+            <summary>
+            JS安全拼接
+            </summary>
+            <param name="txt">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.FormatByteSize(System.Double,System.Int32)">
+            <summary>
+            字节可视化
+            </summary>
+            <param name="size">字节大小</param>
+            <param name="keep">保留</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.ParsingTo.FormatMillisecondsSize(System.Double,System.String)">
+            <summary>
+            毫秒可视化
+            </summary>
+            <param name="ms">秒</param>
+            <param name="format">格式化</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.PathTo">
+            <summary>
+            路径
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.PathTo.Combine(System.String[])">
+            <summary>
+            路径结合，默认 / 拼接
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.QueryableTo">
+            <summary>
+            查询支持处理
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.QueryableTo.OrderBy``1(System.Linq.IQueryable{``0},System.String,System.String)">
+            <summary>
+            排序
+            </summary>
+            <param name="query"></param>
+            <param name="sorts">排序字段，支持多个，逗号分割</param>
+            <param name="orders">排序类型，支持多个，逗号分割</param>
+        </member>
+        <member name="T:Netnr.Core.RandomTo">
+            <summary>
+            生成随机字符
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.RandomTo.StrCode(System.Int32,System.String)">
+            <summary>
+            随机字符 验证码
+            </summary>
+            <param name="strLen">长度 默认4个字符</param>
+            <param name="source">自定义随机的字符源</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RandomTo.NumCode(System.Int32,System.String)">
+            <summary>
+            随机字符 纯数字
+            </summary>
+            <param name="strLen">长度 默认4</param>
+            <param name="source">生成的源字符串 默认0-9</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.RsaTo">
+            <summary> 
+            RSA加密解密及RSA签名和验证
+            </summary> 
+        </member>
+        <member name="M:Netnr.Core.RsaTo.RSAKey(System.String@,System.String@)">
+            <summary>
+            RSA 的密钥产生 产生私钥 和公钥 
+            </summary>
+            <param name="xmlKeys"></param>
+            <param name="xmlPublicKey"></param>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.RSAEncrypt(System.String,System.String)">
+            <summary>
+            RSA的加密函数  string
+            </summary>
+            <param name="xmlPublicKey"></param>
+            <param name="m_strEncryptString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.RSAEncrypt(System.String,System.Byte[])">
+            <summary>
+            RSA的加密函数 byte[]
+            </summary>
+            <param name="xmlPublicKey"></param>
+            <param name="EncryptString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.RSADecrypt(System.String,System.String)">
+            <summary>
+            RSA的解密函数  string
+            </summary>
+            <param name="xmlPrivateKey"></param>
+            <param name="m_strDecryptString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.RSADecrypt(System.String,System.Byte[])">
+            <summary>
+            RSA的解密函数  byte
+            </summary>
+            <param name="xmlPrivateKey"></param>
+            <param name="DecryptString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.GetHash(System.String,System.Byte[]@)">
+            <summary>
+            获取Hash描述表 
+            </summary>
+            <param name="m_strSource"></param>
+            <param name="HashData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.GetHash(System.String,System.String@)">
+            <summary>
+            获取Hash描述表 
+            </summary>
+            <param name="m_strSource"></param>
+            <param name="strHashData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.GetHash(System.IO.FileStream,System.Byte[]@)">
+            <summary>
+            获取Hash描述表 
+            </summary>
+            <param name="objFile"></param>
+            <param name="HashData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.GetHash(System.IO.FileStream,System.String@)">
+            <summary>
+            获取Hash描述表
+            </summary>
+            <param name="objFile"></param>
+            <param name="strHashData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureFormatter(System.String,System.Byte[],System.Byte[]@)">
+            <summary>
+            RSA签名
+            </summary>
+            <param name="p_strKeyPrivate"></param>
+            <param name="HashbyteSignature"></param>
+            <param name="EncryptedSignatureData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureFormatter(System.String,System.Byte[],System.String@)">
+            <summary>
+            RSA签名
+            </summary>
+            <param name="p_strKeyPrivate"></param>
+            <param name="HashbyteSignature"></param>
+            <param name="m_strEncryptedSignatureData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureFormatter(System.String,System.String,System.Byte[]@)">
+            <summary>
+            RSA签名
+            </summary>
+            <param name="p_strKeyPrivate"></param>
+            <param name="m_strHashbyteSignature"></param>
+            <param name="EncryptedSignatureData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureFormatter(System.String,System.String,System.String@)">
+            <summary>
+            RSA签名
+            </summary>
+            <param name="p_strKeyPrivate"></param>
+            <param name="m_strHashbyteSignature"></param>
+            <param name="m_strEncryptedSignatureData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureDeformatter(System.String,System.Byte[],System.Byte[])">
+            <summary>
+            RSA 签名验证
+            </summary>
+            <param name="p_strKeyPublic"></param>
+            <param name="HashbyteDeformatter"></param>
+            <param name="DeformatterData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureDeformatter(System.String,System.String,System.Byte[])">
+            <summary>
+            RSA 签名验证
+            </summary>
+            <param name="p_strKeyPublic"></param>
+            <param name="p_strHashbyteDeformatter"></param>
+            <param name="DeformatterData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureDeformatter(System.String,System.Byte[],System.String)">
+            <summary>
+            RSA 签名验证
+            </summary>
+            <param name="p_strKeyPublic"></param>
+            <param name="HashbyteDeformatter"></param>
+            <param name="p_strDeformatterData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.RsaTo.SignatureDeformatter(System.String,System.String,System.String)">
+            <summary>
+            RSA 签名验证
+            </summary>
+            <param name="p_strKeyPublic"></param>
+            <param name="p_strHashbyteDeformatter"></param>
+            <param name="p_strDeformatterData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.SystemStatusTo">
+            <summary>
+            系统状态
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.Is64BitOperatingSystem">
+            <summary>
+            确定当前操作系统是否为64位操作系统
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.MachineName">
+            <summary>
+            获取此本地计算机的NetBIOS名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.OSVersion">
+            <summary>
+            获取当前平台标识符和版本号
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.ProcessorCount">
+            <summary>
+            获取当前计算机上的处理器数量
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.ProcessorName">
+            <summary>
+            处理器名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.ProcessorUsage">
+            <summary>
+            处理器使用率
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.SystemDirectory">
+            <summary>
+            获取系统目录的标准路径
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.SystemPageSize">
+            <summary>
+            获取操作系统的内存页面中的字节数
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.TickCount">
+            <summary>
+            获取自系统启动以来经过的毫秒数
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.UserDomainName">
+            <summary>
+            获取与当前用户关联的网络域名
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.UserName">
+            <summary>
+            获取当前登录到操作系统的用户的用户名
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.Version">
+            <summary>
+            获取公共语言运行时的主要，次要，内部和修订版本号
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.FrameworkDescription">
+            <summary>
+            获取运行应用程序的.NET安装的名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.OSDescription">
+            <summary>
+            获取描述应用程序正在运行的操作系统的字符串
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.OS">
+            <summary>
+            代表操作系统平台
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.TotalPhysicalMemory">
+            <summary>
+            总物理内存 B
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.FreePhysicalMemory">
+            <summary>
+            可用物理内存 B
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.SwapTotal">
+            <summary>
+            总交换空间（Linux）B
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.SwapFree">
+            <summary>
+            可用交换空间（Linux）B
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.UsePhysicalMemory">
+            <summary>
+            使用物理内存
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.LogicalDisk">
+            <summary>
+            逻辑磁盘 B
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.Model">
+            <summary>
+            型号
+            </summary>
+        </member>
+        <member name="P:Netnr.Core.SystemStatusTo.OperatingSystem">
+            <summary>
+            操作系统
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.GetOSPlatform">
+            <summary>
+            获取平台
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.SystemStatusTo.PlatformForWindows">
+            <summary>
+            WINDOWS
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.TotalPhysicalMemory">
+            <summary>
+            获取物理内存 B
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.FreePhysicalMemory">
+            <summary>
+            获取可用内存 B
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.LogicalDisk">
+            <summary>
+            获取磁盘信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.ProcessorName">
+            <summary>
+            获取处理器名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.CPUUsage">
+            <summary>
+            获取CPU使用率 %
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.RunTime">
+            <summary>
+            运行时长
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.Model">
+            <summary>
+            获取型号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForWindows.OperatingSystem">
+            <summary>
+            获取操作系统
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.SystemStatusTo.PlatformForLinux">
+            <summary>
+            Linux系统
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.MemInfo(System.String)">
+            <summary>
+            获取 /proc/meminfo
+            </summary>
+            <param name="pkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.CpuInfo(System.String)">
+            <summary>
+            获取 /proc/cpuinfo
+            </summary>
+            <param name="pkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.LogicalDisk">
+            <summary>
+            获取磁盘信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.CPUUsage">
+            <summary>
+            获取CPU使用率 %
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.RunTime">
+            <summary>
+            运行时长
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.Model">
+            <summary>
+            获取型号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.PlatformForLinux.OperatingSystem">
+            <summary>
+            获取操作系统
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.ToView">
+            <summary>
+            可视化输出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.SystemStatusTo.ProgressBar(System.Int64,System.Int64,System.Boolean,System.String)">
+            <summary>
+            进度条
+            </summary>
+            <param name="m">分子</param>
+            <param name="d">分母</param>
+            <param name="isc">是否转换</param>
+            <param name="desc">说明</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.TreeTo">
+            <summary>
+            Tree常用方法
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.TreeTo.ListToTree``1(System.Collections.Generic.List{``0},System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            数据集合转JSON
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="pidField">父ID键</param>
+            <param name="idField">ID键</param>
+            <param name="startPid">开始的PID</param>
+            <param name="childrenNodeName">子节点名称，默认children</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Core.TreeTo.FindToTree``1(System.Collections.Generic.List{``0},System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            根据节点找到所有子节点（不包含自身节点）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="pidField">父ID键</param>
+            <param name="idField">ID键</param>
+            <param name="startPid">开始的PID</param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.UniqueTo">
+            <summary>
+            生成唯一标识
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.UniqueTo.LongId">
+            <summary>
+            根据Guid获取唯一数字序列，19位
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Core.ZipTo">
+            <summary>
+            压缩
+            </summary>
+        </member>
+        <member name="M:Netnr.Core.ZipTo.Create(System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            创建打包
+            </summary>
+            <param name="pathName">文件完整路径-（可选）包内文件名</param>
+            <param name="zipPath">zip 完整路径，默认添加的第一个文件同目录下</param>
+        </member>
+        <member name="M:Netnr.Core.ZipTo.Create(System.String,System.String)">
+            <summary>
+            创建打包
+            </summary>
+            <param name="fullPath">需打包的文件夹完整路径</param>
+            <param name="zipPath">zip 完整路径，默认文件夹同目录</param>
+        </member>
+        <member name="M:Netnr.Core.ZipTo.Extract(System.String,System.String)">
+            <summary>
+            解压提取
+            </summary>
+            <param name="zipPath">zip 完整路径</param>
+            <param name="dirName">文件完整路径-包内文件名（可选）</param>
+        </member>
+        <member name="T:Netnr.Extend">
+            <summary>
+            常用方法拓展
+            </summary>
+        </member>
+        <member name="M:Netnr.Extend.ToJson(System.Object,System.Boolean,System.String)">
+            <summary>
+            object 转 JSON 字符串
+            </summary>
+            <param name="obj"></param>
+            <param name="isSpace">缩进输出</param>
+            <param name="DateTimeFormat">时间格式化</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToJObject(System.String)">
+            <summary>
+            解析 JSON字符串 为JObject对象
+            </summary>
+            <param name="json">JSON字符串</param>
+            <returns>JObject对象</returns>
+        </member>
+        <member name="M:Netnr.Extend.ToJArray(System.String)">
+            <summary>
+            解析 JSON字符串 为JArray对象
+            </summary>
+            <param name="json">JSON字符串</param>
+            <returns>JArray对象</returns>
+        </member>
+        <member name="M:Netnr.Extend.ToType(System.String,System.Type)">
+            <summary>
+            JSON字符串 转 类型
+            </summary>
+            <param name="json">JSON字符串</param>
+            <param name="type">类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToEntity``1(System.String)">
+            <summary>
+            JSON字符串 转 实体
+            </summary>
+            <typeparam name="T">实体泛型</typeparam>
+            <param name="json">JSON字符串</param>
+        </member>
+        <member name="M:Netnr.Extend.ToEntitys``1(System.String)">
+            <summary>
+            JSON字符串 转 实体
+            </summary>
+            <typeparam name="T">实体泛型</typeparam>
+            <param name="json">JSON字符串</param>
+        </member>
+        <member name="M:Netnr.Extend.ToStringOrEmpty(Newtonsoft.Json.Linq.JToken)">
+            <summary>
+            把jArray里面的json对象转为字符串
+            </summary>
+            <param name="jt">JToken对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.OfJson(System.String)">
+            <summary>
+            字符串 JSON转义
+            </summary>
+            <param name="s">字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.OfSql(System.String)">
+            <summary>
+            SQL单引号转义
+            </summary>
+            <param name="s">字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToDataTable``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            实体转表
+            </summary>
+            <typeparam name="T">泛型</typeparam>
+            <param name="list">对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToModel``1(System.Data.DataTable)">
+            <summary>
+            表转为实体
+            </summary>
+            <typeparam name="T">泛型</typeparam>
+            <param name="table">表</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToUrlEncode(System.String)">
+            <summary>
+            URL 编码
+            </summary>
+            <param name="value">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToUrlDecode(System.String)">
+            <summary>
+            URL 解码
+            </summary>
+            <param name="value">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToHtmlEncode(System.String)">
+            <summary>
+            HTML 编码
+            </summary>
+            <param name="value">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToHtmlDecode(System.String)">
+            <summary>
+            HTML 解码
+            </summary>
+            <param name="value">内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToByte(System.String,System.Text.Encoding)">
+            <summary>
+            转 Byte
+            </summary>
+            <param name="value">内容</param>
+            <param name="encoding">默认 UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToText(System.Byte[],System.Text.Encoding)">
+            <summary>
+            Byte 转
+            </summary>
+            <param name="value">内容</param>
+            <param name="encoding">默认 UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToBase64Encode(System.String,System.Text.Encoding)">
+            <summary>
+            Base64 编码
+            </summary>
+            <param name="value">内容</param>
+            <param name="encoding">默认 UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToBase64Decode(System.String,System.Text.Encoding)">
+            <summary>
+            Base64 解码
+            </summary>
+            <param name="value"></param>
+            <param name="encoding">默认 UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToRead``1(``0,System.Object)">
+            <summary>
+            对象值读取源
+            </summary>
+            <param name="target">需要赋值的对象</param>
+            <param name="source">源对象</param>
+        </member>
+        <member name="M:Netnr.Extend.ToTimestamp(System.DateTime,System.Boolean)">
+            <summary>
+            将Datetime转换成时间戳，10位：秒 或 13位：毫秒
+            </summary>
+            <param name="datetime"></param>
+            <param name="isms">毫秒，默认false为秒，设为true，返回13位，毫秒</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.ToUtcTotalDays(System.DateTime)">
+            <summary>
+            将Datetime转换成从UTC开始计算的总天数
+            </summary>
+            <param name="datetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Extend.AddRange(System.Collections.ObjectModel.ObservableCollection{System.Object},System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            拓展批量添加
+            </summary>
+            <param name="oc"></param>
+            <param name="list"></param>
+        </member>
+    </members>
+</doc>

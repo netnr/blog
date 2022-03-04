@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2;netstandard2.1</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<Description>开发常用的核心类库；文档：https://netnr.eu.org</Description>
+		<Copyright>netnr</Copyright>
+		<PackageIconUrl></PackageIconUrl>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/netnr</RepositoryUrl>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageTags>netnr</PackageTags>
+		<PackageReleaseNotes>
+		</PackageReleaseNotes>
+		<Authors>netnr</Authors>
+		<Version>1.4.2</Version>
+		<DocumentationFile>Netnr.Core.xml</DocumentationFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>favicon.png</PackageIcon>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+		<DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <NoWarn>1701;1702</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.Runtime.Caching">
+			<Version>6.0.2-mauipre.1.22102.15</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="favicon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>
